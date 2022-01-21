@@ -22,6 +22,7 @@ The type is contained within the title and can be one of these types:
 - [요구사항 명세서](https://quilled-impulse-695.notion.site/1c064b49e979488386e3f7f2ff3d433e)<br>
 - [ERD](https://quilled-impulse-695.notion.site/ERD-241f9773912e441589bdac4fc3f25c43)<br>
 - [프로토타입](https://www.figma.com/file/GDZM9AklPZrsCaC1AeHYxH/Ondo?node-id=0%3A1)<br>
+- [API](https://www.notion.so/API-1ca45d1fdc95415aac1050bf3f63cb96)
 
 ## 카테고리
 
