@@ -21,6 +21,7 @@ The type is contained within the title and can be one of these types:
 - [기술 스택](https://quilled-impulse-695.notion.site/285948eaff6943e8a0b1ab121f462b8d)<br>
 - [요구사항 명세서](https://quilled-impulse-695.notion.site/1c064b49e979488386e3f7f2ff3d433e)<br>
 - [ERD](https://quilled-impulse-695.notion.site/ERD-241f9773912e441589bdac4fc3f25c43)<br>
+- [프로토타입 - figma]](https://www.figma.com/file/GDZM9AklPZrsCaC1AeHYxH/Ondo?node-id=0%3A1)<br>
 
 ## 카테고리
 
