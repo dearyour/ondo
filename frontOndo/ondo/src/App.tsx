@@ -8,7 +8,7 @@ let age :JSX.Element = <div> 내용 </div>;  //컴포넌트 jsx 타입지정
 
 function App() {
 
-  let [users,setUsers] = useState<string | number>('학교')
+let [users,setUsers] = useState<string | number>('학교')
 
   // const output = useSelector( (state :{count: number}) => state);  //스토어타입 적기
   const output = useSelector( (state :RootState) => state); //리덕스에서가져온 상태들

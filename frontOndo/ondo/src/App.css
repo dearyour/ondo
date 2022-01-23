@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Stylish&display=swap');
+
 .App {
   text-align: center;
+
+  font-family: 'Stylish', sans-serif;
 }
 
 .App-logo {
