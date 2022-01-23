@@ -62,7 +62,7 @@ The type is contained within the title and can be one of these types:
   - Back-End
     - **Spring boot(2.2.2.RELEASE)** - 2.0.0부터 @Nullable, @NotNull, Java 11, Junit 5 지원.
   - Front-End
-    - React
+    - React(Next.js)
   - DB
     - **MariaDB**
   - CI/CD
