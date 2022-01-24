@@ -5,8 +5,8 @@ import App from './App';
 import {Provider} from 'react-redux';
 import {createSlice, configureStore, PayloadAction} from '@reduxjs/toolkit';
 
-import {createStore} from 'redux';
-import { resolveTripleslashReference } from 'typescript';
+// import {createStore} from 'redux';
+// import { resolveTripleslashReference } from 'typescript';
 
 interface arrLength {
   count: number

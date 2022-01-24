@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-const AppLayout = ( props :any) => {
+const Layout  = (props :any) :JSX.Element  => {
     return (
         <div>
             {props}
@@ -9,8 +9,8 @@ const AppLayout = ( props :any) => {
 
 };
 
-AppLayout.propTypes ={
-    children: PropTypes.node.isRequired,
+Layout.propTypes  ={
+    props: PropTypes.node.isRequired,
 };
 
-export default AppLayout;
+export default Layout;
