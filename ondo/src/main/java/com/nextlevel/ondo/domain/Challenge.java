@@ -10,33 +10,31 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Builder
-public class User extends BaseTimeEntity {
-    public enum Role { user, admin;}
-
+public class Challenge extends BaseTimeEntity {
+    public enum Category { 운동, 공부, 식단관리;}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long challenge_id;
     @Column(nullable = false)
-    private String email;
+    private String title;
     @Column(nullable = false)
-    private String password;
+    private String content;
     @Column(nullable = false)
-    private String nickname;
-    @Column(nullable = false, columnDefinition = "number(10) default 36")
-    private int ondo;
-    @Column(columnDefinition = "varchar(255) default 'ㅋㅋ'") // 경로는 추후 설정
+    private String s_date;
+    @Column(nullable = false,columnDefinition = "varchar(255) default 'ㅋㅋ'")
     private String image;
+    @Column(nullable = false)
+    private Long owner;
+    @Column(nullable = false)
+    private Category category;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(10) default 'user'")
-    private Role role;
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "challenge")
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
+
 
 }
