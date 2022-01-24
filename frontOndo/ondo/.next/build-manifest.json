@@ -30,15 +30,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/user/info": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/info.js"
+    ],
     "/user/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/user/login.js"
-    ],
-    "/user/mypage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/user/mypage.js"
     ],
     "/user/signup": [
       "static/chunks/webpack.js",

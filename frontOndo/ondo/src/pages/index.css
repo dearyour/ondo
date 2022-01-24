@@ -7,6 +7,6 @@ body {
     justify-content: center;
     align-items: center;
     font-family: "Stylish";
-    min-height: 100vh;
+    /* min-height: 100vh; */
     margin: 0px;
   }
