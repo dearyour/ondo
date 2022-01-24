@@ -1,15 +1,29 @@
 import React from 'react';
-import './_app.css';
-import Layout from '../components/Layout';
+import PropTypes from 'prop-types'
+import 'antd/dist/antd.css'
+import Head from 'next/head';
+// import './index.css';
 
-const App = () =>{
+//index.tsx의 부모 모든 pages의 상위 타입
+//page에서 공통적인분은 여기다 적기
+
+//index.tsx의 레이아웃컴포넌트가 여기인자로 들어감 
+const App = ({Component}) =>{
     return (
-        <Layout>
-         {"next js 시작 홈 부분!"}
-        </Layout>
+        <>
+        <Head>
+            <meta charSet="utf-8" />
+            <title>NodeBird</title>
+        </Head>
+        <div>공통메뉴</div>
+        <Component />
 
-        
+        </>
     );
 
+};
+
+App.propTypes  = {
+    Component: PropTypes.elementType.isRequired,
 };
 export default App;
