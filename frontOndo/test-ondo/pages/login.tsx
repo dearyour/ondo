@@ -10,6 +10,9 @@ const LoginInput = styled(Input)`
   border-right: 0px;
   margin: 5px;
   border-color: #EDBABA;
+  &:focus {
+    outline: none;     
+  }
 `
 
 const LoginForm = styled(Form)`
@@ -35,6 +38,9 @@ const LoginButton = styled(Button)`
   border-radius: 5px;
   padding: 10px;
   margin: 20px 0px;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const LoginDiv = styled.div`
