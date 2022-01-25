@@ -30,4 +30,4 @@ const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) =>
     </div>
 )
 
-export default Layout;
+export default AppLayout;
