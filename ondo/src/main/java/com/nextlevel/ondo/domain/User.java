@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class User extends BaseTimeEntity {
-    public enum Role { user, admin;}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +25,27 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
+    private String name;
     private String nickname;
-    @Column(nullable = false, columnDefinition = "number(10) default 36")
+    @Column(nullable = false, columnDefinition = "int(10) default 36")
     private int ondo;
-    @Column(columnDefinition = "varchar(255) default 'ㅋㅋ'") // 경로는 추후 설정
+    @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(10) default 'user'")
+    @Column(nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
 
+    public User update(String name, String picture) {
+        this.name = name;
+        this.image = picture;
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }

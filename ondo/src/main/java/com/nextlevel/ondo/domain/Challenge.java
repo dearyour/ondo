@@ -16,7 +16,8 @@ import java.util.List;
 @Entity
 @Builder
 public class Challenge extends BaseTimeEntity {
-    public enum Category { 운동, 공부, 식단관리;}
+    public enum Category {운동, 공부, 식단관리;}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long challenge_id;
@@ -26,7 +27,7 @@ public class Challenge extends BaseTimeEntity {
     private String content;
     @Column(nullable = false)
     private String s_date;
-    @Column(nullable = false,columnDefinition = "varchar(255) default 'ㅋㅋ'")
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'null'")
     private String image;
     @Column(nullable = false)
     private Long owner;
