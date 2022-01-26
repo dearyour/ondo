@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../interfaces/User.interface';
 
-export interface User { 
-    nickname: string;
-    email: string;
-    count: number;
-  }
 const initialState: User = {
-    nickname: 'base', email: 'base@base.com', count: 0
+    nickname: 'base', email: 'base@base.com', count: 0, data: '', error: null,
 }
 
 export const userSlice = createSlice({
@@ -15,10 +11,19 @@ export const userSlice = createSlice({
     reducers: {
         increase: (state) => {
             state.count += 1;
+        },
+        getKakaoKey: (state) => {
+            
+        },
+        getKakaoKeySuccess: (state, { payload }) => {
+            state.data = payload
+        },
+        getKakaoKeyError: (state, { payload }) => {
+            state.error = payload
         }
     }
 })
 
 const { actions, reducer } = userSlice;
-export const {increase} = actions;
+export const userActions = actions;
 export default reducer;

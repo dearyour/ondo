@@ -3,7 +3,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import rootReducer from './module';
 import createSagaMiddleware, { Task } from 'redux-saga';
 import { Store } from 'redux';
-// import rootSaga from 'sagas';
+import rootSaga from './sagas'
 
 // Next Redux Toolkit Saga를 사용할때는
 // confugureStore에서 강제로 sagaTask를 만들어주기 위함
@@ -21,7 +21,7 @@ const store = () => {
   });
   
   // Next Redux Toolkit 에서 saga를 사용해야할 때
-  // (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
+  (store as SagaStore).sagaTask = sagaMiddleware.run(rootSaga);
   
   return store;
 };

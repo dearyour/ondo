@@ -1,14 +1,15 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../module';
-import { increase } from '../slice/user';
+import { userActions } from '../slice/user';
 
 export default function useUser() {
     const dispatch = useDispatch();
     const count = useSelector((state:RootState) => state.user.count);
     const plus = useCallback(() => {
-        dispatch(increase());
+        dispatch(userActions.getKakaoKey());
     }, [dispatch]);
+
 
     return { count, plus };
 }
