@@ -1,17 +1,17 @@
 package com.nextlevel.ondo.domain;
 
 import com.nextlevel.ondo.util.BaseTimeEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
+@Builder
+@Data
+@ToString
 public class User extends BaseTimeEntity {
-    public enum Role { user, admin;}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,23 +21,14 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private String nickname;
-    @Column(nullable = false, columnDefinition = "number(10) default 36")
+    private String username;
+    @Column(nullable = false, columnDefinition = "int(20) default 36")
     private int ondo;
-    @Column(columnDefinition = "varchar(255) default ㅋㅋ") // 경로는 추후 설정
+    @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(10) default 'user'")
-    private Role role;
+    private RoleType role;
 
-    @Builder
-    public User(String email, String password, int ondo, String nickname,String image, Role role) {
-        this.email = email;
-        this.password = password;
-        this.ondo = ondo;
-        this.nickname = nickname;
-        this.image = image;
-        this.role = role;
-    }
 }
