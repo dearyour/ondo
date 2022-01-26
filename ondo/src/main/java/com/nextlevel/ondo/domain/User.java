@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
-@Builder
 public class User extends BaseTimeEntity {
 
     @Id
@@ -22,8 +21,6 @@ public class User extends BaseTimeEntity {
     private Long user_id;
     @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
-    private String password;
     @Column(nullable = false)
     private String name;
     private String nickname;
@@ -43,6 +40,15 @@ public class User extends BaseTimeEntity {
         this.name = name;
         this.image = picture;
         return this;
+    }
+    @Builder
+    public User(String email,String name,String nickname,int ondo,String image,Role role){
+        this.email = email;
+        this.name = name;
+        this.nickname = nickname;
+        this.ondo = ondo;
+        this.image = image;
+        this.role = role;
     }
 
     public String getRoleKey() {
