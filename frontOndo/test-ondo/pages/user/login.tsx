@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Button, Form, Input } from 'antd';
-import { test } from '../store/api/User.api';
+import { test } from '../../store/api/User.api';
 
 
 const LoginInput = styled(Input)`
