@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import Head from 'next/head';
 import { Layout } from 'antd';
+import NavBar from './navbar';
 
 interface LayoutProps {
     children?: ReactNode,
@@ -18,7 +19,7 @@ const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) =>
         </Head>
         <Layout>
           <Header>
-            <h1> #Header </h1>
+            <NavBar></NavBar>
           </Header>
         </Layout>
         <Content>
@@ -30,4 +31,4 @@ const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) =>
     </div>
 )
 
-export default Layout;
+export default AppLayout;
