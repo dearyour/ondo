@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Button, Form, Input } from 'antd';
+import { test } from '../store/api/User.api';
 
 
 const LoginInput = styled(Input)`
@@ -11,7 +12,7 @@ const LoginInput = styled(Input)`
   margin: 5px;
   border-color: #EDBABA;
   &:focus {
-    outline: none;     
+    outline: none;
   }
 `
 
@@ -34,12 +35,13 @@ const LoginButton = styled(Button)`
   width: 100%;
   border: 0px;
   color: #F3F3F3;
-  background-color: #EDBABA;
+  background-color: #ebc1c1;
   border-radius: 5px;
   padding: 10px;
   margin: 20px 0px;
   &:hover {
     cursor: pointer;
+    background-color: #e7adad;
   }
 `
 
@@ -68,6 +70,7 @@ const Login = () => {
           <Link href=""><a>비밀번호 찾기 </a></Link>
           |
           <Link href=""><a> 회원가입</a></Link>
+          <a href={test}>카카오 테스트</a>
         </div>
     </LoginForm>
   )

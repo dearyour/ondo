@@ -1,4 +1,10 @@
+import { all, call } from "redux-saga/effects";
+import getKakaoKeySaga from "./User.saga";
 
-const rootSaga: any = 1;
+
+
+function* rootSaga() {
+  yield all([call(getKakaoKeySaga)]);
+}
 
 export default rootSaga;
