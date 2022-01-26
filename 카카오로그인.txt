@@ -1,0 +1,32 @@
+카카오 api 
+1. 웹서버주소 : http://localhost:3000
+2. 클라이언트 키 : 44dad20dedd901c8ca6eb5d6fde58baa
+
+3. 로그인 요청 콜백 주소: http://localhost:3000/auth/kakao/callback
+4. 로그아웃 요청 콜백 주소:
+
+5. 카카오 동의 구성
+User 오브젝트 : id(번호), username, password, email
+카카오로부터 받을 정보 : profile정보 , email(선택)
+
+6. 로그인 요청 주소(get)
+https://kauth.kakao.com/oauth/authorize?client_id=44dad20dedd901c8ca6eb5d6fde58baa&redirect_uri=http://localhost:3000/auth/kakao/callback&response_type=code
+
+7. 응답받은 코드 
+
+
+8. 토큰 발급 요청 주소(post) - http body에 데이터를 전달 (4가지 데이터를 담아라)
+요청 주소 : https://kauth.kakao.com/ouath/token
+헤더 값
+application/x-www-form-urlencoded;charset=utf-8  (key=value 형태)
+바디 값
+grant_type=authorization_code
+client_id=44dad20dedd901c8ca6eb5d6fde58baa
+redirect_uri=http://localhost:3000/auth/kakao/callback
+code={동적임}
+
+9. 토큰을 통한 사용자 정보 조회 ( POST )
+요청 주소 : https://kapi.kakao.com/v2/user/me
+헤더 값
+Authorization: Bearer {ACCESS_TOKEN}
+Content-type: application/x-www-form-urlencoded;charset=utf-8
