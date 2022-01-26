@@ -54,7 +54,7 @@ const WriteButton = styled(Button)`
   color: #F3F3F3;
   background-color: #ebc1c1;
   border-radius: 5px;
-  padding: 10px;
+  padding: 10px;  
   margin: 20px 0px;
   &:hover {
     cursor: pointer;

@@ -7,9 +7,10 @@ import { KakaoLogin } from '../api/User.api'
 
 function* getKakaoKey() {
   try {
-    const code = new URL(window.location.href).searchParams.get("code");;
+    const code = new URL(window.location.href).searchParams.get("code");
     const response: AxiosResponse = yield call(KakaoLogin, code);
     console.log(response)
+    console.log(code)
     yield put(userActions.getKakaoKeySuccess(response.data))
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
