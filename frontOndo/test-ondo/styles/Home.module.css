@@ -114,3 +114,8 @@
     flex-direction: column;
   }
 }
+
+.ant-select-selection {
+  background-color: saddlebrown;
+  height: 53px;
+}
