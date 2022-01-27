@@ -1,0 +1,51 @@
+import { useState } from 'react';
+import { Select } from 'antd';
+import styled from 'styled-components';
+
+const { Option } = Select;
+
+function onSearch(val:any) {
+  console.log('search:', val);
+}
+
+function ChallengeSelector(): JSX.Element {
+  const [category, setCategory] = useState('');
+
+  const onChange = (value:any) => {
+    setCategory(value);
+    console.log(value);
+  }
+    
+  return (
+    <StyledSelect
+      showSearch
+      placeholder="카테고리를 골라주세요"
+      optionFilterProp="children"
+      onChange={onChange}
+      onSearch={onSearch}
+      filterOption={(input, option:any) =>
+        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      }
+      style={{width: 200}}
+    > 
+    {
+      ['운동', '식습관', '취미', '학습', '친환경', '외모 관리', '기타'].map(category => (
+        <Option value={category}>{category}</Option>
+      ))
+    }
+    </StyledSelect>
+  );
+}
+
+const StyledSelect = styled(Select)`
+  margin: 5px 0 5px 5px;
+  border-radius: 10px;
+  background-color: #fdfcf6;
+  border-color: #EDBABA;
+  &:focus {
+    outline: none;
+  }
+`
+
+export default ChallengeSelector;
+
