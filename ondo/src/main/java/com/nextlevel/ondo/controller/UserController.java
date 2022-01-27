@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -36,16 +37,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping("/auth/joinForm")
-    public String joinForm() {
-        return "user/joinForm";
-    }
-
-    @GetMapping("/auth/loginForm")
-    public String loginForm() {
-        return "user/loginForm";
-    }
 
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<Map<String,Object>> kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
@@ -159,8 +150,8 @@ public class UserController {
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/user/updateForm")
-    public String updateForm() {
-        return "user/updateForm";
+    @GetMapping("/user/rank")
+    public ResponseEntity<List<User>> rankUser() {
+        return new ResponseEntity<List<User>>(UserService.rankUser(), HttpStatus.OK);
     }
 }
