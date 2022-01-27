@@ -4,6 +4,6 @@ export interface User {
   nickname: string;
   email: string;
   count: number;
-  data: string;
+  data: string | null;
   error: AxiosError | null;
 }

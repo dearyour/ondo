@@ -3,14 +3,14 @@ import AppLayout from '../components/layout/AppLayout'
 
 
 export default function Test() {
-    const {plus, count} = useUser()
+    const {data, count} = useUser()
     return (
         
         <div>
             <AppLayout>
             </AppLayout>
             <h1>count</h1>
-            <button onClick={() => plus()}> + </button>
+            <button onClick={() => data()}> + </button>
             <p> 값: {count}</p>
 
         </div>

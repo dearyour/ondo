@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, Form, Input } from 'antd';
 import AppLayout from '../../components/layout/AppLayout';
 
-const {Search} = Input;
+const { TextArea } = Input;
 
 const Write_feed = () => {
   return (
@@ -12,7 +12,7 @@ const Write_feed = () => {
         <Writetitle>피드 작성하기</Writetitle>
         <WriteDiv>
           <Label>이미지</Label>
-          <UploadInput enterButton="업로드"></UploadInput>
+          <UploadInput></UploadInput>
         </WriteDiv>
         <WriteDiv>
           <Label>도전</Label>
@@ -24,7 +24,7 @@ const Write_feed = () => {
         </WriteDiv>
         <WriteDiv>
           <Label>내용</Label>
-          <WriteInput></WriteInput>
+          <WriteTA rows={4}></WriteTA>
         </WriteDiv>
     </Write>
     </AppLayout>
@@ -36,6 +36,8 @@ const Write = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
+
 `
 
 const Writetitle = styled.h1`
@@ -45,6 +47,8 @@ const Writetitle = styled.h1`
 const Label = styled.label`
   padding-top: 5px;
   white-space: nowrap;
+  padding: 5px;
+  width: 10%;
 
 `
 
@@ -54,7 +58,7 @@ const WriteButton = styled(Button)`
   color: #F3F3F3;
   background-color: #ebc1c1;
   border-radius: 5px;
-  padding: 10px;
+  padding: 10px;  
   margin: 20px 0px;
   &:hover {
     cursor: pointer;
@@ -63,24 +67,44 @@ const WriteButton = styled(Button)`
 `
 
 const WriteInput = styled(Input)`
+  box-shadow: none;
   margin: 5px 0 5px 5px;
   border-radius: 10px;
   background-color: #fdfcf6;
   border-color: #EDBABA;
+  width: 30%;
+  outline: none;
+  
+`
+
+const WriteTA = styled(TextArea)`
+  margin: 5px 0 5px 5px;
+  border-radius: 10px;
+  background-color: #fdfcf6;
+  border-color: #EDBABA;
+  width: 30%;
   &:focus {
     outline: none;
   }
 `
 
-const UploadInput = styled(Search)`
-  border-radius: 5px;
+const UploadInput = styled(Input)`
+  box-shadow: none;
+  margin: 5px 0 5px 5px;
+  border-radius: 10px;
   background-color: #fdfcf6;
   border-color: #EDBABA;
+  width: 30%;
+  &:focus {
+    outline: none;
+  }
 `
 
 const WriteDiv = styled.div`
   display: flex;
   width: 100%;
+  justify-content: center;
+  margin-top: 10px;
 
 `
 
@@ -89,6 +113,7 @@ const TagInput = styled(Input)`
   border-left: 0px;
   border-right: 0px;
   margin: 5px;
+  width:30%;
   border-color: #EDBABA;
   &:focus {
     outline: none;

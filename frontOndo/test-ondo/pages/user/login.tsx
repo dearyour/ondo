@@ -54,6 +54,7 @@ const LoginDiv = styled.div`
 
 `
 
+
 const Login = () => {
   return (
     <LoginForm>
@@ -69,8 +70,9 @@ const Login = () => {
         <div>
           <Link href=""><a>비밀번호 찾기 </a></Link>
           |
-          <Link href=""><a> 회원가입</a></Link>
-          <a href={test}>카카오 테스트</a>
+          <Link href=""><a> 회원가입 </a></Link>
+          |
+          <a href={test}> 카카오 테스트</a>
         </div>
     </LoginForm>
   )
