@@ -15,7 +15,7 @@ export const userSlice = createSlice({
         getKakaoKey: (state) => {
             
         },
-        getKakaoKeySuccess: (state, { payload } :PayloadAction<string>) => {
+        getKakaoKeySuccess: (state, { payload }) => {
             state.data = payload
         },
         getKakaoKeyError: (state, { payload }) => {

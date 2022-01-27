@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import OndoLogo from '/public/images/ondo.png';
 import Image from 'next/image'
+import Link from 'next/link';
 import { Input } from 'antd';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
@@ -29,7 +30,7 @@ function Navbar(): JSX.Element {
             <Searchbar />
             <Menu>
                 <MenuLink style={{color: 'red', fontWeight: 'bold'}}>Challenge🔥</MenuLink>|
-                <MenuLink>로그인</MenuLink>|
+                <Link href='/login'><a><MenuLink>로그인</MenuLink></a></Link>|
                 <MenuLink>회원가입</MenuLink>
             </Menu>
             </Nav>

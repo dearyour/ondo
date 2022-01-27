@@ -2,11 +2,35 @@ import React, {ReactNode} from 'react';
 import Head from 'next/head';
 import { Layout } from 'antd';
 import NavBar from './Navbar';
+import styled from 'styled-components';
 
 interface LayoutProps {
     children?: ReactNode,
     title?: string,
 }
+
+const Container = styled.div`
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @media (min-width: 576px) {
+    max-width: 576px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 768px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 992px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1200px;
+  }
+`
+
 const { Header, Content, Footer } = Layout;
 
 const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) => (
@@ -23,7 +47,9 @@ const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) =>
           </Header>
         </Layout>
         <Content>
-          { children }
+          <Container>
+            { children }
+          </Container>
         </Content>
         <Footer>
 
