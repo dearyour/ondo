@@ -9,15 +9,23 @@ import com.nextlevel.ondo.domain.RoleType;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.repository.UserRepository;
 
+import java.util.List;
+
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private static UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Transactional(readOnly = true)
+    public static List<User> rankUser() {
+        List<User> list = userRepository.findTop5ByOrderByOndoDesc();
+        return list;
+    }
 
     @Transactional(readOnly = true)
     public User findUser(String username) {
