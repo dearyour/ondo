@@ -1,13 +1,16 @@
 package com.nextlevel.ondo.controller;
 
+import com.nextlevel.ondo.domain.Challenge;
+import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
+import com.nextlevel.ondo.service.ChallengeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Map;
 
 //        도전 생성	/challenge/create
 //        도전 상세보기	/challenge/info/{challange_id}
@@ -18,6 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/challenge")
 public class ChallengeController {
+    private final ChallengeService challengeService;
 
     @GetMapping
     public String ChallengePage() {
@@ -25,11 +29,7 @@ public class ChallengeController {
     }
 
     @PostMapping("/create")
-    public String createChallenge(@RequestBody Map<String, Object> requestData) {
-        requestData.forEach((key, value) -> {
-            System.out.println("key: " + key);
-            System.out.println("value: " + value);
-        });
-        return "";
+    public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto) {
+        return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto), HttpStatus.OK);
     }
 }

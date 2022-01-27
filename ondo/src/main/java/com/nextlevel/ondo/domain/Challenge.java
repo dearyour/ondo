@@ -26,7 +26,7 @@ public class Challenge extends BaseTimeEntity {
     @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
     @Column(nullable = false)
-    private String owner;
+    private long owner;
     @Enumerated(EnumType.STRING)
     @Column
     private Category category;
@@ -35,7 +35,7 @@ public class Challenge extends BaseTimeEntity {
 
 
     @Builder
-    public Challenge( String title, String content, String s_date, String image, String owner, Category category) {
+    public Challenge( String title, String content, String s_date, String image, long owner, Category category) {
         this.title = title;
         this.content = content;
         this.s_date = s_date;
