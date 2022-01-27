@@ -27,7 +27,6 @@ public class UserService {
         return user;
     }
 
-    @Transactional
     public int signUp(User user) {
         String rawPassword = user.getPassword(); // 1234 원문
         String encPassword = encoder.encode(rawPassword); // 해쉬
