@@ -7,6 +7,7 @@ import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -21,21 +22,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import java.util.*;
+@RequiredArgsConstructor
 @Controller
 public class UserController {
 
     @Value("${cos.key}")
     private String cosKey;
 
-    @Autowired
+    //@Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+    //@Autowired
     private UserService userService;
 
     @GetMapping("/auth/kakao/callback")
@@ -152,6 +150,11 @@ public class UserController {
 
     @GetMapping("/user/rank")
     public ResponseEntity<List<User>> rankUser() {
-        return new ResponseEntity<List<User>>(UserService.rankUser(), HttpStatus.OK);
+
+        List<User> ranker = new ArrayList<>();
+         ranker=UserService.rankUser();
+        return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
+
+
 }
