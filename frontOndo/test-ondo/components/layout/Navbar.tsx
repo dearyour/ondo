@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Input } from 'antd';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
+import Router from 'next/router';
 
 // const { Search } = Input;
 // const onSearch = (value:any) => console.log(value);
@@ -31,11 +32,16 @@ function Navbar(): JSX.Element {
             <Menu>
                 <MenuLink style={{color: 'red', fontWeight: 'bold'}}>Challenge🔥</MenuLink>|
                 <Link href='/login'><a><MenuLink>로그인</MenuLink></a></Link>|
-                <MenuLink>회원가입</MenuLink>
+                <MenuLink onClick={Logout}>회원가입</MenuLink>
             </Menu>
             </Nav>
         </NavWrapper>
     )
+}
+
+const Logout = () => {
+    localStorage.removeItem('Token')
+    Router.push('/user/login')
 }
 
 const NavWrapper = styled.div`

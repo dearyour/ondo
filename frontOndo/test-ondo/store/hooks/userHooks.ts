@@ -6,10 +6,11 @@ import { userActions } from '../slice/user';
 export default function useUser() {
     const dispatch = useDispatch();
     const count = useSelector((state:RootState) => state.user.count);
-    const plus = useCallback(() => {
+    const data = useSelector((state:RootState) => state.user.data);
+    const kakaoLogin = useCallback(() => {
         dispatch(userActions.getKakaoKey());
     }, [dispatch]);
 
 
-    return { count, plus };
+    return { count, kakaoLogin, data };
 }
