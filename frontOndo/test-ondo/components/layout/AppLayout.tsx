@@ -4,6 +4,8 @@ import { Layout } from 'antd';
 import NavBar from './Navbar';
 import styled from 'styled-components';
 
+
+
 interface LayoutProps {
     children?: ReactNode,
     title?: string,
