@@ -9,10 +9,7 @@ import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -49,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/auth/kakao/callback")
-    public String kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
+    public ResponseEntity<Map<String,Object>> kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
 
         // POST방식으로 key=value 데이터를 요청 (카카오쪽으로)
         // Retrofit2
@@ -155,7 +154,9 @@ public class UserController {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return "redirect:/";
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("access-token",oauthToken.getAccess_token());
+        return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/user/updateForm")
