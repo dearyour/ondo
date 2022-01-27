@@ -32,6 +32,7 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "varchar(10) default 'user'")
     private RoleType role;
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
 
