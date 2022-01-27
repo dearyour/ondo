@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,7 +22,7 @@ public class Challenge extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private Date s_date;
+    private String s_date;
     @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
     @Column(nullable = false)
@@ -36,7 +35,7 @@ public class Challenge extends BaseTimeEntity {
 
 
     @Builder
-    public Challenge( String title, String content, Date s_date, String image, String owner, Category category) {
+    public Challenge( String title, String content, String s_date, String image, String owner, Category category) {
         this.title = title;
         this.content = content;
         this.s_date = s_date;
