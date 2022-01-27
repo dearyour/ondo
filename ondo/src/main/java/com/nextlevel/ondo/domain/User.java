@@ -4,11 +4,12 @@ import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
 @ToString
 public class User extends BaseTimeEntity {
@@ -30,5 +31,19 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(10) default 'user'")
     private RoleType role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
+
+
+    @Builder
+    public User(String email, String password, String username, int ondo, String image, RoleType role) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.ondo = ondo;
+        this.image = image;
+        this.role = role;
+    }
 
 }
