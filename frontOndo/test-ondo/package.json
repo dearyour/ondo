@@ -2,7 +2,7 @@
   "name": "test-ondo",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next -p 3500",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
