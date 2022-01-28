@@ -24,16 +24,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     @Value("${cos.key}")
     private String cosKey;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<Map<String,Object>> kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
@@ -143,15 +142,13 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("access-token",oauthToken.getAccess_token());
+        resultMap.put("token",oauthToken.getAccess_token());
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/user/rank")
     public ResponseEntity<List<User>> rankUser() {
-
-        List<User> ranker = new ArrayList<>();
-         ranker=UserService.rankUser();
+        List<User> ranker = userService.rankUser();
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
 
