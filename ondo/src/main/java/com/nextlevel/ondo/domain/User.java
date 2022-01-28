@@ -15,8 +15,9 @@ import java.util.List;
 public class User extends BaseTimeEntity {
 
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)

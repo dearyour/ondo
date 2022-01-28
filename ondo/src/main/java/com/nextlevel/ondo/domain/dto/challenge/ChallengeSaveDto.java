@@ -29,7 +29,7 @@ public class ChallengeSaveDto {
         return Challenge.builder().
                 title(title)
                 .content(content)
-                .s_date(s_date)
+                .sDate(s_date)
                 .image(image)
                 .owner(owner)
                 .category(category).build();
