@@ -143,7 +143,7 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("access-token",oauthToken.getAccess_token());
+        resultMap.put("token",oauthToken.getAccess_token());
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
