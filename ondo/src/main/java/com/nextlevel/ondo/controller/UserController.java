@@ -23,17 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
-@RequiredArgsConstructor
 @Controller
 public class UserController {
 
     @Value("${cos.key}")
     private String cosKey;
 
-    //@Autowired
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    //@Autowired
+    @Autowired
     private UserService userService;
 
     @GetMapping("/auth/kakao/callback")
@@ -155,6 +154,7 @@ public class UserController {
          ranker=UserService.rankUser();
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
+
 
 
 }
