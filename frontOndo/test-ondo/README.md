@@ -32,3 +32,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+
+
+# 패치 노트
+
+## 1/27
+
+* 소셜 로그인 기능 부분 완성 ( 연결만 하면 됨)
+* 챌린지 생성 페이지 틀 생성
+
+## 1/26
+
+* 소셜 로그인 기능 테스트코드 추가
+* 헤더 구현 - Navbar
+
+# 1/25
+
+* 프론트 기본 구조 작성
+* 로그인 페이지 뷰 구현
