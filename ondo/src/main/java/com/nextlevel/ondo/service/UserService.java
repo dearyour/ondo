@@ -14,18 +14,18 @@ import java.util.List;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
-    //@Autowired
+    @Autowired
     private static UserRepository userRepository;
+
 
     @Autowired
     private void test(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    //@Autowired
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
 
@@ -35,6 +35,8 @@ public class UserService {
         //List<User> list = userRepository.findAll();
         return list;
     }
+
+
 
 
     @Transactional(readOnly = true)
@@ -51,6 +53,7 @@ public class UserService {
         user.setPassword(encPassword);
         user.setRole(RoleType.USER);
         try {
+            user.setOndo(36);
             userRepository.save(user);
             return 1;
         } catch (Exception e) {
