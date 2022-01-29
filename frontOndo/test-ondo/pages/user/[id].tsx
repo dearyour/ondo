@@ -13,26 +13,29 @@ const mypage = () => {
   const follow = [1,2,3,4];
   const following = [1,2,3,4];
   const ondo = 44;
+  const challenge_ing = 1;
+  const challenge_end = 4;
 
   return (
     <AppLayout title="mypage">
       <Row>
-        <Col span={8} xs={24} md={8} className={styles.border_right}>
-          <div className={styles.justify_content_center}>
-            <Image src={temp_profile}></Image>
+        <Col span={8} xs={24} md={8} className={`${styles.border_right} ${styles.mx_auto}`}>
+          <div className={styles.mx_auto}>
+            <Image src={temp_profile} className={styles.mx_auto}></Image>
             <div>
               <FollowBtn>팔로우 {follow.length}</FollowBtn>
               <FollowBtn>팔로잉 {following.length}</FollowBtn>
             </div>
-            <p>{nickname}</p>
-            <p>{ondo}</p>
+            <p>닉네임 {nickname}</p>
+            <p>온도 {ondo}°C</p>
+            <OndoBar value={ondo} max="100"></OndoBar>
             <Button>수정</Button>
           </div>
         </Col>
         <Col span={15} xs={24} md={15} offset={1}>
           <div>
-            <h1>도전 중</h1>
-            <h1>도전 완료</h1>
+            <h1>도전 중: {challenge_ing}</h1>
+            <h1>도전 완료: {challenge_end}</h1>
           </div>
         </Col>
       </Row>
@@ -51,6 +54,11 @@ const FollowBtn = styled(Button)`
     cursor: pointer;
     background-color: #e7adad;
   }
+`
+
+const OndoBar = styled.progress`
+  display: block;
+  margin-bottom: 10px;
 `
 
 

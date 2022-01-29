@@ -87,3 +87,8 @@
 .border_right {
   border-right: 1px solid #EDBABA;
 }
+
+.mx_auto {
+  margin-left: auto;
+  margin-right: auto;
+}
