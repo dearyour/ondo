@@ -9,7 +9,7 @@ const Line = styled.hr`
   background-color: gray;
   border: none;
   height: 1px;
-  width: 80%
+
 
 `
 
