@@ -18,12 +18,12 @@ import org.springframework.lang.Nullable;
 @Getter
 @NoArgsConstructor
 public class ChallengeSaveDto {
-    String title;
-    String content;
-    String s_date;
-    String image;
-    long owner;
-    Category category;
+    private String title;
+    private String content;
+    private String s_date;
+    private String image;
+    private long owner;
+    private Category category;
 
     public Challenge toEntity() {
         return Challenge.builder().

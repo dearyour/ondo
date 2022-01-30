@@ -10,21 +10,24 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChallengeParticipate {
     @Id
+    @Column(name = "challenge_participate_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challengeParticipate_id;
+    private long challengeParticipateId;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
+    @Column
+    private boolean archived;
 
     @Builder
-    public ChallengeParticipate(User user, Challenge challenge){
+    public ChallengeParticipate(User user, Challenge challenge,boolean archived){
         this.user = user;
         this.challenge = challenge;
+        this.archived = archived;
     }
 }

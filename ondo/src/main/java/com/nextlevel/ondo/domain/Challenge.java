@@ -1,5 +1,8 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,11 +17,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "challengeId")
 public class Challenge extends BaseTimeEntity {
     @Id
     @Column(name = "challenge_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challengeId;
+    private Long challengeId;
 
     @Column(nullable = false)
     private String title;
@@ -29,7 +33,7 @@ public class Challenge extends BaseTimeEntity {
     @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
     @Column(nullable = false)
-    private long owner;
+    private Long owner;
     @Enumerated(EnumType.STRING)
     @Column
     private Category category;

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ChallengeRepository extends JpaRepository<Challenge, Integer> {
+public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     List<Challenge> findAllByCategory(Category category);
     Challenge findByChallengeId(long challengeId);
     List<Challenge> findByCategory(Category category);
