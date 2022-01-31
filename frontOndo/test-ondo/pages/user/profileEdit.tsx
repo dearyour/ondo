@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import NowTitleBar from 'components/NowTitleBar'
 import AppLayout from 'components/layout/AppLayout';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import { Modal, Button, Col, Row, Input } from 'antd';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
 import temp_profile from 'public/images/temp_profile.jpg'
 import useInput from 'store/hooks/useInput';
+import useUser from 'store/hooks/userHooks';
 
+const dispatch = useDispatch();
 const Edit = () => {
   const [nickname, onChangeNick] = useInput('asdas');
+  const {ProfileEditRequest} = useUser();
+  const onChangeNickname = useCallback((e) => {
+    onChangeNick(e.target.value);
+  }, []);
+  const onEditNickname = useCallback((e) => {
+    e.preventDefault();
+    dispatch(ProfileEditRequest);
+  }, [nickname]); 
   return (
     <AppLayout>
       <NowTitleBar title="개인정보 수정"></NowTitleBar>
@@ -22,14 +33,16 @@ const Edit = () => {
           </Divide>
           <Divide>
             <h3  className={styles.mx_20}>닉네임</h3>
-            <NickInput value={nickname} onChange={onChangeNick}></NickInput>
-            <Button  className={styles.mx_20}>수정</Button>
+            <NickInput value={nickname} onChange={onChangeNickname}></NickInput>
+            <Button  className={styles.mx_20} onClick={onEditNickname}>수정</Button>
           </Divide>
         </div>
       </BorderDiv>
     </AppLayout>
   )
 }
+
+
 
 const BorderDiv = styled.div`
   border: 1px solid #EDBABA;
