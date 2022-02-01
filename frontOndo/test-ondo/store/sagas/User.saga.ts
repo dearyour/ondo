@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios";
 import { takeEvery, call, put, takeLatest, all, fork } from "redux-saga/effects"
 import { User } from "../interfaces/User.interface";
 import { userActions } from "../slice/user";
-import { KakaoLogin, ProfileEdit } from '../api/User.api'
+import { KakaoLogin, ProfileEdit, GetUserState } from '../api/User.api'
 import { stringify } from "querystring";
 import { Router } from "next/router";
 
@@ -30,8 +30,8 @@ function* watchGetKakaoKey() {
 
 function* requestprofileEdit (nickname: any) {
   try {
-    yield call(ProfileEdit, nickname);
-    yield put(userActions.setnickname(nickname));
+    yield call(ProfileEdit, nickname.data);
+    yield put(userActions.setnickname(nickname.data));
   } catch (err) {
     console.log(err);
   }
@@ -41,6 +41,22 @@ function* watchProfileEdit() {
   yield takeLatest(userActions.profileEdit, requestprofileEdit);
 }
 
+function* getUserState() {
+  try {
+    const code = new URL(window.location.href).searchParams.get("code");
+    const userdata: AxiosResponse = yield call(GetUserState, code)
+    console.log(userdata)
+    yield put(userActions.setEmail(userdata))
+    yield put(userActions.setnickname(userdata))
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+function* watchgetUserState() {
+  yield takeLatest(userActions.getUser, getUserState);
+}
+
 export default function* getKakaoKeySaga() {
-  yield all([fork(watchGetKakaoKey), fork(watchProfileEdit)])
+  yield all([fork(watchGetKakaoKey), fork(watchProfileEdit), fork(watchgetUserState)])
 }

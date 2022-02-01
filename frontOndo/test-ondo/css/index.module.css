@@ -80,6 +80,10 @@
   display: grid;
 }
 
+.d_none {
+  display: none;
+}
+
 .w_60 {
   width: 80%;
 }

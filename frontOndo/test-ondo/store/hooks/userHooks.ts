@@ -16,7 +16,10 @@ export default function useUser() {
         e.preventDefault();
         dispatch(userActions.profileEdit());
     }, [editednickname])
+    const GetUser = useCallback(() => {
+        dispatch(userActions.getUser)
+    }, [dispatch])
 
 
-    return { count, kakaoLogin, data, nickname, ProfileEditRequest };
+    return { count, kakaoLogin, data, nickname, ProfileEditRequest, GetUser };
 }

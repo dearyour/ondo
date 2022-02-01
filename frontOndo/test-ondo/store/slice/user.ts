@@ -13,8 +13,14 @@ export const userSlice = createSlice({
         profileEdit: (state) => {
             
         },
+        getUser: (state) => {
+
+        },
         setnickname: (state, {payload}) => {
             state.nickname = payload
+        },
+        setEmail: (state, {payload}) => {
+            state.email = payload
         },
         getKakaoKey: (state) => {
             

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import NowTitleBar from 'components/NowTitleBar'
 import AppLayout from 'components/layout/AppLayout';
 import styled from 'styled-components';
@@ -21,6 +21,17 @@ const Edit = () => {
     e.preventDefault();
     dispatch(ProfileEditRequest);
   }, [nickname]); 
+  const profileImgInput: any = useRef();
+  const ImgBtnClick = (e: any) => {
+    e.preventdefault();
+    profileImgInput.current.click();
+  }
+
+  const ImgUpload = async (e:any) => {
+    const formdata = new FormData();
+    formdata.append('file', e.target.files[0]);
+    // 업로드 추가해야함
+  }
   return (
     <AppLayout>
       <NowTitleBar title="개인정보 수정"></NowTitleBar>
@@ -29,7 +40,8 @@ const Edit = () => {
           <Divide>
             <h3  className={styles.mx_20}>프로필</h3>
             <Profile src={temp_profile}></Profile>
-            <Button  className={styles.mx_20}>수정</Button>
+            <Button  className={styles.mx_20} onClick={ImgBtnClick}>수정</Button>
+            <input type="file" accept='image/*' name='file' ref={profileImgInput} className={styles.d_none} onChange={ImgUpload}/>
           </Divide>
           <Divide>
             <h3  className={styles.mx_20}>닉네임</h3>
