@@ -1,11 +1,18 @@
 import { AxiosError } from "axios";
 
+export interface ChallengeParams {
+  challengeId: number;
+  title: string;
+  content: string;
+  sDate: Date;
+  image: string;
+  owner: number;
+  category: string;
+  error: AxiosError | null;
+}
+
 export interface Challenge {
-  title: String;
-  content: String;
-  s_date: Date;
-  image: String;
-  owner: String;
-  category: String;
+  challenges: ChallengeParams[];
+  isLoading: boolean;
   error: AxiosError | null;
 }

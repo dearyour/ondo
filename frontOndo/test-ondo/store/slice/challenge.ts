@@ -1,37 +1,32 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../interfaces/User.interface';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Challenge, ChallengeParams } from "../interfaces/Challenge.interface";
 
+// initialState
+export const initialState: Challenge = {
+  challenges: [],
+  isLoading: false,
+  error: null,
+};
 
-const initialState: User = {
-    nickname: 'base', email: 'base@base.com', count: 0, data: '', error: null,
-}
-
-export const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        increase: (state) => {
-            state.count += 1;
-        },
-        getKakaoKey: (state) => {
-            
-        },
-        getKakaoKeySuccess: (state, { payload }) => {
-            state.data = payload
-            localStorage.setItem('Token', payload)
-
-        },
-        getKakaoKeyError: (state, { payload }) => {
-            state.error = payload
-        },
-
-        getToken: (state) => {
-            const token = localStorage.getItem('Token')
-            state.data = token
-        }
+export const challengeSlice = createSlice({
+  name: 'challenge',
+  initialState,
+  reducers: {
+    getChallenge: (state, action: PayloadAction) => {
+      state.isLoading = false;
+    },
+    getChallengeSuccess: (state, action: PayloadAction<ChallengeParams>) => {
+      state.isLoading = true;
+      state.challenges.length = 0;
+      state.challenges = [...state.challenges, action.payload];
+    },
+    getChallengeFailure: (state, { payload: error }) => {
+      state.isLoading = false;
+      state.error = error;
     }
-})
+  }
+});
 
-const { actions, reducer } = userSlice;
-export const userActions = actions;
-export default reducer;
+export const challenge = challengeSlice.name;
+export const challengeReducer = challengeSlice.reducer;
+export const challengeAction = challengeSlice.actions;
