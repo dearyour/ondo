@@ -1,5 +1,6 @@
 package com.nextlevel.ondo.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,16 +14,15 @@ import java.util.List;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private static UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
 
     @Transactional(readOnly = true)
-    public static List<User> rankUser() {
+    public List<User> rankUser() {
         List<User> list = userRepository.findTop5ByOrderByOndoDesc();
         return list;
     }
