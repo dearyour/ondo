@@ -12,14 +12,15 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ToString
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "userId")
 public class User extends BaseTimeEntity {
 
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long user_id;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)

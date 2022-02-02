@@ -7,6 +7,7 @@ import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -21,22 +22,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import java.util.*;
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
     @Value("${cos.key}")
     private String cosKey;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<Map<String,Object>> kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
@@ -146,12 +142,16 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("access-token",oauthToken.getAccess_token());
+        resultMap.put("token",oauthToken.getAccess_token());
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/user/rank")
     public ResponseEntity<List<User>> rankUser() {
-        return new ResponseEntity<List<User>>(UserService.rankUser(), HttpStatus.OK);
+        List<User> ranker = userService.rankUser();
+        return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
+
+
+
 }

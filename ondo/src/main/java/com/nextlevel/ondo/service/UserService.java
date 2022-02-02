@@ -24,6 +24,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<User> rankUser() {
         List<User> list = userRepository.findTop5ByOrderByOndoDesc();
+        //List<User> list = userRepository.findAll();
         return list;
     }
 
@@ -41,6 +42,7 @@ public class UserService {
         user.setPassword(encPassword);
         user.setRole(RoleType.USER);
         try {
+            user.setOndo(36);
             userRepository.save(user);
             return 1;
         } catch (Exception e) {
