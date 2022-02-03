@@ -1,8 +1,8 @@
-import React, { FC, useRef, useEffect, useCallback } from "react";
+import React, { FC, useRef, useEffect, useCallback, useState } from "react";
 import { useSpring, animated } from 'react-spring';
 import { Divider } from 'antd';
 import styled from "styled-components";
-import { CloseOutlined, FireOutlined, FireFilled, CommentOutlined } from '@ant-design/icons';
+import { CloseOutlined, FireOutlined, FireTwoTone, CommentOutlined } from '@ant-design/icons';
 import LoggedInForm from "./layout/LoggedInForm";
 import 'antd/dist/antd.css';
 
@@ -45,6 +45,13 @@ const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
     return () => document.removeEventListener('keydown', keyPress)
   }, [keyPress]);
 
+  // dummy data
+  const [liked, setLiked] = useState(false);
+
+  const onToggleLike = useCallback(() => {
+    setLiked((prev) => !prev);
+  }, []);
+
   return (
     <>
       {showModal ? (
@@ -57,10 +64,14 @@ const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
                 <LoggedInForm />
                 <p>{feedContent}</p>
                 <Divider orientation="right">
-                    <FireOutlined style={{color: 'red'}} /> {likes} &nbsp;
+                  {liked
+                    ? <FireTwoTone twoToneColor='red' onClick={onToggleLike} />
+                    : <FireOutlined style={{color: '#edbaba'}} onClick={onToggleLike} />
+                  }  {likes} &nbsp;
                   <CommentOutlined /> {comments.length}
                 </Divider>
                 {/* <button>Join</button> */}
+                <div>댓글 부분</div>
               </ModalContent>
               <CloseModalButton aria-label="Close modal" onClick={() => setShowModal((prev:Boolean) => !prev)} />
             </ModalWrapper>

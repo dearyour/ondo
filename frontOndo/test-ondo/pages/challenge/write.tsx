@@ -41,10 +41,10 @@ const WriteChallenge = () => {
             <label htmlFor='content'>내용</label>
             <ContentInput rows={4} style={{width: 500}} placeholder='도전 상세 내용, 인증 사진 찍는 법 등을 기재해 주세요.' name='content' value={content} onChange={onChangeContent}/>
           </Space>
-          <Space direction='horizontal'>
+          <Button.Group>
             <ConfirmBtn>개설</ConfirmBtn>
             <CancelBtn>취소</CancelBtn>
-          </Space>
+          </Button.Group>
       </Write>
     </AppLayout>
   )
