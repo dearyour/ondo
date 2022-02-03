@@ -1,0 +1,212 @@
+$yong-gray: #e8e8e8;
+$yong-gray100: #9d9d9f;
+$yong-gray200: #454545;
+$yong-blue: #5085e8;
+#__next {
+  .feed-detail {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: $yong-gray200;
+      opacity: 0.8;
+    }
+    .wrapper {
+      width: 1200px;
+      height: 687px;
+      background-color: white;
+      border-radius: 15px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      .close {
+        width: 24px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        cursor: pointer;
+      }
+      .main-image {
+        width: 877px;
+        height: 100%;
+        background-size: $yong-gray;
+        flex-shrink: 0;
+        border-radius: 15px 0 0 15px;
+      }
+      .contents {
+        display: flex;
+        flex-direction: column;
+        .feed-content {
+          padding: 21px;
+          border-bottom: 1px solid $yong-gray;
+          flex-shrink: 0;
+          .top {
+            display: flex;
+            align-items: center;
+            .profile-image {
+              width: 43px;
+              height: 43px;
+              border-radius: 43px;
+              background-color: $yong-gray;
+              margin-right: 16px;
+            }
+            .feed-desc {
+              .nickname {
+                font-size: 16px;
+                color: $yong-gray200;
+              }
+              .timestamp {
+                font-size: 12px;
+                color: $yong-gray200;
+                opacity: 0.4;
+                margin-top: 4px;
+              }
+            }
+          }
+          .body {
+            margin-top: 24px;
+            font-size: 12px;
+            line-height: 1.6;
+            color: $yong-gray200;
+          }
+
+          .bottom {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            .like,
+            .comment {
+              display: flex;
+              align-items: center;
+              .asset {
+                width: 30px;
+                display: flex;
+                align-items: center;
+                margin-right: 4px;
+              }
+
+              & > .title {
+                font-size: 14px;
+                color: $yong-gray100;
+              }
+            }
+            .like {
+              margin-right: 16px;
+            }
+          }
+        }
+        .feed-comments {
+          flex: 1;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          border-bottom: 1px solid $yong-gray;
+          .comment-form {
+            padding: 11px 21px;
+            .top {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .left {
+                display: flex;
+                align-items: center;
+
+                .profile-image {
+                  width: 33px;
+                  height: 33px;
+                  border-radius: 33px;
+                  background-color: $yong-gray;
+                  margin-right: 16px;
+                }
+                .feed-desc {
+                  .nickname {
+                    font-size: 12px;
+                    color: $yong-gray200;
+                  }
+                  .timestamp {
+                    font-size: 10px;
+                    color: $yong-gray200;
+                    opacity: 0.4;
+                    margin-top: 4px;
+                  }
+                }
+              }
+              .right {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                .like {
+                  display: flex;
+                  align-items: center;
+                  .asset {
+                    width: 16px;
+                    display: flex;
+                    align-items: center;
+                    margin-right: 4px;
+                  }
+                  & > .title {
+                    font-size: 10px;
+                    color: $yong-gray;
+                  }
+                }
+                .reply-btn {
+                  margin-top: 6px;
+                  font-size: 10px;
+                  color: $yong-blue;
+                }
+              }
+            }
+            .body {
+              font-size: 12px;
+              line-height: 1.67;
+              color: $yong-gray200;
+              margin-top: 18px;
+            }
+          }
+
+          .reply {
+            padding-left: 38px;
+          }
+        }
+
+        .feed-write-comment {
+          height: 54px;
+          display: flex;
+          align-items: center;
+          padding: 0 21px;
+          .profile-image {
+            width: 33px;
+            height: 33px;
+            border-radius: 33px;
+            background-color: $yong-gray;
+            margin-right: 14px;
+            flex-shrink: 0;
+          }
+          .write-comment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            input {
+              border: none;
+              font-size: 12px;
+              color: $yong-gray200;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
-#__NEXT .mainfeed {
+#__next .mainfeed {
   padding-top: 54px;
   background-color: #fafafa;
   min-height: 100vh;
 }
 
-#__NEXT .mainfeed .wrapper {
+#__next .mainfeed .wrapper {
   width: 1000px;
   margin: 0 auto;
   padding-top: 30px;
@@ -19,11 +19,11 @@
           justify-content: space-between;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list {
+#__next .mainfeed .wrapper .feed-list {
   width: 729px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed {
+#__next .mainfeed .wrapper .feed-list .write-feed {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -34,7 +34,7 @@
   border: 1px solid #e8e8e8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .profile-image {
+#__next .mainfeed .wrapper .feed-list .write-feed .profile-image {
   width: 40px;
   height: 40px;
   border-radius: 40px;
@@ -42,36 +42,36 @@
   margin-right: 12px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .inp {
+#__next .mainfeed .wrapper .feed-list .write-feed .inp {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .inp input {
+#__next .mainfeed .wrapper .feed-list .write-feed .inp input {
   width: 100%;
   font-size: 12px;
   color: #454545;
   border: none;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .inp input::-webkit-input-placeholder {
+#__next .mainfeed .wrapper .feed-list .write-feed .inp input::-webkit-input-placeholder {
   color: #e8e8e8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .inp input:-ms-input-placeholder {
+#__next .mainfeed .wrapper .feed-list .write-feed .inp input:-ms-input-placeholder {
   color: #e8e8e8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .inp input::-ms-input-placeholder {
+#__next .mainfeed .wrapper .feed-list .write-feed .inp input::-ms-input-placeholder {
   color: #e8e8e8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .inp input::placeholder {
+#__next .mainfeed .wrapper .feed-list .write-feed .inp input::placeholder {
   color: #e8e8e8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .get-image label {
+#__next .mainfeed .wrapper .feed-list .write-feed .get-image label {
   width: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -81,18 +81,18 @@
           align-items: center;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .write-feed .get-image input {
+#__next .mainfeed .wrapper .feed-list .write-feed .get-image input {
   display: none;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed {
+#__next .mainfeed .wrapper .feed-list .feed {
   border: 1px solid #e8e8e8;
   background-color: white;
   margin-top: 25px;
   padding: 20px 24px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .top {
+#__next .mainfeed .wrapper .feed-list .feed .top {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -101,7 +101,7 @@
           align-items: center;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .top .profile-image {
+#__next .mainfeed .wrapper .feed-list .feed .top .profile-image {
   width: 40px;
   height: 40px;
   border-radius: 40px;
@@ -109,26 +109,26 @@
   margin-right: 12px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .top .profile-desc .nicknaeme {
+#__next .mainfeed .wrapper .feed-list .feed .top .profile-desc .nicknaeme {
   font-size: 14px;
   color: #454545;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .top .profile-desc .timestamp {
+#__next .mainfeed .wrapper .feed-list .feed .top .profile-desc .timestamp {
   font-size: 10px;
   color: #454545;
   opacity: 0.4;
   margin-top: 2px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .contents {
+#__next .mainfeed .wrapper .feed-list .feed .contents {
   margin-top: 48px;
   font-size: 12px;
   color: #454545;
   line-height: 1.8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .contents .image {
+#__next .mainfeed .wrapper .feed-list .feed .contents .image {
   width: 100%;
   height: 309px;
   background-color: #e8e8e8;
@@ -138,7 +138,7 @@
   margin-top: 25px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom {
+#__next .mainfeed .wrapper .feed-list .feed .bottom {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -151,8 +151,8 @@
   margin-top: 25px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .like,
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .comment {
+#__next .mainfeed .wrapper .feed-list .feed .bottom .like,
+#__next .mainfeed .wrapper .feed-list .feed .bottom .comment {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -161,8 +161,8 @@
           align-items: center;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .like .asset,
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .comment .asset {
+#__next .mainfeed .wrapper .feed-list .feed .bottom .like .asset,
+#__next .mainfeed .wrapper .feed-list .feed .bottom .comment .asset {
   width: 32px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -173,17 +173,17 @@
   margin-right: 12px;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .like .count,
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .comment .count {
+#__next .mainfeed .wrapper .feed-list .feed .bottom .like .count,
+#__next .mainfeed .wrapper .feed-list .feed .bottom .comment .count {
   font-size: 16px;
   color: #e8e8e8;
 }
 
-#__NEXT .mainfeed .wrapper .feed-list .feed .bottom .like {
+#__next .mainfeed .wrapper .feed-list .feed .bottom .like {
   margin-right: 24px;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list {
+#__next .mainfeed .wrapper .friend-list {
   position: -webkit-sticky;
   position: sticky;
   padding: 20px 16px;
@@ -193,7 +193,7 @@
   top: 84px;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-profile {
+#__next .mainfeed .wrapper .friend-list .my-profile {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -202,7 +202,7 @@
           align-items: center;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-profile .profile-image {
+#__next .mainfeed .wrapper .friend-list .my-profile .profile-image {
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -210,28 +210,28 @@
   margin-right: 12px;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-profile .nickname {
+#__next .mainfeed .wrapper .friend-list .my-profile .nickname {
   font-size: 12px;
   color: #454545;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-friends {
+#__next .mainfeed .wrapper .friend-list .my-friends {
   margin-top: 14px;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-friends > .title {
+#__next .mainfeed .wrapper .friend-list .my-friends > .title {
   font-size: 10px;
   color: #454545;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper {
+#__next .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper {
   margin-top: 14p;
   display: -ms-grid;
   display: grid;
   row-gap: 8px;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend {
+#__next .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -240,7 +240,7 @@
           align-items: center;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend .profile-image {
+#__next .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend .profile-image {
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -248,7 +248,7 @@
   margin-right: 12px;
 }
 
-#__NEXT .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend .nickname {
+#__next .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend .nickname {
   font-size: 12px;
   color: #454545;
 }
