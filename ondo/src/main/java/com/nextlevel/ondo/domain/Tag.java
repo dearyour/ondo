@@ -1,5 +1,7 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tag {
@@ -18,14 +21,14 @@ public class Tag {
     @Column(name = "tag_id")
     private long tagId;
 
-    @Column(nullable = false)
-    private String name;
-    /*
+    @Column(nullable = false, name="tag_name")
+    private String tagName;
+
     @OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)
     private List<FeedTag> feedTag = new ArrayList<>();
-    */
+
     @Builder
-    public Tag(String name) {
-        this.name = name;
+    public Tag(String tagName) {
+        this.tagName = tagName;
     }
 }

@@ -12,9 +12,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ChallengeParticipate {
     @Id
-    @Column(name = "challenge_participate_id")
+    @Column(name="challengeparticipate_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challengeParticipateId;
+    private long challengeparticipateId;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
