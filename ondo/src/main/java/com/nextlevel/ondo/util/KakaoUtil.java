@@ -16,9 +16,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
+@Component
 public class KakaoUtil {
 
-    private final User user;
     private final UserService userservice;
 
     public User getUserByEmail(String accessToken) {
