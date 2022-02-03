@@ -26,30 +26,32 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @PostMapping("/create")
-    public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto,@RequestHeader("Authorization") String token) {
-        return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto,token), HttpStatus.OK);
+    public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto, token), HttpStatus.OK);
     }
+
     @GetMapping("/info/{challenge_id}") // 도전 상세보기
     public ResponseEntity<Challenge> challengeDetail(@PathVariable("challenge_id") long challengeId) {
         return new ResponseEntity<Challenge>(challengeService.challengeDetail(challengeId), HttpStatus.OK);
     }
+
     @PostMapping("/participate")
-    public ResponseEntity<ChallengeParticipate> participateChallenge(@RequestBody JoinChallengeDto joinChallengeDto) {
-        // api에서 받는건 토큰, challenge_id
-        // 여기서 토큰안의 user_id를 빼온다.
-        ChallengeParticipate response = challengeService.participateChallenge(joinChallengeDto);
-        if(response == null){
+    public ResponseEntity<ChallengeParticipate> participateChallenge(@RequestBody JoinChallengeDto joinChallengeDto, @RequestHeader("Authorization") String token) {
+        ChallengeParticipate response = challengeService.participateChallenge(joinChallengeDto, token);
+        if (response == null) {
             // 이미 참여중.
             return new ResponseEntity<ChallengeParticipate>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<ChallengeParticipate>(response, HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<List<Challenge>> challengePage() {
         return new ResponseEntity<List<Challenge>>(challengeService.findAllChallenge(), HttpStatus.OK);
     }
+
     @GetMapping("/{category}") // 카테고리
-    public ResponseEntity<List<Challenge>> getChallengeByCategory(@PathVariable("category")Category category) {
+    public ResponseEntity<List<Challenge>> getChallengeByCategory(@PathVariable("category") Category category) {
         return new ResponseEntity<List<Challenge>>(challengeService.getChallengeByCategory(category), HttpStatus.OK);
     }
 }

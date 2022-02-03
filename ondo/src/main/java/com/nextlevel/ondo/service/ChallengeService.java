@@ -34,11 +34,11 @@ public class ChallengeService {
         return challenge;
     }
 
-    public ChallengeParticipate participateChallenge(JoinChallengeDto joinChallengeDto) {
+    public ChallengeParticipate participateChallenge(JoinChallengeDto joinChallengeDto,String token) {
         // DTO 하나 만들어서 .Entity() 사용 후 테이블에 저장.
         // Exception Handler
-        User user = userRepository.findById(joinChallengeDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + joinChallengeDto.getUserId()));
+        String accessToken = token.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(accessToken);
         Challenge challenge = challengeRepository.findById(joinChallengeDto.getChallengeId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 챌린지가 없습니다. id=" + joinChallengeDto.getChallengeId()));
         ChallengeParticipate challengeParticipate =  joinChallengeDto.toEntity(user,challenge);
