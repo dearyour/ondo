@@ -25,8 +25,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/write")
-    public ResponseEntity<Comment> createComment(@RequestBody CreateCommentDto createCommentDto) {
+    public ResponseEntity<Comment> createComment(@RequestBody CreateCommentDto createCommentDto,@RequestHeader("Authorization") String token) {
         // feed_id, content, token을 받는다.
-        return new ResponseEntity<Comment>(commentService.createComment(createCommentDto), HttpStatus.OK);
+        return new ResponseEntity<Comment>(commentService.createComment(createCommentDto,token), HttpStatus.OK);
     }
 }

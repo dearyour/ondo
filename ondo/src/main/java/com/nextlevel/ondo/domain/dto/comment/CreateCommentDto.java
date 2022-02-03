@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateCommentDto {
     private Long feedId;
-    private String token;
     private String content;
 
     public Comment toEntity(User user, Feed feed) {

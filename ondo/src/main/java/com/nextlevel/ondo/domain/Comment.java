@@ -3,6 +3,7 @@ package com.nextlevel.ondo.domain;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@Getter
 @AllArgsConstructor
 public class Comment extends BaseTimeEntity {
     @Id

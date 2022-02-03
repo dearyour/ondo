@@ -7,18 +7,21 @@ import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
+@Component
 public class KakaoUtil {
 
-    private final User user;
     private final UserService userservice;
 
     public User getUserByEmail(String accessToken) {
