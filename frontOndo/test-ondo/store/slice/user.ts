@@ -10,8 +10,17 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        increase: (state) => {
-            state.count += 1;
+        profileEdit: (state) => {
+            
+        },
+        getUser: (state) => {
+
+        },
+        setnickname: (state, {payload}) => {
+            state.nickname = payload
+        },
+        setEmail: (state, {payload}) => {
+            state.email = payload
         },
         getKakaoKey: (state) => {
             
