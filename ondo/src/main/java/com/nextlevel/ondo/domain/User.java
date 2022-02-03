@@ -38,6 +38,8 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Comment> comment = new ArrayList<>();
 
 
     @Builder
