@@ -1,5 +1,6 @@
 package com.nextlevel.ondo.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,25 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
+    @Autowired
+    private void test(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Autowired
     private BCryptPasswordEncoder encoder;
+
 
     @Transactional(readOnly = true)
     public static List<User> rankUser() {
         List<User> list = userRepository.findTop5ByOrderByOndoDesc();
+        //List<User> list = userRepository.findAll();
         return list;
     }
+
+
+
 
     @Transactional(readOnly = true)
     public User findUser(String username) {
@@ -48,6 +60,7 @@ public class UserService {
         user.setPassword(encPassword);
         user.setRole(RoleType.USER);
         try {
+            user.setOndo(36);
             userRepository.save(user);
             return 1;
         } catch (Exception e) {
