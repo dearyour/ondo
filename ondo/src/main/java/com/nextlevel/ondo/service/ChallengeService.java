@@ -39,7 +39,6 @@ public class ChallengeService {
         // Exception Handler
         User user = userRepository.findById(joinChallengeDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + joinChallengeDto.getUserId()));
-        System.out.println(user.toString());
         Challenge challenge = challengeRepository.findById(joinChallengeDto.getChallengeId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 챌린지가 없습니다. id=" + joinChallengeDto.getChallengeId()));
         ChallengeParticipate challengeParticipate =  joinChallengeDto.toEntity(user,challenge);

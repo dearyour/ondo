@@ -3,6 +3,7 @@ package com.nextlevel.ondo.domain;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Feed extends BaseTimeEntity {
@@ -29,6 +31,8 @@ public class Feed extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<FeedLike> feedlike = new ArrayList<>();
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
+    private List<Comment> comment = new ArrayList<>();
 
     @Builder
     public Feed(long challengeId, String image, String content, String userId) {
