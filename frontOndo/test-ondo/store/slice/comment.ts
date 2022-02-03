@@ -30,3 +30,4 @@ export const commentSlice = createSlice({
 export const comment = commentSlice.name;
 export const commentReducer = commentSlice.reducer;
 export const commentAction = commentSlice.actions;
+export default commentReducer;

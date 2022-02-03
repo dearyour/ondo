@@ -1,9 +1,9 @@
 import axios from "axios";
 
 
-const Loginurl = 'http://localhost:8080/auth/kakao/callback'
-const ProfileEditurl = 'http://localhost:8080/user/modify/'
-const GetUserurl = 'http://localhost:8080/user/'
+const Loginurl = 'http://i6a601.p.ssafy.io:8080/auth/kakao/callback'
+const ProfileEditurl = 'http://i6a601.p.ssafy.io:8080/user/modify/'
+const GetUserurl = 'http://i6a601.p.ssafy.io:8080/user/info'
 
 
 export const test = 'https://kauth.kakao.com/oauth/authorize?client_id=44dad20dedd901c8ca6eb5d6fde58baa&redirect_uri=http://localhost:3000/auth/kakao/callback&response_type=code'
@@ -26,13 +26,11 @@ export const KakaoLogin = (code: string | null) => {
 }
 
 // 개인정보 수정
-export const ProfileEdit = (nickname: string) => {
+export const ProfileEdit = (nickname: string, token: string) => {
   return axios({
     method: 'POST',
     url: ProfileEditurl,
-    headers: {
-      // 토큰
-    },
+    headers: { Authorization: "Bearer " + token },
     data: {
       nickname: nickname,
     }
@@ -45,13 +43,11 @@ export const ProfileEdit = (nickname: string) => {
   })
 }
 
-export const GetUserState = (token:string | null) => {
+export const GetUserState = (token:string) => {
   return axios({
     method: 'GET',
     url:GetUserurl,
-    params: {
-      token: token
-    }
+    headers: { Authorization: "Bearer " + token },
   })
   .then((res) => {
     return res.data

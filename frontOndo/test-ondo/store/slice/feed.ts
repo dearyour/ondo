@@ -30,3 +30,4 @@ export const feedSlice = createSlice({
 export const feed = feedSlice.name;
 export const feedReducer = feedSlice.reducer;
 export const feedAction = feedSlice.actions;
+export default feedReducer;

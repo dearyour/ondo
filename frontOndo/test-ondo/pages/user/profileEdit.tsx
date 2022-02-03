@@ -10,8 +10,8 @@ import temp_profile from 'public/images/temp_profile.jpg'
 import useInput from 'store/hooks/useInput';
 import useUser from 'store/hooks/userHooks';
 
-const dispatch = useDispatch();
 const Edit = () => {
+  const dispatch = useDispatch();
   const [nickname, onChangeNick] = useInput('asdas');
   const {ProfileEditRequest} = useUser();
   const onChangeNickname = useCallback((e) => {
@@ -60,11 +60,13 @@ const BorderDiv = styled.div`
   border: 1px solid #EDBABA;
   border-radius: 5px;
   padding: 10px;
+  margin-top: 20px;
 `
 
 const Divide = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 10px;
 `
 
 const Profile = styled(Image)`
