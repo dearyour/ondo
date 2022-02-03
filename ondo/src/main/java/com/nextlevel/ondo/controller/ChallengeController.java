@@ -26,8 +26,8 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @PostMapping("/create")
-    public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto) {
-        return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto), HttpStatus.OK);
+    public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto,@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto,token), HttpStatus.OK);
     }
     @GetMapping("/info/{challenge_id}") // 도전 상세보기
     public ResponseEntity<Challenge> challengeDetail(@PathVariable("challenge_id") long challengeId) {

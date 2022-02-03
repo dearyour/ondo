@@ -22,10 +22,9 @@ public class ChallengeSaveDto {
     private String content;
     private String s_date;
     private String image;
-    private long owner;
     private Category category;
 
-    public Challenge toEntity() {
+    public Challenge toEntity(Long owner) {
         return Challenge.builder().
                 title(title)
                 .content(content)
