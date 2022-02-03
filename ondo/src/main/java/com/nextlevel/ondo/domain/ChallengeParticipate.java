@@ -1,13 +1,15 @@
 package com.nextlevel.ondo.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChallengeParticipate {
     @Id
     @Column(name="challengeparticipate_id")
@@ -19,6 +21,13 @@ public class ChallengeParticipate {
     @ManyToOne
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
+    @Column
+    private boolean archived;
 
-
+    @Builder
+    public ChallengeParticipate(User user, Challenge challenge,boolean archived){
+        this.user = user;
+        this.challenge = challenge;
+        this.archived = archived;
+    }
 }

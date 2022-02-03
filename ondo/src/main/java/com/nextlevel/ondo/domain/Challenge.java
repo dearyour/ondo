@@ -1,8 +1,12 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,23 +14,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "challengeId")
 public class Challenge extends BaseTimeEntity {
     @Id
+    @Column(name = "challenge_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challenge_id;
+    private Long challengeId;
 
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String content;
-    @Column(nullable = false)
-    private String s_date;
+    @Column(nullable = false,name = "s_date")
+    private String sDate;
     @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
     @Column(nullable = false)
-    private String owner;
+    private Long owner;
     @Enumerated(EnumType.STRING)
     @Column
     private Category category;
@@ -35,10 +42,10 @@ public class Challenge extends BaseTimeEntity {
 
 
     @Builder
-    public Challenge( String title, String content, String s_date, String image, String owner, Category category) {
+    public Challenge( String title, String content, String sDate, String image, long owner, Category category) {
         this.title = title;
         this.content = content;
-        this.s_date = s_date;
+        this.sDate = sDate;
         this.image = image;
         this.owner = owner;
         this.category = category;

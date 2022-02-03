@@ -1,5 +1,7 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.*;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "userId")
 public class User extends BaseTimeEntity {
 
     @Id
@@ -32,7 +35,6 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(10) default 'user'")
     private RoleType role;
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
