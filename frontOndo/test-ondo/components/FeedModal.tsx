@@ -18,7 +18,7 @@ const likes = 77;
 const comments = ['우와 고생하셨어요~'];
 
 const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
-  const modalRef = useRef()
+  const modalRef: React.RefObject<HTMLDivElement> = useRef(null)
 
   const animation = useSpring({
     config: {
@@ -28,7 +28,7 @@ const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
     transform: showModal ? `translateY(0%)` : `translateY(-100%)` 
   })
 
-  const closeModal = (e: Event) => {
+  const closeModal: React.MouseEventHandler<HTMLDivElement>  = (e: React.MouseEvent<HTMLElement>) => {
     if(modalRef.current === e.target) {
       setShowModal(false);
     }
@@ -57,7 +57,7 @@ const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
       {showModal ? (
         <Background ref={modalRef} onClick={closeModal}>
           <animated.div style={animation}>
-            <ModalWrapper showModal={showModal}>
+            <ModalWrapper >
               <ModalImg src='https://picsum.photos/2500' alt="feed-image" />
               <ModalContent>
                 <ModalTitle>{challengeTitle}</ModalTitle>

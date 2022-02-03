@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux';
 import { HYDRATE } from "next-redux-wrapper";
 import user from '../slice/user';
+import challenge from 'store/slice/challenge';
+import feed from 'store/slice/feed';
+import comment from 'store/slice/comment';
 
 // 루트 리듀서
 const rootReducer = (state: any, action: any) => {
@@ -10,7 +13,7 @@ const rootReducer = (state: any, action: any) => {
             ...action.payload
         };
     }
-    return combineReducers({ user })(state, action);
+    return combineReducers({ user, challenge, feed, comment })(state, action);
 } 
 
 export default rootReducer;

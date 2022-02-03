@@ -6,6 +6,7 @@ import { Modal, Button, Col, Row } from 'antd';
 import AppLayout from 'components/layout/AppLayout';
 import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
+import Challengebox from 'components/user/mypageChallenge';
 import 'antd/dist/antd.css';
 
 const mypage = () => {
@@ -15,6 +16,7 @@ const mypage = () => {
   const ondo = 44;
   const challenge_ing = 1;
   const challenge_end = 4;
+  const datetime = new Date().toDateString();
 
   return (
     <AppLayout title="mypage">
@@ -35,7 +37,9 @@ const mypage = () => {
         <Col span={15} xs={24} md={15} offset={1}>
           <div>
             <h1>도전 중: {challenge_ing}</h1>
+            <Challengebox title='1' percent={2} participate={3} start={datetime}></Challengebox>
             <h1>도전 완료: {challenge_end}</h1>
+            <Challengebox title='1' percent={2} participate={3} start={datetime}></Challengebox>
           </div>
         </Col>
       </Row>

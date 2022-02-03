@@ -33,7 +33,7 @@ function ChallengeSelector(): JSX.Element {
       > 
       {
         ['운동', '식습관', '취미', '학습', '친환경', '외모 관리', '기타'].map(category => (
-          <Option value={category}>{category}</Option>
+          <Option value={category} key={category}>{category}</Option>
         ))
       }
       </StyledSelect>

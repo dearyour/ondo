@@ -65,11 +65,11 @@ export default class StartDatePicker extends Component {
           <label htmlFor="start-date" >시작일</label>
           <SingleDatePicker
             numberOfMonths={1}
-            onDateChange={(date:Date) => this.setState({ date })}
+            onDateChange={(date:moment.Moment|null) => this.setState({ date })}
             onFocusChange={({ focused }:any) => this.setState({ focused })}
             focused={this.state.focused}
             date={this.state.date}
-            name='start-date'
+            id='start-date'
           />
         </StyledDatePickerWrapper> 
           <Tooltip title='시작일 포함 3일동안 도전합니다.'>

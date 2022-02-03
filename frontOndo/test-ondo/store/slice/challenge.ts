@@ -30,3 +30,4 @@ export const challengeSlice = createSlice({
 export const challenge = challengeSlice.name;
 export const challengeReducer = challengeSlice.reducer;
 export const challengeAction = challengeSlice.actions;
+export default challengeReducer;

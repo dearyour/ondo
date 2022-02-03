@@ -30,8 +30,11 @@ function* watchGetKakaoKey() {
 
 function* requestprofileEdit (nickname: any) {
   try {
-    yield call(ProfileEdit, nickname.data);
-    yield put(userActions.setnickname(nickname.data));
+    const token = localStorage.getItem('Token')
+    if (token) {
+      yield call(ProfileEdit, nickname.data, token);
+      yield put(userActions.setnickname(nickname.data));
+    }
   } catch (err) {
     console.log(err);
   }
@@ -43,11 +46,13 @@ function* watchProfileEdit() {
 
 function* getUserState() {
   try {
-    const code = new URL(window.location.href).searchParams.get("code");
-    const userdata: AxiosResponse = yield call(GetUserState, code)
-    console.log(userdata)
-    yield put(userActions.setEmail(userdata))
-    yield put(userActions.setnickname(userdata))
+    const token = localStorage.getItem('Token')
+    if (token) {
+      const userdata: AxiosResponse = yield call(GetUserState, token)
+      console.log(userdata)
+      yield put(userActions.setEmail(userdata))
+      yield put(userActions.setnickname(userdata))
+    }
   } catch(err) {
     console.log(err)
   }
