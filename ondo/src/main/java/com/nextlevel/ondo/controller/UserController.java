@@ -7,6 +7,7 @@ import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.service.UserService;
+import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,6 +36,9 @@ public class UserController {
 
     private final UserService userService;
 
+    private final KakaoUtil kakaoUtil;
+
+    //로그인 및 회원 가입
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<Map<String,Object>> kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
 
@@ -77,6 +82,7 @@ public class UserController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
 
         System.out.println("****************");
         System.out.println("kakaotoken : "+oauthToken.getAccess_token());
@@ -146,11 +152,20 @@ public class UserController {
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
+    //회원 정보
+    @GetMapping("/user/info")
+    public ResponseEntity<User> infoUser(@RequestHeader("Authorization") String accessToken) {
+        String token = accessToken.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(token);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+    //회원 랭킹
     @GetMapping("/user/rank")
     public ResponseEntity<List<User>> rankUser() {
         List<User> ranker = userService.rankUser();
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
+
 
 
 
