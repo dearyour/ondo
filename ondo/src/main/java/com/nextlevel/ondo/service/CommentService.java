@@ -21,7 +21,6 @@ public class CommentService {
     public Comment createComment(CreateCommentDto createCommentDto, String token) {
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
-        System.out.println(user.getEmail());
         Feed feed = feedRepository.findByFeedId(createCommentDto.getFeedId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 피드가 없습니다. id=" + createCommentDto.getFeedId()));
         Comment comment =  createCommentDto.toEntity(user,feed);

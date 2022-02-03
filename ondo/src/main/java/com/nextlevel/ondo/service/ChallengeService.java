@@ -9,6 +9,7 @@ import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.repository.ChallengeParticipateRepository;
 import com.nextlevel.ondo.repository.ChallengeRepository;
 import com.nextlevel.ondo.repository.UserRepository;
+import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,23 +23,22 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final ChallengeParticipateRepository challengeParticipateRepository;
+    private final KakaoUtil kakaoUtil;
 
-    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto) {
-        System.out.println(challengeRepository);
-        Challenge newChallenge = challengeSaveDto.toEntity();
+    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto,String token) {
+        // token으로 owner 찾기
+        String accessToken = token.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(accessToken);
+        Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId());
         Challenge challenge = challengeRepository.save(newChallenge);
-        // Exception Handler
-
-
-        // Exception Handler end
         return challenge;
     }
 
-    public ChallengeParticipate participateChallenge(JoinChallengeDto joinChallengeDto) {
+    public ChallengeParticipate participateChallenge(JoinChallengeDto joinChallengeDto,String token) {
         // DTO 하나 만들어서 .Entity() 사용 후 테이블에 저장.
         // Exception Handler
-        User user = userRepository.findById(joinChallengeDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + joinChallengeDto.getUserId()));
+        String accessToken = token.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(accessToken);
         Challenge challenge = challengeRepository.findById(joinChallengeDto.getChallengeId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 챌린지가 없습니다. id=" + joinChallengeDto.getChallengeId()));
         ChallengeParticipate challengeParticipate =  joinChallengeDto.toEntity(user,challenge);
