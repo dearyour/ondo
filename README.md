@@ -17,6 +17,11 @@ The type is contained within the title and can be one of these types:
 - **chore:** Updating build tasks, package manager configs, etc; no production code change
 
 ## Preview.
+
+![img](frontOndo/test-ondo/public/images/ondo.png)
+
+Ondo(오늘의 도전)
+
 - [와이어 프레임](https://www.notion.so/4892db0a84f14a0ea80f0237e2a43ba5) <br>
 - [기술 스택](https://www.notion.so/285948eaff6943e8a0b1ab121f462b8d)<br>
 - [요구사항 명세서](https://www.notion.so/1c064b49e979488386e3f7f2ff3d433e)<br>
@@ -62,9 +67,9 @@ The type is contained within the title and can be one of these types:
   - Back-End
     - **Spring boot(2.2.2.RELEASE)** - 2.0.0부터 @Nullable, @NotNull, Java 11, Junit 5 지원.
   - Front-End
-    - React(Next.js)
+    - React(Next.js, typescript)
   - DB
-    - **MariaDB**
+    - Mysql
   - CI/CD
     - Jenkins - 프로젝트 시, 개발자들의 commit, push 내용을 지속적으로 통합하여 빌드, 테스트하며 관리.
 
