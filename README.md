@@ -1,4 +1,4 @@
-# 웹/모바일(웹 디자인) 스켈레톤 프로젝트
+# Ondo
 
 # dev
 
@@ -17,10 +17,10 @@ The type is contained within the title and can be one of these types:
 - **chore:** Updating build tasks, package manager configs, etc; no production code change
 
 ## Preview.
-- [와이어 프레임](https://quilled-impulse-695.notion.site/4892db0a84f14a0ea80f0237e2a43ba5) <br>
-- [기술 스택](https://quilled-impulse-695.notion.site/285948eaff6943e8a0b1ab121f462b8d)<br>
-- [요구사항 명세서](https://quilled-impulse-695.notion.site/1c064b49e979488386e3f7f2ff3d433e)<br>
-- [ERD](https://quilled-impulse-695.notion.site/ERD-241f9773912e441589bdac4fc3f25c43)<br>
+- [와이어 프레임](https://www.notion.so/4892db0a84f14a0ea80f0237e2a43ba5) <br>
+- [기술 스택](https://www.notion.so/285948eaff6943e8a0b1ab121f462b8d)<br>
+- [요구사항 명세서](https://www.notion.so/1c064b49e979488386e3f7f2ff3d433e)<br>
+- [ERD](https://www.erdcloud.com/d/uNBM3PjzYqBmSymfP)<br>
 - [프로토타입](https://www.figma.com/file/GDZM9AklPZrsCaC1AeHYxH/Ondo?node-id=0%3A1)<br>
 - [API](https://www.notion.so/API-1ca45d1fdc95415aac1050bf3f63cb96)
 
@@ -78,6 +78,4 @@ The type is contained within the title and can be one of these types:
 * 전건하: 프론트엔드 개발
 
 ---
-
-## 프로젝트 상세 설명
 

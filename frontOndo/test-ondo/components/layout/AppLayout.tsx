@@ -43,19 +43,19 @@ const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) =>
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
-        <Layout>
-          <Header>
+        {/* <Layout> */}
+          {/* <Header> */}
             <NavBar></NavBar>
-          </Header>
-        </Layout>
-        <Content>
+          {/* </Header> */}
+        {/* </Layout> */}
+        {/* <Content> */}
           <Container>
             { children }
           </Container>
-        </Content>
-        <Footer>
+        {/* </Content> */}
+        {/* <Footer> */}
 
-        </Footer>
+        {/* </Footer> */}
     </div>
 )
 

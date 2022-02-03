@@ -6,6 +6,7 @@ import { Input } from 'antd';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
 import Router from 'next/router';
+import LoggedInForm from './LoggedInForm';
 
 // const { Search } = Input;
 // const onSearch = (value:any) => console.log(value);
@@ -16,6 +17,7 @@ import Router from 'next/router';
 
 function Navbar(): JSX.Element {
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     return (
         <NavWrapper>
@@ -31,8 +33,19 @@ function Navbar(): JSX.Element {
             <Searchbar />
             <Menu>
                 <MenuLink style={{color: 'red', fontWeight: 'bold'}}>Challenge🔥</MenuLink>|
-                <Link href='/login'><a><MenuLink>로그인</MenuLink></a></Link>|
-                <MenuLink onClick={Logout}>회원가입</MenuLink>
+                { isLoggedIn ? (
+                    <>
+                        <Link href='/'><a><MenuLink><LoggedInForm /></MenuLink></a></Link>|
+                        <MenuLink onClick={Logout}>로그아웃</MenuLink>
+                    </>
+                )
+                    : (
+                    <>
+                        <Link href='/login'><a><MenuLink>로그인</MenuLink></a></Link>|
+                        <MenuLink onClick={Logout}>회원가입</MenuLink>
+                    </>
+                    )
+                }
             </Menu>
             </Nav>
         </NavWrapper>

@@ -7,3 +7,9 @@ export interface User {
   data: string | null;
   error: AxiosError | null;
 }
+
+export interface UserParams {
+  isLoading: boolean;
+  users: User[];
+  error: AxiosError | null;
+}
