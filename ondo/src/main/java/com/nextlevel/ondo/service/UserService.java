@@ -29,6 +29,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public User findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseGet(()->{
+            return new User();
+        });
+        return user;
+    }
+
+    @Transactional(readOnly = true)
     public User findUser(String username) {
         User user = userRepository.findByUsername(username).orElseGet(()->{
             return new User();
