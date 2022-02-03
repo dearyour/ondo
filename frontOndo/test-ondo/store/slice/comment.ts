@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Comment, CommentParams } from "../interfaces/Comment.interface";
+import { Comment, CommentParams, CommentParamType } from "../interfaces/Comment.interface";
 
 // initialState
 export const initialState: Comment = {
@@ -12,7 +12,7 @@ export const commentSlice = createSlice({
   name: 'comment',
   initialState,
   reducers: {
-    getComment: (state, action: PayloadAction) => {
+    getComment: (state, action: PayloadAction<CommentParamType>) => {
       state.isLoading = false;
     },
     getCommentSuccess: (state, action: PayloadAction<CommentParams>) => {

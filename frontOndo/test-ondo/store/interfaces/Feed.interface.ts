@@ -14,3 +14,7 @@ export interface Feed {
   isLoading: boolean;
   error: AxiosError | null;
 }
+
+export interface FeedParamType {
+  feedId: number;
+}

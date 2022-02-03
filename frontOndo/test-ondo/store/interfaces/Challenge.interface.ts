@@ -16,3 +16,8 @@ export interface Challenge {
   isLoading: boolean;
   error: AxiosError | null;
 }
+
+export interface ChallengeParamType {
+  challengeId: number;
+  category: string;
+}

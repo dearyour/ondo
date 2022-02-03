@@ -62,7 +62,7 @@ export default class StartDatePicker extends Component {
      
         <Space direction="horizontal">
         <StyledDatePickerWrapper>
-          <label htmlFor="start-date" >시작일</label>
+          <label htmlFor="start-date" style={{verticalAlign: 'center'}}>시작일</label>
           <SingleDatePicker
             numberOfMonths={1}
             onDateChange={(date:Date) => this.setState({ date })}

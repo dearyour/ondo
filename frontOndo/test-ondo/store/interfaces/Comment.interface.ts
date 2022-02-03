@@ -12,3 +12,8 @@ export interface Comment {
   isLoading: boolean;
   error: AxiosError | null;
 }
+
+export interface CommentParamType {
+  commentId: number;
+  feedId: number;
+}

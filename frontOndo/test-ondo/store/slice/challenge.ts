@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Challenge, ChallengeParams } from "../interfaces/Challenge.interface";
+import { Challenge, ChallengeParams, ChallengeParamType } from "../interfaces/Challenge.interface";
 
 // initialState
 export const initialState: Challenge = {
@@ -12,7 +12,7 @@ export const challengeSlice = createSlice({
   name: 'challenge',
   initialState,
   reducers: {
-    getChallenge: (state, action: PayloadAction) => {
+    getChallenge: (state, action: PayloadAction<ChallengeParamType>) => {
       state.isLoading = false;
     },
     getChallengeSuccess: (state, action: PayloadAction<ChallengeParams>) => {

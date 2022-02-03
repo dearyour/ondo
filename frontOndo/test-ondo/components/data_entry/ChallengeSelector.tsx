@@ -17,7 +17,7 @@ function ChallengeSelector(): JSX.Element {
   }
     
   return (
-    <Space direction='horizontal'>
+    <Space direction='horizontal' style={{margin: '10px'}}>
       <label htmlFor='category'>카테고리</label>
       <StyledSelect
         showSearch
