@@ -22,5 +22,10 @@ public class FeedController {
         return new ResponseEntity<List<Feed>>(feeds, HttpStatus.OK);
     }
 
+    @GetMapping("/feed/")
+    public ResponseEntity<List<Feed>> listFeed() {
+        List<Feed> feeds = feedService.listFeed();
+        return new ResponseEntity<List<Feed>>(feeds, HttpStatus.OK);
+    }
 
 }

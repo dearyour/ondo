@@ -8,17 +8,19 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChallengeParticipate {
+public class FeedTag {
+
     @Id
-    @Column(name="challengeparticipate_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long challengeparticipateId;
+    @Column(name = "feedtag_id")
+    private long feedtageId;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "feed_id")
+    private Feed feed;
     @ManyToOne
-    @JoinColumn(name = "challenge_id")
-    private Challenge challenge;
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 
 
 }

@@ -34,6 +34,7 @@ public class UserController {
 
     private final UserService userService;
 
+    //로그인 및 회원 가입
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<Map<String,Object>> kakaoCallback(String code) { // Data를 리턴해주는 컨트롤러 함수
 
@@ -77,6 +78,7 @@ public class UserController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
 
         System.out.println("****************");
         System.out.println("kakaotoken : "+oauthToken.getAccess_token());
@@ -144,6 +146,13 @@ public class UserController {
         Map<String,Object> resultMap = new HashMap<>();
         resultMap.put("token",oauthToken.getAccess_token());
         return new ResponseEntity<Map<String,Object>>(resultMap, HttpStatus.ACCEPTED);
+    }
+
+    //회원 정보
+    @GetMapping("/user/info")
+    public ResponseEntity<List<User>> rankUser() {
+        List<User> ranker = userService.rankUser();
+        return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
 
     @GetMapping("/user/rank")
