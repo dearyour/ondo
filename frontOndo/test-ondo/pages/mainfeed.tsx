@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 // import "../styles/feedcss/index.scss";
 // import "../styles/feedcss/index.module.scss";
 // import style from "./style.module.css";
-import "./mainfeedcss/style.module.scss";
+// import "./mainfeedcss/style.module.scss";
 
 function mainfeed() {
   return (
