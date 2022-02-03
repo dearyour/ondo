@@ -1,5 +1,5 @@
 import React from "react";
-import "./maindetailcss/style.module.scss";
+
 
 function Detail() {
   return (
@@ -16,7 +16,7 @@ function Detail() {
               <div className="top">
                 <div className="profile-image"></div>
                 <div className="feed-desc">
-                  <div className="nickname" txt-bold>
+                  <div className="nickname txt-bold">
                     yongstar
                   </div>
                   <div className="timestamp">8:15pm, yesterday</div>
