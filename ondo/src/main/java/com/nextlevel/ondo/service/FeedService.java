@@ -22,6 +22,9 @@ public class FeedService {
     @Transactional(readOnly = true)
     public List<Feed> listFeed() {
         List<Feed> list = feedRepository.findAll();
+        for(Feed f : list){
+            System.out.println(f.getComment());
+        }
         return list;
     }
 
