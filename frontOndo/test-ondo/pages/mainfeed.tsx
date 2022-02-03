@@ -41,7 +41,7 @@ function mainfeed() {
               <div className="top">
                 <div className="profile-image"></div>
                 <div className="profile-desc">
-                  <div className="nickname txt-bold">yongstar</div>
+                  <div className="nickname" txt-bold>yongstar</div>
                   <div className="timestamp">8:15 pm, yesterday</div>
                 </div>
               </div>
@@ -56,7 +56,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/like-dac.svg" alt="좋아요" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     25k
                   </div>
                 </div>
@@ -64,7 +64,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/comment.svg" alt="댓글" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     2k
                   </div>
                 </div>
@@ -91,7 +91,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/like-dac.svg" alt="좋아요" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     25k
                   </div>
                 </div>
@@ -99,7 +99,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/comment.svg" alt="댓글" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     2k
                   </div>
                 </div>
@@ -125,7 +125,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/like-dac.svg" alt="좋아요" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     25k
                   </div>
                 </div>
@@ -133,7 +133,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/comment.svg" alt="댓글" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     2k
                   </div>
                 </div>
@@ -160,7 +160,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/like-dac.svg" alt="좋아요" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     25k
                   </div>
                 </div>
@@ -168,7 +168,7 @@ function mainfeed() {
                   <div className="asset">
                     <img src="/assets/feed/comment.svg" alt="댓글" />
                   </div>
-                  <div className="count" txt-bold>
+                  <div className="count txt-bold">
                     2k
                   </div>
                 </div>
@@ -178,7 +178,7 @@ function mainfeed() {
           <div className="friend-list">
             <div className="my-profile">
               <div className="profile-image"></div>
-              <div className="nickname" txt-bold>
+              <div className="nickname txt-bold">
                 yongstar
               </div>
             </div>
@@ -187,25 +187,25 @@ function mainfeed() {
               <ul className="friend-list-wrapper">
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname" txt-bold>
+                  <div className="nickname txt-bold">
                     일주어터
                   </div>
                 </li>
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname" txt-bold>
+                  <div className="nickname txt-bold">
                     카리나
                   </div>
                 </li>
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname" txt-bold>
+                  <div className="nickname txt-bold">
                     윈터
                   </div>
                 </li>
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname" txt-bold>
+                  <div className="nickname txt-bold">
                     랭커
                   </div>
                 </li>

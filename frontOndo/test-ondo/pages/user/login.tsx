@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { Button, Form, Input } from 'antd';
 import { test } from '../../store/api/User.api';
+import Image from 'next/image'
+import kakao_login_large_wide from 'public/images/kakao_login_large_wide.png'
+import AppLayout from 'components/layout/AppLayout';
+import Pagebar from 'components/NowTitleBar';
 
 
 const LoginInput = styled(Input)`
@@ -53,28 +57,33 @@ const LoginDiv = styled.div`
   margin: 10px 0px;
 
 `
+const Kakao = styled.a`
 
+`
 
 const Login = () => {
   return (
-    <LoginForm>
-        <LoginDiv>
-          <LoginLabel htmlFor="user-id">이메일</LoginLabel>
-          <LoginInput name="user-id" required />
-        </LoginDiv>
-        <LoginDiv>
-          <LoginLabel htmlFor="user-password">비밀번호</LoginLabel>
-          <LoginInput name="user-password"  type="password" required />
-        </LoginDiv>
-        <LoginButton>로그인</LoginButton>
+      <AppLayout>
+      <Pagebar title="로그인"></Pagebar>
+     <LoginForm>
+    {/* //     <LoginDiv>
+    //       <LoginLabel htmlFor="user-id">이메일</LoginLabel>
+    //       <LoginInput name="user-id" required />
+    //     </LoginDiv>
+    //     <LoginDiv>
+    //       <LoginLabel htmlFor="user-password">비밀번호</LoginLabel>
+    //       <LoginInput name="user-password"  type="password" required />
+    //     </LoginDiv>
+    //     <LoginButton>로그인</LoginButton> */}
         <div>
-          <Link href=""><a>비밀번호 찾기 </a></Link>
+          {/* <Link href=""><a>비밀번호 찾기 </a></Link>
           |
           <Link href=""><a> 회원가입 </a></Link>
-          |
-          <a href={test}> 카카오 테스트</a>
+        | */}
+          <Kakao href={test}><Image src={kakao_login_large_wide}></Image></Kakao>
         </div>
     </LoginForm>
+        </AppLayout>
   )
 }
 
