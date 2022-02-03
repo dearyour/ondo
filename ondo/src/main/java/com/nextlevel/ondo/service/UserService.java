@@ -10,13 +10,18 @@ import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
 public class UserService {
 
-    @Autowired
+//    @Autowired
     private static UserRepository userRepository;
+    @Autowired
+    private void test(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -32,7 +37,9 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseGet(()->{
             return new User();
         });
+
         return user;
+
     }
 
     public int signUp(User user) {
