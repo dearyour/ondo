@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
-    @Query(value = "SELECT tag_id FROM tag WHERE name like %:keyword%", nativeQuery = true)
-    List<Long> selectByKeyword(@Param(value = "keyword") String keyword);
+//    @Query(value = "SELECT tag_id FROM tag WHERE name like %:keyword%", nativeQuery = true)
+//    List<Long> selectByKeyword(@Param(value = "keyword") String keyword);
+    List<Tag> findByNameContaining(String keyword);
 }

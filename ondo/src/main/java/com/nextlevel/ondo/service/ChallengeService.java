@@ -67,7 +67,7 @@ public class ChallengeService {
 
     @Transactional(readOnly = true)
     public List<Challenge> findChallengeByKeyword(String keyword) {
-        return challengeRepository.findByTitleLike("%" + keyword + "%");
+        return challengeRepository.findByTitleContaining(keyword);
     }
 
 }

@@ -15,6 +15,7 @@ import com.nextlevel.ondo.domain.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     // SELECT * FROM user WHERE username = 1?;
     Optional<User> findByUsername(String username);
+    Optional<List<User>> findByUsernameContaining(String keyword);
 
     List<User> findTop5ByOrderByOndoDesc();
 

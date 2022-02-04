@@ -1,5 +1,6 @@
 package com.nextlevel.ondo.service;
 
+import com.nextlevel.ondo.domain.Challenge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,15 +31,22 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseGet(()->{
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
             return new User();
         });
         return user;
     }
 
     @Transactional(readOnly = true)
+    public List<User> findUserByKeyword(String keyword) {
+        return userRepository.findByUsernameContaining(keyword).orElseThrow(
+                () -> new IllegalArgumentException("올바른 유저명이 아니다.")
+        );
+    }
+
+    @Transactional(readOnly = true)
     public User findUser(String username) {
-        User user = userRepository.findByUsername(username).orElseGet(()->{
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
         return user;

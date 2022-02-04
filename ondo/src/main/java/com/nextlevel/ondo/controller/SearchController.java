@@ -32,8 +32,8 @@ public class SearchController {
     public ResponseEntity<List<Feed>> findFeedByKeyword(@PathVariable("keyword") String keyword) {
         return new ResponseEntity<List<Feed>>(feedService.findFeedByKeyword(keyword), HttpStatus.OK);
     }
-//    @GetMapping("/user/{keyword}")
-//    public ResponseEntity<List<User>> findUserByKeyword(@PathVariable("keyword") String keyword) {
-//        return new ResponseEntity<List<User>>(userService.findUserByKeyword(keyword), HttpStatus.OK);
-//    }
+    @GetMapping("/user/{keyword}")
+    public ResponseEntity<List<User>> findUserByKeyword(@PathVariable("keyword") String keyword) {
+        return new ResponseEntity<List<User>>(userService.findUserByKeyword(keyword), HttpStatus.OK);
+    }
 }
