@@ -23,9 +23,9 @@ public class FeedController {
     private final FeedService feedService;
 
     @GetMapping
-    public ResponseEntity<List<Feed>> listFeed() {
-        List<Feed> feeds = feedService.listFeed();
-        return new ResponseEntity<List<Feed>>(feeds, HttpStatus.OK);
+    public ResponseEntity<List<DetailFeedDto>> listFeed(@RequestHeader("Authorization") String token) {
+        List<DetailFeedDto> feeds = feedService.listFeed(token);
+        return new ResponseEntity<List<DetailFeedDto>>(feeds, HttpStatus.OK);
     }
 
     @GetMapping("/info/{feed_id}")
