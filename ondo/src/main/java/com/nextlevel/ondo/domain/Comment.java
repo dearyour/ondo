@@ -1,5 +1,6 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.*;
@@ -19,10 +20,11 @@ public class Comment extends BaseTimeEntity {
     private long commentId;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    @JsonBackReference
     private User user;
     @ManyToOne
     @JoinColumn(name = "feed_id")
+    @JsonBackReference
     private Feed feed;
     @Column
     private String content;

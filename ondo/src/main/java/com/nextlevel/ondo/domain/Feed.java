@@ -2,12 +2,10 @@ package com.nextlevel.ondo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "feedId")
@@ -31,16 +30,18 @@ public class Feed extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
     @Column(nullable = false, name = "user_id") // 경로는 추후 설정
-    private String userId;
+    private long userId;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<FeedLike> feedlike = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
 
     @Builder
-    public Feed(long challengeId, String image, String content, String userId) {
+    public Feed(long challengeId, String image, String content, long userId) {
         this.challengeId = challengeId;
         this.image = image;
         this.content = content;
