@@ -1,6 +1,7 @@
 package com.nextlevel.ondo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.*;
@@ -37,8 +38,10 @@ public class User extends BaseTimeEntity {
     private RoleType role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<Comment> comment = new ArrayList<>();
 
 
