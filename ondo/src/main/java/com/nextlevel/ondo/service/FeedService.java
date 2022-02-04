@@ -37,12 +37,42 @@ public class FeedService {
     private final TagRepository tagRepository;
 
     @Transactional(readOnly = true)
-    public List<Feed> listFeed() {
+    public List<DetailFeedDto> listFeed(String token) {
+        //토큰 유저 (로그인 한 유저)
+        String accessToken = token.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(accessToken);
+
         List<Feed> list = feedRepository.findAll();
+        List<DetailFeedDto> detailFeedDtos = new ArrayList<>();
+
         for(Feed f : list){
-            System.out.println(f.getComment());
+
+            //피드 작성 유저
+            User user = userRepository.findByUserId(f.getUserId());
+
+            //해당피드에 달린 코멘트들
+
+            List<Comment> comments = commentRepository.findAllByFeed(f).orElseThrow(() -> new IllegalArgumentException("NO"));
+            //을 Dto에 담기(불리안 더 담아서)
+            List<DetailCommentDto> detailCommentDtos = new ArrayList<>();
+
+            for(Comment c : comments){
+                if(c.getUser().getUserId() == tokenuser.getUserId()){
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true);
+                    detailCommentDtos.add(detailCommentDto);
+                } else {
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
+                    detailCommentDtos.add(detailCommentDto);
+                }
+            }
+            Boolean flag = false;
+            // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
+            if(f.getFeedlike().contains(tokenuser)) flag = true;
+
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
+            detailFeedDtos.add(detailFeedDto);
         }
-        return list;
+        return detailFeedDtos;
     }
     @Transactional(readOnly = true)
     public List<Feed> findFeedByKeyword(String keyword) {
