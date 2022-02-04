@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../interfaces/User.interface';
+import { User, UserParams } from '../interfaces/User.interface';
 
 
-const initialState: User = {
-    nickname: 'base', email: 'base@base.com', count: 0, data: '', error: null,
+const initialState: UserParams = {
+    nickname: 'base', email: 'base@base.com', data: '', error: null,
 }
 
 export const userSlice = createSlice({
@@ -14,7 +14,7 @@ export const userSlice = createSlice({
             
         },
         getUser: (state) => {
-
+            
         },
         setnickname: (state, {payload}) => {
             state.nickname = payload

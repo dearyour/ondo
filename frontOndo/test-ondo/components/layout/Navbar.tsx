@@ -23,7 +23,7 @@ function Navbar(): JSX.Element {
         <NavWrapper>
             {/* <img src={OndoLogo} alt='OndoLogo'/> */}
             <Nav>
-            <a href=''><Image src={OndoLogo} /></a>
+            <Link href="/mainfeed"><a><Image src={OndoLogo} /></a></Link>
             {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}
             <Hamburger onClick={() => setIsOpen(!isOpen)}>
                 <span></span>

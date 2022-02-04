@@ -6,8 +6,7 @@ import { Spin, Space } from 'antd';
 import styles from '../../../css/index.module.css'
 
 const Auth2 = () => {
-  const { data } = useUser();
-  const {kakaoLogin, count} = useUser()
+  const {kakaoLogin} = useUser()
   useEffect(() => {
     kakaoLogin();
   }, [])

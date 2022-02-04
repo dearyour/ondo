@@ -9,6 +9,7 @@ import { Router } from "next/router";
 
 
 
+
 function* getKakaoKey() {
   interface tokentype extends AxiosResponse {
     token: string;
@@ -50,7 +51,7 @@ function* getUserState() {
     if (token) {
       const userdata: AxiosResponse = yield call(GetUserState, token)
       console.log(userdata)
-      yield put(userActions.setEmail(userdata))
+      // yield put(userActions.setEmail(userdata))
       yield put(userActions.setnickname(userdata))
     }
   } catch(err) {
