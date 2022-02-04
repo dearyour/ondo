@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Feed, FeedParams } from "../interfaces/Feed.interface";
+import { Feed, FeedParams, FeedParamType } from "../interfaces/Feed.interface";
 
 //initialState
 export const initialState: Feed = {
@@ -12,7 +12,7 @@ export const feedSlice = createSlice({
   name: 'feed',
   initialState,
   reducers: {
-    getFeed: (state, action: PayloadAction) => {
+    getFeed: (state, action: PayloadAction<FeedParamType>) => {
       state.isLoading = false;
     },
     getFeedSuccess: (state, action: PayloadAction<FeedParams>) => {
