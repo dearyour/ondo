@@ -14,8 +14,8 @@ public class FeedTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "feedtag_id")
-    private long feedtageId;
+    @Column(name = "feed_tag_id")
+    private Long feedTagId;
 
     @ManyToOne
     @JoinColumn(name = "feed_id")

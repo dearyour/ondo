@@ -23,14 +23,15 @@ public class Tag {
     @Column(name = "tag_id")
     private long tagId;
 
-    @Column(nullable = false, name="tag_name")
-    private String tagName;
+    @Column(nullable = false, name = "name")
+    private String name;
 
     @OneToMany(mappedBy = "tag", cascade = CascadeType.REMOVE)
     private List<FeedTag> feedTag = new ArrayList<>();
 
     @Builder
-    public Tag(String tagName) {
-        this.tagName = tagName;
+    public Tag(String name) {
+        this.name = name;
     }
+
 }

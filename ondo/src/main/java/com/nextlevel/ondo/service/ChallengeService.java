@@ -25,7 +25,7 @@ public class ChallengeService {
     private final ChallengeParticipateRepository challengeParticipateRepository;
     private final KakaoUtil kakaoUtil;
 
-    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto,String token) {
+    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto, String token) {
         // token으로 owner 찾기
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
@@ -34,15 +34,15 @@ public class ChallengeService {
         return challenge;
     }
 
-    public ChallengeParticipate participateChallenge(JoinChallengeDto joinChallengeDto,String token) {
+    public ChallengeParticipate participateChallenge(JoinChallengeDto joinChallengeDto, String token) {
         // DTO 하나 만들어서 .Entity() 사용 후 테이블에 저장.
         // Exception Handler
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
         Challenge challenge = challengeRepository.findById(joinChallengeDto.getChallengeId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 챌린지가 없습니다. id=" + joinChallengeDto.getChallengeId()));
-        ChallengeParticipate challengeParticipate =  joinChallengeDto.toEntity(user,challenge);
-        if(challengeParticipateRepository.findByChallengeAndUser(challenge, user) != null){
+        ChallengeParticipate challengeParticipate = joinChallengeDto.toEntity(user, challenge);
+        if (challengeParticipateRepository.findByChallengeAndUser(challenge, user) != null) {
             // 이미 참가 중이거나 챌린지가 종료 되었을 경우.
             return null;
         }
@@ -63,6 +63,11 @@ public class ChallengeService {
     @Transactional(readOnly = true)
     public List<Challenge> getChallengeByCategory(Category category) {
         return challengeRepository.findAllByCategory(category);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Challenge> findChallengeByKeyword(String keyword) {
+        return challengeRepository.findByTitleLike("%" + keyword + "%");
     }
 
 }
