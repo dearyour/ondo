@@ -62,7 +62,7 @@ public class ChallengeService {
 
     @Transactional(readOnly = true)
     public List<Challenge> getChallengeByCategory(Category category) {
-        return challengeRepository.findByCategory(category);
+        return challengeRepository.findAllByCategory(category);
     }
 
 }

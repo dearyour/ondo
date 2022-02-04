@@ -25,38 +25,43 @@ public class CommentService {
     public Comment createComment(CreateCommentDto createCommentDto, String token) {
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
-        if(user == null){
+        if (user == null) {
             return null;
         }
         Feed feed = feedRepository.findByFeedId(createCommentDto.getFeedId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 피드가 없습니다. id=" + createCommentDto.getFeedId()));
-        Comment comment =  createCommentDto.toEntity(user,feed);
+        Comment comment = createCommentDto.toEntity(user, feed);
         return commentRepository.save(comment);
     }
+
     public Comment modifyComment(ModifyCommentDto modifyCommentDto, String token) {
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
-        if(user == null){
+        if (user == null) {
             return null;
         }
         Comment comment = commentRepository.findByCommentId(modifyCommentDto.getCommentId())
-                .orElseThrow(()->new IllegalArgumentException("해당 댓글은 삭제되었습니다." + modifyCommentDto.getCommentId()));
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글은 삭제되었습니다." + modifyCommentDto.getCommentId()));
         comment.setContent(modifyCommentDto.getContent());
         return commentRepository.save(comment);
     }
+
     public Long deleteComment(Long commentId, String token) {
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
-        if(user == null){
+        if (user == null) {
             return null;
         }
         Long count = commentRepository.deleteByCommentId(commentId)
-                .orElseThrow(()->new IllegalArgumentException("이미 삭제된 댓글입니다." + commentId));
+                .orElseThrow(() -> new IllegalArgumentException("이미 삭제된 댓글입니다." + commentId));
         return 1L;
     }
-    public List<Comment> getComment(Long feedId){
-        List<Comment> comments = commentRepository.findAllByFeedId(feedId)
-                .orElseThrow(()->new IllegalArgumentException("ㅗ" + feedId));
+
+    public List<Comment> getComment(Long feedId) {
+        Feed feed = feedRepository.findByFeedId(feedId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 피드가 존재하지 않습니다." + feedId));
+        List<Comment> comments = commentRepository.findAllByFeed(feed)
+                .orElseThrow(() -> new IllegalArgumentException("NO" + feedId));
         return comments;
     }
 }
