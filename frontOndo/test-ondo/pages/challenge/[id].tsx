@@ -9,7 +9,7 @@ import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import 'antd/dist/antd.css';
 
-const mypage = () => {
+const readChallenge = () => {
   const title = '하루 30분 조깅하기';
   const startDate = new Date(2022, 0, 31);
   const getDuration = () => {
@@ -164,4 +164,4 @@ const Participants = styled.div`
   bottom: 70px; */
 `
 
-export default mypage;
+export default readChallenge;
