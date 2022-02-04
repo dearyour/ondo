@@ -86,7 +86,7 @@ public class FeedService {
 
         //해당피드에 달린 코멘트들
 
-        List<Comment> comments = commentRepository.findAllByFeed(feed);
+        List<Comment> comments = commentRepository.findAllByFeed(feed).orElseThrow(() -> new IllegalArgumentException("NO"));
         //을 Dto에 담기(불리안 더 담아서)
         List<DetailCommentDto> detailCommentDtos = new ArrayList<>();
 
