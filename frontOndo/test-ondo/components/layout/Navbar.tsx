@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import OndoLogo from '/public/images/ondo.png';
 import Image from 'next/image'
 import Link from 'next/link';
-import { Input } from 'antd';
+import { Input, Row, Col, Menu, Dropdown } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
 import Router from 'next/router';
 import LoggedInForm from './LoggedInForm';
+import styles from 'css/index.module.css';
 
 // const { Search } = Input;
 // const onSearch = (value:any) => console.log(value);
@@ -15,7 +17,23 @@ import LoggedInForm from './LoggedInForm';
 //   font-size: 50px
 // `;
 
+
 function Navbar(): JSX.Element {
+  const menu = (
+    <Menu>
+      <Menu.Item key="0" >
+        <Link href='/'><a>1st menu item</a></Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="1">
+        <Link href='/'><a>2st menu item</a></Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3">
+        <Link href='/'><a>3st menu item</a></Link>
+      </Menu.Item>
+    </Menu>
+  );
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -23,96 +41,87 @@ function Navbar(): JSX.Element {
         <NavWrapper>
             {/* <img src={OndoLogo} alt='OndoLogo'/> */}
             <Nav>
-            <a href=''><Image src={OndoLogo} /></a>
+            <XsLogo xs={24} lg={4}>
+              <Link href="/mainfeed"><a><Image src={OndoLogo}/></a></Link>
             {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}
-            <Hamburger onClick={() => setIsOpen(!isOpen)}>
-                <span></span>
-                <span></span>
-                <span></span>
-            </Hamburger>
-            <Searchbar />
-            <Menu>
-                <MenuLink style={{color: 'red', fontWeight: 'bold'}}>Challenge🔥</MenuLink>|
-                { isLoggedIn ? (
-                    <>
-                        <Link href='/'><a><MenuLink><LoggedInForm /></MenuLink></a></Link>|
-                        <MenuLink onClick={Logout}>로그아웃</MenuLink>
-                    </>
-                )
-                    : (
-                    <>
-                        <Link href='/login'><a><MenuLink>로그인</MenuLink></a></Link>|
-                        <MenuLink onClick={Logout}>회원가입</MenuLink>
-                    </>
-                    )
-                }
-            </Menu>
+              <Hamburger overlayStyle={{width: '50%'}} overlay={menu} trigger={['click']}>
+                <MenuOutlined style={{fontSize: '25px'}} />
+              </Hamburger>
+            </XsLogo>
+            <Col xs={24} md={24} lg={8}>
+              <Searchbar />
+            </Col>
+            <Col md={24} lg={12}>
+            <Menuitem>
+              <MenuLink style={{color: 'red', fontWeight: 'bold'}}>Challenge🔥</MenuLink>
+                <Link href='/'><a><MenuLink><LoggedInForm /></MenuLink></a></Link>
+                <MenuLink onClick={Logout}>로그아웃</MenuLink>
+            </Menuitem>
+            </Col>
             </Nav>
         </NavWrapper>
     )
 }
-
 const Logout = () => {
-    localStorage.removeItem('Token')
-    Router.push('/user/login')
+  localStorage.removeItem('Token')
+  Router.push('/user/login')
 }
+const XsLogo = styled(Col)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media (max-width: 768px) {
+      margin-bottom: 5px;
+    }
+`
 
 const NavWrapper = styled.div`
     padding: 1rem 10rem;
+    @media (max-width: 768px) {
+      padding: 1rem;
+    }
     `;
 
-const Nav = styled.div`
+const Nav = styled(Row)`
     padding: 0 2rem 1rem;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     align-items: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     background: white;
     border-bottom: 2px solid #edbaba;
 `;
 
-const Hamburger = styled.div`
+const Hamburger = styled(Dropdown)`
     display: none;
-    flex-direction: column;
     cursor: pointer;
 
-    span {
-        height: 2px;
-        width: 25px;
-        background: palevioletred;
-        margin-bottom: 4px;
-        border-radius: 5px;
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
         display: flex;
     }
 `;
 
 const MenuLink = styled.div`
-    padding: 1rem 2rem;
     cursor: pointer;
+    padding: 0 10px;
     text-align: center;
     text-decoration: none;
     color: black;
     transition: all 0.3s ease-in;
-    font-size: 0.9rem;
 
     &:hover {
         color: palevioletred;
     }
 `;
 
-const Menu = styled.div`
+const Menuitem = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
-    position: relative;
 
-    @media (max-width: 768px) {
-        overflow: hidden;
-        flex-direction: column;
-        width: 100%;
+
+    @media (max-width: 992px) {
+        display: none;
     }
 `;
 
