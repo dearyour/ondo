@@ -3,6 +3,7 @@ package com.nextlevel.ondo.controller;
 import com.nextlevel.ondo.domain.Category;
 import com.nextlevel.ondo.domain.Challenge;
 import com.nextlevel.ondo.domain.ChallengeParticipate;
+import com.nextlevel.ondo.domain.dto.challenge.ChallengeDetailDto;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.service.ChallengeService;
@@ -25,13 +26,17 @@ import java.util.List;
 public class ChallengeController {
     private final ChallengeService challengeService;
 
+    @GetMapping("/detail") // 챌린지 상세보기
+    public ResponseEntity<ChallengeDetailDto> detailChallenge(@PathVariable("challenge_id") Long challengeId, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<ChallengeDetailDto>(challengeService.detailChallenge(challengeId, token), HttpStatus.OK);
+    }
     @PostMapping("/create")
     public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto, @RequestHeader("Authorization") String token) {
         return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto, token), HttpStatus.OK);
     }
 
     @GetMapping("/info/{challenge_id}") // 도전 상세보기
-    public ResponseEntity<Challenge> challengeDetail(@PathVariable("challenge_id") long challengeId) {
+    public ResponseEntity<Challenge> challengeDetail(@PathVariable("challenge_id") Long challengeId) {
         return new ResponseEntity<Challenge>(challengeService.challengeDetail(challengeId), HttpStatus.OK);
     }
 
