@@ -22,15 +22,15 @@ function Navbar(): JSX.Element {
   const menu = (
     <Menu>
       <Menu.Item key="0" >
-        <Link href='/'><a>1st menu item</a></Link>
+        <Link href='/challenge'><a>challenge</a></Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="1">
-        <Link href='/'><a>2st menu item</a></Link>
+        <Link href='/user/1'><a>mypage</a></Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="3">
-        <Link href='/'><a>3st menu item</a></Link>
+        <div onClick={Logout}>Logout</div>
       </Menu.Item>
     </Menu>
   );
@@ -41,20 +41,20 @@ function Navbar(): JSX.Element {
         <NavWrapper>
             {/* <img src={OndoLogo} alt='OndoLogo'/> */}
             <Nav>
-            <XsLogo xs={24} lg={4}>
+            <XsLogo xs={24} lg={4} xl={6}>
               <Link href="/mainfeed"><a><Image src={OndoLogo}/></a></Link>
             {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}
               <Hamburger overlayStyle={{width: '50%'}} overlay={menu} trigger={['click']}>
                 <MenuOutlined style={{fontSize: '25px'}} />
               </Hamburger>
             </XsLogo>
-            <Col xs={24} md={24} lg={8}>
+            <Col xs={24} md={24} lg={8} xl={6}>
               <Searchbar />
             </Col>
             <Col md={24} lg={12}>
             <Menuitem>
               <MenuLink style={{color: 'red', fontWeight: 'bold'}}>Challenge🔥</MenuLink>
-                <Link href='/'><a><MenuLink><LoggedInForm /></MenuLink></a></Link>
+                <Link href='/user/1'><a><MenuLink><LoggedInForm /></MenuLink></a></Link>
                 <MenuLink onClick={Logout}>로그아웃</MenuLink>
             </Menuitem>
             </Col>
