@@ -10,6 +10,7 @@ const Line = styled.hr`
   background-color: gray;
   border: none;
   height: 1px;
+  margin-top: 5px;
 `
 
 

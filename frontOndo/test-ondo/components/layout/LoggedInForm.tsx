@@ -7,7 +7,7 @@ const LoggedInForm = () => {
   return (
     <Space direction='horizontal'>
       <Avatar style={{backgroundColor: '#edbaba'}} icon={<UserOutlined />} />
-      &nbsp;<b>doyouhaveaknife</b>
+      &nbsp;<b>doyouhavea</b>
     </Space>
   );
 }
