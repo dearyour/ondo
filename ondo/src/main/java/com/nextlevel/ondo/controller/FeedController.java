@@ -5,6 +5,7 @@ import com.nextlevel.ondo.domain.Feed;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.feed.MainFeedDto;
 import com.nextlevel.ondo.domain.dto.feed.ModifyFeedDto;
 import com.nextlevel.ondo.service.FeedService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,9 @@ public class FeedController {
     private final FeedService feedService;
 
     @GetMapping
-    public ResponseEntity<List<DetailFeedDto>> listFeed(@RequestHeader("Authorization") String token) {
-        List<DetailFeedDto> feeds = feedService.listFeed(token);
-        return new ResponseEntity<List<DetailFeedDto>>(feeds, HttpStatus.OK);
+    public ResponseEntity<List<MainFeedDto>> listFeed(@RequestHeader("Authorization") String token) {
+        List<MainFeedDto> mainFeedDto = feedService.listFeed(token);
+        return new ResponseEntity<List<MainFeedDto>>(mainFeedDto, HttpStatus.OK);
     }
 
     @GetMapping("/info/{feed_id}")

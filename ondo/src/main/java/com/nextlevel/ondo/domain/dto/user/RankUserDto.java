@@ -4,13 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class FeedUserDto {
+public class RankUserDto {
 
     private String username;
     private String image;
 
     @Builder
-    public FeedUserDto(String username, String image) {
+    public RankUserDto(String username, String image) {
         this.username = username;
         this.image = image;
     }
