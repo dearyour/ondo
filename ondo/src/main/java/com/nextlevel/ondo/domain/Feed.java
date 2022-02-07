@@ -40,6 +40,10 @@ public class Feed extends BaseTimeEntity {
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
+    private List<FeedTag> feedTag = new ArrayList<>();
+
     @Builder
     public Feed(long challengeId, String image, String content, long userId) {
         this.challengeId = challengeId;

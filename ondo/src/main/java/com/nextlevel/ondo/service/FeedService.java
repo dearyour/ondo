@@ -35,13 +35,13 @@ public class FeedService {
     private final TagRepository tagRepository;
 
     @Transactional(readOnly = true)
-    public List<MainFeedDto> listFeed(String token) {
+    public MainFeedDto returnmain(String token) {
         //토큰 유저 (로그인 한 유저)
         String accessToken = token.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(accessToken);
 
         List<Feed> list = feedRepository.findAll();
-        List<MainFeedDto> mainFeedDtos = new ArrayList<>();
+        List<DetailFeedDto> detailFeedDtos = new ArrayList<>();
 
         for(Feed f : list){
 
@@ -67,16 +67,20 @@ public class FeedService {
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
             if(f.getFeedlike().contains(tokenuser)) flag = true;
 
-            List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
-            List<RankUserDto> rankUserDtos = new ArrayList<>();
-            for(User u : ulist){
-                rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage()));
-            }
 
-            MainFeedDto mainFeedDto = new MainFeedDto(user,f,detailCommentDtos,flag,rankUserDtos);
-            mainFeedDtos.add(mainFeedDto);
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
+            detailFeedDtos.add(detailFeedDto);
         }
-        return mainFeedDtos;
+
+        List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
+        List<RankUserDto> rankUserDtos = new ArrayList<>();
+        for(User u : ulist){
+            rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage()));
+        }
+
+        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos,rankUserDtos);
+
+        return mainFeedDto;
     }
 
     @Transactional(readOnly = true)
