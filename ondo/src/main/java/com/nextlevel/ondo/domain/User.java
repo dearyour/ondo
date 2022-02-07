@@ -1,5 +1,8 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.nextlevel.ondo.util.BaseTimeEntity;
 import lombok.*;
 
@@ -10,13 +13,15 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @ToString
 public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
@@ -32,10 +37,20 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "varchar(10) default 'user'")
     private RoleType role;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Comment> comment = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<FeedLike> feedLikes = new ArrayList<>();
+    /*
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Follow> follows = new ArrayList<>();
+    */
 
     @Builder
     public User(String email, String password, String username, int ondo, String image, RoleType role) {
