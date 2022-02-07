@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
+import useInput from 'store/hooks/useInput';
+import axios from 'axios';
+import Router from 'next/router';
 
 const SearchContainer = styled.div`
     position: relative;
@@ -66,15 +69,31 @@ const IconButton = styled.button`
 `;
 
 function Searchbar(): JSX.Element {
+    const [keyword, setKeyword] = useInput('');
     const [isActive, setIsActive] = useState(false);
+    const keywordChange:React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setKeyword(e)
+    }
 
     const toggleSearch = () => {
         setIsActive(!isActive);
     }
+    const url = 'http://localhost:8080/search/'
+    const Search = () => {
+        const token= localStorage.getItem('Token');
+        axios({
+            method:'get',
+            url: url + keyword,
+            headers: { Authorization: "Bearer " + token },
+        })
+        .then((res) => {
+            console.log(res)
+        })
+    }
 
     return (
        <SearchContainer>
-           <IconButton onClick={toggleSearch}>
+           <IconButton onClick={Search}>
                {isActive ? (
                    <CloseOutlined size={18} />
                     ) : (
@@ -82,7 +101,7 @@ function Searchbar(): JSX.Element {
                     )
                 }
            </IconButton>
-           <SearchInput placeholder='검색' />
+           <SearchInput placeholder='검색' value={keyword} onChange={keywordChange} />
        </SearchContainer>
     );
 }

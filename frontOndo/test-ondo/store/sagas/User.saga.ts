@@ -28,10 +28,10 @@ function* getKakaoKey() {
     console.log(response.token);
     console.log(code);
     yield put(userActions.getKakaoKeySuccess(response.token));
-    // Router.push("/");
+    Router.push("/");
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
-    // Router.push("/");
+    Router.push("/");
   }
 }
 
