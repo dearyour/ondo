@@ -96,12 +96,11 @@ public class ChallengeService {
     }
 
 
-    public Challenge createChallenge(MultipartFile image, ChallengeSaveDto challengeSaveDto, String token) {
-        System.out.println(image);
+    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto, String token, String image) {
         // token으로 owner 찾기
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
-        Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId());
+        Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId(), image);
         Challenge challenge = challengeRepository.save(newChallenge);
         System.out.println("챌린지 생성 완료");
         return challenge;

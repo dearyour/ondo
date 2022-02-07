@@ -51,7 +51,4 @@ public class FeedController {
         return new ResponseEntity<Feed>(feedService.createFeed(feedSaveDto, token), HttpStatus.OK);
     }
     */
-
-
-
 }
