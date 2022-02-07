@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import { CommentParams } from "./Comment.interface";
 
 export interface FeedParams {
   feedId: number;
@@ -6,7 +7,10 @@ export interface FeedParams {
   image: string;
   content: string;
   userId: number;
-  date: Date;
+  createdDate: Date;
+  modifiedDate: Date;
+  feedlike: Array<[]>;
+  comments: CommentParams;
 }
 
 export interface Feed {

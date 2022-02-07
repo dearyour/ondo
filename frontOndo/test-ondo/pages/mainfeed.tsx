@@ -1,12 +1,142 @@
 // import firebaseApp from '@config/firebaseApp';
-import React, { useState, useCallback, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import "../styles/feedcss/index.scss";
 // import "../styles/feedcss/index.module.scss";
 // import style from "./style.module.css";
 // import "./mainfeedcss/style.module.scss";
+import axios from "axios";
+import { userActions } from "store/slice/user";
+import { RootState } from "../store/module";
+import Feed from "components/Feed/Feed";
+import { Feed as Feedtype, FeedParams } from "store/interfaces/Feed.interface";
 
 function mainfeed() {
+  // const dispatch = useDispatch();
+  const { nickname } = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
+  const { ondo } = useSelector((state: RootState) => state.user);
+  const { image } = useSelector((state: RootState) => state.user);
+  const { feeds } = useSelector((state: RootState) => state.feed);
+  const { comments } = useSelector((state: RootState) => state.comment);
+  const [userProfileImage, setUserProfileImage] = useState(undefined);
+  useEffect(() => {
+    setUserProfileImage(image);
+  });
+
+  // const [feeds, setFeeds] = useState([]);
+  // const {
+  //   feedId,
+  //   challengeId,
+  //   image,
+  //   content,
+  //   userId,
+  //   createdDate,
+  //   modifiedDate,
+  //   feedlike,
+  // } = useSelector((state: RootState) => state.feed.feeds[0]);
+  // console.log(
+  //   feeds,
+  //   feedId,
+  //   challengeId,
+  //   image,
+  //   content,
+  //   userId,
+  //   createdDate,
+  //   modifiedDate,
+  //   feedlike
+  // );
+
+  //유저 이미지 불러오기 ##########
+  // const __getUserProfileImage = useCallback(() => {
+  //   if (user) {
+  //     const { userid } = user;
+
+  //     let url = "http://i6a601.p.ssafy.io:8080/user/profile";
+  //     axios({
+  //       method: "GET",
+  //       url: url,
+  //       headers: { Authorization: "Bearer " + token },
+  //       data: {
+  //         userid: userid,
+  //       },
+  //     })
+  //       .then((res) => {
+  //         console.log(res);
+  //         return res.data;
+  //         setUserprofileImage(image);
+  //       })
+  //       .catch((err) => {
+  //         return err;
+  //       });
+  //   }
+  // }, [user]);
+  // useEffect(() => {
+  //   __getUserProfileImage();
+  //   return () => {};
+  // }, [__getUserProfileImage]);
+
+  const token = "6YJpB-pLXvA0Ehu3rvFD49e-8R7DX9Ubql6zjgo9c5oAAAF-zaYqcA";
+  // const token = useSelector(() => {
+  //   localStorage.getItem("token");
+  // });
+  // console.log(token);
+
+  const __GetFeedState = (token: string | null) => {
+    return axios({
+      method: "GET",
+      url: "http://i6a601.p.ssafy.io:8080/feed",
+      // url: "https://jsonplaceholder.typicode.com/comments",
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        console.log(res);
+        return res.data;
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+
+  useEffect(() => {
+    __GetFeedState(token);
+  }, [__GetFeedState]);
+
+  // const url = "http://i6a601.p.ssafy.io:8080/feed";
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: "http://i6a601.p.ssafy.io:8080/feed",
+  //     headers: {
+  //       Authorization:
+  //         "Bearer bcigxnrl_AYNRx4Ft2ou3z7xO4VrBB2XySAgdgorDKYAAAF-xC_Mkw",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       console.log(response);
+  //       return response.data;
+  //     })
+  //     .catch((err) => {
+  //       return err;
+  //     });
+  // });
+  // //
+  // const dispatch = useDispatch();
+
+  // const { GetUser } = useUser();
+  // useEffect(() => {
+  //   dispatch(userActions.getToken);
+  // }, [dispatch]);
+
+  // console.log(GetUser);
+
+  // const token = localStorage.getItem("Token");
+
+  // let state = useSelector((state: RootState) => state.feed.feeds[0].content);
+  // console.log(state);
+
+  // state.user.data = token;
+  // console.log(state);
   return (
     <div>
       <div className="mainfeed">
@@ -16,12 +146,18 @@ function mainfeed() {
               className="write-feed"
               // onSubmit={__makeFeed}
             >
-              <div className="profile-image"></div>
+              {image && (
+                <div
+                  className="profile-image"
+                  style={{ backgroundImage: `url(${image})` }}
+                ></div>
+              )}
+              {/* <div className="profile-image"></div> */}
               <div className="inp">
                 <input
                   // ref={contextRef}
                   type="text"
-                  placeholder="오늘 무슨 일이 있었나요?"
+                  placeholder="      오늘의 도전 완료 피드 쓰러가기"
                   // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
@@ -37,153 +173,58 @@ function mainfeed() {
               </div>
             </form>
 
-            <div className="feed">
-              <div className="top">
-                <div className="profile-image"></div>
-                <div className="profile-desc">
-                  <div className="nickname" txt-bold>
-                    yongstar
-                  </div>
-                  <div className="timestamp">8:15 pm, yesterday</div>
-                </div>
-              </div>
-              <div className="contents">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                soluta voluptate aspernatur assumenda tenetur illum doloremque
-                dolorum ipsa, libero explicabo nam earum velit voluptatibus sunt
-                in, illo laborum nostrum aliquid.
-              </div>
-              <div className="bottom">
-                <div className="like">
-                  <div className="asset">
-                    <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                  </div>
-                  <div className="count txt-bold">25k</div>
-                </div>
-                <div className="comment">
-                  <div className="asset">
-                    <img src="/assets/feed/comment.svg" alt="댓글" />
-                  </div>
-                  <div className="count txt-bold">2k</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="feed">
-              <div className="top">
-                <div className="profile-image"></div>
-                <div className="profile-desc">
-                  <div className="nickname txt-bold">yongstar</div>
-                  <div className="timestamp">8:15 pm, yesterday</div>
-                </div>
-              </div>
-              <div className="contents">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                soluta voluptate aspernatur assumenda tenetur illum doloremque
-                dolorum ipsa, libero explicabo nam earum velit voluptatibus sunt
-                in, illo laborum nostrum aliquid.
-                <div className="image"></div>
-              </div>
-              <div className="bottom">
-                <div className="like">
-                  <div className="asset">
-                    <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                  </div>
-                  <div className="count txt-bold">25k</div>
-                </div>
-                <div className="comment">
-                  <div className="asset">
-                    <img src="/assets/feed/comment.svg" alt="댓글" />
-                  </div>
-                  <div className="count txt-bold">2k</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="feed">
-              <div className="top">
-                <div className="profile-image"></div>
-                <div className="profile-desc">
-                  <div className="nickname txt-bold">yongstar</div>
-                  <div className="timestamp">8:15 pm, yesterday</div>
-                </div>
-              </div>
-              <div className="contents">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                soluta voluptate aspernatur assumenda tenetur illum doloremque
-                dolorum ipsa, libero explicabo nam earum velit voluptatibus sunt
-                in, illo laborum nostrum aliquid.
-              </div>
-              <div className="bottom">
-                <div className="like">
-                  <div className="asset">
-                    <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                  </div>
-                  <div className="count txt-bold">25k</div>
-                </div>
-                <div className="comment">
-                  <div className="asset">
-                    <img src="/assets/feed/comment.svg" alt="댓글" />
-                  </div>
-                  <div className="count txt-bold">2k</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="feed">
-              <div className="top">
-                <div className="profile-image"></div>
-                <div className="profile-desc">
-                  <div className="nickname txt-bold">yongstar</div>
-                  <div className="timestamp">8:15 pm, yesterday</div>
-                </div>
-              </div>
-              <div className="contents">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                soluta voluptate aspernatur assumenda tenetur illum doloremque
-                dolorum ipsa, libero explicabo nam earum velit voluptatibus sunt
-                in, illo laborum nostrum aliquid.
-                <div className="image"></div>
-              </div>
-              <div className="bottom">
-                <div className="like">
-                  <div className="asset">
-                    <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                  </div>
-                  <div className="count txt-bold">25k</div>
-                </div>
-                <div className="comment">
-                  <div className="asset">
-                    <img src="/assets/feed/comment.svg" alt="댓글" />
-                  </div>
-                  <div className="count txt-bold">2k</div>
-                </div>
-              </div>
-            </div>
+            {/* <Feed /> */}
+            {feeds.map((item: any, idx: number) => {
+              console.log(item);
+              return (
+                <Feed
+                  key={idx}
+                  feed={item}
+                  nickname={nickname}
+                  image={image}
+                  // comments={comments}
+                />
+              );
+            })}
           </div>
+
           <div className="friend-list">
             <div className="my-profile">
-              <div className="profile-image"></div>
-              <div className="nickname txt-bold">yongstar</div>
+              {image && (
+                <div
+                  className="profile-image"
+                  style={{ backgroundImage: `url(${image})` }}
+                ></div>
+              )}
+              {/* <div className="profile-image"></div> */}
+              <div className="nickname txt-bold">
+                {nickname && user.nickname}
+              </div>
             </div>
             <div className="my-friends">
-              <div className="title txt-bold">나의 친구</div>
+              <div
+                className="
+              name txt-bold"
+              >
+                나의 온도 : {ondo} ˚C
+              </div>
+              <div className="title txt-bold">Ondo 순위</div>
               <ul className="friend-list-wrapper">
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname txt-bold">일주어터</div>
+                  <div className="nickname txt-bold">1. 일주어터</div>
                 </li>
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname txt-bold">카리나</div>
+                  <div className="nickname txt-bold">2. 카리나</div>
                 </li>
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname txt-bold">윈터</div>
+                  <div className="nickname txt-bold">3. 윈터</div>
                 </li>
                 <li className="friend">
                   <div className="profile-image"></div>
-                  <div className="nickname txt-bold">랭커</div>
+                  <div className="nickname txt-bold">4. 혁이</div>
                 </li>
               </ul>
             </div>

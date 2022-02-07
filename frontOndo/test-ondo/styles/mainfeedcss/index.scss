@@ -2,9 +2,10 @@ $yong-white-200: #fafafa;
 $yong-gray200: #454545;
 $yong-gray100: #9d9d9f;
 $yong-gray: #e8e8e8;
+$yong-blue: #5085e8;
 #__next {
   .mainfeed {
-    padding-top: 54px;
+    padding-top: 5px;
     background-color: $yong-white-200;
     min-height: 100vh;
     .wrapper {
@@ -18,17 +19,24 @@ $yong-gray: #e8e8e8;
       .feed-list {
         width: 729px;
         .write-feed {
+          width: 50%;
           display: flex;
           align-items: center;
+          justify-content: flex-end;
+          margin-left: 182px;
           padding: 20px 24px;
-          border: 1px solid $yong-gray;
+          border: 1px solid #edbaba;
+          border-radius: 40px;
 
           .profile-image {
             width: 40px;
             height: 40px;
             border-radius: 40px;
-            background-color: $yong-gray;
+            background-color: #edbaba;
             margin-right: 12px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
           }
           .inp {
             flex: 1;
@@ -38,7 +46,7 @@ $yong-gray: #e8e8e8;
               color: $yong-gray200;
               border: none;
               &::placeholder {
-                color: $yong-gray;
+                color: #edbaba;
               }
             }
           }
@@ -55,7 +63,8 @@ $yong-gray: #e8e8e8;
         }
 
         .feed {
-          border: 1px solid $yong-gray;
+          border: 1px solid #edbaba;
+          border-radius: 40px;
           background-color: white;
           margin-top: 25px;
           padding: 20px 24px;
@@ -69,15 +78,18 @@ $yong-gray: #e8e8e8;
               border-radius: 40px;
               background-color: $yong-gray;
               margin-right: 12px;
+              background-position: center;
+              background-size: cover;
+              background-repeat: no-repeat;
             }
             .profile-desc {
               .nicknaeme {
-                font-size: 14px;
+                font-size: 20px;
                 color: $yong-gray200;
               }
               .timestamp {
-                font-size: 10px;
-                color: $yong-gray200;
+                font-size: 15px;
+                color: $yong-blue;
                 opacity: 0.4;
                 margin-top: 2px;
               }
@@ -85,7 +97,7 @@ $yong-gray: #e8e8e8;
           }
           .contents {
             margin-top: 48px;
-            font-size: 12px;
+            font-size: 14px;
             color: $yong-gray200;
             line-height: 1.8;
             .image {
@@ -129,7 +141,8 @@ $yong-gray: #e8e8e8;
         position: sticky;
         padding: 20px 16px;
         width: 246px;
-        border: 1px solid $yong-gray;
+        border: 1px solid #edbaba;
+        border-radius: 40px;
         background-color: white;
         top: 84px;
         .my-profile {
@@ -141,17 +154,25 @@ $yong-gray: #e8e8e8;
             border-radius: 10px;
             background-color: $yong-gray;
             margin-right: 12px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
           }
           .nickname {
-            font-size: 12px;
+            font-size: 14px;
             color: $yong-gray200;
           }
         }
         .my-friends {
           margin-top: 14px;
           & > .title {
-            font-size: 10px;
-            color: $yong-gray200;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            color: #edbaba;
+            border-top: 3px solid #edbaba;
+            margin-top: 12px;
+            margin-bottom: 10px;
           }
           .friend-list-wrapper {
             margin-top: 14p;
@@ -167,6 +188,9 @@ $yong-gray: #e8e8e8;
                 border-radius: 10px;
                 background-color: $yong-gray;
                 margin-right: 12px;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
               }
               .nickname {
                 font-size: 12px;

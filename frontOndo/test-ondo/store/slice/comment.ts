@@ -1,15 +1,32 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Comment, CommentParams, CommentParamType } from "../interfaces/Comment.interface";
+import {
+  Comment,
+  CommentParams,
+  CommentParamType,
+} from "../interfaces/Comment.interface";
 
 // initialState
 export const initialState: Comment = {
-  comments: [],
+  comments: [
+    {
+      createdDate: new Date(),
+      modifiedDate: new Date(),
+      commentId: 1,
+      content: "댓글 컨텐츠 test",
+    },
+    {
+      createdDate: new Date(),
+      modifiedDate: new Date(),
+      commentId: 2,
+      content: "댓글 컨텐츠 test22",
+    },
+  ],
   isLoading: false,
   error: null,
 };
 
 export const commentSlice = createSlice({
-  name: 'comment',
+  name: "comment",
   initialState,
   reducers: {
     getComment: (state, action: PayloadAction<CommentParamType>) => {
@@ -23,8 +40,8 @@ export const commentSlice = createSlice({
     getCommentFailure: (state, { payload: error }) => {
       state.isLoading = false;
       state.error = error;
-    }
-  }
+    },
+  },
 });
 
 export const comment = commentSlice.name;
