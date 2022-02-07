@@ -16,11 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "userId")
 public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
     @Column(nullable = false)
     private String email;

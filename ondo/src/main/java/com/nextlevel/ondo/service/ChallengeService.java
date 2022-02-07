@@ -1,19 +1,24 @@
 package com.nextlevel.ondo.service;
 
-import com.nextlevel.ondo.domain.Category;
-import com.nextlevel.ondo.domain.Challenge;
-import com.nextlevel.ondo.domain.ChallengeParticipate;
-import com.nextlevel.ondo.domain.User;
+import com.nextlevel.ondo.domain.*;
+import com.nextlevel.ondo.domain.dto.challenge.ChallengeDetailDto;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.repository.ChallengeParticipateRepository;
 import com.nextlevel.ondo.repository.ChallengeRepository;
+import com.nextlevel.ondo.repository.FeedRepository;
 import com.nextlevel.ondo.repository.UserRepository;
 import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +28,72 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final ChallengeParticipateRepository challengeParticipateRepository;
+    private final FeedRepository feedRepository;
     private final KakaoUtil kakaoUtil;
+
+    public ChallengeDetailDto detailChallenge(Long challengeId, String token) {
+        // 1. 챌린지 id로 해당 챌린지 찾기. 챌린지에 참여한 사람은 챌린지에 필드로 존재
+        Challenge challenge = challengeRepository.findByChallengeId(challengeId);
+        // 2. 챌린지 관련 피드들 찾기
+        List<Feed> feeds = feedRepository.findAllByChallengeId(challengeId);
+        // 3. 토큰으로 User 찾기.
+        String accessToken = token.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(accessToken);
+        // 4. user가 해당 챌린지에 참여중인지 검사
+        List<ChallengeParticipate> list = challenge.getChallengeParticipate();
+        boolean amIParticipate = false;
+        for (ChallengeParticipate challengeParticipate : list) {
+            if (user.getEmail().equals(challengeParticipate.getUser().getEmail())) {
+                amIParticipate = true;
+                break;
+            }
+        }
+        // 5. 해당 챌린지가 이미 종료된건지 검사
+        boolean isFinished = isProcessingChallenge(challenge);
+        // 6. DTO에 담아서 리턴
+        return ChallengeDetailDto.builder()
+                .challenge(challenge)
+                .feeds(feeds)
+                .amIParticipate(amIParticipate)
+                .isFinished(isFinished)
+                .build();
+    }
+
+    // 현재 날짜와 비교해 진행되고 있는 챌린지인지 여부 검사
+    public boolean isProcessingChallenge(Challenge challenge) {
+        // 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+        System.out.println(formatedNow + " : 현재 날짜");
+        System.out.println(challenge.getSDate() + " : 챌린지 개설일");
+        // 현재 날짜와 비교
+        try {
+            if (formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 0))
+                    || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 1))
+                    || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 2))) {
+                System.out.println("현재 진행중인 챌린지 입니다.");
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public String AddDate(String strDate, int year, int month, int day) throws Exception {
+        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+        Date dt = dtFormat.parse(strDate);
+        cal.setTime(dt);
+        cal.add(Calendar.YEAR, year);
+        cal.add(Calendar.MONTH, month);
+        cal.add(Calendar.DATE, day);
+        return dtFormat.format(cal.getTime());
+    }
+
 
     public Challenge createChallenge(ChallengeSaveDto challengeSaveDto, String token) {
         // token으로 owner 찾기
@@ -31,6 +101,7 @@ public class ChallengeService {
         User user = kakaoUtil.getUserByEmail(accessToken);
         Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId());
         Challenge challenge = challengeRepository.save(newChallenge);
+        System.out.println("챌린지 생성 완료");
         return challenge;
     }
 

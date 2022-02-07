@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "challengeId")
 public class Challenge extends BaseTimeEntity {
     @Id
     @Column(name = "challenge_id")
@@ -32,7 +31,7 @@ public class Challenge extends BaseTimeEntity {
     private String sDate;
     @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
-    @Column(nullable = false)
+    @Column(nullable = false,name = "owner")
     private Long owner;
     @Enumerated(EnumType.STRING)
     @Column
