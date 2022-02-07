@@ -74,12 +74,13 @@ public class ChallengeService {
             if (formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 0))
                     || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 1))
                     || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 2))) {
-                return true;
+                System.out.println("현재 진행중인 챌린지 입니다.");
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 
     public String AddDate(String strDate, int year, int month, int day) throws Exception {
@@ -100,6 +101,7 @@ public class ChallengeService {
         User user = kakaoUtil.getUserByEmail(accessToken);
         Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId());
         Challenge challenge = challengeRepository.save(newChallenge);
+        System.out.println("챌린지 생성 완료");
         return challenge;
     }
 

@@ -26,7 +26,7 @@ import java.util.List;
 public class ChallengeController {
     private final ChallengeService challengeService;
 
-    @GetMapping("/detail") // 챌린지 상세보기
+    @GetMapping("/detail/{challenge_id}") // 챌린지 상세보기
     public ResponseEntity<ChallengeDetailDto> detailChallenge(@PathVariable("challenge_id") Long challengeId, @RequestHeader("Authorization") String token) {
         return new ResponseEntity<ChallengeDetailDto>(challengeService.detailChallenge(challengeId, token), HttpStatus.OK);
     }
