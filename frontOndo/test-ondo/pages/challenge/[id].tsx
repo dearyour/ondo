@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
@@ -10,6 +10,9 @@ import temp_profile from 'public/images/temp_profile.jpg'
 import 'antd/dist/antd.css';
 
 const readChallenge = () => {
+  useEffect(() => {
+
+  })
   const title = '하루 30분 조깅하기';
   const startDate = new Date(2022, 0, 31);
   const getDuration = () => {
@@ -32,7 +35,7 @@ const readChallenge = () => {
     const result = [];
     for(let i = 0; i < feedsPosted.length; i++) {
       result.push(
-        <Col xs={8} md={8}>
+        <Col xs={8} md={8} key={i}>
           <FeedImg src={feedsPosted[i]}></FeedImg>
         </Col>
       );

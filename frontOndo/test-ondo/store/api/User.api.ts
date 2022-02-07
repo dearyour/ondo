@@ -6,7 +6,9 @@ const ProfileEditurl = process.env.BACK_EC2 + '/user/modify/'
 const GetUserurl = process.env.BACK_EC2 + '/user/info'
 
 
-export const test = process.env.KAKAO_LOGIN
+export const test = process.env.KAKAO_LOGIN? process.env.KAKAO_LOGIN:'';
+  
+
 //response_type=code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}'
 // 카카오 로그인
 export const KakaoLogin = (code: string | null) => {
