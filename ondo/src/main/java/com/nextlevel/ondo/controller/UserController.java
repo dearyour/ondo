@@ -151,14 +151,6 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
-    //회원 정보
-    <<<<<<<HEAD
-    // @GetMapping("/user/rank")
-    // public ResponseEntity<List<User>> rankUser() {
-    // return new ResponseEntity<List<User>>(UserService.rankUser(), HttpStatus.OK);
-    // }
-    =======
-
     // 회원 정보
     @GetMapping("/user/info")
     public ResponseEntity<User> infoUser(@RequestHeader("Authorization") String accessToken) {
@@ -173,10 +165,4 @@ public class UserController {
         List<User> ranker = userService.rankUser();
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
-
-<<<<<<< HEAD
-
-=======
-    >>>>>>>back
->>>>>>> 552974b8535a83fb0097f2f1a1d51fe6bfda31ec
 }
