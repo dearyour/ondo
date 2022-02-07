@@ -4,7 +4,7 @@ import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 
 const SearchContainer = styled.div`
     position: relative;
-    width: 360px;
+    width: 100%;
     height: 48px;
     background: #f2f2f2;
     border-radius: 0;

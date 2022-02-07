@@ -59,14 +59,49 @@
   }
 }
 
-.justify-content-center{
+.justify_content_center{
   justify-content: center;
 }
 
-.d-flex {
+.justify_content_end{
+  justify-content: end;
+}
+
+.d_flex {
   display: flex;
 }
 
-.d-grid {
+.d_flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+.d_grid {
   display: grid;
+}
+
+.d_none {
+  display: none;
+}
+
+.w_60 {
+  width: 80%;
+}
+
+.border_right {
+  border-right: 1px solid #EDBABA;
+}
+
+.mx_auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mx_20 {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.mt_30 {
+  margin-top: 30px;;
 }

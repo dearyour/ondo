@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import useUser from "../../../store/hooks/userHooks"
 import { Spin, Space } from 'antd';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import styles from '../../../css/index.module.css'
 
 const Auth2 = () => {
-  const { data } = useUser();
-  const {kakaoLogin, count} = useUser()
+  const {kakaoLogin} = useUser()
   useEffect(() => {
     kakaoLogin();
   }, [])
