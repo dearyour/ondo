@@ -3,8 +3,16 @@ package com.nextlevel.ondo.service;
 import com.nextlevel.ondo.domain.*;
 import com.nextlevel.ondo.domain.dto.comment.DetailCommentDto;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.feed.MainFeedDto;
 import com.nextlevel.ondo.domain.dto.feed.ModifyFeedDto;
 import com.nextlevel.ondo.repository.*;
+import com.nextlevel.ondo.domain.dto.user.RankUserDto;
+import com.nextlevel.ondo.repository.CommentRepository;
+import com.nextlevel.ondo.repository.FeedLikeRepository;
+import com.nextlevel.ondo.repository.FeedRepository;
+import com.nextlevel.ondo.repository.FeedTagRepository;
+import com.nextlevel.ondo.repository.TagRepository;
+import com.nextlevel.ondo.repository.UserRepository;
 import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,13 +35,13 @@ public class FeedService {
     private final TagRepository tagRepository;
 
     @Transactional(readOnly = true)
-    public List<DetailFeedDto> listFeed(String token) {
+    public List<MainFeedDto> listFeed(String token) {
         //토큰 유저 (로그인 한 유저)
         String accessToken = token.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(accessToken);
 
         List<Feed> list = feedRepository.findAll();
-        List<DetailFeedDto> detailFeedDtos = new ArrayList<>();
+        List<MainFeedDto> mainFeedDtos = new ArrayList<>();
 
         for(Feed f : list){
 
@@ -59,10 +67,16 @@ public class FeedService {
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
             if(f.getFeedlike().contains(tokenuser)) flag = true;
 
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
-            detailFeedDtos.add(detailFeedDto);
+            List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
+            List<RankUserDto> rankUserDtos = new ArrayList<>();
+            for(User u : ulist){
+                rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage()));
+            }
+
+            MainFeedDto mainFeedDto = new MainFeedDto(user,f,detailCommentDtos,flag,rankUserDtos);
+            mainFeedDtos.add(mainFeedDto);
         }
-        return detailFeedDtos;
+        return mainFeedDtos;
     }
 
     @Transactional(readOnly = true)
