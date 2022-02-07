@@ -31,6 +31,10 @@ public class Feed extends BaseTimeEntity {
     private String content;
     @Column(nullable = false, name = "user_id") // 경로는 추후 설정
     private long userId;
+    @Column
+    private String fileOriName;
+    @Column
+    private String fileUrl;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
@@ -39,6 +43,10 @@ public class Feed extends BaseTimeEntity {
     @JsonManagedReference
     @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<Comment> comment = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
+    private List<FeedTag> feedTag = new ArrayList<>();
 
     @Builder
     public Feed(long challengeId, String image, String content, long userId) {

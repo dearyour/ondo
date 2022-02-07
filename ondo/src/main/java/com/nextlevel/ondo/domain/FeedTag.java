@@ -1,5 +1,6 @@
 package com.nextlevel.ondo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,11 @@ public class FeedTag {
 
     @ManyToOne
     @JoinColumn(name = "feed_id")
+    @JsonBackReference
     private Feed feed;
     @ManyToOne
     @JoinColumn(name = "tag_id")
+    @JsonBackReference
     private Tag tag;
 
 

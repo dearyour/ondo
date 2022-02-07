@@ -1,12 +1,12 @@
 import axios from "axios";
 
 
-const Loginurl = 'http://i6a601.p.ssafy.io:8080/auth/kakao/callback'
-const ProfileEditurl = 'http://i6a601.p.ssafy.io:8080/user/modify/'
-const GetUserurl = 'http://i6a601.p.ssafy.io:8080/user/info'
+const Loginurl = 'http://localhost:8080/auth/kakao/callback'
+const ProfileEditurl = process.env.BACK_EC2 + '/user/modify/'
+const GetUserurl = process.env.BACK_EC2 + '/user/info'
 
 
-export const test = 'https://kauth.kakao.com/oauth/authorize?client_id=44dad20dedd901c8ca6eb5d6fde58baa&redirect_uri=http://localhost:3000/auth/kakao/callback&response_type=code'
+export const test = process.env.KAKAO_LOGIN
 //response_type=code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}'
 // 카카오 로그인
 export const KakaoLogin = (code: string | null) => {

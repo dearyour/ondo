@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import 'antd/dist/antd.css';
 import { Col, Row, Space } from "antd";
+import Router from 'next/router'
 
 const ChallengeByCategory = (props:any) => {
   const challenges = [...props.categorized];
@@ -40,7 +41,7 @@ const ChallengeByCategory = (props:any) => {
   return (
     <Row>
       <Col span={22} offset={1}>
-        <WriteBtnWrapper><WriteBtn>도전 개설하기</WriteBtn></WriteBtnWrapper>
+        <WriteBtnWrapper><WriteBtn onClick={()=> {Router.push('/challenge/write')}}>도전 개설하기</WriteBtn></WriteBtnWrapper>
         {renderCategorizedChallenges()}
       </Col>
     </Row>

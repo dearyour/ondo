@@ -31,7 +31,7 @@ function* getKakaoKey() {
     Router.push("/");
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
-    Router.push("/");
+    // Router.push("/");
   }
 }
 

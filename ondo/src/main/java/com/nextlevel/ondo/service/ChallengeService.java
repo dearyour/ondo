@@ -12,6 +12,7 @@ import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,7 +96,8 @@ public class ChallengeService {
     }
 
 
-    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto, String token) {
+    public Challenge createChallenge(MultipartFile image, ChallengeSaveDto challengeSaveDto, String token) {
+        System.out.println(image);
         // token으로 owner 찾기
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
