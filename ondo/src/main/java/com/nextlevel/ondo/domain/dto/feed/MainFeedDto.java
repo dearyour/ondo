@@ -12,12 +12,18 @@ import java.util.List;
 @Getter
 public class MainFeedDto {
 
-    private List<DetailFeedDto> detailFeedDtos;
+    private User user;
+    private Feed feed;
+    private List<DetailCommentDto> comments;
+    private Boolean likeflag;
     private List<RankUserDto> rankusers;
 
     @Builder
-    public MainFeedDto(List<DetailFeedDto> detailFeedDtos,List<RankUserDto> rankusers) {
-        this.detailFeedDtos = detailFeedDtos;
+    public MainFeedDto(User user, Feed feed, List<DetailCommentDto> comments, Boolean likeflag, List<RankUserDto> rankusers) {
+        this.user = user;
+        this.feed = feed;
+        this.comments = comments;
+        this.likeflag = likeflag;
         this.rankusers = rankusers;
     }
 

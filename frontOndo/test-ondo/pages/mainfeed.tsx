@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import "./mainfeedcss/style.module.scss";
 import axios from "axios";
 import { userActions } from "store/slice/user";
-import { RootState } from "../../store/module";
+import { RootState } from "../store/module";
 import Feed from "components/Feed/Feed";
 import { Feed as Feedtype, FeedParams } from "store/interfaces/Feed.interface";
 

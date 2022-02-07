@@ -4,7 +4,6 @@ import com.nextlevel.ondo.config.auth.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -51,8 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     // 시큐리티가 대신 로그인해주는데 password를 가로채기를 하는데
     // 해당 password가 뭘로 해쉬가 되어 회원가입이 되었는지 알아야
     // 같은 해쉬로 암호화해서 DB에 있는 해쉬랑 비교할 수 있음.
-
-
+    /*
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(principalDetailService).passwordEncoder(encodePWD());
+    }
+    */
     /*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -80,7 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and().addFilter(new TokenFilter(authenticationManager()))
 
                 .authorizeRequests()
-                .mvcMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers("/auth/**", "/user/rank","/challenge","/challenge/info/**","/feed","/search/**")
                 .permitAll()
                 .anyRequest()
