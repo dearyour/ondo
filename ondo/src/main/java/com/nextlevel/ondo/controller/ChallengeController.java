@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class ChallengeController {
         return new ResponseEntity<ChallengeDetailDto>(challengeService.detailChallenge(challengeId, token), HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<Challenge> createChallenge(@RequestBody ChallengeSaveDto challengeSaveDto, @RequestHeader("Authorization") String token) {
-        return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto, token), HttpStatus.OK);
+    public ResponseEntity<Challenge> createChallenge(@RequestPart MultipartFile image, @RequestBody ChallengeSaveDto challengeSaveDto, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<Challenge>(challengeService.createChallenge(image,challengeSaveDto, token), HttpStatus.OK);
     }
 
     @GetMapping("/info/{challenge_id}") // 도전 상세보기

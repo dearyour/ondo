@@ -23,7 +23,7 @@ public class FeedTag {
     @JsonBackReference
     private Feed feed;
     @ManyToOne
-    @JoinColumn(name = "name")
+    @JoinColumn(name = "tag_id")
     @JsonBackReference
     private Tag tag;
 
