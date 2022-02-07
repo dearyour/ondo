@@ -10,6 +10,7 @@ import { userActions } from "store/slice/user";
 import { RootState } from "../../store/module";
 import Feed from "components/Feed/Feed";
 import { Feed as Feedtype, FeedParams } from "store/interfaces/Feed.interface";
+import Router from 'next/router';
 
 function mainfeed() {
   // const dispatch = useDispatch();
@@ -75,8 +76,9 @@ function mainfeed() {
   //   __getUserProfileImage();
   //   return () => {};
   // }, [__getUserProfileImage]);
-
-  const token = "6YJpB-pLXvA0Ehu3rvFD49e-8R7DX9Ubql6zjgo9c5oAAAF-zaYqcA";
+  
+  // const token = localStorage.getItem("Token");
+  
   // const token = useSelector(() => {
   //   localStorage.getItem("token");
   // });
@@ -85,7 +87,7 @@ function mainfeed() {
   const __GetFeedState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://i6a601.p.ssafy.io:8080/feed",
+      url: "http://localhost:8080/feed",
       // url: "https://jsonplaceholder.typicode.com/comments",
       headers: { Authorization: "Bearer " + token },
     })
@@ -99,6 +101,7 @@ function mainfeed() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem('Token')
     __GetFeedState(token);
   }, [__GetFeedState]);
 
@@ -155,6 +158,8 @@ function mainfeed() {
               {/* <div className="profile-image"></div> */}
               <div className="inp">
                 <input
+                disabled
+                onClick={()=> {Router.push('/feed/write')}}
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
