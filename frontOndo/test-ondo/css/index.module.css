@@ -105,3 +105,9 @@
 .mt_30 {
   margin-top: 30px;;
 }
+
+.transform {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}

@@ -3,14 +3,13 @@ import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import { Modal, Button, Col, Row } from 'antd';
 import styled from 'styled-components';
-import Router from 'next/router'
 
 
-const Challengebox = ({challenge}: any) => {
+const Feedbox = ({feed}: any) => {
   
   return (
     <Title span={6}>
-        <Content src={challenge.image} onClick={()=>{Router.push('/challenge/1')}}></Content>
+        <Content src={feed.image}></Content>
     </Title>
 
   )
@@ -31,4 +30,4 @@ const Content = styled.img`
 `
 
 
-export default Challengebox;
+export default Feedbox;

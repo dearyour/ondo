@@ -156,10 +156,10 @@ function mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div className="inp">
+              <div className="inp" onClick={()=>{Router.push('/feed/write')}} >
                 <input
                 disabled
-                onClick={()=> {Router.push('/feed/write')}}
+                
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
