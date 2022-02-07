@@ -56,23 +56,28 @@ export default class StartDatePicker extends Component {
     focused: false,
     date: moment()
   };
+  
   render() {
     return (
-      <Space direction="horizontal">
-      <StyledDatePickerWrapper>
-        <SingleDatePicker
-          numberOfMonths={1}
-          onDateChange={(date:Date) => this.setState({ date })}
-          onFocusChange={({ focused }:any) => this.setState({ focused })}
-          focused={this.state.focused}
-          date={this.state.date}
-        />
-      </StyledDatePickerWrapper> 
-        <Tooltip title='시작일 포함 3일동안 도전합니다.'>
-          {/* <Button shape="circle" icon={<InfoCircleOutlined />} size="large" /> */}
-          <InfoCircleTwoTone twoToneColor='#edbaba' />
-        </Tooltip>
-        </Space>
+     
+        <Space direction="horizontal">
+        <StyledDatePickerWrapper>
+          <label htmlFor="start-date" style={{verticalAlign: 'center'}}>시작일</label>
+          <SingleDatePicker
+            numberOfMonths={1}
+            onDateChange={(date:moment.Moment|null) => this.setState({ date })}
+            onFocusChange={({ focused }:any) => this.setState({ focused })}
+            focused={this.state.focused}
+            date={this.state.date}
+            id='start-date'
+          />
+        </StyledDatePickerWrapper> 
+          <Tooltip title='시작일 포함 3일동안 도전합니다.'>
+            {/* <Button shape="circle" icon={<InfoCircleOutlined />} size="large" /> */}
+            <InfoCircleTwoTone twoToneColor='#edbaba' />
+          </Tooltip>
+          </Space>
+   
     );
   }
 }

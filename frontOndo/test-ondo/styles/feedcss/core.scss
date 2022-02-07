@@ -1,0 +1,50 @@
+$yong-white-200: #fafafa;
+$yong-gray: #e8e8e8;
+$yong-gray100: #9d9d9f;
+$yong-gray200: #454545;
+$yong-main: #373f50;
+$yong-blue: #5085e8;
+$yong-black: #262626;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+html,
+body,
+#__next {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh !important;
+}
+
+li,
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.txt-bold {
+  font-weight: 700;
+}
+
+input,
+textarea {
+  &:focus {
+    outline: none;
+  }
+}

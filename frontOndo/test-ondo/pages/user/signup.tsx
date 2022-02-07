@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { Button, Form, Input } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
-import Pagebar from '../../components/nowpagebar';
+import Pagebar from '../../components/NowTitleBar';
 
 
 const TermsBox = styled.div`

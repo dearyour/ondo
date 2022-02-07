@@ -24,7 +24,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -165,8 +169,4 @@ public class UserController {
         List<User> ranker = userService.rankUser();
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
-
-
-
-
 }

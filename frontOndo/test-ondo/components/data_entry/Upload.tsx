@@ -67,33 +67,34 @@ class UploadAvatar extends Component {
       </div>
     );
     return (
-      <Space direction='vertical'>
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
-      >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-      </Upload>
-      <Button>썸네일</Button>
+      <Space direction='horizontal'>
+        <label htmlFor='thumbnail'>대표 사진</label>
+        <Upload
+          name="thumbnail"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          beforeUpload={beforeUpload}
+          onChange={this.handleChange}
+        >
+          {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+      {/* <Button>썸네일</Button> */}
       </Space>
     );
   }
 }
 
-const Button = styled.div`
-  background: #edbaba;
-  border-radius: 3px;
-  border: 2px solid #edbaba;
-  color: white;
-  text-align: center;
-  margin: 0 1em;
-  padding: 0.25em 1em;
-  width: 120px;
-`
+// const Button = styled.div`
+//   background: #edbaba;
+//   border-radius: 3px;
+//   border: 2px solid #edbaba;
+//   color: white;
+//   text-align: center;
+//   margin: 0 1em;
+//   padding: 0.25em 1em;
+//   width: 120px;
+// `
 
 export default UploadAvatar;
