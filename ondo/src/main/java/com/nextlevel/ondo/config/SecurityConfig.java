@@ -16,9 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.nextlevel.ondo.config.auth.PrincipalDetailService;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -73,12 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().cors().configurationSource(corsConfigurationSource()).and().csrf().disable().sessionManagement()
-
+        http.httpBasic().disable().csrf().disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
-
                 .and().addFilter(new TokenFilter(authenticationManager()))
-
                 .authorizeRequests()
                 .mvcMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .antMatchers("/auth/**", "/user/rank","/challenge","/challenge/info/**","/feed","/search/**")
@@ -88,20 +82,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .cors();
 
-    }
-
-    // CORS 허용 적용
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 }
