@@ -7,13 +7,17 @@ import Mainfeed from "../components/Feed/mainfeed";
 import Detailfeed from "../components/Feed/detailfeed";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/module";
-import Login from "./user/login";
 
 const Home: NextPage = () => {
   const isDetailOpen = useSelector(
     (state: RootState) => state.layout.isDetailOpen
   );
-  return <Login />;
+  return (
+    <AppLayout title="index page">
+      <Mainfeed />
+      {isDetailOpen && <Detailfeed />}
+    </AppLayout>
+  );
 };
 
 export default Home;
