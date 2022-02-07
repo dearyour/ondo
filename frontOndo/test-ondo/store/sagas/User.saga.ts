@@ -13,9 +13,10 @@ import { User } from "../interfaces/User.interface";
 import { userActions } from "../slice/user";
 import { KakaoLogin, ProfileEdit, GetUserState } from "../api/User.api";
 import { stringify } from "querystring";
+
+// import { useRouter } from "next/router";
+// import router from "react-router-redux";
 import Router from "next/router";
-
-
 
 function* getKakaoKey() {
   interface tokentype extends AxiosResponse {
@@ -27,10 +28,10 @@ function* getKakaoKey() {
     console.log(response.token);
     console.log(code);
     yield put(userActions.getKakaoKeySuccess(response.token));
-    Router.push('/')
+    Router.push("/");
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
-    Router.push('/')
+    Router.push("/");
   }
 }
 
