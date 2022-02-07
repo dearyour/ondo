@@ -8,14 +8,9 @@ import "../styles/mainfeedcss/index.scss";
 // import "./maindetailcss/style.module.scss";
 // import "../styles/feedcss/index.module.scss";
 // import style from "./style.module.css";
-import AppLayout from "../components/layout/AppLayout";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <AppLayout>
-      <Component {...pageProps} />
-    </AppLayout>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default wrapper.withRedux(MyApp);
