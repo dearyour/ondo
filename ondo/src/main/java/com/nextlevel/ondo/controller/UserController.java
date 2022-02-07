@@ -151,12 +151,12 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
-    <<<<<<<HEAD
+
     // @GetMapping("/user/rank")
     // public ResponseEntity<List<User>> rankUser() {
     // return new ResponseEntity<List<User>>(UserService.rankUser(), HttpStatus.OK);
     // }
-    =======
+
 
     // 회원 정보
     @GetMapping("/user/info")
@@ -173,5 +173,5 @@ public class UserController {
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
     }
 
-    >>>>>>>back
+
 }

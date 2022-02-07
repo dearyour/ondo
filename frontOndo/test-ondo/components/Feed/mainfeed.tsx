@@ -76,7 +76,8 @@ function mainfeed() {
   //   return () => {};
   // }, [__getUserProfileImage]);
 
-  const token = "6YJpB-pLXvA0Ehu3rvFD49e-8R7DX9Ubql6zjgo9c5oAAAF-zaYqcA";
+  const token = localStorage.getItem("Token");
+  console.log(token + "###############3");
   // const token = useSelector(() => {
   //   localStorage.getItem("token");
   // });
@@ -85,7 +86,8 @@ function mainfeed() {
   const __GetFeedState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://i6a601.p.ssafy.io:8080/feed",
+      // url: "http://i6a601.p.ssafy.io:8080/feed",
+      url: "http://localhost:8080/feed",
       // url: "https://jsonplaceholder.typicode.com/comments",
       headers: { Authorization: "Bearer " + token },
     })
