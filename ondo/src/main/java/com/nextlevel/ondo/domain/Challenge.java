@@ -33,6 +33,12 @@ public class Challenge extends BaseTimeEntity {
     private String image;
     @Column(nullable = false,name = "owner")
     private Long owner;
+    @Column
+    private String fileOriName;
+    @Column
+    private String fileUrl;
+
+
     @Enumerated(EnumType.STRING)
     @Column
     private Category category;
