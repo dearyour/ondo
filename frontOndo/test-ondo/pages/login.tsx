@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { Button, Form, Input } from 'antd';
 import { test } from '../store/api/User.api';
+import axios from 'axios';
 
 
 const LoginInput = styled(Input)`
@@ -65,7 +66,20 @@ const Login = () => {
           <LoginLabel htmlFor="user-password">비밀번호</LoginLabel>
           <LoginInput name="user-password"  type="password" required />
         </LoginDiv>
-        <LoginButton>로그인</LoginButton>
+        <LoginButton onClick={()=> {
+          const token = localStorage.getItem('Token');
+          axios({
+            method: 'get',
+            url: 'http://localhost:8080/user/info',
+            headers: { Authorization: "Bearer " + token },
+          })
+          .then((res)=> {
+            console.log(res)
+          })
+          .catch((err)=> {
+            console.log(err)
+          })
+        }}>로그인</LoginButton>
         <div>
           <Link href=""><a>비밀번호 찾기 </a></Link>
           |

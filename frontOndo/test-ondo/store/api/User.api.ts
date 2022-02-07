@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const Loginurl = process.env.BACK_EC2 + '/auth/kakao/callback'
+const Loginurl = 'http://localhost:8080/auth/kakao/callback'
 const ProfileEditurl = process.env.BACK_EC2 + '/user/modify/'
 const GetUserurl = process.env.BACK_EC2 + '/user/info'
 
