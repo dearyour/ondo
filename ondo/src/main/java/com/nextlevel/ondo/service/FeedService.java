@@ -3,6 +3,7 @@ package com.nextlevel.ondo.service;
 import com.nextlevel.ondo.domain.*;
 import com.nextlevel.ondo.domain.dto.comment.DetailCommentDto;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.feed.FeedSaveDto;
 import com.nextlevel.ondo.domain.dto.feed.MainFeedDto;
 import com.nextlevel.ondo.domain.dto.feed.ModifyFeedDto;
 import com.nextlevel.ondo.repository.*;
@@ -17,6 +18,7 @@ import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class FeedService {
         List<Feed> list = feedRepository.findAll();
         List<DetailFeedDto> detailFeedDtos = new ArrayList<>();
 
-        for(Feed f : list){
+        for (Feed f : list) {
 
             //피드 작성 유저
             User user = userRepository.findByUserId(f.getUserId());
@@ -54,31 +56,31 @@ public class FeedService {
             //을 Dto에 담기(불리안 더 담아서)
             List<DetailCommentDto> detailCommentDtos = new ArrayList<>();
 
-            for(Comment c : comments){
-                if(c.getUser().getUserId() == tokenuser.getUserId()){
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true);
+            for (Comment c : comments) {
+                if (c.getUser().getUserId() == tokenuser.getUserId()) {
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c, true);
                     detailCommentDtos.add(detailCommentDto);
                 } else {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c, false);
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
             Boolean flag = false;
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
-            if(f.getFeedlike().contains(tokenuser)) flag = true;
+            if (f.getFeedlike().contains(tokenuser)) flag = true;
 
 
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag);
             detailFeedDtos.add(detailFeedDto);
         }
 
         List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
         List<RankUserDto> rankUserDtos = new ArrayList<>();
-        for(User u : ulist){
-            rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage()));
+        for (User u : ulist) {
+            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage()));
         }
 
-        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos,rankUserDtos);
+        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos, rankUserDtos);
 
         return mainFeedDto;
     }
@@ -91,8 +93,8 @@ public class FeedService {
         // 1. 태그 테이블에서 태그명으로 태그 id 찾기.
         tagIdList = tagRepository.findByNameContaining(keyword);
         List<Feed> temp = new ArrayList<>();
-        for(Tag t : tagIdList){
-            for (FeedTag ft: t.getFeedTag()){
+        for (Tag t : tagIdList) {
+            for (FeedTag ft : t.getFeedTag()) {
                 temp.add(ft.getFeed());
             }
         }
@@ -182,5 +184,14 @@ public class FeedService {
         DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag);
 
         return detailFeedDto;
+    }
+
+    public Feed createFeed(String image, FeedSaveDto feedSaveDto, String token) {
+        String accessToken = token.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(accessToken);
+        Feed newFeed = feedSaveDto.toEntity(user.getUserId(), image);
+        Feed feed = feedRepository.save(newFeed);
+        System.out.println("피드 생성 완료");
+        return feed;
     }
 }
