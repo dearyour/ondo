@@ -5,9 +5,9 @@ import { userActions } from '../slice/user';
 
 export default function useUser() {
     const dispatch = useDispatch();
-    const data = useSelector((state:RootState) => state.user.data);
-    const nickname = useSelector((state:RootState) => state.user.nickname);
-    const editednickname = useSelector((state:RootState) => state.user.editednickname);
+    const data = useSelector((state: RootState) => state.user.data);
+    const nickname = useSelector((state: RootState) => state.user.nickname);
+    const editednickname = useSelector((state: RootState) => state.user.editednickname);
     const kakaoLogin = useCallback(() => {
         dispatch(userActions.getKakaoKey());
     }, [dispatch]);
@@ -16,7 +16,7 @@ export default function useUser() {
         dispatch(userActions.profileEdit());
     }, [editednickname])
     const GetUser = useCallback(() => {
-        dispatch(userActions.getUser)
+        dispatch(userActions.getUser())
     }, [dispatch])
 
 

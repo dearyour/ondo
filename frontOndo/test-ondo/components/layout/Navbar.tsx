@@ -95,7 +95,7 @@ const XsLogo = styled(Col)`
 `;
 
 const NavWrapper = styled.div`
-  padding: 1rem 10rem;
+  padding: 1rem;
   @media (max-width: 768px) {
     padding: 1rem;
   }

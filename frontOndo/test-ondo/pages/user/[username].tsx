@@ -5,10 +5,13 @@ import styled from 'styled-components';
 import Challengebox from 'components/user/mypageChallenge';
 import Feedbox from 'components/user/mypageFeed';
 import { Tabs, Row } from 'antd';
+import { useRouter } from 'next/router'
 
 const { TabPane } = Tabs;
 
 const Userfeed = () => {
+  const router = useRouter()
+  const { username } = router.query
   const people = {
     image: 'https://picsum.photos/2500',
     nickname: 'asdasd',
@@ -20,15 +23,19 @@ const Userfeed = () => {
     image: 'https://picsum.photos/2500',
   }
   const nowUser = {
-    nickname: 'asdasd',
+    nickname: 'asd',
     image: '',
     ondo: 22,
     challenges: [Challenge, Challenge],
     endChallenges: [Challenge, Challenge, Challenge, Challenge],
     myChallenges: [Challenge, Challenge, Challenge],
     feeds: [Feed, Feed, Feed, Feed, Feed],
-    follow: [people,],
-    following: [1, 2, 3, 4],
+    follow: [people, people, people, people,],
+    following: [],
+  }
+  if (username) {
+    nowUser.nickname = String(username)
+
   }
   return (
     <AppLayout>
