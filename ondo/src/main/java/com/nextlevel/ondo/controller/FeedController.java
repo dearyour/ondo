@@ -59,7 +59,7 @@ public class FeedController {
     ) throws IOException {
         System.out.println("FeedController 요청 성공.");
         String image = s3Uploader.upload(multipartFile, "static", "feed");
-        return new ResponseEntity<Feed>(feedService.createFeed(image, null, token), HttpStatus.OK);
+        return new ResponseEntity<Feed>(feedService.createFeed(image, feedSaveDto, token), HttpStatus.OK);
     }
 
 }
