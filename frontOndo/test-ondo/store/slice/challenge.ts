@@ -27,6 +27,9 @@ export const initialState: Challenge | any = {
       category: "댄스",
     },
   ],
+  hotChallenges: [
+
+  ],
   isLoading: false,
   error: null,
 };
