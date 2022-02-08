@@ -59,9 +59,10 @@ function* getUserState() {
   try {
     const token = localStorage.getItem("Token");
     if (token) {
+      console.log("유저시작전");
       const userdata: AxiosResponse = yield call(GetUserState, token);
       console.log(userdata);
-      yield put(userActions.setEmail(userdata));
+      // yield put(userActions.setEmail(userdata));
       yield put(userActions.setnickname(userdata));
       // yield put(userActions.getToken);
     }

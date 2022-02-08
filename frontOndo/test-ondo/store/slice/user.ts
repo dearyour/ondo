@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserParams } from "../interfaces/User.interface";
 
-const initialState: UserParams = {
+const initialState: UserParams | any = {
+  users: [],
   nickname: "카리나",
   email: "base@base.com",
   data: "",
@@ -17,11 +18,11 @@ export const userSlice = createSlice({
     profileEdit: (state) => {},
     getUser: (state) => {},
     setnickname: (state, { payload }) => {
-      state.nickname = payload;
+      state.users = payload;
     },
-    setEmail: (state, { payload }) => {
-      state.email = payload;
-    },
+    // setEmail: (state, { payload }) => {
+    //   state.users = payload;
+    // },
     getKakaoKey: (state) => {},
     getKakaoKeySuccess: (state, { payload }) => {
       state.data = payload;

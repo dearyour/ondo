@@ -10,9 +10,6 @@ import { RootState } from "../store/module";
 import Login from "./user/login";
 
 const Home: NextPage = () => {
-  const isDetailOpen = useSelector(
-    (state: RootState) => state.layout.isDetailOpen
-  );
   return <Login />;
 };
 
