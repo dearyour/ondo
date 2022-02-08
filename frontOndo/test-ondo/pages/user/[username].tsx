@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 const Userfeed = () => {
   const people = {
     image: 'https://picsum.photos/2500',
-    nick: 'asdasd',
+    nickname: 'asdasd',
   }
   const Challenge = {
     image: 'https://picsum.photos/2500',
@@ -37,36 +37,36 @@ const Userfeed = () => {
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
         <TabPane tab="Feed" key="1">
           <Row>
-          {nowUser.feeds.map((feed) => {
-            return (
-              <Feedbox feed={feed} key={nowUser.ondo++}></Feedbox>
+            {nowUser.feeds.map((feed) => {
+              return (
+                <Feedbox feed={feed} key={nowUser.ondo++}></Feedbox>
               )
             })}
           </Row>
         </TabPane>
         <TabPane tab="도전" key="2">
-        <ChallengeDiv>도전 중</ChallengeDiv>
-        <Row>
-          {nowUser.challenges.map((challenge) => {
-            return (
-              <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+          <ChallengeDiv>도전 중</ChallengeDiv>
+          <Row>
+            {nowUser.challenges.map((challenge) => {
+              return (
+                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
               )
             })}
           </Row>
-        <ChallengeDiv>도전 완료</ChallengeDiv>
-        <Row>
-          {nowUser.endChallenges.map((challenge) => {
-            return (
-              <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+          <ChallengeDiv>도전 완료</ChallengeDiv>
+          <Row>
+            {nowUser.endChallenges.map((challenge) => {
+              return (
+                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
               )
             })}
           </Row>
 
-        <ChallengeDiv>내가 만든 도전</ChallengeDiv>
-        <Row>
-          {nowUser.myChallenges.map((challenge) => {
-            return (
-              <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+          <ChallengeDiv>내가 만든 도전</ChallengeDiv>
+          <Row>
+            {nowUser.myChallenges.map((challenge) => {
+              return (
+                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
               )
             })}
           </Row>
