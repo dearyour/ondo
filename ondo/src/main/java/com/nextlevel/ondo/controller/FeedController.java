@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/feed")
 public class FeedController {
@@ -51,21 +51,13 @@ public class FeedController {
     }
 
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = {"multipart/form-data"})
     public ResponseEntity<Feed> createChallenge(
-            @RequestParam(name = "file",required = false) MultipartFile multipartFile
-//            , @RequestPart(value = "data",required = false) FeedSaveDto feedSaveDto
-            ,@RequestParam String content
-            ,@RequestParam String tags
-            ,@RequestParam String challengeId
-            , @RequestHeader("Authorization") String token) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile
+            , @RequestPart(value = "data") FeedSaveDto feedSaveDto
+            , @RequestHeader("Authorization") String token
+    ) throws IOException {
         System.out.println("FeedController 요청 성공.");
-        System.out.println(content);
-        System.out.println(tags);
-        System.out.println(challengeId);
-        System.out.println(multipartFile);
-//        System.out.println(feedSaveDto);
-//        FeedSaveDto feedSaveDto = FeedSaveDto.builder().build();
         String image = s3Uploader.upload(multipartFile, "static", "feed");
         return new ResponseEntity<Feed>(feedService.createFeed(image, null, token), HttpStatus.OK);
     }

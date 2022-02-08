@@ -15,7 +15,7 @@ import java.io.IOException;
 public class TestController {
     private final S3Uploader s3Uploader;
     @PostMapping("/images")
-    public String upload(@RequestParam("images") MultipartFile multipartFile
+    public String upload(@RequestParam(value = "images") MultipartFile multipartFile
     ,@RequestParam String content
     ,@RequestParam String[] tags
     ,@RequestParam Long challengeId) throws IOException {
