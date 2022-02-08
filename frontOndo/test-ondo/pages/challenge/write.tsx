@@ -1,16 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import styled, {css} from 'styled-components';
 import { Button, Form, Input, Space, Row, Col } from 'antd';
+import Image from 'next/image';
 import AppLayout from '../../components/layout/AppLayout';
 import UploadAvatar from '../../components/data_entry/Upload';
-import ChallengeSelector from '../../components/data_entry/ChallengeSelector';
+import CategorySelector from '../../components/data_entry/CategorySelector';
 import StartDatePicker from 'components/data_entry/StartDatePicker';
+import FightingDogye from 'public/images/dogye/fighting.png';
+import axios from 'axios';
 
 const { TextArea } = Input;
 
 const WriteChallenge = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | ''>('');
+  const [startDate, setStartDate] = useState<string | ''>('');
+  const [category, setCategory] = useState<string | ''>('');
+  const [title, setTitle] = useState<string | ''>('');
+  const [content, setContent] = useState<string | ''>('');
 
   const onChangeTitle = useCallback((e) => {
     setTitle(e.target.value);
@@ -24,18 +30,44 @@ const WriteChallenge = () => {
     
   }, []);
 
+  const openChallengeRequest = () => {
+    console.log(process.env.BACK_EC2);
+    
+    const challenge = {
+      title: title,
+      content: content,
+      s_date: startDate,
+      image: imageUrl,
+      category: category
+    }
+    const token = localStorage.getItem('Token')
+    axios({
+      method: 'POST',
+      url: process.env.BACK_EC2 + '/challenge/create',
+      headers: { Authorization: "Bearer " + token},
+      data: challenge,
+    })
+  }
+
   return (
     <AppLayout title='도전 생성 | 온도'>
       <Row>
         <Col xs={0} md={6}></Col>
         <Col xs={24} md={14}>
-        <Write onFinish={onSubmitForm}>
-            <Writetitle>도전을 만들어주세요!</Writetitle>
+        <Write>
+            <Space direction='horizontal'>
+              <Image src={FightingDogye} width={75} height={75}></Image>
+              <Writetitle>도전을 생성해주세요!</Writetitle>
+            </Space>
             <Row>
-              <Col xs={12} md={12}><UploadAvatar /></Col>
-              <Col xs={12} md={12} style={{display: 'flex', alignItems: 'center'}}><StartDatePicker /></Col> 
+              <Col xs={11} md={11}>
+                <UploadAvatar changeThumbnail={(imageUrl:string) => setImageUrl(imageUrl)} />
+              </Col>
+              <Col xs={13} md={13} style={{display: 'flex', alignItems: 'center'}}>
+                <StartDatePicker changeStartDate={(dateString:string) => setStartDate(dateString) }/>
+              </Col> 
             </Row>
-            <ChallengeSelector />
+            <CategorySelector changeCategory={(value:string) => setCategory(value) } />
             <Space direction='horizontal' style={{margin: '10px'}}>
               <label htmlFor='title'>제목</label>
               <TitleInput style={{width: 300}} name='title' value={title} onChange={onChangeTitle} />
@@ -45,7 +77,7 @@ const WriteChallenge = () => {
               <ContentInput showCount maxLength={200} allowClear rows={4} style={{width: 500}} placeholder='도전 상세 내용, 인증 사진 찍는 법 등을 기재해 주세요.' name='content' value={content} onChange={onChangeContent}/>
             </Space>
             <Button.Group style={{justifyContent: 'center'}}>
-              <ConfirmBtn>개설</ConfirmBtn>
+              <ConfirmBtn onClick={openChallengeRequest}>개설</ConfirmBtn>
               <CancelBtn>취소</CancelBtn>
             </Button.Group>
         </Write>
@@ -66,10 +98,11 @@ const WriteChallenge = () => {
 //   )
 // }
 
-const Write = styled(Form)`
+const Write = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-top: 10px;
 `
 
 const Writetitle = styled.h2`
