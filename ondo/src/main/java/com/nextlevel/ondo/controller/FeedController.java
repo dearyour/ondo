@@ -63,7 +63,7 @@ public class FeedController {
 
 
     @PostMapping(value = "/create", consumes = {"multipart/form-data"})
-    public ResponseEntity<Feed> createChallenge(
+    public ResponseEntity<Feed> createFeed(
             @RequestPart(value = "file", required = false) MultipartFile multipartFile
             , @RequestPart(value = "data") FeedSaveDto feedSaveDto
             , @RequestHeader("Authorization") String token

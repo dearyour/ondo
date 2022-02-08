@@ -3,7 +3,9 @@ package com.nextlevel.ondo.controller;
 import com.nextlevel.ondo.domain.Category;
 import com.nextlevel.ondo.domain.Challenge;
 import com.nextlevel.ondo.domain.ChallengeParticipate;
+import com.nextlevel.ondo.domain.Feed;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeDetailDto;
+import com.nextlevel.ondo.domain.dto.challenge.ChallengePageDto;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.service.ChallengeService;
@@ -35,18 +37,11 @@ public class ChallengeController {
         return new ResponseEntity<ChallengeDetailDto>(challengeService.detailChallenge(challengeId, token), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Challenge> createChallenge(@RequestPart(required = false) MultipartFile multipartFile
-            , @RequestPart ChallengeSaveDto challengeSaveDto
+    @PostMapping(value = "/create", consumes = {"multipart/form-data"})
+    public ResponseEntity<Challenge> createChallenge(@RequestPart(value = "file",required = false) MultipartFile multipartFile
+            , @RequestPart(value = "data") ChallengeSaveDto challengeSaveDto
             , @RequestHeader("Authorization") String token) throws IOException {
         String image = s3Uploader.upload(multipartFile, "static", "challenge");
-//        ChallengeSaveDto challengeSaveDto = ChallengeSaveDto.builder()
-//                .title(title)
-//                .content(content)
-//                .s_date(sDate)
-//                .category(category)
-//                .image(image)
-//                .build();
         return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto, token, image), HttpStatus.OK);
     }
 
@@ -66,8 +61,8 @@ public class ChallengeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Challenge>> challengePage() {
-        return new ResponseEntity<List<Challenge>>(challengeService.findAllChallenge(), HttpStatus.OK);
+    public ResponseEntity<ChallengePageDto> challengePage() {
+        return new ResponseEntity<ChallengePageDto>(challengeService.findAllChallenge(), HttpStatus.OK);
     }
 
     @GetMapping("/{category}") // 카테고리

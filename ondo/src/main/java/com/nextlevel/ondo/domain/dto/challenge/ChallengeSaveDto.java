@@ -2,10 +2,7 @@ package com.nextlevel.ondo.domain.dto.challenge;
 
 import com.nextlevel.ondo.domain.Category;
 import com.nextlevel.ondo.domain.Challenge;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 //category(String)
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 public class ChallengeSaveDto {
