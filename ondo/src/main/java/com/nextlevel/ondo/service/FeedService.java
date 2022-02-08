@@ -56,31 +56,31 @@ public class FeedService {
             //을 Dto에 담기(불리안 더 담아서)
             List<DetailCommentDto> detailCommentDtos = new ArrayList<>();
 
-            for (Comment c : comments) {
-                if (c.getUser().getUserId() == tokenuser.getUserId()) {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c, true);
+            for(Comment c : comments){
+                if(c.getUser().getUserId() == tokenuser.getUserId()){
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
                     detailCommentDtos.add(detailCommentDto);
                 } else {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c, false);
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true); //토큰아이디랑 작성아이디 다르면 활성화 true
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
-            Boolean flag = false;
-            // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
-            if (f.getFeedlike().contains(tokenuser)) flag = true;
+            Boolean flag = true;
+            // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
+            if(f.getFeedlike().contains(tokenuser)) flag = false;
 
 
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag);
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
             detailFeedDtos.add(detailFeedDto);
         }
 
         List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
         List<RankUserDto> rankUserDtos = new ArrayList<>();
-        for (User u : ulist) {
-            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage()));
+        for(User u : ulist){
+            rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage()));
         }
 
-        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos, rankUserDtos);
+        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos,rankUserDtos);
 
         return mainFeedDto;
     }
@@ -93,8 +93,8 @@ public class FeedService {
         // 1. 태그 테이블에서 태그명으로 태그 id 찾기.
         tagIdList = tagRepository.findByNameContaining(keyword);
         List<Feed> temp = new ArrayList<>();
-        for (Tag t : tagIdList) {
-            for (FeedTag ft : t.getFeedTag()) {
+        for(Tag t : tagIdList){
+            for (FeedTag ft: t.getFeedTag()){
                 temp.add(ft.getFeed());
             }
         }
@@ -193,5 +193,43 @@ public class FeedService {
         Feed feed = feedRepository.save(newFeed);
         System.out.println("피드 생성 완료");
         return feed;
+    }
+
+    public String likeFeed(long feedId, String token) {
+
+        String accessToken = token.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(accessToken);
+
+        Feed feed = feedRepository.findByFeedId(feedId).orElseGet(() -> {
+            return new Feed();
+        });
+        List<FeedLike> FL = feedLikeRepository.findByFeed(feed);
+        // 리스트 돌다가 목록에 있으면 ( 이미 눌렀으니 해제)
+        for(FeedLike f : FL){
+            if(f.getUser() == tokenuser){
+                feedLikeRepository.delete(f);
+                return "delete";
+            }
+        }
+        // 없으면 반복문 나와서
+        FeedLike feedLike = new FeedLike(tokenuser,feed);
+        feedLikeRepository.save(feedLike);
+        return "ok";
+
+    }
+
+    public String deleteFeed(long feedId, String token) {
+
+        String accessToken = token.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(accessToken);
+
+        Feed feed = feedRepository.findByFeedId(feedId).orElseGet(() -> {
+            return new Feed();
+        });
+
+        if(tokenuser.getUserId() != feed.getUserId()) return "no permission";
+
+        feedRepository.delete(feed);
+        return "delete complete";
     }
 }

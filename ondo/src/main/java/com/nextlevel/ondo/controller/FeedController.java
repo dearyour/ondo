@@ -2,6 +2,7 @@ package com.nextlevel.ondo.controller;
 
 import com.nextlevel.ondo.domain.Challenge;
 import com.nextlevel.ondo.domain.Feed;
+import com.nextlevel.ondo.domain.FeedLike;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
@@ -48,6 +49,16 @@ public class FeedController {
             return ResponseEntity.status(403).body(null);
         }
         return ResponseEntity.status(201).body(feed);
+    }
+
+    @GetMapping("/like/{feed_id}")
+    public ResponseEntity<String> likeFeed(@PathVariable("feed_id") long feedId, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<String>(feedService.likeFeed(feedId, token),HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{feed_id}")
+    public ResponseEntity<String> deleteFeed(@PathVariable("feed_id") long feedId, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<String>(feedService.deleteFeed(feedId, token),HttpStatus.OK);
     }
 
 

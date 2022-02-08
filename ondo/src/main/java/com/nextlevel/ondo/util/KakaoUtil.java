@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.User;
+import com.nextlevel.ondo.repository.UserRepository;
 import com.nextlevel.ondo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class KakaoUtil {
 
-    private final UserService userservice;
+    //private final UserService userservice;
+    private final UserRepository userRepository;
 
     public User getUserByEmail(String accessToken) {
 
@@ -59,7 +61,7 @@ public class KakaoUtil {
 
         String kakaoEmail = kakaoProfile.getKakao_account().getEmail();
 
-        User nuser = userservice.findUserByEmail(kakaoEmail);
+        User nuser = userRepository.findUserByEmail(kakaoEmail);
 
         return nuser;
 

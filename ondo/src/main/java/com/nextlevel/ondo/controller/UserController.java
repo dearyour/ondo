@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
+import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
 import com.nextlevel.ondo.service.UserService;
 import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
@@ -133,23 +136,36 @@ public class UserController {
                 .build();
 
         // 가입자 혹은 비가입자 체크 해서 처리
-        User originUser = userService.findUser(kakaoUser.getUsername());
+        User originUser = userService.findUser(kakaoUser.getEmail());
 
         if (originUser.getUsername() == null) {
             System.out.println("기존 회원이 아니기에 자동 회원가입을 진행합니다");
             userService.signUp(kakaoUser);
+            originUser = userService.findUser(kakaoUser.getEmail());
         }
 
         System.out.println("자동 로그인을 진행합니다.");
         // 로그인 처리
+        /*
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+         */
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("token", oauthToken.getAccess_token());
+        resultMap.put("username", originUser.getUsername());
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
+
+
+    // 유저 피드 페이지
+    @GetMapping("/user/feed/{username}")
+    public ResponseEntity<FeedUserDto> feedUser(@PathVariable String username, @RequestHeader("Authorization") String accessToken) {
+        FeedUserDto feedUserDto = userService.feedUser(username, accessToken);
+        return new ResponseEntity<FeedUserDto>(feedUserDto, HttpStatus.OK);
+    }
+
+
 
     // 회원 정보
     @GetMapping("/user/info")
