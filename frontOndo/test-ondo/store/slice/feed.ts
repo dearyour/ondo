@@ -16,10 +16,10 @@ export const feedSlice = createSlice({
     getFeed: (state) => {
       state.isLoading = true;
     },
-    getFeedSuccess: (state, { payload }) => {
+    getFeedSuccess: (state, action) => {
       //payload는 api 요청 성공값 comments이다
       state.isLoading = false;
-      state.items = payload;
+      state.items = action.payload;
     },
     getFeedFailure: (state, { payload: error }) => {
       state.isLoading = false;
