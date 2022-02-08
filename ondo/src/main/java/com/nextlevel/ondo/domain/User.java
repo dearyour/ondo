@@ -47,6 +47,7 @@ public class User extends BaseTimeEntity {
     @JsonManagedReference
     private List<FeedLike> feedLikes = new ArrayList<>();
 
+
     /*
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference

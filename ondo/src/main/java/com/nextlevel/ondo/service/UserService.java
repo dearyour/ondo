@@ -1,27 +1,40 @@
 package com.nextlevel.ondo.service;
 
-import com.nextlevel.ondo.domain.Challenge;
+import com.nextlevel.ondo.domain.*;
+import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
+import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
+import com.nextlevel.ondo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nextlevel.ondo.domain.RoleType;
-import com.nextlevel.ondo.domain.User;
-import com.nextlevel.ondo.repository.UserRepository;
+import com.nextlevel.ondo.util.KakaoUtil;
 
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
 
+    private final FollowService followService;
+    private final ChallengeService challengeService;
+
+    private final KakaoUtil kakaoUtil;
     private final BCryptPasswordEncoder encoder;
+
+    private final UserRepository userRepository;
+    private final FeedRepository feedRepository;
+    private final ChallengeParticipateRepository challengeParticipateRepository;
+    private final FollowRepository followRepository;
+    private final ChallengeRepository challengeRepository;
 
     @Transactional(readOnly = true)
     public List<User> rankUser() {
@@ -45,8 +58,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User findUser(String username) {
-        User user = userRepository.findByUsername(username).orElseGet(() -> {
+    public User findUser(String email) {
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
             return new User();
         });
 
@@ -68,26 +81,82 @@ public class UserService {
         }
 
     }
-    /*
-     * @Transactional
-     * public void 회원수정(User user) {
-     * // 수정시에는 영속성 컨텍스트 User 오브젝트를 영속화시키고, 영속화된 User 오브젝트를 수정
-     * // select를 해서 User오브젝트를 DB로 부터 가져오는 이유는 영속화를 하기 위해서!!
-     * // 영속화된 오브젝트를 변경하면 자동으로 DB에 update문을 날려주거든요.
-     * User persistance = userRepository.findById(user.getId()).orElseThrow(()->{
-     * return new IllegalArgumentException("회원 찾기 실패");
-     * });
-     * 
-     * // Validate 체크 => oauth 필드에 값이 없으면 수정 가능
-     * if(persistance.getOauth() == null || persistance.getOauth().equals("")) {
-     * String rawPassword = user.getPassword();
-     * String encPassword = encoder.encode(rawPassword);
-     * persistance.setPassword(encPassword);
-     * persistance.setEmail(user.getEmail());
-     * }
-     * 
-     * // 회원수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit 이 자동으로 됩니다.
-     * // 영속화된 persistance 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려줌.
-     * }
-     */
+
+    public FeedUserDto feedUser(String username, String accessToken) {
+
+        String token = accessToken.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(token);
+
+    //        User user;
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
+            return new User();
+        });
+
+    //        Boolean modifyflag;
+        Boolean modifyflag = true;
+        if(user.getUserId() == tokenuser.getUserId()) modifyflag = false;
+
+    //        Boolean followflag;
+        Boolean followflag = true;
+        List<Follow> fList = followRepository.findByFromUser(tokenuser);
+        if(user.getUserId() == tokenuser.getUserId()) followflag = false;
+        else{
+            for(Follow f : fList){
+                if(f.getToUser().getUserId() == user.getUserId()){
+                    followflag = false;
+                    break;
+                }
+            }
+        }
+            //팔로우 부분
+    //        List<FollowUserDto> followingUserDtos = new ArrayList<>();
+
+        //List<Follow> follows = followRepository.findByFromUser(user);
+
+        List<FollowUserDto> followingUserDtos = followService.listFollowing(username);
+
+
+    //        List<FollowUserDto> followerUserDtos = new ArrayList<>();
+        List<FollowUserDto> followerUserDtos = followService.listFollower(username);
+
+
+
+            //피드 부분
+    //        List<DetailFeedDto> myFeedDtos = new ArrayList<>();
+        List<Feed> myFeed = feedRepository.findByUserId(user.getUserId());
+            //도전 부분
+        List<ChallengeParticipate> challengeParticipates = challengeParticipateRepository.findByUser(user);
+        List<Challenge> challenges = new ArrayList<>();
+        for(ChallengeParticipate c : challengeParticipates){
+            challenges.add(c.getChallenge());
+        }
+    //        List<Challenge> runChallenge = new ArrayList<>();
+        List<Challenge> runChallenge = new ArrayList<>();
+        for(Challenge c : challenges){
+            if(challengeService.isProcessingChallenge(c)){
+                runChallenge.add(c);
+            }
+        }
+    //        List<Challenge> compeleteChallenge = new ArrayList<>();
+        List<Challenge> compeleteChallenge = new ArrayList<>();
+        tp: for(Challenge c : challenges){
+            if(!challengeService.isProcessingChallenge(c) ){
+                ChallengeParticipate cp = challengeParticipateRepository.findByChallenge(c);
+                Boolean[] archived = cp.getArchived();
+                for(Boolean b : archived){
+                    if(b == false){
+                        continue tp;
+                    }
+                }
+                compeleteChallenge.add(c);
+            }
+        }
+    //        List<Challenge> makedChallenge = new ArrayList<>();
+        List<Challenge> makedChallenge = challengeRepository.findByOwner(user.getUserId());
+
+        return new FeedUserDto(user,modifyflag,followflag,followingUserDtos,followerUserDtos,myFeed,runChallenge,compeleteChallenge,makedChallenge);
+
+    }
+
+
 }
