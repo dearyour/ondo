@@ -9,7 +9,7 @@ import Router from 'next/router'
 const Challengebox = ({challenge}: any) => {
   
   return (
-    <Title span={6}>
+    <Title span={24} sm={12} md={8} lg={6}>
         <Content src={challenge.image} onClick={()=>{Router.push('/challenge/1')}}></Content>
     </Title>
 
@@ -28,6 +28,7 @@ const Content = styled.img`
     overflow: hidden;
   }
   cursor: pointer;
+  border-radius:5px;
 `
 
 

@@ -67,7 +67,7 @@ function Navbar(): JSX.Element {
             <MenuLink style={{ color: "red", fontWeight: "bold" }}>
               <Link href="/challenge">Challenge🔥</Link>
             </MenuLink>
-            <Link href="/personal-feed">
+            <Link href="/user/s">
               <a>
                 <MenuLink>
                   <LoggedInForm />

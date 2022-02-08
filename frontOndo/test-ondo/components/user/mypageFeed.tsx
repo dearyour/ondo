@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const Feedbox = ({feed}: any) => {
   
   return (
-    <Title span={6}>
+    <Title span={24} sm={12} md={8} lg={6}>
         <Content src={feed.image}></Content>
     </Title>
 
@@ -27,6 +27,7 @@ const Content = styled.img`
     overflow: hidden;
   }
   cursor: pointer;
+  border-radius:5px;
 `
 
 

@@ -87,12 +87,12 @@ const Write_feed = () => {
   // 피드 작성 axios
   const WriteRequest = () => {
     const feed = {
-      image: files,
+      image: new FormData(),
       tags: hashArr,
       challenge: challenge,
       content: content,
-
     }
+    feed.image.append('image', files)
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',

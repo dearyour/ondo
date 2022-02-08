@@ -14,6 +14,7 @@ const Edit = () => {
   const dispatch = useDispatch();
   const [nickname, onChangeNick] = useInput("asdas");
   const { ProfileEditRequest } = useUser();
+  const [files, setFiles] = useState<File|''>('')
   const onChangeNickname = useCallback((e) => {
     onChangeNick(e);
   }, []);
