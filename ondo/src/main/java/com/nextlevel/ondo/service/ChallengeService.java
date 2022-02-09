@@ -2,6 +2,7 @@ package com.nextlevel.ondo.service;
 
 import com.nextlevel.ondo.domain.*;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeDetailDto;
+import com.nextlevel.ondo.domain.dto.challenge.ChallengePageDto;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.repository.ChallengeParticipateRepository;
@@ -18,10 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -50,7 +48,7 @@ public class ChallengeService {
             }
         }
         // 5. 해당 챌린지가 이미 종료된건지 검사
-        boolean isFinished = isProcessingChallenge(challenge);
+        boolean isFinished = !isProcessingChallenge(challenge);
         // 6. DTO에 담아서 리턴
         return ChallengeDetailDto.builder()
                 .challenge(challenge)
@@ -76,12 +74,12 @@ public class ChallengeService {
                     || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 1))
                     || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 2))) {
                 System.out.println("현재 진행중인 챌린지 입니다.");
-                return false;
+                return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public String AddDate(String strDate, int year, int month, int day) throws Exception {
@@ -96,12 +94,18 @@ public class ChallengeService {
     }
 
 
-    public Challenge createChallenge(MultipartFile image, ChallengeSaveDto challengeSaveDto, String token) {
-        System.out.println(image);
+    public Challenge createChallenge(ChallengeSaveDto challengeSaveDto, String token, String image) {
         // token으로 owner 찾기
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
-        Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId());
+        // date 파싱
+        String date = "";
+        String[] temp = challengeSaveDto.getS_date().split("-");
+        for (int i = 0; i < temp.length; i++) {
+            date += temp[i];
+        }
+        challengeSaveDto.setS_date(date);
+        Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId(), image);
         Challenge challenge = challengeRepository.save(newChallenge);
         System.out.println("챌린지 생성 완료");
         return challenge;
@@ -124,8 +128,20 @@ public class ChallengeService {
     }
 
     @Transactional(readOnly = true)
-    public List<Challenge> findAllChallenge() {
-        return challengeRepository.findAll();
+    public ChallengePageDto findAllChallenge() {
+        List<Challenge> allChallenges = challengeRepository.findAll();
+        allChallenges.sort(((o1, o2) -> -Integer.compare(o1.getChallengeParticipate().size(), o2.getChallengeParticipate().size())));
+        List<Challenge> top3Challenges = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            if (allChallenges.size() < i + 1) {
+                break;
+            }
+            top3Challenges.add(allChallenges.get(i));
+        }
+        return ChallengePageDto.builder()
+                .allChallenges(allChallenges)
+                .top3Challenges(top3Challenges)
+                .build();
     }
 
     @Transactional(readOnly = true)

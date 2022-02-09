@@ -1,10 +1,13 @@
 package com.nextlevel.ondo.service;
 
 import com.nextlevel.ondo.domain.*;
+import com.nextlevel.ondo.domain.dto.challenge.SimpleChallengeDto;
 import com.nextlevel.ondo.domain.dto.comment.DetailCommentDto;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.feed.FeedSaveDto;
 import com.nextlevel.ondo.domain.dto.feed.MainFeedDto;
 import com.nextlevel.ondo.domain.dto.feed.ModifyFeedDto;
+import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
 import com.nextlevel.ondo.repository.*;
 import com.nextlevel.ondo.domain.dto.user.RankUserDto;
 import com.nextlevel.ondo.repository.CommentRepository;
@@ -17,8 +20,14 @@ import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +38,14 @@ public class FeedService {
 
     private final FeedRepository feedRepository;
     private final CommentRepository commentRepository;
+    private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final FeedLikeRepository feedLikeRepository;
+    private final ChallengeParticipateRepository challengeParticipateRepository;
     private final KakaoUtil kakaoUtil;
     private final TagRepository tagRepository;
+
+    private final ChallengeService challengeService;
 
     @Transactional(readOnly = true)
     public MainFeedDto returnmain(String token) {
@@ -43,7 +56,7 @@ public class FeedService {
         List<Feed> list = feedRepository.findAll();
         List<DetailFeedDto> detailFeedDtos = new ArrayList<>();
 
-        for(Feed f : list){
+        for (Feed f : list) {
 
             //피드 작성 유저
             User user = userRepository.findByUserId(f.getUserId());
@@ -56,16 +69,16 @@ public class FeedService {
 
             for(Comment c : comments){
                 if(c.getUser().getUserId() == tokenuser.getUserId()){
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true);
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
                     detailCommentDtos.add(detailCommentDto);
                 } else {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true); //토큰아이디랑 작성아이디 다르면 활성화 true
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
-            Boolean flag = false;
-            // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
-            if(f.getFeedlike().contains(tokenuser)) flag = true;
+            Boolean flag = true;
+            // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
+            if(f.getFeedlike().contains(tokenuser)) flag = false;
 
 
             DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
@@ -182,5 +195,126 @@ public class FeedService {
         DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag);
 
         return detailFeedDto;
+    }
+
+    public Feed createFeed(String image, FeedSaveDto feedSaveDto, String token) {
+
+        String accessToken = token.split(" ")[1];
+        User user = kakaoUtil.getUserByEmail(accessToken);
+
+        Feed newFeed = feedSaveDto.toEntity(user.getUserId(), image);
+        Feed feed = feedRepository.save(newFeed);
+        //로직 구현
+        Challenge challenge = challengeRepository.findByChallengeId(feedSaveDto.getChallengeId());
+        ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge,user);
+
+        // 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+
+        try {
+            if (formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 0))){
+                Boolean[] archive = challengeParticipate.getArchived();
+                archive[0] = true;
+                challengeParticipate.setArchived(archive);
+                challengeParticipateRepository.save(challengeParticipate);
+            } else if (formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 1))){
+                Boolean[] archive = challengeParticipate.getArchived();
+                archive[1] = true;
+                challengeParticipate.setArchived(archive);
+                challengeParticipateRepository.save(challengeParticipate);
+            } else if(formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 2))){
+                Boolean[] archive = challengeParticipate.getArchived();
+                archive[2] = true;
+                challengeParticipate.setArchived(archive);
+                challengeParticipateRepository.save(challengeParticipate);
+
+                //3번 다 true 인지 하나라도 안올렸으면 return 으로 종료
+                archive = challengeParticipate.getArchived();
+                for(int i = 0; i < 3; i++){
+                    if(archive[i] == false){
+                        return feed;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //3개 다 true면 위에 코드 통과해서 여기로 오고, 온도 1도 오르기
+        user.setOndo(user.getOndo()+1);
+        userRepository.save(user);
+
+        System.out.println("피드 생성 완료");
+        return feed;
+    }
+
+    public String AddDate(String strDate, int year, int month, int day) throws Exception {
+        SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+        Date dt = dtFormat.parse(strDate);
+        cal.setTime(dt);
+        cal.add(Calendar.YEAR, year);
+        cal.add(Calendar.MONTH, month);
+        cal.add(Calendar.DATE, day);
+        return dtFormat.format(cal.getTime());
+    }
+
+    public String likeFeed(long feedId, String token) {
+
+        String accessToken = token.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(accessToken);
+
+        Feed feed = feedRepository.findByFeedId(feedId).orElseGet(() -> {
+            return new Feed();
+        });
+        List<FeedLike> FL = feedLikeRepository.findByFeed(feed);
+        // 리스트 돌다가 목록에 있으면 ( 이미 눌렀으니 해제)
+        for(FeedLike f : FL){
+            if(f.getUser() == tokenuser){
+                feedLikeRepository.delete(f);
+                return "delete";
+            }
+        }
+        // 없으면 반복문 나와서
+        FeedLike feedLike = new FeedLike(tokenuser,feed);
+        feedLikeRepository.save(feedLike);
+        return "ok";
+
+    }
+
+    public String deleteFeed(long feedId, String token) {
+
+        String accessToken = token.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(accessToken);
+
+        Feed feed = feedRepository.findByFeedId(feedId).orElseGet(() -> {
+            return new Feed();
+        });
+
+        if(tokenuser.getUserId() != feed.getUserId()) return "no permission";
+
+        feedRepository.delete(feed);
+        return "delete complete";
+    }
+
+    public List<SimpleChallengeDto> beforecreateFeed(String accessToken) {
+
+        List<SimpleChallengeDto> simpleChallengeDtos = new ArrayList<>();
+
+        String token = accessToken.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(token);
+
+        List<ChallengeParticipate> challengeParticipates = challengeParticipateRepository.findByUser(tokenuser);
+
+        for(ChallengeParticipate c : challengeParticipates){
+            if(challengeService.isProcessingChallenge(c.getChallenge()))
+                simpleChallengeDtos.add(new SimpleChallengeDto(c.getChallenge().getChallengeId(),c.getChallenge().getTitle()));
+        }
+
+        return simpleChallengeDtos;
+
     }
 }
