@@ -7,6 +7,7 @@ export interface UserParams {
   error: AxiosError | null;
   ondo: number;
   image: string;
+  isLoading: boolean;
 }
 
 export interface User {

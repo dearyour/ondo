@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Button, Form, Input } from 'antd';
 import AppLayout from '../../components/layout/AppLayout';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import Router from 'next/router';
 import useImg from 'store/hooks/imgHooks';
 import CropImg from 'components/Cropper';
+import useUser from 'store/hooks/userHooks';
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -88,6 +89,7 @@ const Write_feed = () => {
     }
   };
 
+
   // 피드 작성 axios
   const WriteRequest = () => {
     const feed = {
@@ -149,12 +151,13 @@ const Write_feed = () => {
     }
   }
 
+
   return (
     <AppLayout>
       <Write>
         <Writetitle>피드 작성하기</Writetitle>
         {originalImg ? <CropImg></CropImg> : null}
-        {/* <MyImage>{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '50%', border: '1px solid #ebc1c1' }} /> : ''}</MyImage> */}
+        <MyImage>{image ? <img src={image} alt="avatar" style={{ width: '50%', border: '1px solid #ebc1c1' }} /> : ''}</MyImage>
         <WriteDiv>
           <Label>이미지</Label>
           <UploadInput value={Imgname}></UploadInput>
