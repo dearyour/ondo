@@ -8,19 +8,19 @@ import { Button, DatePicker, Space, Tooltip } from "antd";
 import { InfoCircleTwoTone } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
-export default class AntdDatePicker extends Component {
+const StartDatePicker = (props:any) => {
   
-  render() {
-    const onChange = (date:any, dateString:any) => {
+ 
+    const onChange = (date:any, dateString:string) => {
       console.log(date, dateString);
-      
+      props.changeStartDate(dateString);
     }
 
     return (
         <Space direction="horizontal">
  
           <label htmlFor="start-date">시작일</label>
-          <DatePicker onChange={onChange} name='start-date' />
+          <DatePicker onChange={onChange} name='start-date' placeholder='시작일을 골라주세요' style={{width: '180px'}}/>
 
           <Tooltip title='시작일 포함 3일동안 도전합니다.'>
             {/* <Button shape="circle" icon={<InfoCircleOutlined />} size="large" /> */}
@@ -29,5 +29,6 @@ export default class AntdDatePicker extends Component {
           </Space>
    
     );
-  }
 }
+
+export default StartDatePicker;

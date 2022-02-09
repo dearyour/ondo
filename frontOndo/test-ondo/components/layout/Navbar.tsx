@@ -67,7 +67,7 @@ function Navbar(): JSX.Element {
             <MenuLink style={{ color: "red", fontWeight: "bold" }}>
               <Link href="/challenge">Challenge🔥</Link>
             </MenuLink>
-            <Link href="/user/1">
+            <Link href="/user/s">
               <a>
                 <MenuLink>
                   <LoggedInForm />
@@ -95,7 +95,7 @@ const XsLogo = styled(Col)`
 `;
 
 const NavWrapper = styled.div`
-  padding: 1rem 10rem;
+  padding: 1rem;
   @media (max-width: 768px) {
     padding: 1rem;
   }

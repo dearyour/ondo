@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserParams } from "../interfaces/User.interface";
 
-const initialState: UserParams = {
+const initialState: UserParams | any = {
+  users: [],
   nickname: "카리나",
   email: "base@base.com",
-  data: "",
+  session: "",
   error: null,
   ondo: 30,
   image: "https://cdn.entermedia.co.kr/news/photo/202112/28096_52173_2023.jpg",
@@ -17,14 +18,17 @@ export const userSlice = createSlice({
     profileEdit: (state) => {},
     getUser: (state) => {},
     setnickname: (state, { payload }) => {
-      state.nickname = payload;
+      state.nickname = payload.username;
     },
     setEmail: (state, { payload }) => {
-      state.email = payload;
+      state.email = payload.email;
+    },
+    setuserdata: (state, { payload }) => {
+      state.users = payload;
     },
     getKakaoKey: (state) => {},
     getKakaoKeySuccess: (state, { payload }) => {
-      state.data = payload;
+      state.session = payload;
       localStorage.setItem("Token", payload);
     },
     getKakaoKeyError: (state, { payload }) => {
@@ -33,7 +37,7 @@ export const userSlice = createSlice({
 
     getToken: (state) => {
       const token = localStorage.getItem("Token");
-      state.data = token;
+      state.session = token;
     },
   },
 });

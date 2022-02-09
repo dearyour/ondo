@@ -2,14 +2,17 @@ import axios from "axios";
 
 const Feedurl = process.env.BACK_EC2 + "/feed";
 const placeHolderurl = process.env.BACK_EC2 + "/feed";
+
 export const GetFeedState = (token: string | null) => {
   return axios({
     method: "GET",
-    url: Feedurl,
+    url: "http://localhost:8080/feed",
+    // url: "https://jsonplaceholder.typicode.com/comments",
     headers: { Authorization: "Bearer " + token },
   })
-    .then((res) => {
-      return res.data;
+    .then((comments) => {
+      console.log(comments.data.detailFeedDtos);
+      return comments.data.detailFeedDtos;
     })
     .catch((err) => {
       return err;

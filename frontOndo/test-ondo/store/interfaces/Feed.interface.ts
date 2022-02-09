@@ -9,12 +9,12 @@ export interface FeedParams {
   userId: number;
   createdDate: Date;
   modifiedDate: Date;
-  feedlike: Array<[]>;
+  feedlike: Array<number>;
   comments: CommentParams;
 }
 
 export interface Feed {
-  feeds: FeedParams[];
+  items: any;
   isLoading: boolean;
   error: AxiosError | null;
 }

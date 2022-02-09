@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Upload, message, Space } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -36,30 +36,25 @@ function beforeUpload(file:any) {
 //   }
 // }
 
-class UploadAvatar extends Component {
-  state = {
-    imageUrl: '',
-    loading: false,
-  };
+const UploadAvatar = (props: any) => {
+  const [imageUrl, setImageUrl] = useState<string | ''>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
-  handleChange = (info:any) => {
+  const handleChange = (info:any) => {
     if (info.file.status === 'uploading') {
-      this.setState({ loading: true });
+      setLoading(true);
       return;
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl:any) =>
-        this.setState({
-          imageUrl,
-          loading: false,
-        }),
-      );
+      getBase64(info.file.originFileObj, (imageUrl:any) => {
+        setImageUrl(imageUrl);
+        setLoading(false);
+      });
+      props.changeThumbnail(imageUrl);
     }
   };
 
-  render() {
-    const { loading, imageUrl } = this.state;
     const uploadButton = (
       <div>
         {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -76,14 +71,13 @@ class UploadAvatar extends Component {
           showUploadList={false}
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           beforeUpload={beforeUpload}
-          onChange={this.handleChange}
+          onChange={handleChange}
         >
           {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
         </Upload>
       {/* <Button>썸네일</Button> */}
       </Space>
     );
-  }
 }
 
 // const Button = styled.div`

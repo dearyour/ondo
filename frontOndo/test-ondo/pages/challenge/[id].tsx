@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
@@ -9,30 +9,33 @@ import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import 'antd/dist/antd.css';
 
-const readChallenge = () => {
+const ReadChallenge = () => {
+  useEffect(() => {
+
+  })
   const title = '하루 30분 조깅하기';
   const startDate = new Date(2022, 0, 31);
   const getDuration = () => {
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 2);
-  
+
     const sy = startDate.getFullYear();
     const sm = startDate.getMonth() + 1;
     const sd = startDate.getDate();
     const ey = endDate.getFullYear();
     const em = endDate.getMonth() + 1;
     const ed = endDate.getDate();
-    return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
+    return sy + '-' + sm + '-' + sd + ' ~ ' + ey + '-' + em + '-' + ed;
   }
   const content = "3일동안 다같이 런닝해여~ 조깅화와 시계를 찍어서 올려주시면 됩니다.";
   const participants = 7;
-  const feedsPosted = ['https://picsum.photos/250','https://picsum.photos/250','https://picsum.photos/250','https://picsum.photos/250','https://picsum.photos/250'];
+  const feedsPosted = ['https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250'];
 
   const renderPosts = () => {
     const result = [];
-    for(let i = 0; i < feedsPosted.length; i++) {
+    for (let i = 0; i < feedsPosted.length; i++) {
       result.push(
-        <Col xs={8} md={8}>
+        <Col xs={8} md={8} key={i}>
           <FeedImg src={feedsPosted[i]}></FeedImg>
         </Col>
       );
@@ -42,31 +45,31 @@ const readChallenge = () => {
 
   return (
     <AppLayout title="도전 상세보기 | 온도">
-      <Row style={{marginTop: 20, fontFamily: 'sans-serif'}}>
+      <Row style={{ marginTop: 20, fontFamily: 'sans-serif' }}>
         <Col xs={0} md={4} />
         <Col xs={24} md={16}>
           오늘의 도전
-          <Divider style={{borderColor: 'black'}}/>
-      <ChallengeWrapper>
-       <ChallengeImg src='https://picsum.photos/2500' alt="feed-image" />
-         <ChallengeContent>
-           <ChallengeTitle>{title}</ChallengeTitle>
-           <LoggedInForm />
-           <ChallengeDuration>{getDuration()}</ChallengeDuration>
-           <p>{content}</p>
-           
-           <BottomContent>
-           <Participants>현재 {participants} 명 참여 중</Participants>
-         <Button.Group>
-            {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
+          <Divider style={{ borderColor: 'black' }} />
+          <ChallengeWrapper>
+            <ChallengeImg src='https://picsum.photos/2500' alt="feed-image" />
+            <ChallengeContent>
+              <ChallengeTitle>{title}</ChallengeTitle>
+              <LoggedInForm />
+              <ChallengeDuration>{getDuration()}</ChallengeDuration>
+              <p>{content}</p>
+
+              <BottomContent>
+                <Participants>현재 {participants} 명 참여 중</Participants>
+                <Button.Group>
+                  {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
-            <button>참여하기</button>
-            <button>피드쓰기</button>
-          </Button.Group>
-          </BottomContent>
-         </ChallengeContent>
-      </ChallengeWrapper>
-            <Row gutter={8}>{renderPosts()}</Row>
+                  <button>참여하기</button>
+                  <button>피드쓰기</button>
+                </Button.Group>
+              </BottomContent>
+            </ChallengeContent>
+          </ChallengeWrapper>
+          <Row gutter={8}>{renderPosts()}</Row>
         </Col>
         <Col xs={0} md={4} />
       </Row>
@@ -164,4 +167,4 @@ const Participants = styled.div`
   bottom: 70px; */
 `
 
-export default readChallenge;
+export default ReadChallenge;

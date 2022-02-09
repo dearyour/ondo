@@ -5,6 +5,7 @@ import challenge from "store/slice/challenge";
 import feed from "store/slice/feed";
 import comment from "store/slice/comment";
 import layout from "store/slice/layout";
+import upload from "store/slice/upload";
 
 // 루트 리듀서
 const rootReducer = (state: any, action: any) => {
@@ -14,7 +15,7 @@ const rootReducer = (state: any, action: any) => {
       ...action.payload,
     };
   }
-  return combineReducers({ user, challenge, feed, comment, layout })(
+  return combineReducers({ user, challenge, feed, comment, layout, upload })(
     state,
     action
   );
