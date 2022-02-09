@@ -1,15 +1,13 @@
 package com.nextlevel.ondo.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class ChallengeParticipate {
     @Id
@@ -26,10 +24,10 @@ public class ChallengeParticipate {
     @JsonBackReference
     private Challenge challenge;
     @Column
-    private boolean archived;
+    private Boolean[] archived = new Boolean[3];
 
     @Builder
-    public ChallengeParticipate(User user, Challenge challenge,boolean archived){
+    public ChallengeParticipate(User user, Challenge challenge,Boolean[] archived){
         this.user = user;
         this.challenge = challenge;
         this.archived = archived;

@@ -2,9 +2,9 @@ package com.nextlevel.ondo.domain.dto.challenge;
 
 import com.nextlevel.ondo.domain.Category;
 import com.nextlevel.ondo.domain.Challenge;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
 
 
 //challenge_id (Long)
@@ -16,7 +16,9 @@ import org.springframework.lang.Nullable;
 //category(String)
 
 @Getter
-@NoArgsConstructor
+@Setter
+@Builder
+@AllArgsConstructor
 public class ChallengeSaveDto {
     private String title;
     private String content;
@@ -24,7 +26,7 @@ public class ChallengeSaveDto {
     private String image;
     private Category category;
 
-    public Challenge toEntity(Long owner) {
+    public Challenge toEntity(Long owner, String image) {
         return Challenge.builder().
                 title(title)
                 .content(content)
@@ -34,3 +36,5 @@ public class ChallengeSaveDto {
                 .category(category).build();
     }
 }
+
+
