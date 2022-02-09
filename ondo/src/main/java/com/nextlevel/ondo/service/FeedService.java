@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
+// 스프링이 컴포넌트  스캔 을  통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
 @RequiredArgsConstructor
 public class FeedService {
