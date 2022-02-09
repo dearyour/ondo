@@ -34,7 +34,7 @@ function detailfeed() {
 
     const timeGap = nowDate - startDate;
 
-    const date = parseInt(timeGap / oneDay);
+    const date = parseInt(String(timeGap / oneDay));
     const hour = feedDate.getHours();
     const minutes = feedDate.getMinutes();
     console.log(hour + "hour");
