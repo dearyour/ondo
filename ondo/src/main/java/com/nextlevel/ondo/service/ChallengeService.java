@@ -48,7 +48,7 @@ public class ChallengeService {
             }
         }
         // 5. 해당 챌린지가 이미 종료된건지 검사
-        boolean isFinished = isProcessingChallenge(challenge);
+        boolean isFinished = !isProcessingChallenge(challenge);
         // 6. DTO에 담아서 리턴
         return ChallengeDetailDto.builder()
                 .challenge(challenge)
@@ -74,12 +74,12 @@ public class ChallengeService {
                     || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 1))
                     || formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 2))) {
                 System.out.println("현재 진행중인 챌린지 입니다.");
-                return false;
+                return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     public String AddDate(String strDate, int year, int month, int day) throws Exception {
