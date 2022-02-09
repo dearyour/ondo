@@ -78,7 +78,7 @@ function Searchbar(): JSX.Element {
     const toggleSearch = () => {
         setIsActive(!isActive);
     }
-    const url = 'http://localhost:8080/search/'
+    const url = process.env.BACK_EC2 + '/search/'
     const Search = () => {
         const token= localStorage.getItem('Token');
         axios({
@@ -88,6 +88,7 @@ function Searchbar(): JSX.Element {
         })
         .then((res) => {
             console.log(res)
+            Router.push('/search/'+ {keyword})
         })
     }
 
