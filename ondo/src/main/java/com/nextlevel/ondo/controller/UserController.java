@@ -7,9 +7,12 @@ import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
+import com.nextlevel.ondo.domain.dto.feed.FeedSaveDto;
 import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
+import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
 import com.nextlevel.ondo.service.UserService;
 import com.nextlevel.ondo.util.KakaoUtil;
+import com.nextlevel.ondo.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,12 +24,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,7 @@ public class UserController {
     private final UserService userService;
 
     private final KakaoUtil kakaoUtil;
+    private final S3Uploader s3Uploader;
 
     // 로그인 및 회원 가입
     @GetMapping("/auth/kakao/callback")
@@ -165,8 +168,6 @@ public class UserController {
         return new ResponseEntity<FeedUserDto>(feedUserDto, HttpStatus.OK);
     }
 
-
-
     // 회원 정보
     @GetMapping("/user/info")
     public ResponseEntity<User> infoUser(@RequestHeader("Authorization") String accessToken) {
@@ -180,5 +181,31 @@ public class UserController {
     public ResponseEntity<List<User>> rankUser() {
         List<User> ranker = userService.rankUser();
         return new ResponseEntity<List<User>>(ranker, HttpStatus.OK);
+    }
+
+    // 개인 정보 수정 화면
+    @GetMapping("/user/modify")
+    public ResponseEntity<FollowUserDto> beforemodifyUser(@RequestHeader("Authorization") String accessToken){
+        FollowUserDto userDto = userService.beforemodifyUser(accessToken);
+        return new ResponseEntity<FollowUserDto>(userDto, HttpStatus.OK);
+    }
+
+    // 개인 정보 수정 버튼 클릭
+    @PutMapping(value = "/user/modify", consumes = {"multipart/form-data"})
+    public ResponseEntity<String> modifyUser(
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile
+            , @RequestPart String username
+            , @RequestHeader("Authorization") String accessToken) throws IOException {
+        String image = null;
+        if(multipartFile == null) image = null;
+        else{
+            image = s3Uploader.upload(multipartFile, "static", "user");
+        }
+        String result = userService.modifyUser(image,username,accessToken);
+        if(result == "fail"){
+            return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<String>(result, HttpStatus.OK);
+        }
     }
 }

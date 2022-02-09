@@ -5,6 +5,7 @@ import com.nextlevel.ondo.domain.Feed;
 import com.nextlevel.ondo.domain.FeedLike;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
+import com.nextlevel.ondo.domain.dto.challenge.SimpleChallengeDto;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
 import com.nextlevel.ondo.domain.dto.feed.FeedSaveDto;
 import com.nextlevel.ondo.domain.dto.feed.MainFeedDto;
@@ -61,13 +62,18 @@ public class FeedController {
         return new ResponseEntity<String>(feedService.deleteFeed(feedId, token),HttpStatus.OK);
     }
 
+    @GetMapping("/create")
+    public ResponseEntity<List<SimpleChallengeDto>> beforecreateFeed(@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<List<SimpleChallengeDto>>(feedService.beforecreateFeed(token),HttpStatus.OK);
+    }
+
 
     @PostMapping(value = "/create", consumes = {"multipart/form-data"})
     public ResponseEntity<Feed> createFeed(
             @RequestPart(value = "file", required = false) MultipartFile multipartFile
             , @RequestPart(value = "data") FeedSaveDto feedSaveDto
             , @RequestHeader("Authorization") String token
-    ) throws IOException {
+    ) throws Exception {
         System.out.println("FeedController 요청 성공.");
         String image = s3Uploader.upload(multipartFile, "static", "feed");
         return new ResponseEntity<Feed>(feedService.createFeed(image, feedSaveDto, token), HttpStatus.OK);

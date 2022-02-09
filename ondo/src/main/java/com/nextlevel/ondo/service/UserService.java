@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nextlevel.ondo.util.KakaoUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -138,7 +139,7 @@ public class UserService {
             }
         }
     //        List<Challenge> compeleteChallenge = new ArrayList<>();
-        List<Challenge> compeleteChallenge = new ArrayList<>();
+        List<Challenge> completeChallenge = new ArrayList<>();
         tp: for(Challenge c : challenges){
             if(!challengeService.isProcessingChallenge(c) ){
                 ChallengeParticipate cp = challengeParticipateRepository.findByChallenge(c);
@@ -148,15 +149,49 @@ public class UserService {
                         continue tp;
                     }
                 }
-                compeleteChallenge.add(c);
+                completeChallenge.add(c);
             }
         }
     //        List<Challenge> makedChallenge = new ArrayList<>();
-        List<Challenge> makedChallenge = challengeRepository.findByOwner(user.getUserId());
+        List<Challenge> madeChallenge = challengeRepository.findByOwner(user.getUserId());
 
-        return new FeedUserDto(user,modifyflag,followflag,followingUserDtos,followerUserDtos,myFeed,runChallenge,compeleteChallenge,makedChallenge);
+        return new FeedUserDto(user,modifyflag,followflag,followingUserDtos,followerUserDtos,myFeed,runChallenge,completeChallenge,madeChallenge);
 
     }
 
 
+    public FollowUserDto beforemodifyUser(String accessToken) {
+        String token = accessToken.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(token);
+
+        FollowUserDto userDto = new FollowUserDto(tokenuser.getUsername(),tokenuser.getImage());
+
+        return userDto;
+    }
+
+    public String modifyUser(String image, String username, String accessToken) {
+
+        String token = accessToken.split(" ")[1];
+        User tokenuser = kakaoUtil.getUserByEmail(token);
+
+        if(image != null){
+            //유저.image 경로 바꿔주기
+            tokenuser.setImage(image);
+            userRepository.save(tokenuser);
+        }
+        //닉네임 바꾸기
+        //중복 체크
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
+            return new User();
+        });
+        if(user.getUsername() == null){
+            tokenuser.setUsername(username);
+            userRepository.save(tokenuser);
+            return "success";
+        } else {
+            return "fail";
+        }
+
+
+    }
 }
