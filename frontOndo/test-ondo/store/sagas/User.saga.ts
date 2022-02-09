@@ -31,7 +31,7 @@ function* getKakaoKey() {
     Router.push("/feedMain");
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
-    // Router.push("/");
+    Router.push("/");
   }
 }
 
@@ -62,9 +62,9 @@ function* getUserState() {
       console.log("유저시작전");
       const userdata: AxiosResponse = yield call(GetUserState, token);
       console.log(userdata);
-      // yield put(userActions.setEmail(userdata));
+      yield put(userActions.setEmail(userdata));
       yield put(userActions.setnickname(userdata));
-      // yield put(userActions.getToken);
+      yield put(userActions.setuserdata(userdata));
     }
   } catch (err) {
     console.log(err);

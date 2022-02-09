@@ -58,27 +58,16 @@ const Kakao = styled.a``;
 
 const Login = () => {
   return (
-    <LoginForm>
+    <AppLayout>
       <Pagebar title="로그인"></Pagebar>
-      {/* //     <LoginDiv>
-    //       <LoginLabel htmlFor="user-id">이메일</LoginLabel>
-    //       <LoginInput name="user-id" required />
-    //     </LoginDiv>
-    //     <LoginDiv>
-    //       <LoginLabel htmlFor="user-password">비밀번호</LoginLabel>
-    //       <LoginInput name="user-password"  type="password" required />
-    //     </LoginDiv>
-    //     <LoginButton>로그인</LoginButton> */}
-      <div>
-        {/* <Link href=""><a>비밀번호 찾기 </a></Link>
-          |
-          <Link href=""><a> 회원가입 </a></Link>
-        | */}
-        <Kakao href={test}>
-          <Image src={kakao_login_large_wide}></Image>
-        </Kakao>
-      </div>
-    </LoginForm>
+      <LoginForm>
+        <div>
+          <Kakao href={test}>
+            <Image src={kakao_login_large_wide}></Image>
+          </Kakao>
+        </div>
+      </LoginForm>
+    </AppLayout>
   );
 };
 

@@ -10,4 +10,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     List<Challenge> findAllByCategory(Category category);
     List<Challenge> findByTitleContaining(String keyword);
     Challenge findByChallengeId(Long challengeId);
+    List<Challenge> findByOwner(Long userId);
+//    Optional<List<Challenge>> Top3Find
+    List<Challenge> findAll();
 }

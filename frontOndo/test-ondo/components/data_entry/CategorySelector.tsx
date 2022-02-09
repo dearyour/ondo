@@ -8,12 +8,13 @@ function onSearch(val:any) {
   console.log('search:', val);
 }
 
-function ChallengeSelector(): JSX.Element {
+function CategorySelector(props:any): JSX.Element {
   const [category, setCategory] = useState('');
 
   const onChange = (value:any) => {
     setCategory(value);
     console.log(value);
+    props.changeCategory(value);
   }
     
   return (
@@ -51,5 +52,5 @@ const StyledSelect = styled(Select)`
   }
 `
 
-export default ChallengeSelector;
+export default CategorySelector;
 

@@ -15,7 +15,7 @@ import { feedAction } from "store/slice/feed";
 import { arrayBuffer } from "stream/consumers";
 import { actionChannel } from "redux-saga/effects";
 
-function mainfeed() {
+function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user);
@@ -118,7 +118,7 @@ function mainfeed() {
           <div className="feed-list">
             <form
               className="write-feed"
-              // onSubmit={__makeFeed}
+            // onSubmit={__makeFeed}
             >
               {image && (
                 <div
@@ -127,16 +127,13 @@ function mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div className="inp">
+              <div className="inp" onClick={() => { Router.push('/feed/write') }} >
                 <input
                   disabled
-                  onClick={() => {
-                    Router.push("/feed/write");
-                  }}
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
-                  // onChange={(e) => setContext(e.target.value)}
+                // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -146,7 +143,7 @@ function mainfeed() {
                 <input
                   id="get-image-input"
                   type="file"
-                  // onChange={__getData64FromImage}
+                // onChange={__getData64FromImage}
                 />
               </div>
             </form>
@@ -160,7 +157,7 @@ function mainfeed() {
                   feed={item}
                   nickname={nickname}
                   image={image}
-                  // comments={comments}
+                // comments={comments}
                 />
               );
             })}
@@ -212,7 +209,7 @@ function mainfeed() {
     </div>
   );
 }
-export default mainfeed;
+export default Mainfeed;
 //유저 이미지 불러오기 ##########
 // const __getUserProfileImage = useCallback(() => {
 //   if (user) {

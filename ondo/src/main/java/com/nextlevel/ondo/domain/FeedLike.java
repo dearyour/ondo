@@ -2,6 +2,7 @@ package com.nextlevel.ondo.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,7 @@ public class FeedLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "feedlike_id")
+    @Column(name = "feed_like_id")
     private long feedLikeId;
 
     @ManyToOne
@@ -27,6 +28,12 @@ public class FeedLike {
     @JoinColumn(name = "feed_id")
     @JsonBackReference
     private Feed feed;
+
+    @Builder
+    public FeedLike(User user, Feed feed){
+        this.user = user;
+        this.feed = feed;
+    }
 
 
 }

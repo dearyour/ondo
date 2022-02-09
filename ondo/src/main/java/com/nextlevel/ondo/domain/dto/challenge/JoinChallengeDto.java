@@ -20,7 +20,7 @@ public class JoinChallengeDto {
 
     public ChallengeParticipate toEntity(User user, Challenge challenge) {
         return ChallengeParticipate.builder()
-                .archived(false)
+                .archived(new Boolean[3])
                 .user(user)
                 .challenge(challenge)
                 .build();

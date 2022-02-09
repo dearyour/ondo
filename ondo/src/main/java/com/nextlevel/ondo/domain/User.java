@@ -32,10 +32,6 @@ public class User extends BaseTimeEntity {
     private int ondo;
     @Column(columnDefinition = "varchar(255) default 'null'") // 경로는 추후 설정
     private String image;
-    @Column
-    private String fileOriName;
-    @Column
-    private String fileUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(10) default 'user'")
@@ -50,6 +46,7 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<FeedLike> feedLikes = new ArrayList<>();
+
 
     /*
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
