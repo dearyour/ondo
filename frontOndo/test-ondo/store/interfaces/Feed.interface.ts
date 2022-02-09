@@ -9,7 +9,7 @@ export interface FeedParams {
   userId: number;
   createdDate: Date;
   modifiedDate: Date;
-  feedlike: Array<[]>;
+  feedlike: Array<number>;
   comments: CommentParams;
 }
 

@@ -15,7 +15,7 @@ import { feedAction } from "store/slice/feed";
 import { arrayBuffer } from "stream/consumers";
 import { actionChannel } from "redux-saga/effects";
 
-function mainfeed() {
+function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user);
@@ -209,7 +209,7 @@ function mainfeed() {
     </div>
   );
 }
-export default mainfeed;
+export default Mainfeed;
 //유저 이미지 불러오기 ##########
 // const __getUserProfileImage = useCallback(() => {
 //   if (user) {

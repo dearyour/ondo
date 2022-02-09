@@ -63,8 +63,8 @@ const UserProfile = ({ nowUser }: any) => {
           nowUser.follow.map((user: any) => {
             let key = 9
             return (
-              <FModalDiv>
-                <FollowUser user={user} key={key++}></FollowUser>
+              <FModalDiv key={key++}>
+                <FollowUser user={user} ></FollowUser>
                 <hr />
               </FModalDiv>
             )
@@ -83,8 +83,8 @@ const UserProfile = ({ nowUser }: any) => {
           nowUser.following.map((user: any) => {
             let key = 9
             return (
-              <FModalDiv>
-                <FollowUser user={user} key={key++}></FollowUser>
+              <FModalDiv key={key++}>
+                <FollowUser user={user} ></FollowUser>
                 <hr />
               </FModalDiv>
             )

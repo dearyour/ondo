@@ -4,12 +4,13 @@ import { takeEvery, call, put, takeLatest, all, fork } from "redux-saga/effects"
 import { CommentParams, CommentParamType } from "../interfaces/Comment.interface";
 import { challengeAction } from "../slice/challenge";
 import { commentAction } from "../slice/comment";
+import CommentApi from "store/api/Comment.api"
 
 // get Saga
 function* getCommentSaga(action: { payload: CommentParamType }) {
   try {
     // call은 미들웨어에게 함수와 인자들을 실행하라는 명령
-    const response: CommentParams = yield call(CommentAPI.getComment, action.payload);
+    const response: CommentParams = yield call(CommentApi, action.payload);
     // put은 dispatch 를 뜻한다.
     yield put(commentAction.getCommentSuccess(response));
   } catch (err) {

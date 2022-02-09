@@ -2,7 +2,7 @@ import axios from "axios";
 
 const challengeURL = process.env.BACK_EC2 + "/challenge";
 const placeHolderurl = process.env.BACK_EC2 + "/feed";
-const ChallengeAPI = (token: any) => {
+const CommentApi = (token: any) => {
   return axios({
     method: "GET",
     url: challengeURL,
@@ -15,5 +15,4 @@ const ChallengeAPI = (token: any) => {
       return err;
     });
 };
-
-export default ChallengeAPI;
+export default CommentApi;
