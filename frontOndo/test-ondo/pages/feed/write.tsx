@@ -8,6 +8,8 @@ import { Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Router from 'next/router';
+import useImg from 'store/hooks/imgHooks';
+import CropImg from 'components/Cropper';
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -42,12 +44,14 @@ const ImageUploadInputSetting = {
 
 
 const Write_feed = () => {
+  const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [loading, setLoading] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string | ''>('');
   const [hashtag, setHashtag] = useState<string | ''>('')
-  const [image, setImage] = useState<string | ''>('')
+  // const [image, setImage] = useState<string | ''>('')
   const [content, setContent] = useState<string | ''>('')
-  const [files, setFiles] = useState<File | ''>('')
+  // const [files, setFiles] = useState<File | ''>('')
+  const [Imgname, setImgname] = useState<string>();
   const [num, setNum] = useState<number>(0)
   const [hashArr, setHashArr] = useState<string[] | []>([])
   const [challenge, setChallenge] = useState<string | ''>('')
@@ -69,7 +73,7 @@ const Write_feed = () => {
   }
 
   const handleChange = (info: any) => {
-    setFiles(info.file)
+    // setFile(info.file)
     if (info.file.status === 'uploading') {
       setLoading(true);
       return;
@@ -77,8 +81,8 @@ const Write_feed = () => {
     if (info.file.status === 'done') {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl: any) => {
-        setImage(info.file.name)
-        return setLoading(false), setImageUrl(imageUrl)
+        setImgname(info.file.name)
+        return setLoading(false), setOriginalImage(imageUrl)
       },
       );
     }
@@ -92,7 +96,7 @@ const Write_feed = () => {
       challenge: challenge,
       content: content,
     }
-    feed.image.append('image', files)
+    feed.image.append('image', file)
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',
@@ -149,10 +153,11 @@ const Write_feed = () => {
     <AppLayout>
       <Write>
         <Writetitle>피드 작성하기</Writetitle>
-        <MyImage>{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '50%', border: '1px solid #ebc1c1' }} /> : ''}</MyImage>
+        {originalImg ? <CropImg></CropImg> : null}
+        {/* <MyImage>{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '50%', border: '1px solid #ebc1c1' }} /> : ''}</MyImage> */}
         <WriteDiv>
           <Label>이미지</Label>
-          <UploadInput value={image}></UploadInput>
+          <UploadInput value={Imgname}></UploadInput>
           <UpImage {...ImageUploadInputSetting}
             className="avatar-uploader"
             showUploadList={false}
