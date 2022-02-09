@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import { HYDRATE } from "next-redux-wrapper";
 import user from "../slice/user";
-import challenge from "store/slice/challenge";
-import feed from "store/slice/feed";
-import comment from "store/slice/comment";
-import layout from "store/slice/layout";
+import challenge from "../slice/challenge";
+import feed from "../slice/feed";
+import comment from "../slice/comment";
+import layout from "../slice/layout";
 
 // 루트 리듀서
 const rootReducer = (state: any, action: any) => {
