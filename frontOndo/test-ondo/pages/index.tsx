@@ -7,7 +7,7 @@ import Mainfeed from "../components/Feed/mainfeed";
 import Detailfeed from "../components/Feed/detailfeed";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/module";
-import Login from "./user/login";
+import Login from "../components/user/login";
 
 const Home: NextPage = () => {
   return <Login />;
