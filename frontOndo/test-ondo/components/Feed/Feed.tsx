@@ -5,6 +5,7 @@ import { FeedParams } from "store/interfaces/Feed.interface";
 import { RootState } from "store/module";
 import { useDispatch, useSelector } from "react-redux";
 import { layoutAction } from "store/slice/layout";
+// import Router from "next/router";
 //feedId, createDate, chaallengId , image , content , userId , feedlike, comment []
 // feeds: [feedId, createdDate, challengeId, image, content, userId, feedlike],
 // comment: [commentId, userId, feedId, content, createdDate, modifiedDate],
@@ -14,48 +15,33 @@ interface Propss {
   setShowModal: Function;
 }
 const Feed = (props: any) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const nickname = props.nickname;
-  // const startDate = props.feed.createdDate;
+  const startDate = props.dto.feed.createdDate;
   // const userimage = props.image;
   const user = useSelector((state: RootState) => state.user);
+  const nickname = useSelector((state: RootState) => state.user.nickname);
   const comments = useSelector((state: RootState) => state.comment.comments);
   const ondo = useSelector((state: RootState) => state.user.ondo);
-  const title1 = useSelector(
-    (state: RootState) => state.challenge.challenges[0].title
-  );
-  console.log(props.feed.user.image);
-  // 피드 하나하나당
-  console.log(props.feed);
+
+  // const challengeTitle = useSelector(
+  //   (state: RootState) => state.challenge.challenges
+  // );
+
+  //mainfeed 페이지, props 는 detailFeedDtos이다 해당 [{..},{..},{..}] 내려받음
+  //feed 페이지,  props.dto 는 해당 dto를 사용한다 이형식으로 리덕스에 저장됬다
+  // {..} 이것이 feed 이다
+  // console.log(props.dto.user.image);
+  // 피드 하나하나당이 있는 배열 default값!
+  // console.log(props.dto);
+
+  console.log(props.dto.feed);
+
+  //
   // challenges.map((item: any, idx: number) => {
   //   console.log(item);
   // });
-  // const [
-  //   {
-  //     feed: {
-  //       userid,
-  //       feedid,
-  //       iamge,
-  //       content,
-  //       createDate,
-  //       modifiedDate,
-  //       feedlike,
-  //       challengeId,
-  //     },
-  //   },
-  //   setData,
-  // ] = useState({
-  //   feed: {
-  //     userid: 0,
-  //     feedid: 0,
-  //     iamge: "",
-  //     content: "",
-  //     createDate: Date,
-  //     modifiedDate: Date,
-  //     feedlike: [],
-  //     challengeId: 0,
-  //   },
-  // });
+
   // const feedId = useSelector((state: RootState) => state.feed.feeds.feedId);
   // const image = useSelector((state: RootState) => state.feed.feeds.image);
   // const content = useSelector((state: RootState) => state.feed.feeds.content);
@@ -70,35 +56,11 @@ const Feed = (props: any) => {
   // const challengeId = useSelector(
   //   (state: RootState) => state.feed.feeds.challengeId
   // );
-  // const __openFeedDetail = useCallback(() => {
-  //   const feedData = {
-  //     feed: {
-  //       userId,
-  //       feedId,
-  //       image,
-  //       content,
-  //       createdDate,
-  //       modifiedDate,
-  //       feedlike,
-  //       challengeId,
-  //     },
-  //     user: { nickname: user ? user.nickname : "yongstar", userimage },
-  //   };
-
-  //   console.log(feedData);
-  //   dispatch(layoutAction.updateDetailData(feedData));
-  //   dispatch(layoutAction.updateDetailState(true));
-  // }, [
-  //   dispatch,
-  //   userId,
-  //   feedId,
-  //   image,
-  //   content,
-  //   createdDate,
-  //   modifiedDate,
-  //   feedlike,
-  //   challengeId,
-  // ]);
+  const __openFeedDetail = useCallback(() => {
+    console.log(props.dto.feed);
+    dispatch(layoutAction.updateDetailData(props.dto));
+    dispatch(layoutAction.updateDetailState(true));
+  }, [dispatch]);
 
   // // const comment = comments;
   // console.log(comments.length);
@@ -114,39 +76,45 @@ const Feed = (props: any) => {
   //   return () => {};
   // }, [IamgeLoad]);
   // //////////////////////////////// Date
-  // const oneDay: number = 1000 * 60 * 60 * 24;
+  const oneDay = 1000 * 60 * 60 * 24;
 
-  // function makeTwoDigits(time: any) {
-  //   return time.toString().length !== 2 ? `0${time}` : time;
-  // }
-  // const makeFeedTime = () => {
-  //   const feedDate = new Date(startDate);
-  //   const nowDate = Date.now(); //현재 시간
+  function makeTwoDigits(time: any) {
+    return time.toString().length !== 2 ? `0${time}` : time;
+  }
+  const makeFeedTime = () => {
+    const feedDate = new Date(startDate);
+    const nowDate = Date.now(); //현재 시간
 
-  //   const timeGap = nowDate - startDate;
+    const timeGap = nowDate - startDate;
 
-  //   const date = parseInt(timeGap / oneDay);
-  //   const hour = feedDate.getHours();
-  //   const minutes = feedDate.getMinutes();
-  //   console.log(hour + "hour");
-  //   console.log(minutes);
+    const date = parseInt(String(timeGap / oneDay));
+    const hour = feedDate.getHours();
+    const minutes = feedDate.getMinutes();
+    console.log(hour + "hour");
+    console.log(minutes);
+    console.log(startDate);
 
-  //   return ` ${hour > 12 ? "오후" : "오전"} ${
-  //     hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-  //   }:${makeTwoDigits(minutes)},  ${
-  //     date === 0 ? "오늘" : date === 1 ? "어제" : `${date} 일전`
-  //   }`;
-  // };
-  // //////////////////////////////
-  // const getStartDate = () => {
-  //   const newdate = new Date(startDate);
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+      // `${date} 일전`
+    }`;
+  };
+  //////////////////////////////
+  const getStartDate = () => {
+    const newdate = new Date(startDate);
 
-  //   const sy = newdate.getFullYear();
-  //   const sm = newdate.getMonth() + 1;
-  //   const sd = newdate.getDate();
+    const sy = newdate.getFullYear();
+    const sm = newdate.getMonth() + 1;
+    const sd = newdate.getDate();
 
-  //   return sy + "-" + sm + "-" + sd;
-  // };
+    return sy + "-" + sm + "-" + sd;
+  };
+  console.log(startDate);
+  const adate = new Date(startDate);
+  const newdate = adate.getMonth() + 1;
+  console.log(newdate);
   // const getDuration = () => {
   //   const endDate = new Date(startDate);
   //   endDate.setDate(endDate.getDate() + 2);
@@ -159,53 +127,51 @@ const Feed = (props: any) => {
   //   const ed = endDate.getDate();
   //   return sy + "-" + sm + "-" + sd + " ~ " + ey + "-" + em + "-" + ed;
   // };
-  // createdDate,
-  // challengeId,
-  // image,
-  // content,
-  // props.feed.feedId,
-  //   props.feed.userId,
-  // feedlike,
   //   console.log(props);
   // console.log(props.feed.feedId);
   //
   // console.log(props.feed.feed.feedlike);
 
   return (
-    <div
-      className="feed"
-      // onClick={__openFeedDetail}
-    >
-      <div className="top">
-        {props.feed.user.image && (
+    <div className="feed" onClick={__openFeedDetail}>
+      <div
+        className="top"
+        // onClick={() => {
+        //   Router.push(`/user/${props.dto.username}`);
+        // }}
+      >
+        {props.dto.user.image && (
           <div
             className="profile-image"
-            style={{ backgroundImage: `url(${props.feed.user.image})` }}
+            style={{ backgroundImage: `url(${props.dto.user.image})` }}
           >
-            {/* <img src={userimage} alt="온도이미지" /> */}
+            {/* { <img src={userimage} alt="온도이미지" />} */}
           </div>
         )}
         <div className="profile-desc">
-          <div className="nickname txt-bold">{/* {nickname} */}</div>
+          <div className="nickname txt-bold">{props.dto.user.username}</div>
           <div className="timestamp">
-            {/* 온도 :{props.feed.user.ondo} */}
+            온도 : {props.dto.user.ondo}
             ˚C
           </div>
-          <div className="timestamp">도전 중 :{/* {title1} */}</div>
+          <div className="timestamp">
+            도전 명 : {props.dto.feed.challengeId}
+          </div>
+          {/* <div className="timestamp">도전 명 : {challengeTitle}</div> */}
           {/* <div className="timestamp">도전 기간 :{getDuration()}</div> */}
-          {/* <div className="timestamp">참여 날짜 : {getStartDate()}</div> */}
-          {/* <div className="timestamp">피드 작성 시간 : {makeFeedTime()}</div> */}
+          <div className="timestamp">참여 날짜 : {getStartDate()}</div>
+          <div className="timestamp">피드 작성 시간 : {makeFeedTime()}</div>
         </div>
       </div>
       <div className="contents">
-        {props.feed.feed.content}
-        {props.feed.feed.image && (
+        {props.dto.feed.content}
+        {/* <img src={props.feed.image} alt="온도이미지" /> */}
+        {props.dto.feed.image && (
           <div
             className="image"
-            style={{ backgroundImage: `url(${props.feed.feed.image})` }}
+            style={{ backgroundImage: `url(${props.dto.feed.image})` }}
           ></div>
         )}
-        {/* <img src={props.feed.image} alt="온도이미지" /> */}
       </div>
       <div className="bottom">
         <div className="like">
@@ -213,7 +179,7 @@ const Feed = (props: any) => {
             <img src="/assets/feed/like-dac.svg" alt="좋아요" />
           </div>
           <div className="count txt-bold">
-            {props.feed.feed.feedlike ? props.feed.feed.feedlike.length : 2}
+            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 2}
           </div>
         </div>
         <div className="comment">
@@ -222,7 +188,7 @@ const Feed = (props: any) => {
             <img src="/assets/feed/comment.svg" alt="댓글" />
           </div>
           <div className="count txt-bold">
-            {props.feed.comments ? props.feed.comments.length : 0}
+            {props.dto.comments ? props.dto.comments.length : 0}
           </div>
           {/* </Link> */}
         </div>
@@ -231,3 +197,66 @@ const Feed = (props: any) => {
   );
 };
 export default Feed;
+
+// const [
+//   {
+//     feed: {
+//       _userid,
+//       _feedid,
+//       _image,
+//       _content,
+//       _createdDate,
+//       _modifiedDate,
+//       _feedlike,
+//       _challengeId,
+//       _comment,
+//     },
+//   },
+//   setData,
+// ] = useState({
+//   feed: {
+//     _userid: 0,
+//     _feedid: 0,
+//     _image: "",
+//     _content: "",
+//     _createdDate: Date,
+//     _modifiedDate: Date,
+//     _feedlike: [],
+//     _challengeId: 0,
+//     _comment: [],
+//   },
+// });
+
+// const __openFeedDetail = useCallback(() => {
+//   const feedData = {
+//     feed: {
+//       _userid,
+//       _feedid,
+//       _image,
+//       _content,
+//       _createdDate,
+//       _modifiedDate,
+//       _feedlike,
+//       _challengeId,
+//       _comment,
+//     },
+//     // user: { nickname: user ? user.nickname : "yongstar", _userimage },
+//   };
+
+//   console.log(feedData);
+//   console.log(props.dto.feed);
+//   // dispatch(layoutAction.updateDetailData(feedData));
+//   dispatch(layoutAction.updateDetailData(props.dto.feed));
+//   dispatch(layoutAction.updateDetailState(true));
+// }, [
+//   dispatch,
+//   _userid,
+//   _feedid,
+//   _image,
+//   _content,
+//   _createdDate,
+//   _modifiedDate,
+//   _feedlike,
+//   _challengeId,
+//   _comment,
+// ]);

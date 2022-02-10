@@ -2,14 +2,17 @@ import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/module";
 import { layoutAction } from "store/slice/layout";
+import Reply from "components/Feed/reply";
+import Router from "next/router";
 
 function Detailfeed() {
   const dispatch = useDispatch();
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const userImage = useSelector((state: RootState) => state.user.image);
-  const image = useSelector(
-    (state: RootState) => state.layout.detailData.feed.image
-  );
+  // const session = useSelector((state)=>state.auth.session);
+  // const image = useSelector(
+  //   (state: RootState) => state.layout.detailData.feed.image
+  // );
   const startDate = detailData.feed.createdDate;
 
   // const __getProfileImage = useCallback(() => {}, [userImage]);
@@ -40,9 +43,12 @@ function Detailfeed() {
     console.log(hour + "hour");
     console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : `${date} 일전`
-      }`;
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+      // `${date} 일전`
+    }`;
   };
 
   const __closeDetail = useCallback(() => {
@@ -76,26 +82,34 @@ function Detailfeed() {
             <img src="/assets/feed/close.svg" alt="닫기" />
           </div>
           {/* {detailData.feed.image && <div className="main-image" style={{ backgroundImage: `url(${detailData.feed.image})`></div>} */}
-          {image && (
+          {detailData.feed.image && (
             <div
               className="main-image"
-              style={{ backgroundImage: `url(${image})` }}
+              style={{ backgroundImage: `url(${detailData.feed.image})` }}
             ></div>
           )}
           <div className="contents">
             <div className="feed-content">
-              <div className="top">
-                {userImage && (
+              <div
+                className="top"
+                onClick={() => {
+                  Router.push(`/user/${detailData.user.username}`);
+                }}
+              >
+                {detailData.user.image && (
                   <div
                     className="profile-image"
-                    style={{ backgroundImage: `url(${userImage})` }}
+                    style={{ backgroundImage: `url(${detailData.user.image})` }}
                   ></div>
                 )}
                 <div className="feed-desc">
                   <div className="nickname txt-bold">
-                    {detailData.user.nickname}
+                    {detailData.user.username}
                   </div>
-                  <div className="timestamp">{makeFeedTime()}</div>
+                  <div className="timestamp">
+                    {getStartDate()}
+                    {makeFeedTime()}
+                  </div>
                 </div>
               </div>
 
@@ -106,7 +120,7 @@ function Detailfeed() {
                     <img src="assets/feed/like-dac.svg" alt="좋아요" />
                   </div>
                   <div className="title txt-bold">
-                    {/* {detailData.feed.feedlike[0]} */}25k
+                    {detailData.feed.feedlike} 2
                   </div>
                 </div>
                 <div className="comment">
@@ -122,118 +136,10 @@ function Detailfeed() {
               </div>
             </div>
             <div className="feed-comments">
-              <div className="comment-form comment">
-                <div className="top">
-                  <div className="left">
-                    <div className="profile-image"></div>
-                    <div className="feed-desc">
-                      <div className="nickname">yongstar</div>
-                      <div className="timestamp">8:15pm, yesterday</div>
-                    </div>
-                  </div>
-                  <div className="right">
-                    <div className="like">
-                      <div className="asset">
-                        <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                      </div>
-                      <div className="title txt-bold">34k</div>
-                    </div>
-                    <div className="reply-btn">답글</div>
-                  </div>
-                </div>
-                <div className="body">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Reprehenderit sapiente corrupti veritatis tempora repudiandae
-                  dolor delectus animi nisi, saepe, commodi nemo totam sequi.
-                  Nobis consequatur accusamus suscipit porro iure dolor.
-                </div>
-              </div>
-
-              <div className="comment-form reply">
-                <div className="top">
-                  <div className="left">
-                    <div className="profile-image"></div>
-                    <div className="feed-desc">
-                      <div className="nickname">yongstar</div>
-                      <div className="timestamp">8:15pm, yesterday</div>
-                    </div>
-                  </div>
-                  <div className="right">
-                    <div className="like">
-                      <div className="asset">
-                        <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                      </div>
-                      <div className="title txt-bold">34k</div>
-                    </div>
-                    <div className="reply-btn">답글</div>
-                  </div>
-                </div>
-                <div className="body">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Reprehenderit sapiente corrupti veritatis tempora repudiandae
-                  dolor delectus animi nisi, saepe, commodi nemo totam sequi.
-                  Nobis consequatur accusamus suscipit porro iure dolor.
-                </div>
-              </div>
-
-              <div className="comment-form comment">
-                <div className="top">
-                  <div className="left">
-                    <div className="profile-image"></div>
-                    <div className="feed-desc">
-                      <div className="nickname">yongstar</div>
-                      <div className="timestamp">8:15pm, yesterday</div>
-                    </div>
-                  </div>
-                  <div className="right">
-                    <div className="like">
-                      <div className="asset">
-                        <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                      </div>
-                      <div className="title txt-bold">34k</div>
-                    </div>
-                    <div className="reply-btn">답글</div>
-                  </div>
-                </div>
-                <div className="body">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Reprehenderit sapiente corrupti veritatis tempora repudiandae
-                  dolor delectus animi nisi, saepe, commodi nemo totam sequi.
-                  Nobis consequatur accusamus suscipit porro iure dolor.
-                </div>
-              </div>
-
-              <div className="comment-form comment">
-                <div className="top">
-                  <div className="left">
-                    {userImage && (
-                      <div
-                        className="profile-image"
-                        style={{ backgroundImage: `url(${userImage})` }}
-                      ></div>
-                    )}
-                    <div className="feed-desc">
-                      <div className="nickname txt-bold">yongstar</div>
-                      <div className="timestamp">8:15pm, yesterday</div>
-                    </div>
-                  </div>
-                  <div className="right">
-                    <div className="like">
-                      <div className="asset">
-                        <img src="/assets/feed/like-dac.svg" alt="좋아요" />
-                      </div>
-                      <div className="title txt-bold">34k</div>
-                    </div>
-                    <div className="reply-btn">답글</div>
-                  </div>
-                </div>
-                <div className="body">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Reprehenderit sapiente corrupti veritatis tempora repudiandae
-                  dolor delectus animi nisi, saepe, commodi nemo totam sequi.
-                  Nobis consequatur accusamus suscipit porro iure dolor.
-                </div>
-              </div>
+              {detailData.comments.map((item: any, idx: number) => {
+                // {/* // console.log(feeds); */}
+                return <Reply key={idx} item={detailData} reply={item} />;
+              })}
             </div>
             <div className="feed-write-comment">
               {userImage && (

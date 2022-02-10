@@ -20,7 +20,7 @@ $yong-blue: #5085e8;
       width: 100%;
       height: 100vh;
       background-color: $yong-gray200;
-      opacity: 0.8;
+      opacity: 0.6;
     }
     .wrapper {
       width: 1200px;
@@ -52,6 +52,7 @@ $yong-blue: #5085e8;
       .contents {
         display: flex;
         flex-direction: column;
+        width: 100%;
         .feed-content {
           padding: 21px;
           border-bottom: 1px solid #edbaba;
@@ -76,8 +77,8 @@ $yong-blue: #5085e8;
               }
               .timestamp {
                 font-size: 12px;
-                color: $yong-gray200;
-                opacity: 0.4;
+                color: yellowgreen;
+                opacity: 0.7;
                 margin-top: 4px;
               }
             }
@@ -147,8 +148,8 @@ $yong-blue: #5085e8;
                   }
                   .timestamp {
                     font-size: 10px;
-                    color: $yong-gray200;
-                    opacity: 0.4;
+                    color: yellowgreen;
+                    opacity: 0.7;
                     margin-top: 4px;
                   }
                 }

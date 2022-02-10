@@ -1,10 +1,5 @@
-// import firebaseApp from '@config/firebaseApp';
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import "../styles/feedcss/index.scss";
-// import "../styles/feedcss/index.module.scss";
-// import style from "./style.module.css";
-// import "./mainfeedcss/style.module.scss";
 import axios from "axios";
 import { userActions } from "store/slice/user";
 import { RootState } from "../../store/module";
@@ -14,25 +9,23 @@ import Router from "next/router";
 import { feedAction } from "store/slice/feed";
 import { arrayBuffer } from "stream/consumers";
 import { actionChannel } from "redux-saga/effects";
+import Rankfeed from "components/Feed/rankfeed";
 
 function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
-  const { ondo } = useSelector((state: RootState) => state.user);
-  const { image } = useSelector((state: RootState) => state.user);
+  const { ondo } = useSelector((state: RootState) => state.user.users);
+  const image = useSelector((state: RootState) => state.user.image);
   // const { feeds } = useSelector((state: RootState) => state.feed);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
   const dispatch = useDispatch();
   const [feeds, setFeeds] = useState([]); //프롭으로내려주자
+  const [rankers, setRankers] = useState([]); //프롭으로내려주자
+  const dataId = useRef(0);
   // useEffect(() => {
   //   setUserProfileImage(image);
   // });
-  ////////////////////////
-  useEffect(() => {
-    // dispatch(userActions.getUser());
-    dispatch(feedAction.getFeed());
-  }, []);
   const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
@@ -61,7 +54,7 @@ function Mainfeed() {
   //res.data.detailFeedDtos 여기까지가 action임
   //res.data.detailFeedDtos.feed 가 action.payload 임
   let eml: any = [];
-  const __GetFeedState = (token: string | null) => {
+  const __GetFeedState = useCallback((token: string | null) => {
     return axios({
       method: "GET",
       url: "http://localhost:8080/feed",
@@ -72,6 +65,7 @@ function Mainfeed() {
         // console.log(res.data.detailFeedDtos);
         let feedss = res.data.detailFeedDtos;
         //[{피드1},{피드2},{피드3}] 저장되어있음
+        console.log(res.data);
         console.log(res.data.detailFeedDtos);
         // console.log(feeds);
         // feeds.map((els: any) => {
@@ -84,8 +78,9 @@ function Mainfeed() {
         ////
         // console.log(res.data);
         //
-        //객체가들어있는 해당배열을 feeds에 저장, 프롭으로 내려주기위해
-        setFeeds(res.data.detailFeedDtos);
+        setRankers(res.data.rankusers);
+        //객체가들어있는 해당배열을 feeds에 저장, 프롭으로 내려주기위해, 최신순
+        setFeeds(res.data.detailFeedDtos.reverse());
         return;
 
         // feedss.map((elm: any) => {
@@ -97,13 +92,15 @@ function Mainfeed() {
       .catch((err) => {
         return err;
       });
-  };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
     __GetFeedState(token);
     dispatch(userActions.getUser());
+    dispatch(feedAction.getFeed());
+    setUserProfileImage(image);
   }, []);
   //##################################################################################
   // const url = "http://i6a601.p.ssafy.io:8080/feed";
@@ -111,6 +108,7 @@ function Mainfeed() {
   //   console.log(item.feed);
   // });
   // console.log(test);
+  console.log(rankers);
   return (
     <div>
       <div className="mainfeed">
@@ -118,7 +116,7 @@ function Mainfeed() {
           <div className="feed-list">
             <form
               className="write-feed"
-            // onSubmit={__makeFeed}
+              // onSubmit={__makeFeed}
             >
               {image && (
                 <div
@@ -127,24 +125,29 @@ function Mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div className="inp" onClick={() => { Router.push('/feed/write') }} >
+              <div
+                className="inp"
+                onClick={() => {
+                  Router.push("/feed/write");
+                }}
+              >
                 <input
                   disabled
                   // ref={contextRef}
                   type="text"
-                  placeholder="      오늘의 도전 완료 피드 쓰러가기"
-                // onChange={(e) => setContext(e.target.value)}
+                  placeholder="           오늘의 도전 완료 피드 쓰러가기"
+                  // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
-                <label htmlFor="get-image-input">
+                {/* <label htmlFor="get-image-input">
                   <img src="/assets/main/add-image.svg" alt="이미지 추가하기" />
                 </label>
                 <input
                   id="get-image-input"
                   type="file"
-                // onChange={__getData64FromImage}
-                />
+                  // onChange={__getData64FromImage}
+                /> */}
               </div>
             </form>
             {/* <Feed /> */}
@@ -154,10 +157,10 @@ function Mainfeed() {
               return (
                 <Feed
                   key={idx}
-                  feed={item}
+                  dto={item}
                   nickname={nickname}
                   image={image}
-                // comments={comments}
+                  // comments={comments}
                 />
               );
             })}
@@ -165,7 +168,7 @@ function Mainfeed() {
 
           <div className="friend-list">
             <div className="my-profile">
-              {image && (
+              {userProfileImage && (
                 <div
                   className="profile-image"
                   style={{ backgroundImage: `url(${image})` }}
@@ -184,24 +187,10 @@ function Mainfeed() {
                 나의 온도 : {ondo} ˚C
               </div>
               <div className="title txt-bold">Ondo 순위</div>
-              <ul className="friend-list-wrapper">
-                <li className="friend">
-                  <div className="profile-image"></div>
-                  <div className="nickname txt-bold">1. 일주어터</div>
-                </li>
-                <li className="friend">
-                  <div className="profile-image"></div>
-                  <div className="nickname txt-bold">2. 카리나</div>
-                </li>
-                <li className="friend">
-                  <div className="profile-image"></div>
-                  <div className="nickname txt-bold">3. 윈터</div>
-                </li>
-                <li className="friend">
-                  <div className="profile-image"></div>
-                  <div className="nickname txt-bold">4. 혁이</div>
-                </li>
-              </ul>
+              {rankers.map((item: any, idx: number) => {
+                // console.log(feeds);
+                return <Rankfeed key={idx} dto={item} num={idx + 1} />;
+              })}
             </div>
           </div>
         </div>
