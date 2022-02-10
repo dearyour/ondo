@@ -94,8 +94,8 @@ public class UserService {
         });
 
     //        Boolean modifyflag;
-        Boolean modifyflag = true;
-        if(user.getUserId() == tokenuser.getUserId()) modifyflag = false;
+        Boolean modifyflag = false;
+        if(user.getUserId() == tokenuser.getUserId()) modifyflag = true;
 
     //        Boolean followflag;
         Boolean followflag = true;
