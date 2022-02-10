@@ -8,8 +8,12 @@ import { Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import Router from 'next/router';
+<<<<<<< HEAD
+import { feed } from 'store/slice/feed';
+=======
 import useImg from 'store/hooks/imgHooks';
 import CropImg from 'components/Cropper';
+>>>>>>> back-updatecomment
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -50,8 +54,12 @@ const Write_feed = () => {
   const [hashtag, setHashtag] = useState<string | ''>('')
   // const [image, setImage] = useState<string | ''>('')
   const [content, setContent] = useState<string | ''>('')
+<<<<<<< HEAD
+  const [files, setFiles] = useState<any|''>('')
+=======
   // const [files, setFiles] = useState<File | ''>('')
   const [Imgname, setImgname] = useState<string>();
+>>>>>>> back-updatecomment
   const [num, setNum] = useState<number>(0)
   const [hashArr, setHashArr] = useState<string[] | []>([])
   const [challenge, setChallenge] = useState<string | ''>('')
@@ -90,19 +98,31 @@ const Write_feed = () => {
 
   // 피드 작성 axios
   const WriteRequest = () => {
+<<<<<<< HEAD
+    const datas = {
+=======
     const feed = {
       image: new FormData(),
+>>>>>>> back-updatecomment
       tags: hashArr,
-      challenge: challenge,
+      challengeId: 1,
       content: content,
     }
     feed.image.append('image', file)
     const token = localStorage.getItem('Token')
+    const formData = new FormData();
+    formData.append("file", files.originFileObj);
+    formData.append("data", new Blob([JSON.stringify(datas)], {type: "application/json"}))
+    console.log(formData.get('file'));
     axios({
       method: 'POST',
-      url: '',
-      headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
-      data: feed,
+      url: 'http://localhost:8080/feed/create',
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      Authorization: "Bearer " + token 
+    },
+      data: formData,
+
     })
 
   }
@@ -151,13 +171,17 @@ const Write_feed = () => {
 
   return (
     <AppLayout>
-      <Write>
+      <Write >
         <Writetitle>피드 작성하기</Writetitle>
         {originalImg ? <CropImg></CropImg> : null}
         {/* <MyImage>{imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '50%', border: '1px solid #ebc1c1' }} /> : ''}</MyImage> */}
         <WriteDiv>
           <Label>이미지</Label>
+<<<<<<< HEAD
+          <UploadInput  value={image}></UploadInput>
+=======
           <UploadInput value={Imgname}></UploadInput>
+>>>>>>> back-updatecomment
           <UpImage {...ImageUploadInputSetting}
             className="avatar-uploader"
             showUploadList={false}

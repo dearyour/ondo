@@ -44,6 +44,7 @@ public class FeedService {
     private final ChallengeParticipateRepository challengeParticipateRepository;
     private final KakaoUtil kakaoUtil;
     private final TagRepository tagRepository;
+    private final FeedTagRepository feedTagRepository;
 
     private final ChallengeService challengeService;
 
@@ -69,10 +70,10 @@ public class FeedService {
 
             for(Comment c : comments){
                 if(c.getUser().getUserId() == tokenuser.getUserId()){
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(),c.getUser().getImage(),false);
                     detailCommentDtos.add(detailCommentDto);
                 } else {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true); //토큰아이디랑 작성아이디 다르면 활성화 true
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(),c.getUser().getImage(),true); //토큰아이디랑 작성아이디 다르면 활성화 true
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
@@ -88,7 +89,7 @@ public class FeedService {
         List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
         List<RankUserDto> rankUserDtos = new ArrayList<>();
         for(User u : ulist){
-            rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage()));
+            rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage(),u.getOndo()));
         }
 
         MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos,rankUserDtos);
@@ -179,10 +180,10 @@ public class FeedService {
 
         for (Comment c : comments) {
             if (c.getUser().getUserId() == tokenuser.getUserId()) {
-                DetailCommentDto detailCommentDto = new DetailCommentDto(c, true);
+                DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(), c.getUser().getImage(),true);
                 detailCommentDtos.add(detailCommentDto);
             } else {
-                DetailCommentDto detailCommentDto = new DetailCommentDto(c, false);
+                DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(), c.getUser().getImage(),false);
                 detailCommentDtos.add(detailCommentDto);
             }
         }
@@ -204,6 +205,22 @@ public class FeedService {
 
         Feed newFeed = feedSaveDto.toEntity(user.getUserId(), image);
         Feed feed = feedRepository.save(newFeed);
+
+        // 태그 등록 (이미 디비에 같은 이름 저장되어있으면 x)
+        ArrayList<String> tags = feedSaveDto.getTags();
+        for(String s : tags){
+            if(tagRepository.findByName(s) == null) {
+                Tag tag = tagRepository.save(new Tag(s));
+                //연결
+                feedTagRepository.save(new FeedTag(feed,tag));
+            } else {
+                //연결
+                Tag tag = new Tag(s);
+                feedTagRepository.save(new FeedTag(feed,tag));
+            }
+        }
+
+
         //로직 구현
         Challenge challenge = challengeRepository.findByChallengeId(feedSaveDto.getChallengeId());
         ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge,user);
