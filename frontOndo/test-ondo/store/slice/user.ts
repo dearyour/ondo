@@ -16,8 +16,8 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    profileEdit: (state) => { },
-    getUser: (state) => { },
+    profileEdit: (state) => {},
+    getUser: (state) => {},
     loadingStart: (state) => {
       state.isLoading = true;
     },
@@ -34,7 +34,7 @@ export const userSlice = createSlice({
       state.users = payload;
     },
     getKakaoKey: (state) => {
-      state.isLoading = true
+      state.isLoading = true;
     },
     getKakaoKeySuccess: (state, { payload }) => {
       state.session = payload;
