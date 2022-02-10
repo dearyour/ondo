@@ -209,13 +209,13 @@ public class FeedService {
         // 태그 등록 (이미 디비에 같은 이름 저장되어있으면 x)
         ArrayList<String> tags = feedSaveDto.getTags();
         for(String s : tags){
-            if(tagRepository.findByName(s) == null) {
-                Tag tag = tagRepository.save(new Tag(s));
-                //연결
-                feedTagRepository.save(new FeedTag(feed,tag));
-            } else {
+            if(tagRepository.findByName(s) != null) {
                 //연결
                 Tag tag = new Tag(s);
+                feedTagRepository.save(new FeedTag(feed,tag));
+            } else {
+                Tag tag = tagRepository.save(new Tag(s));
+                //연결
                 feedTagRepository.save(new FeedTag(feed,tag));
             }
         }
