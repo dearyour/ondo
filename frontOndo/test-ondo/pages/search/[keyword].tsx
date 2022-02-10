@@ -11,6 +11,11 @@ import styled from 'styled-components';
 
 
 const SearchPage = () => {
+  let data = {
+    challenges: [],
+    feeds: [],
+    users: [],
+  }
   const router = useRouter()
   const { keyword } = router.query
   useEffect(useCallback(() => {
@@ -24,13 +29,12 @@ const SearchPage = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res)
+          data = res.data
+          console.log(data)
         })
     }
-  }, []), [keyword])
+  }, [keyword]), [keyword])
 
-  const router = useRouter()
-  const { keyword } = router.query
 
   const temptemp = { image: 'https://picsum.photos/1000', id: 1, nickname: 'asd' }
   const temp2 = { image: 'https://picsum.photos/1200', id: 2, nickname: 'asdf' }
@@ -42,11 +46,11 @@ const SearchPage = () => {
 
   return (
     <AppLayout>
-      <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={temp.challenge}></SearchResultChallenge>
+      <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={data.challenges}></SearchResultChallenge>
       <DivideLine />
-      <SearchResultFeed title='Feed' keyword={String(keyword)} results={temp.feed}></SearchResultFeed>
+      <SearchResultFeed title='Feed' keyword={String(keyword)} results={data.feeds}></SearchResultFeed>
       <DivideLine />
-      <SearchResultUser title='User' keyword={String(keyword)} results={temp.user}></SearchResultUser>
+      <SearchResultUser title='User' keyword={String(keyword)} results={data.users}></SearchResultUser>
     </AppLayout>
   )
 };
