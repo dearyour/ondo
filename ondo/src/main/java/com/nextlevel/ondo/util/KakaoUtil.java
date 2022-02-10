@@ -40,7 +40,6 @@ public class KakaoUtil {
 
         ResponseEntity<String> response = null;
 
-
         //Http 요청하기 - Post - response 변수의 웅답 받음
         response = rt.exchange(
                 "https://kapi.kakao.com/v2/user/me",
