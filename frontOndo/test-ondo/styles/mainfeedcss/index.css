@@ -1,5 +1,5 @@
 #__next .mainfeed {
-  padding-top: 54px;
+  padding-top: 5px;
   background-color: #fafafa;
   min-height: 100vh;
 }
@@ -24,22 +24,31 @@
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed {
+  width: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-left: 182px;
   padding: 20px 24px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #edbaba;
+  border-radius: 40px;
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .profile-image {
   width: 40px;
   height: 40px;
   border-radius: 40px;
-  background-color: #e8e8e8;
+  background-color: #edbaba;
   margin-right: 12px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .inp {
@@ -56,19 +65,19 @@
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .inp input::-webkit-input-placeholder {
-  color: #e8e8e8;
+  color: #edbaba;
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .inp input:-ms-input-placeholder {
-  color: #e8e8e8;
+  color: #edbaba;
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .inp input::-ms-input-placeholder {
-  color: #e8e8e8;
+  color: #edbaba;
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .inp input::placeholder {
-  color: #e8e8e8;
+  color: #edbaba;
 }
 
 #__next .mainfeed .wrapper .feed-list .write-feed .get-image label {
@@ -86,7 +95,8 @@
 }
 
 #__next .mainfeed .wrapper .feed-list .feed {
-  border: 1px solid #e8e8e8;
+  border: 1px solid #edbaba;
+  border-radius: 40px;
   background-color: white;
   margin-top: 25px;
   padding: 20px 24px;
@@ -107,23 +117,26 @@
   border-radius: 40px;
   background-color: #e8e8e8;
   margin-right: 12px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #__next .mainfeed .wrapper .feed-list .feed .top .profile-desc .nicknaeme {
-  font-size: 14px;
+  font-size: 20px;
   color: #454545;
 }
 
 #__next .mainfeed .wrapper .feed-list .feed .top .profile-desc .timestamp {
-  font-size: 10px;
-  color: #454545;
-  opacity: 0.4;
+  font-size: 15px;
+  color: greenyellow;
+  opacity: 0.8;
   margin-top: 2px;
 }
 
 #__next .mainfeed .wrapper .feed-list .feed .contents {
   margin-top: 48px;
-  font-size: 12px;
+  font-size: 14px;
   color: #454545;
   line-height: 1.8;
 }
@@ -188,7 +201,8 @@
   position: sticky;
   padding: 20px 16px;
   width: 246px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #edbaba;
+  border-radius: 40px;
   background-color: white;
   top: 84px;
 }
@@ -208,10 +222,13 @@
   border-radius: 10px;
   background-color: #e8e8e8;
   margin-right: 12px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #__next .mainfeed .wrapper .friend-list .my-profile .nickname {
-  font-size: 12px;
+  font-size: 14px;
   color: #454545;
 }
 
@@ -220,8 +237,17 @@
 }
 
 #__next .mainfeed .wrapper .friend-list .my-friends > .title {
-  font-size: 10px;
-  color: #454545;
+  font-size: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #edbaba;
+  border-top: 3px solid #edbaba;
+  margin-top: 12px;
+  margin-bottom: 10px;
 }
 
 #__next .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper {
@@ -246,6 +272,9 @@
   border-radius: 10px;
   background-color: #e8e8e8;
   margin-right: 12px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #__next .mainfeed .wrapper .friend-list .my-friends .friend-list-wrapper .friend .nickname {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { Button, Form, Input } from "antd";
@@ -7,7 +7,7 @@ import axios from "axios";
 import { GetFeedState } from "store/api/Feed.api";
 
 const Login = () => {
-  const __GetUserStates = (token: string | null) => {
+  const __GetUserStates = useCallback((token: string | null) => {
     return axios({
       method: "GET",
       url: "http://localhost:8080/user/info",
@@ -20,7 +20,7 @@ const Login = () => {
       .catch((err) => {
         return err;
       });
-  };
+  }, []);
   const [feeds, setFeeds] = useState([]); //프롭으로내려주자
   const __GetFeedState = (token: string | null) => {
     return axios({
@@ -31,7 +31,7 @@ const Login = () => {
     })
       .then((res) => {
         // console.log(res.data.detailFeedDtos);
-        console.log(res);
+        console.log(res.data);
         return setFeeds(res.data.detailFeedDtos);
       })
       .catch((err) => {
@@ -42,10 +42,10 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
-    // __GetFeedState(token);
-    __GetUserStates(token);
+    __GetFeedState(token);
+    // __GetUserStates(token);
     // GetFeedState(token);
-  }, []);
+  }, [__GetUserStates]);
   //아래 얘는 작동인됨 위에는됨 도대체왜?????
   // const __GetFeedssssState = (token: string | null) => {
   //   return axios({
