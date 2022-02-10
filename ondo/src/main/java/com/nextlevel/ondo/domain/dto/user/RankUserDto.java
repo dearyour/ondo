@@ -8,11 +8,13 @@ public class RankUserDto {
 
     private String username;
     private String image;
+    private int ondo;
 
     @Builder
-    public RankUserDto(String username, String image) {
+    public RankUserDto(String username, String image, int ondo) {
         this.username = username;
         this.image = image;
+        this.ondo = ondo;
     }
 
 }
