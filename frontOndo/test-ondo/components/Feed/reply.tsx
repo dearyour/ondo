@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 
 export default function reply(props: any) {
   console.log(props.item.user.userId);
@@ -6,12 +7,19 @@ export default function reply(props: any) {
     <div className="comment-form comment">
       <div className="top">
         <div className="left">
-          <div className="profile-image"></div>
+          {/* <div className="profile-image"></div> */}
+          {props.reply.image && (
+            <div
+              className="profile-image"
+              onClick={() => {
+                Router.push(`/user/${props.reply.username}`);
+              }}
+              style={{ backgroundImage: `url(${props.reply.image})` }}
+            ></div>
+          )}
           <div className="feed-desc">
             {/* <div className="nickname">{props.item.user.username}</div> */}
-            <div className="nickname">
-              {props.item.user.userId} , {props.reply.comment.commentId}
-            </div>
+            <div className="nickname">{props.reply.username}</div>
             <div className="timestamp">{props.reply.comment.createdDate}</div>
           </div>
         </div>

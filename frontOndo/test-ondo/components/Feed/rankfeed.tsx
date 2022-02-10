@@ -5,7 +5,7 @@ import Link from "next/link";
 function rankfeed(props: any) {
   return (
     <ul className="friend-list-wrapper">
-      {props.num}위
+      {props.num}위 {props.dto.ondo}C
       <li
         className="friend"
         onClick={() => {
