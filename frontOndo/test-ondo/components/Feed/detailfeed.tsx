@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/module";
 import { layoutAction } from "store/slice/layout";
 
-function detailfeed() {
+function Detailfeed() {
   const dispatch = useDispatch();
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const userImage = useSelector((state: RootState) => state.user.image);
@@ -40,11 +40,9 @@ function detailfeed() {
     console.log(hour + "hour");
     console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : `${date} 일전`
-    }`;
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : `${date} 일전`
+      }`;
   };
 
   const __closeDetail = useCallback(() => {
@@ -255,4 +253,4 @@ function detailfeed() {
   );
 }
 
-export default detailfeed;
+export default Detailfeed;

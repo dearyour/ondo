@@ -10,89 +10,39 @@ import { userActions } from "store/slice/user";
 import { RootState } from "../../store/module";
 import Feed from "components/Feed/Feed";
 import { Feed as Feedtype, FeedParams } from "store/interfaces/Feed.interface";
-import Router from 'next/router';
+import Router from "next/router";
+import { feedAction } from "store/slice/feed";
+import { arrayBuffer } from "stream/consumers";
+import { actionChannel } from "redux-saga/effects";
 
-function mainfeed() {
-  // const dispatch = useDispatch();
+function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user);
   const { image } = useSelector((state: RootState) => state.user);
-  const { feeds } = useSelector((state: RootState) => state.feed);
+  // const { feeds } = useSelector((state: RootState) => state.feed);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
-  useEffect(() => {
-    setUserProfileImage(image);
-  });
-
-  // const [feeds, setFeeds] = useState([]);
-  // const {
-  //   feedId,
-  //   challengeId,
-  //   image,
-  //   content,
-  //   userId,
-  //   createdDate,
-  //   modifiedDate,
-  //   feedlike,
-  // } = useSelector((state: RootState) => state.feed.feeds[0]);
-  // console.log(
-  //   feeds,
-  //   feedId,
-  //   challengeId,
-  //   image,
-  //   content,
-  //   userId,
-  //   createdDate,
-  //   modifiedDate,
-  //   feedlike
-  // );
-
-  //유저 이미지 불러오기 ##########
-  // const __getUserProfileImage = useCallback(() => {
-  //   if (user) {
-  //     const { userid } = user;
-
-  //     let url = "http://i6a601.p.ssafy.io:8080/user/profile";
-  //     axios({
-  //       method: "GET",
-  //       url: url,
-  //       headers: { Authorization: "Bearer " + token },
-  //       data: {
-  //         userid: userid,
-  //       },
-  //     })
-  //       .then((res) => {
-  //         console.log(res);
-  //         return res.data;
-  //         setUserprofileImage(image);
-  //       })
-  //       .catch((err) => {
-  //         return err;
-  //       });
-  //   }
-  // }, [user]);
+  const dispatch = useDispatch();
+  const [feeds, setFeeds] = useState([]); //프롭으로내려주자
   // useEffect(() => {
-  //   __getUserProfileImage();
-  //   return () => {};
-  // }, [__getUserProfileImage]);
-  
-  // const token = localStorage.getItem("Token");
-  
-  // const token = useSelector(() => {
-  //   localStorage.getItem("token");
+  //   setUserProfileImage(image);
   // });
-  // console.log(token);
 
-  const __GetFeedState = (token: string | null) => {
+  ////////////////////////
+  useEffect(() => {
+    // dispatch(userActions.getUser());
+    dispatch(feedAction.getFeed());
+  }, []);
+  const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://localhost:8080/feed",
-      // url: "https://jsonplaceholder.typicode.com/comments",
+      url: "http://localhost:8080/user/info",
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
         console.log(res);
+        console.log(res.data);
         return res.data;
       })
       .catch((err) => {
@@ -101,45 +51,67 @@ function mainfeed() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('Token')
+    const token = localStorage.getItem("Token");
+    __GetUserState(token);
+    // console.log(userstate.Object.email);
+    // dispatch(userActions.setnickname(userstate));
+  }, []);
+  //////////////////////////////////////////
+
+  //##################################################################################
+  //res.data.detailFeedDtos 여기까지가 action임
+  //res.data.detailFeedDtos.feed 가 action.payload 임
+  let eml: any = [];
+  const __GetFeedState = (token: string | null) => {
+    return axios({
+      method: "GET",
+      url: "http://localhost:8080/feed",
+      // url: "https://jsonplaceholder.typicode.com/comments",
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        let feedss = res.data.detailFeedDtos;
+        //[{피드1},{피드2},{피드3}] 저장되어있음
+        console.log(res.data.detailFeedDtos);
+        // console.log(feeds);
+        // feeds.map((els: any) => {
+        //   console.log(els);
+
+        // elss.finds((elw: any) => {
+        //   console.log(elw);
+        // });
+        // }),
+        ////
+        // console.log(res.data);
+        //
+        //객체가들어있는 해당배열을 feeds에 저장, 프롭으로 내려주기위해
+        setFeeds(res.data.detailFeedDtos);
+        return;
+
+        // feedss.map((elm: any) => {
+        //   console.log(elm.feed);
+        //   return elm.feed;
+        //   return setFeeds(res.data.detailFeedDtos);
+        // });
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
     __GetFeedState(token);
-  }, [__GetFeedState]);
-
+    dispatch(userActions.getUser());
+  }, []);
+  //##################################################################################
   // const url = "http://i6a601.p.ssafy.io:8080/feed";
-  // useEffect(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: "http://i6a601.p.ssafy.io:8080/feed",
-  //     headers: {
-  //       Authorization:
-  //         "Bearer bcigxnrl_AYNRx4Ft2ou3z7xO4VrBB2XySAgdgorDKYAAAF-xC_Mkw",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       console.log(response);
-  //       return response.data;
-  //     })
-  //     .catch((err) => {
-  //       return err;
-  //     });
+  // let test = eml.map((item: any) => {
+  //   console.log(item.feed);
   // });
-  // //
-  // const dispatch = useDispatch();
-
-  // const { GetUser } = useUser();
-  // useEffect(() => {
-  //   dispatch(userActions.getToken);
-  // }, [dispatch]);
-
-  // console.log(GetUser);
-
-  // const token = localStorage.getItem("Token");
-
-  // let state = useSelector((state: RootState) => state.feed.feeds[0].content);
-  // console.log(state);
-
-  // state.user.data = token;
-  // console.log(state);
+  // console.log(test);
   return (
     <div>
       <div className="mainfeed">
@@ -156,10 +128,14 @@ function mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div className="inp" onClick={()=>{Router.push('/feed/write')}} >
+              <div
+                className="inp"
+                onClick={() => {
+                  Router.push("/feed/write");
+                }}
+              >
                 <input
-                disabled
-                
+                  disabled
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
@@ -177,10 +153,10 @@ function mainfeed() {
                 />
               </div>
             </form>
-
             {/* <Feed /> */}
             {feeds.map((item: any, idx: number) => {
-              console.log(item);
+              // console.log(feeds);
+
               return (
                 <Feed
                   key={idx}
@@ -239,4 +215,56 @@ function mainfeed() {
     </div>
   );
 }
-export default mainfeed;
+export default Mainfeed;
+//유저 이미지 불러오기 ##########
+// const __getUserProfileImage = useCallback(() => {
+//   if (user) {
+//     const { userid } = user;
+
+//     let url = "http://i6a601.p.ssafy.io:8080/user/profile";
+//     axios({
+//       method: "GET",
+//       url: url,
+//       headers: { Authorization: "Bearer " + token },
+//       data: {
+//         userid: userid,
+//       },
+//     })
+//       .then((res) => {
+//         console.log(res);
+//         return res.data;
+//         setUserprofileImage(image);
+//       })
+//       .catch((err) => {
+//         return err;
+//       });
+//   }
+// }, [user]);
+// useEffect(() => {
+//   __getUserProfileImage();
+//   return () => {};
+// }, [__getUserProfileImage]);
+
+//
+// const [feeds, setFeeds] = useState([]);
+// const {
+//   feedId,
+//   challengeId,
+//   image,
+//   content,
+//   userId,
+//   createdDate,
+//   modifiedDate,
+//   feedlike,
+// } = useSelector((state: RootState) => state.feed.feeds[0]);
+// console.log(
+//   feeds,
+//   feedId,
+//   challengeId,
+//   image,
+//   content,
+//   userId,
+//   createdDate,
+//   modifiedDate,
+//   feedlike
+// );

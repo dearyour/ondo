@@ -9,18 +9,18 @@ const CategoryIcons = () => {
   const categoryLabels = ['전체', '운동', '식습관', '취미', '학습', '친환경', '외모 관리', '기타'];
 
   return (
-    <Row style={{marginTop: '100px'}}>
-        {
-          categoryIcons.map((v, i) => (
-            <ColCenter xs={3} md={3}>
-              <Space direction="vertical">
-                <Image src={pikachu} name='cat${i}' width={50} height={50}></Image>
-                <LabelCenter htmlFor="cat${i}">{categoryLabels[i]}</LabelCenter>
-              </Space>
-            </ColCenter>
-          ))
-        }
-        {/* <Space direction="vertical">
+    <Row style={{ marginTop: '100px' }}>
+      {
+        categoryIcons.map((v, i) => (
+          <ColCenter xs={3} md={3} key={i}>
+            <Space direction="vertical">
+              <Image src={pikachu} width={50} height={50}></Image>
+              <LabelCenter htmlFor="cat${i}">{categoryLabels[i]}</LabelCenter>
+            </Space>
+          </ColCenter>
+        ))
+      }
+      {/* <Space direction="vertical">
           <Image src={pikachu} name='dd' width={50} height={50}></Image>
           <label htmlFor="dd">피카츄</label>
         </Space>
