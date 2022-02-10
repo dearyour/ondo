@@ -6,13 +6,13 @@ import styled from 'styled-components';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Router from 'next/router';
 
 
 const Imgbox = ({ obj }: any) => {
-
   return (
     <Title className='swiper-slide'>
-      <Content src={obj.image}></Content>
+      <Content src={obj.image} onClick={()=>{Router.push(obj.url)}}></Content>
     </Title>
 
   )

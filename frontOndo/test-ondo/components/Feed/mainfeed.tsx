@@ -28,6 +28,7 @@ function Mainfeed() {
   // useEffect(() => {
   //   setUserProfileImage(image);
   // });
+
   ////////////////////////
   useEffect(() => {
     // dispatch(userActions.getUser());
@@ -118,7 +119,7 @@ function Mainfeed() {
           <div className="feed-list">
             <form
               className="write-feed"
-            // onSubmit={__makeFeed}
+              // onSubmit={__makeFeed}
             >
               {image && (
                 <div
@@ -127,13 +128,18 @@ function Mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div className="inp" onClick={() => { Router.push('/feed/write') }} >
+              <div
+                className="inp"
+                onClick={() => {
+                  Router.push("/feed/write");
+                }}
+              >
                 <input
                   disabled
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
-                // onChange={(e) => setContext(e.target.value)}
+                  // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -143,7 +149,7 @@ function Mainfeed() {
                 <input
                   id="get-image-input"
                   type="file"
-                // onChange={__getData64FromImage}
+                  // onChange={__getData64FromImage}
                 />
               </div>
             </form>
@@ -157,7 +163,7 @@ function Mainfeed() {
                   feed={item}
                   nickname={nickname}
                   image={image}
-                // comments={comments}
+                  // comments={comments}
                 />
               );
             })}

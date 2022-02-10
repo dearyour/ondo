@@ -1,11 +1,13 @@
 import { Col, Row } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Imgbox from './resultCarouselImg';
 import Swiper, { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Router from 'next/router';
+import Link from 'next/link';
 
 
 interface SearchResults {
@@ -52,26 +54,35 @@ const swiper = new Swiper('.swiper', {
   }
 });
 
-const SearchResult: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
+const SearchResultUser: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
+  let i = 1212111
   return (
     <Wrap>
-      <Title>{title}</Title>
+      <Title>User</Title>
+      <div>'{keyword}'에 대한 검색 결과: {results?.length}건</div>
       <div className='swiper'>
         <div className='swiper-wrapper'>
 
-          {results ? results.map((content) => {
-            let i = 1929
+          {results ? results.map((content:any) => {
+            content = {
+              ...content,
+              url: '/user/' + content.nickname,
+            }
             return (
-              <Imgbox obj={content} key={i++}></Imgbox>
+              <Imgbox obj={content} key={title + String(i++)}></Imgbox>
             )
           }) : <Nothing>검색 결과가 없습니다</Nothing>}
         </div>
-        <div className="swiper-button-prev"></div>
-        <div className="swiper-button-next"></div>
+        {/* {results? 
+        <div className="swiper-button-prev"></div> : null
+      }
+        {results?
+        <div className="swiper-button-next"></div> : null
+      } */}
 
       </div>
     </Wrap>
   )
 };
 
-export default SearchResult;
+export default SearchResultUser;

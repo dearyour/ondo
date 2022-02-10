@@ -1,7 +1,14 @@
+
 import axios from 'axios';
-import SearchResult from 'components/search/resultCarousel';
 import React, { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router'
+import AppLayout from 'components/layout/AppLayout';
+import SearchResultChallenge from 'components/search/resultChallenge';
+import SearchResultUser from 'components/search/resultUser';
+import SearchResultFeed from 'components/search/resultFeed';
+import styled from 'styled-components';
+
+
 
 const SearchPage = () => {
   const router = useRouter()
@@ -22,13 +29,31 @@ const SearchPage = () => {
     }
   }, []), [keyword])
 
+  const router = useRouter()
+  const { keyword } = router.query
+
+  const temptemp = { image: 'https://picsum.photos/1000', id: 1, nickname: 'asd' }
+  const temp2 = { image: 'https://picsum.photos/1200', id: 2, nickname: 'asdf' }
+  const temp = {
+    challenge: [temptemp, temptemp, temp2, temptemp, temptemp, temptemp, temp2],
+    feed: [temptemp, temptemp, temptemp, temptemp, temptemp],
+    user: [temptemp, temptemp, temptemp, temptemp, temptemp, temp2],
+  }
+
   return (
-    <div>
-      <SearchResult title='Challenge'></SearchResult>
-      <SearchResult title='Feed'></SearchResult>
-      <SearchResult title='User'></SearchResult>
-    </div>
+    <AppLayout>
+      <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={temp.challenge}></SearchResultChallenge>
+      <DivideLine />
+      <SearchResultFeed title='Feed' keyword={String(keyword)} results={temp.feed}></SearchResultFeed>
+      <DivideLine />
+      <SearchResultUser title='User' keyword={String(keyword)} results={temp.user}></SearchResultUser>
+    </AppLayout>
   )
 };
+
+const DivideLine = styled.hr`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
 
 export default SearchPage;
