@@ -12,11 +12,13 @@ public class DetailCommentDto {
 
     Comment comment;
     String username;
+    String image;
     Boolean flag;
     @Builder
-    public DetailCommentDto(Comment comment,String username, Boolean flag) {
+    public DetailCommentDto(Comment comment,String username,String image, Boolean flag) {
         this.comment = comment;
         this.username = username;
+        this.image = image;
         this.flag = flag;
     }
 }
