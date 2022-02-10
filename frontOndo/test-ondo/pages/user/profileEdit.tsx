@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import NowTitleBar from "components/NowTitleBar";
 import AppLayout from "components/layout/AppLayout";
 import styled from "styled-components";
@@ -42,6 +42,11 @@ const Edit = () => {
   const onChangeNickname = useCallback((e) => {
     onChangeNick(e);
   }, []);
+
+  const { GetUser } = useUser();
+  useEffect(() => {
+    GetUser();
+  }, [])
   const onEditNickname = () => {
     const token = localStorage.getItem('Token');
     const formdata = new FormData();

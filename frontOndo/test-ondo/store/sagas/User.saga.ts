@@ -25,13 +25,13 @@ function* getKakaoKey() {
   try {
     const code = new URL(window.location.href).searchParams.get("code");
     const response: tokentype = yield call(KakaoLogin, code);
-    console.log(response.token);
+    console.log(response);
     console.log(code);
     yield put(userActions.getKakaoKeySuccess(response.token));
     Router.push("/feedMain");
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
-    Router.push("/");
+    // Router.push("/");
   }
 }
 

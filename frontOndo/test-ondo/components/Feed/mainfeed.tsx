@@ -26,6 +26,12 @@ function Mainfeed() {
   // useEffect(() => {
   //   setUserProfileImage(image);
   // });
+
+  ////////////////////////
+  useEffect(() => {
+    // dispatch(userActions.getUser());
+    dispatch(feedAction.getFeed());
+  }, []);
   const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
@@ -135,7 +141,7 @@ function Mainfeed() {
                   disabled
                   // ref={contextRef}
                   type="text"
-                  placeholder="           오늘의 도전 완료 피드 쓰러가기"
+                  placeholder="      오늘의 도전 완료 피드 쓰러가기"
                   // onChange={(e) => setContext(e.target.value)}
                 />
               </div>

@@ -9,14 +9,21 @@ const initialState: UserParams | any = {
   error: null,
   ondo: 30,
   image: "https://cdn.entermedia.co.kr/news/photo/202112/28096_52173_2023.jpg",
+  isLoading: false,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    profileEdit: (state) => {},
-    getUser: (state) => {},
+    profileEdit: (state) => { },
+    getUser: (state) => { },
+    loadingStart: (state) => {
+      state.isLoading = true;
+    },
+    loadingEnd: (state) => {
+      state.isLoading = false;
+    },
     setnickname: (state, { payload }) => {
       state.nickname = payload.username;
     },
@@ -26,13 +33,17 @@ export const userSlice = createSlice({
     setuserdata: (state, { payload }) => {
       state.users = payload;
     },
-    getKakaoKey: (state) => {},
+    getKakaoKey: (state) => {
+      state.isLoading = true
+    },
     getKakaoKeySuccess: (state, { payload }) => {
       state.session = payload;
+      state.isLoading = false;
       localStorage.setItem("Token", payload);
     },
     getKakaoKeyError: (state, { payload }) => {
       state.error = payload;
+      state.isLoading = false;
     },
 
     getToken: (state) => {

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button, Form, Input, Space, Row, Col } from 'antd';
 import Image from 'next/image';
 import AppLayout from '../../components/layout/AppLayout';
@@ -8,10 +8,13 @@ import CategorySelector from '../../components/data_entry/CategorySelector';
 import StartDatePicker from 'components/data_entry/StartDatePicker';
 import FightingDogye from 'public/images/dogye/fighting.png';
 import axios from 'axios';
+import useImg from "store/hooks/imgHooks";
+import Router from 'next/router';
 
 const { TextArea } = Input;
 
 const WriteChallenge = () => {
+  const { file, setFile } = useImg();
   const [imageUrl, setImageUrl] = useState<string | ''>('');
   const [startDate, setStartDate] = useState<string | ''>('');
   const [category, setCategory] = useState<string | ''>('');
@@ -27,26 +30,38 @@ const WriteChallenge = () => {
   }, []);
 
   const onSubmitForm = useCallback(() => {
-    
+
   }, []);
 
   const openChallengeRequest = () => {
     console.log(process.env.BACK_EC2);
-    
-    const challenge = {
+
+    const data = {
       title: title,
       content: content,
       s_date: startDate,
-      image: imageUrl,
+      // image: new FormData(),
       category: category
     }
+    // data.image.append('file', file)
+    const formdata = new FormData();
+    formdata.append('file', file)
+    formdata.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }))
+    // formdata.append('title', title)
+    // formdata.append('s_data', startDate)
+    // formdata.append('content', content)
+    // formdata.append('category', category)
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',
-      url: process.env.BACK_EC2 + '/challenge/create',
-      headers: { Authorization: "Bearer " + token},
-      data: challenge,
+      url: 'http://localhost:8080' + '/challenge/create',
+      headers: { "Content-Type": `multipart/form-data`, Authorization: "Bearer " + token },
+      data: formdata,
     })
+      .then((res) => {
+        console.log(res)
+        Router.push('/challenge/' + String(res.data.challengeId))
+      })
   }
 
   return (
@@ -54,33 +69,33 @@ const WriteChallenge = () => {
       <Row>
         <Col xs={0} md={6}></Col>
         <Col xs={24} md={14}>
-        <Write>
+          <Write>
             <Space direction='horizontal'>
               <Image src={FightingDogye} width={75} height={75}></Image>
               <Writetitle>도전을 생성해주세요!</Writetitle>
             </Space>
             <Row>
               <Col xs={11} md={11}>
-                <UploadAvatar changeThumbnail={(imageUrl:string) => setImageUrl(imageUrl)} />
+                <UploadAvatar changeThumbnail={(imageUrl: string) => setImageUrl(imageUrl)} />
               </Col>
-              <Col xs={13} md={13} style={{display: 'flex', alignItems: 'center'}}>
-                <StartDatePicker changeStartDate={(dateString:string) => setStartDate(dateString) }/>
-              </Col> 
+              <Col xs={13} md={13} style={{ display: 'flex', alignItems: 'center' }}>
+                <StartDatePicker changeStartDate={(dateString: string) => setStartDate(dateString)} />
+              </Col>
             </Row>
-            <CategorySelector changeCategory={(value:string) => setCategory(value) } />
-            <Space direction='horizontal' style={{margin: '10px'}}>
+            <CategorySelector changeCategory={(value: string) => setCategory(value)} />
+            <Space direction='horizontal' style={{ margin: '10px' }}>
               <label htmlFor='title'>제목</label>
-              <TitleInput style={{width: 300}} name='title' value={title} onChange={onChangeTitle} />
+              <TitleInput style={{ width: 300 }} name='title' value={title} onChange={onChangeTitle} />
             </Space>
-            <Space direction='horizontal' style={{margin: '10px'}}>
+            <Space direction='horizontal' style={{ margin: '10px' }}>
               <label htmlFor='content'>내용</label>
-              <ContentInput showCount maxLength={200} allowClear rows={4} style={{width: 500}} placeholder='도전 상세 내용, 인증 사진 찍는 법 등을 기재해 주세요.' name='content' value={content} onChange={onChangeContent}/>
+              <ContentInput showCount maxLength={200} allowClear rows={4} style={{ width: 500 }} placeholder='도전 상세 내용, 인증 사진 찍는 법 등을 기재해 주세요.' name='content' value={content} onChange={onChangeContent} />
             </Space>
-            <Button.Group style={{justifyContent: 'center'}}>
+            <Button.Group style={{ justifyContent: 'center' }}>
               <ConfirmBtn onClick={openChallengeRequest}>개설</ConfirmBtn>
               <CancelBtn>취소</CancelBtn>
             </Button.Group>
-        </Write>
+          </Write>
         </Col>
         <Col xs={0} md={4}></Col>
       </Row>

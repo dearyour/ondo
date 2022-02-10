@@ -75,6 +75,8 @@ public class FeedController {
             , @RequestHeader("Authorization") String token
     ) throws Exception {
         System.out.println("FeedController 요청 성공.");
+        System.out.println("file");
+        System.out.println(multipartFile);
         String image = s3Uploader.upload(multipartFile, "static", "feed");
         return new ResponseEntity<Feed>(feedService.createFeed(image, feedSaveDto, token), HttpStatus.OK);
     }
