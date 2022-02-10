@@ -8,9 +8,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 public class OndoApplication {
+    public static final String APPLICATION_LOCATIONS = "spring.config.location="
+            + "classpath:application.properties,"
+            + "classpath:application-aws.properties";
 
     public static void main(String[] args) {
-        SpringApplication.run(OndoApplication.class, args);
+        new SpringApplicationBuilder(OndoApplication.class)
+                .properties(APPLICATION_LOCATIONS)
+                .run(args);
+
     }
 
 }
