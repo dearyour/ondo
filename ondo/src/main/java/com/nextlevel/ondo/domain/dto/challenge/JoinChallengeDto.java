@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Getter
 @NoArgsConstructor
 public class JoinChallengeDto {
-    // 원래는 Token, challengeId 두 개를 받아야 함.
+    // 원래는 Token, challengeId 두 개를 받아야 함..
     private Long challengeId;
 
     public ChallengeParticipate toEntity(User user, Challenge challenge) {
