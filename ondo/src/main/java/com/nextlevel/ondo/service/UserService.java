@@ -75,6 +75,7 @@ public class UserService {
         user.setRole(RoleType.USER);
         try {
             user.setOndo(36);
+            user.setImage("https://ondobucket.s3.ap-northeast-2.amazonaws.com/static/default.jpg");
             userRepository.save(user);
             return 1;
         } catch (Exception e) {
