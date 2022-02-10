@@ -69,10 +69,10 @@ public class FeedService {
 
             for(Comment c : comments){
                 if(c.getUser().getUserId() == tokenuser.getUserId()){
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,false);
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(),c.getUser().getImage(),false);
                     detailCommentDtos.add(detailCommentDto);
                 } else {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,true); //토큰아이디랑 작성아이디 다르면 활성화 true
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(),c.getUser().getImage(),true); //토큰아이디랑 작성아이디 다르면 활성화 true
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
@@ -179,10 +179,10 @@ public class FeedService {
 
         for (Comment c : comments) {
             if (c.getUser().getUserId() == tokenuser.getUserId()) {
-                DetailCommentDto detailCommentDto = new DetailCommentDto(c, true);
+                DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(), c.getUser().getImage(),true);
                 detailCommentDtos.add(detailCommentDto);
             } else {
-                DetailCommentDto detailCommentDto = new DetailCommentDto(c, false);
+                DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(), c.getUser().getImage(),false);
                 detailCommentDtos.add(detailCommentDto);
             }
         }
