@@ -7,12 +7,43 @@ import AppLayout from 'components/layout/AppLayout';
 import LoggedInForm from 'components/layout/LoggedInForm';
 import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
+import { useRouter } from 'next/router'
 import 'antd/dist/antd.css';
+import axios from 'axios';
 
 const ReadChallenge = () => {
-  useEffect(() => {
 
+  const router = useRouter()
+  const { id } = router.query
+
+  useEffect(() => {
+    const token = localStorage.getItem('Token')
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/challenge/info/' + String(id),
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        console.log(res)
+      })
   })
+
+  // 참여하기
+  const participate = () => {
+    const token = localStorage.getItem('Token')
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/challenge/participate',
+      headers: { Authorization: "Bearer " + token },
+      data: {
+        challengeId: id,
+      }
+    })
+      .then((res) => {
+        console.log(res)
+        alert('ok')
+      })
+  }
   const title = '하루 30분 조깅하기';
   const startDate = new Date(2022, 0, 31);
   const getDuration = () => {
@@ -63,7 +94,7 @@ const ReadChallenge = () => {
                 <Button.Group>
                   {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
-                  <button>참여하기</button>
+                  <button onClick={participate}>참여하기</button>
                   <button>피드쓰기</button>
                 </Button.Group>
               </BottomContent>
