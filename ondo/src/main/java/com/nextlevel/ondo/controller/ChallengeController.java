@@ -54,7 +54,7 @@ public class ChallengeController {
     public ResponseEntity<ChallengeParticipate> participateChallenge(@RequestBody JoinChallengeDto joinChallengeDto, @RequestHeader("Authorization") String token) {
         ChallengeParticipate response = challengeService.participateChallenge(joinChallengeDto, token);
         if (response == null) {
-            // 이미 참여중.
+            // 이미 참여중.dd
             return new ResponseEntity<ChallengeParticipate>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<ChallengeParticipate>(response, HttpStatus.OK);
