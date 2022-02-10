@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const Loginurl = process.env.BACK_EC2 + "/auth/kakao/callback";
+// const Loginurl = process.env.BACK_EC2 + "/auth/kakao/callback";
+const Loginurl = "http://localhost:8080" + "/auth/kakao/callback";
+
 const ProfileEditurl = process.env.BACK_EC2 + "/user/modify/";
 const GetUserurl = process.env.BACK_EC2 + "/user/info";
 const base = process.env.BACK_EC2
@@ -17,7 +19,7 @@ export const KakaoLogin = (code: string | null) => {
     },
   })
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       return response.data;
     })
     .catch((err) => {

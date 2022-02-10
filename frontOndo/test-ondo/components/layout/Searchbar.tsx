@@ -71,7 +71,7 @@ const IconButton = styled.button`
 function Searchbar(): JSX.Element {
     const [keyword, setKeyword] = useInput('');
     const [isActive, setIsActive] = useState(false);
-    const keywordChange:React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const keywordChange: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(e)
     }
 
@@ -80,29 +80,21 @@ function Searchbar(): JSX.Element {
     }
     const url = 'http://localhost:8080/search/'
     const Search = () => {
-        const token= localStorage.getItem('Token');
-        axios({
-            method:'get',
-            url: url + keyword,
-            headers: { Authorization: "Bearer " + token },
-        })
-        .then((res) => {
-            console.log(res)
-        })
+        Router.push('/search/' + keyword)
     }
 
     return (
-       <SearchContainer>
-           <IconButton onClick={Search}>
-               {isActive ? (
-                   <CloseOutlined size={18} />
-                    ) : (
-                   <SearchOutlined size={22}/>
-                    )
+        <SearchContainer>
+            <IconButton onClick={Search}>
+                {isActive ? (
+                    <CloseOutlined size={18} />
+                ) : (
+                    <SearchOutlined size={22} />
+                )
                 }
-           </IconButton>
-           <SearchInput placeholder='검색' value={keyword} onChange={keywordChange} />
-       </SearchContainer>
+            </IconButton>
+            <SearchInput placeholder='검색' value={keyword} onKeyUp={(e) => { if (e.key === 'Enter') { Search(); } }} onChange={keywordChange} />
+        </SearchContainer>
     );
 }
 

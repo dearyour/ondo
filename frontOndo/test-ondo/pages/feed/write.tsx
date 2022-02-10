@@ -56,10 +56,29 @@ const Write_feed = () => {
   const [num, setNum] = useState<number>(0)
   const [hashArr, setHashArr] = useState<string[] | []>([])
   const [challenge, setChallenge] = useState<string | ''>('')
-  const challenges = [];
-  for (let i = 10; i < 36; i++) {
-    challenges.push(<Option key={i.toString(36) + i}>하루에 {i}보 걷기</Option>);
-  }
+  let challenges: Array<Object> = [];
+  // for (let i = 10; i < 36; i++) {
+  //   challenges.push(<Option key={i.toString(36) + i}>하루에 {i}보 걷기</Option>);
+  // }
+
+
+  // 도전 받아오기
+  useEffect(() => {
+    const token = localStorage.getItem('Token');
+    axios({
+      method: "get",
+      url: 'http://localhost:8080/feed/create',
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        console.log(res)
+        if (res.data) {
+          challenges = res.data;
+        } else {
+          // challenges = [{ 'name': '도전이 없습니다.' }]
+        }
+      })
+  })
   const onChangeChallenge = (e: any) => {
     setChallenge(e.target.value)
   }
@@ -92,20 +111,26 @@ const Write_feed = () => {
 
   // 피드 작성 axios
   const WriteRequest = () => {
-    const feed = {
-      image: new FormData(),
+    const data = {
+      // image: new FormData(),
       tags: hashArr,
-      challenge: challenge,
+      challengeId: 1,
       content: content,
     }
-    feed.image.append('image', file)
+    const formdata = new FormData();
+    formdata.append('file', file)
+    formdata.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }))
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',
-      url: '',
+      url: 'http://localhost:8080' + '/feed/create',
       headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
-      data: feed,
+      data: formdata,
     })
+      .then((res) => {
+        console.log(res)
+        Router.push('/feedMain')
+      })
 
   }
 
@@ -142,7 +167,7 @@ const Write_feed = () => {
       /* enter 키 코드 :13 */
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
         // console.log('Enter Key 입력됨!', e.target.value)
-        $HashWrapInner.innerHTML = e.target.value + 'X'
+        $HashWrapInner.innerHTML = e.target.value
         $HashWrapOuter?.appendChild($HashWrapInner)
         setHashArr((hashArr) => [...hashArr, hashtag])
         setHashtag('')
