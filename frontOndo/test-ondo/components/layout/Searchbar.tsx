@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import useInput from 'store/hooks/useInput';
 import axios from 'axios';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 const SearchContainer = styled.div`
     position: relative;
@@ -69,6 +69,7 @@ const IconButton = styled.button`
 `;
 
 function Searchbar(): JSX.Element {
+    const router = useRouter();
     const [keyword, setKeyword] = useInput('');
     const [isActive, setIsActive] = useState(false);
     const keywordChange: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +82,7 @@ function Searchbar(): JSX.Element {
     const url = process.env.BACK_EC2 + '/search/'
     const Search = () => {
         Router.push('/search/' + keyword)
+
     }
 
     return (

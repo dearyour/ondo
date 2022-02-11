@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Row, Modal } from 'antd';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import styled from "styled-components";
 import useImg from "store/hooks/imgHooks";
+
+
 
 const CropImg: React.FC = () => {
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
@@ -22,7 +24,10 @@ const CropImg: React.FC = () => {
   };
 
   return (
-    <div>
+    <Modal
+      visible={originalImg}
+      cancelButtonProps={{ style: { display: 'none' } }}
+      okButtonProps={{ style: { display: 'none' } }}>
       <Cropper
         src={originalImg}
         style={{ height: 400, width: "100%" }}
@@ -35,14 +40,41 @@ const CropImg: React.FC = () => {
         <CropImage src={image} alt="" />
       </div> */}
       {/* <Button onClick={onCrop}>미리보기</Button> */}
-      <Button onClick={onCrop}>적용</Button>
-      <Button onClick={() => { setOriginalImage(null) }}>종료</Button>
-    </div>
+      <BtnDiv>
+        <CropBtn onClick={onCrop}>적용</CropBtn>
+        <CropBtn onClick={() => { setOriginalImage(null) }}>종료</CropBtn>
+      </BtnDiv>
+      <Description><h1>미리보기</h1></Description>
+      <MyImage><CropImage src={image}></CropImage></MyImage>
+    </Modal>
   );
 };
 
+const Description = styled.div`
+  text-align: center;
+  margin-top:10px;
+`
+const MyImage = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+`
 const CropImage = styled.img`
-  width:30%;
+
+`
+
+const BtnDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`
+const CropBtn = styled(Button)`
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
 `
 
 export default CropImg;

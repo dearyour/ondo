@@ -223,6 +223,9 @@ const Write_feed = () => {
 const MyImage = styled.div`
   display: flex;
   justify-content: center;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
 `
 const UpImage = styled(Upload)`
   width: 10%;

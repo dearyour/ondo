@@ -43,9 +43,10 @@ const Edit = () => {
     onChangeNick(e);
   }, []);
 
-  const { GetUser } = useUser();
+  const { GetUser, profile } = useUser();
   useEffect(() => {
     GetUser();
+    setImage(profile);
   }, [])
   const onEditNickname = () => {
     const token = localStorage.getItem('Token');

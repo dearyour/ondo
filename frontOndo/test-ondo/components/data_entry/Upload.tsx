@@ -38,12 +38,12 @@ function beforeUpload(file: any) {
 // }
 
 const UploadAvatar = (props: any) => {
-  const { file, setFile } = useImg();
+  const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [imageUrl, setImageUrl] = useState<string | ''>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (info: any) => {
-    setFile(info.file.originFileObj)
+    // setFile(info.file.originFileObj)
     if (info.file.status === 'uploading') {
       setLoading(true);
       return;
@@ -51,10 +51,10 @@ const UploadAvatar = (props: any) => {
     if (info.file.status === 'done') {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl: any) => {
-        setImageUrl(imageUrl);
+        setOriginalImage(imageUrl);
         setLoading(false);
       });
-      props.changeThumbnail(imageUrl);
+      props.changeThumbnail(image);
     }
   };
 
@@ -72,11 +72,10 @@ const UploadAvatar = (props: any) => {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
       {/* <Button>썸네일</Button> */}
     </Space>
