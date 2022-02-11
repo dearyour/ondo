@@ -8,7 +8,7 @@ export default function reply(props: any) {
       <div className="top">
         <div className="left">
           {/* <div className="profile-image"></div> */}
-          {props.reply.image && (
+          {/* {props.reply.image && (
             <div
               className="profile-image"
               onClick={() => {
@@ -16,11 +16,11 @@ export default function reply(props: any) {
               }}
               style={{ backgroundImage: `url(${props.reply.image})` }}
             ></div>
-          )}
+          )} */}
           <div className="feed-desc">
-            {/* <div className="nickname">{props.item.user.username}</div> */}
+            {/* <div className="nickname">{props.item.username}</div> */}
             <div className="nickname">{props.reply.username}</div>
-            <div className="timestamp">{props.reply.comment.createdDate}</div>
+            {/* <div className="timestamp">{props.reply.comment.createdDate}</div> */}
           </div>
         </div>
         <div className="right">
@@ -33,7 +33,7 @@ export default function reply(props: any) {
           <div className="reply-btn">답글</div>
         </div>
       </div>
-      <div className="body">{props.reply.comment.content}</div>
+      {/* <div className="body">{props.reply.comment.content}</div> */}
     </div>
   );
 }

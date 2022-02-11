@@ -11,27 +11,34 @@ function makeArray(obj: Object) {
   const values = Object.values(obj);
   const result = keys.map((item, idx) => {
     return {
-      commnetId: item,
+      commentId: item,
       data: values[idx],
     };
   });
 
-  return result.reverse;
+  return result.reverse();
 }
 
 function Detailfeed() {
   const dispatch = useDispatch();
   const detailData = useSelector((state: RootState) => state.layout.detailData);
+  const feedssId = useSelector(
+    (state: RootState) => state.layout.detailData.feed.feedId
+  );
   const userImage = useSelector((state: RootState) => state.user.image);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState(""); // 댓글작성
   const commentRef = useRef(null);
-  const [commentData, setCommnetData] = useState([]);
+  const [commentData, setCommentData] = useState([]);
   // const session = useSelector((state)=>state.auth.session);
   // const image = useSelector(
   //   (state: RootState) => state.layout.detailData.feed.image
   // );
-  console.log(detailData.feed.feedId);
+  console.log(detailData);
+  console.log(commentData);
+  console.log(feedssId);
   const startDate = detailData.feed.createdDate;
+  const [putUser, SetPutUser] = useState([]);
+  // putUser = detailData.comment;
 
   // const __getProfileImage = useCallback(() => {}, [userImage]);
   // console.log(startDate + "$$$$$$$$$$");
@@ -73,18 +80,22 @@ function Detailfeed() {
     //코멘트 업로드 또는 불러올때 계속 새로고침
     if (detailData) {
       const token = localStorage.getItem("Token");
+      // const feedsId = detailData.feed.feedId;
       axios({
         method: "GET",
-        url: "http://localhost:8080" + "/comment/" + detailData.feed.feedId,
+        url: "http://localhost:8080" + "/comment/" + feedssId,
+        // url: "http://localhost:8080" + "/feed",
         headers: {
           Authorization: "Bearer " + token,
         },
       })
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
           console.log("######" + detailData.feed.feedId);
-          console.log(makeArray(res));
-          // setCommnetData(makeArray(res));
+          // console.log(makeArray(res));
+          // dispatch(layoutAction.updateDetailData(props.dto));
+          // dispatch(layoutAction.updateDetailData(commentData));
+          setCommentData(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -111,20 +122,17 @@ function Detailfeed() {
         })
           .then((res) => {
             console.log(res);
-            // commentRef.current.value = "";
+            // setComment(res);
+            commentRef.current.value = "";
             setComment("");
-            __loadComments;
+            __loadComments();
           })
           .catch((err) => {
             console.log(err);
           });
       }
     },
-    [
-      detailData,
-      comment,
-      // commentRef
-    ]
+    [detailData, comment, commentRef, __loadComments]
   );
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
@@ -150,7 +158,8 @@ function Detailfeed() {
   }, [__whenKeyDown]);
 
   useEffect(() => {
-    __loadComments;
+    __loadComments();
+    return () => {};
   }, [__loadComments]);
   return (
     <div>
@@ -215,9 +224,9 @@ function Detailfeed() {
               </div>
             </div>
             <div className="feed-comments">
-              {detailData.comments.map((item: any, idx: number) => {
+              {commentData.map((item: any, idx: number) => {
                 // {/* // console.log(feeds); */}
-                return <Reply key={idx} item={detailData} reply={item} />;
+                return <Reply key={idx} item={item} reply={item} />;
               })}
             </div>
             <form className="feed-write-comment" onSubmit={__uploadComment}>
@@ -244,3 +253,8 @@ function Detailfeed() {
 }
 
 export default Detailfeed;
+
+// {detailData.comments.map((item: any, idx: number) => {
+//   // {/* // console.log(feeds); */}
+//   return <Reply key={idx} item={detailData} reply={item} />;
+// })}
