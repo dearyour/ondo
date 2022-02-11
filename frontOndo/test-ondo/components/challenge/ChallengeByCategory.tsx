@@ -6,16 +6,17 @@ import Router from 'next/router'
 
 const ChallengeByCategory = (props:any) => {
   const challenges = [...props.categorized];
-  const getDuration = (startDate: Date) => {
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 2);
-  
-    const sy = startDate.getFullYear();
-    const sm = startDate.getMonth() + 1;
-    const sd = startDate.getDate();
-    const ey = endDate.getFullYear();
-    const em = endDate.getMonth() + 1;
-    const ed = endDate.getDate();
+  const getDuration = (startDate: string) => {
+    const sDate = startDate.substring(0, 10);
+    const sy = sDate.substring(0,4);
+    const sm = sDate.substring(5,7);
+    const sd = sDate.substring(8,10);
+
+    const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
+    const ey = eDate.getFullYear();
+    const em = eDate.getMonth() + 1;
+    const ed = eDate.getDate();
+
     return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
   }
 
@@ -28,7 +29,7 @@ const ChallengeByCategory = (props:any) => {
           <ChallengeContent>
             <ChallengeTitle>{challenges[i].title}</ChallengeTitle>
             {challenges[i].owner}
-            <ChallengeDuration>{getDuration(challenges[i].startDate)}</ChallengeDuration>
+            <ChallengeDuration>{getDuration(challenges[i].sdate)}</ChallengeDuration>
             <Participants>현재 {challenges[i].participants} 명 참여 중</Participants>
           </ChallengeContent>
         </ChallengeWrapper>

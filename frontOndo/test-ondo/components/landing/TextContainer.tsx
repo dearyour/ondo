@@ -12,18 +12,19 @@ const TextContainer = () => {
 
       <TextContainerTop>
         <motion.span variants={fadeIn()} style={{ color: 'palevioletred' }} >
-          3일간의 뜨거운 도전
+          ; 오늘의 도전
         </motion.span>
+        <FirstLetterText5XL variants={fadeIn()} >3 일간의 뜨거운 도전</FirstLetterText5XL> 
       </TextContainerTop>
 
       <TextContainerMiddle>
-        <motion.span variants={fadeIn()} initial='initial' animate='animate'>
+        <motion.span variants={fadeIn()} initial='initial' animate='animate' >
           ONDO
         </motion.span>
       </TextContainerMiddle>
 
       <TextContainerBottom>
-        <Login />
+        <motion.div variants={fadeIn()}><Login /></motion.div>
         <motion.p variants={fadeIn()}>
           몸과 마음 모두 건강해지는<br /> 그 날까지, <span style={{ color: 'palevioletred' }}>온도</span>하세요!
         </motion.p>
@@ -57,6 +58,13 @@ const TextContainerTop = styled.div`
   @media (min-width: 768px) {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+`
+
+const FirstLetterText5XL = styled(motion.span)`
+  ::first-letter {
+    font-size: 3rem;
+    line-height: 1;
   }
 `
 

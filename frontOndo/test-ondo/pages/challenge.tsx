@@ -15,6 +15,7 @@ import { challengeAction } from "store/slice/challenge";
 const Challenge = () => {
   const [hotChallenges, setHotChallenges] = useState([]);
   const [catChallenges, setCatChallenges] = useState([]);
+  const [category, setCategory] = useState('전체');
   const dispatch = useDispatch();
 
   // const __GetUserState = (token: string | null) => {
@@ -39,12 +40,16 @@ const Challenge = () => {
   // }, []);
 
   const __GetChallengeState = useCallback((token: string | null) => {
+    // console.log('__GetChallengeState 호출');
+    
     return axios({
       method: 'GET',
-      url: process.env.BACK_EC2 + '/challenge',
+      url: 'http://localhost:8080' + '/challenge',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
+        console.log('axios get challenge 성공');
+        
         setHotChallenges(res.data.top3Challenges);
         setCatChallenges(res.data.allChallenges.reverse());
       })
@@ -58,6 +63,19 @@ const Challenge = () => {
     // __GetUserState(token);
     __GetChallengeState(token);
   }, []);
+
+  const renderCatChallenges = (selectedCategory:string) => {
+    axios({
+      method: 'GET',
+      url: 'http://localhost:8080/challenge/' + selectedCategory
+    })
+    .then((res) => {
+      setCatChallenges(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   const top3 = [
     {
@@ -133,15 +151,15 @@ const Challenge = () => {
   ];
 
   return (
-    <AppLayout>
+    <AppLayout title="도전 둘러보기 | 온도">
       <Row style={{ marginTop: 20 }}>
         <Col xs={0} md={2}></Col>
         <Col xs={24} md={20}>
-          <HotChallenge top3={top3}></HotChallenge>
-          <CategoryIcons></CategoryIcons>
+          <HotChallenge top3={hotChallenges}></HotChallenge>
+          <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons>
           {/* <Button></Button> */}
           <ChallengeByCategory
-            categorized={categorizedChallenges}
+            categorized={catChallenges}
           ></ChallengeByCategory>
         </Col>
         <Col xs={0} md={2}></Col>
