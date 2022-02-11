@@ -73,12 +73,10 @@ public class S3Uploader {
 //            }
 //            return Optional.of(convertFile);
 //        }
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
+        File convFile = new File( file.getOriginalFilename());
+        file.transferTo(convFile);
         return Optional.of(convFile);
+//        return Optional.of(convFile);
 
     }
 }
