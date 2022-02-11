@@ -61,6 +61,6 @@ const Login = () => {
 };
 
 const LoginDiv = styled.div`
-  width:30%;
+  width:50%;
 `
 export default Login;
