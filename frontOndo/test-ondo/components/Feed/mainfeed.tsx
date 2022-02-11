@@ -15,7 +15,7 @@ function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user.users);
-  const image = useSelector((state: RootState) => state.user.image);
+  const image = useSelector((state: RootState) => state.user.users.image);
   // const { feeds } = useSelector((state: RootState) => state.feed);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
@@ -123,7 +123,7 @@ function Mainfeed() {
           <div className="feed-list">
             <form
               className="write-feed"
-            // onSubmit={__makeFeed}
+              // onSubmit={__makeFeed}
             >
               {image && (
                 <div
@@ -143,7 +143,7 @@ function Mainfeed() {
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
-                // onChange={(e) => setContext(e.target.value)}
+                  // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -167,7 +167,7 @@ function Mainfeed() {
                   dto={item}
                   nickname={nickname}
                   image={image}
-                // comments={comments}
+                  // comments={comments}
                 />
               );
             })}
@@ -175,7 +175,7 @@ function Mainfeed() {
 
           <div className="friend-list">
             <div className="my-profile">
-              {userProfileImage && (
+              {image && (
                 <div
                   className="profile-image"
                   style={{ backgroundImage: `url(${image})` }}
