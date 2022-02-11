@@ -114,7 +114,8 @@ function Mainfeed() {
   //   console.log(item.feed);
   // });
   // console.log(test);
-  console.log(rankers);
+  // console.log(rankers);
+  // console.log(feeds);
   return (
     <div>
       <div className="mainfeed">

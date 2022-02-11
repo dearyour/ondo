@@ -5,6 +5,9 @@ import { Button, Form, Input } from "antd";
 import { test } from "../store/api/User.api";
 import axios from "axios";
 import { GetFeedState } from "store/api/Feed.api";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { userActions } from "store/slice/user";
 
 const Login = () => {
   const __GetUserStates = useCallback((token: string | null) => {
@@ -67,6 +70,35 @@ const Login = () => {
   //   const token = localStorage.getItem("Token");
   //   __GetFeedssssState(token);
   // }, []);
+  const dispatch = useDispatch();
+  const [userObj, setUserObj] = useState([]);
+  const router = useRouter();
+  const { username } = router.query;
+  let a = {};
+  const __GetUserState = (token: string | null) => {
+    return axios({
+      method: "GET",
+      url: "http://localhost:8080/user/feed/" + username,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((result) => {
+        console.log(result.data);
+        result.data;
+        setUserObj(result.data.user.image);
+        // setFeeds(result.data);
+        return result.data;
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    __GetUserState(token);
+    dispatch(userActions.getUserObj(username));
+    // dispatch(layoutAction.updateDetailData(userObj));
+    console.log(userObj);
+  }, [__GetUserState]);
   return (
     <LoginForm>
       <LoginLabel htmlFor="Test-Warning">

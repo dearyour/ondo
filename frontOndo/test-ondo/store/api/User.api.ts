@@ -62,3 +62,19 @@ export const GetUserState = (token: string | null) => {
       return err;
     });
 };
+
+export const getUserObjapi = (username: any, token: string | null) => {
+  return axios({
+    method: "GET",
+    url: "http://localhost:8080/user/feed/" + username,
+    headers: { Authorization: "Bearer " + token },
+  })
+    .then((result) => {
+      console.log(result.data);
+      return result.data;
+    })
+    .catch((err) => {
+      console.log("#############" + username);
+      return err;
+    });
+};

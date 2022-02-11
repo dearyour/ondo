@@ -3,6 +3,7 @@ import { UserParams } from "../interfaces/User.interface";
 
 const initialState: UserParams | any = {
   users: [],
+  userObj: [],
   nickname: "카리나",
   email: "base@base.com",
   session: "",
@@ -49,6 +50,10 @@ export const userSlice = createSlice({
     getToken: (state) => {
       const token = localStorage.getItem("Token");
       state.session = token;
+    },
+    getUserObj: (state, { payload }) => {},
+    setUserObj: (state, { payload }) => {
+      state.userObj = payload;
     },
   },
 });

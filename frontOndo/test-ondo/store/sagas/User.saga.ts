@@ -11,12 +11,18 @@ import {
 } from "redux-saga/effects";
 import { User } from "../interfaces/User.interface";
 import { userActions } from "../slice/user";
-import { KakaoLogin, ProfileEdit, GetUserState } from "../api/User.api";
+import {
+  KakaoLogin,
+  ProfileEdit,
+  GetUserState,
+  getUserObjapi,
+} from "../api/User.api";
 import { stringify } from "querystring";
 
 // import { useRouter } from "next/router";
 // import router from "react-router-redux";
 import Router from "next/router";
+import { useRouter } from "next/router";
 
 function* getKakaoKey() {
   interface tokentype extends AxiosResponse {
@@ -76,10 +82,35 @@ function* watchgetUserState() {
   yield takeLatest(userActions.getUser, getUserState);
 }
 
+///
+function* getUserObjState(username: any) {
+  try {
+    const token = localStorage.getItem("Token");
+    if (token) {
+      console.log("객체유저통신전");
+      const userObjdata: AxiosResponse = yield call(
+        getUserObjapi,
+        username,
+        token
+      );
+      console.log("객체유저통신후");
+      console.log(userObjdata);
+      yield put(userActions.setUserObj(userObjdata));
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* watchgetUserObjState() {
+  yield takeLatest(userActions.getUserObj, getUserObjState);
+}
+
 export default function* getKakaoKeySaga() {
   yield all([
     fork(watchGetKakaoKey),
     fork(watchProfileEdit),
     fork(watchgetUserState),
+    fork(watchgetUserObjState),
   ]);
 }
