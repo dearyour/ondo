@@ -13,7 +13,7 @@ import Link from 'next/link';
 interface SearchResults {
   title?: string,
   keyword?: string,
-  results?: Array<Object>,
+  results: Array<Object>,
 }
 
 const Wrap = styled.div`
@@ -23,7 +23,9 @@ const Title = styled.h1`
   
 `
 const Nothing = styled.div`
-  
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-left: 5rem;
 `
 
 const swiper = new Swiper('.swiper', {
@@ -63,7 +65,7 @@ const SearchResultUser: React.FC<SearchResults> = ({ title = '', keyword, result
       <div className='swiper'>
         <div className='swiper-wrapper'>
 
-          {results ? results.map((content:any) => {
+          {results.length >= 1 ? results.map((content: any) => {
             content = {
               ...content,
               url: '/user/' + content.nickname,

@@ -12,7 +12,7 @@ import Router from 'next/router';
 const Imgbox = ({ obj }: any) => {
   return (
     <Title className='swiper-slide'>
-      <Content src={obj.image} onClick={()=>{Router.push(obj.url)}}></Content>
+      <Content src={obj.image} onClick={() => { Router.push(obj.url) }}></Content>
     </Title>
 
   )
@@ -20,6 +20,9 @@ const Imgbox = ({ obj }: any) => {
 
 const Title = styled.div`
   padding: 10px;
+  margin-top:auto;
+  margin-bottom:auto;
+  height: 100%;
 
 `
 
@@ -29,6 +32,7 @@ const Content = styled.img`
     transition: all 0.3s ease-in-out;
     overflow: hidden;
   }
+
   cursor: pointer;
   border-radius:5px;
 `

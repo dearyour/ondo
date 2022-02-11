@@ -30,7 +30,7 @@ function Mainfeed() {
   ////////////////////////
   useEffect(() => {
     // dispatch(userActions.getUser());
-    dispatch(feedAction.getFeed());
+    // dispatch(feedAction.getFeed());
   }, []);
   const __GetUserState = (token: string | null) => {
     return axios({
@@ -114,7 +114,8 @@ function Mainfeed() {
   //   console.log(item.feed);
   // });
   // console.log(test);
-  console.log(rankers);
+  // console.log(rankers);
+  // console.log(feeds);
   return (
     <div>
       <div className="mainfeed">

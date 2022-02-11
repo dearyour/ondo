@@ -24,10 +24,10 @@ public class ChallengeParticipate {
     @JsonBackReference
     private Challenge challenge;
     @Column
-    private Boolean[] archived = new Boolean[3];
+    private Integer archived = 0;
 
     @Builder
-    public ChallengeParticipate(User user, Challenge challenge,Boolean[] archived){
+    public ChallengeParticipate(User user, Challenge challenge,Integer archived){
         this.user = user;
         this.challenge = challenge;
         this.archived = archived;

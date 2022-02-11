@@ -53,7 +53,7 @@ const Landing = () => {
 }
 
 const Base = styled.main`
-  background-color: #fff9f9;
+  background-color: #fffafa;
   color: #111827;
   font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
   height: 100vh;

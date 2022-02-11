@@ -75,6 +75,7 @@ public class UserService {
         user.setRole(RoleType.USER);
         try {
             user.setOndo(36);
+            user.setImage("https://ondobucket.s3.ap-northeast-2.amazonaws.com/static/default.jpg");
             userRepository.save(user);
             return 1;
         } catch (Exception e) {
@@ -88,74 +89,70 @@ public class UserService {
         String token = accessToken.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(token);
 
-    //        User user;
+        //        User user;
         User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
 
-    //        Boolean modifyflag;
-        Boolean modifyflag = true;
-        if(user.getUserId() == tokenuser.getUserId()) modifyflag = false;
+        //        Boolean modifyflag;
+        Boolean modifyflag = false;
+        if (user.getUserId() == tokenuser.getUserId()) modifyflag = true;
 
-    //        Boolean followflag;
+        //        Boolean followflag;
         Boolean followflag = true;
         List<Follow> fList = followRepository.findByFromUser(tokenuser);
-        if(user.getUserId() == tokenuser.getUserId()) followflag = false;
-        else{
-            for(Follow f : fList){
-                if(f.getToUser().getUserId() == user.getUserId()){
+        if (user.getUserId() == tokenuser.getUserId()) followflag = false;
+        else {
+            for (Follow f : fList) {
+                if (f.getToUser().getUserId() == user.getUserId()) {
                     followflag = false;
                     break;
                 }
             }
         }
-            //팔로우 부분
-    //        List<FollowUserDto> followingUserDtos = new ArrayList<>();
+        //팔로우 부분
+        //        List<FollowUserDto> followingUserDtos = new ArrayList<>();
 
         //List<Follow> follows = followRepository.findByFromUser(user);
 
         List<FollowUserDto> followingUserDtos = followService.listFollowing(username);
 
 
-    //        List<FollowUserDto> followerUserDtos = new ArrayList<>();
+        //        List<FollowUserDto> followerUserDtos = new ArrayList<>();
         List<FollowUserDto> followerUserDtos = followService.listFollower(username);
 
 
-
-            //피드 부분
-    //        List<DetailFeedDto> myFeedDtos = new ArrayList<>();
+        //피드 부분
+        //        List<DetailFeedDto> myFeedDtos = new ArrayList<>();
         List<Feed> myFeed = feedRepository.findByUserId(user.getUserId());
-            //도전 부분
+        //도전 부분
         List<ChallengeParticipate> challengeParticipates = challengeParticipateRepository.findByUser(user);
         List<Challenge> challenges = new ArrayList<>();
-        for(ChallengeParticipate c : challengeParticipates){
+        for (ChallengeParticipate c : challengeParticipates) {
             challenges.add(c.getChallenge());
         }
-    //        List<Challenge> runChallenge = new ArrayList<>();
+        //        List<Challenge> runChallenge = new ArrayList<>();
         List<Challenge> runChallenge = new ArrayList<>();
-        for(Challenge c : challenges){
-            if(challengeService.isProcessingChallenge(c)){
+        for (Challenge c : challenges) {
+            if (challengeService.isProcessingChallenge(c)) {
                 runChallenge.add(c);
             }
         }
-    //        List<Challenge> compeleteChallenge = new ArrayList<>();
+        //        List<Challenge> compeleteChallenge = new ArrayList<>();
         List<Challenge> completeChallenge = new ArrayList<>();
-        tp: for(Challenge c : challenges){
-            if(!challengeService.isProcessingChallenge(c) ){
+        tp:
+        for (Challenge c : challenges) {
+            if (!challengeService.isProcessingChallenge(c)) {
                 ChallengeParticipate cp = challengeParticipateRepository.findByChallenge(c);
-                Boolean[] archived = cp.getArchived();
-                for(Boolean b : archived){
-                    if(b == false){
-                        continue tp;
-                    }
-                }
-                completeChallenge.add(c);
+                Integer archived = cp.getArchived();
+                if (archived == 7)
+                    completeChallenge.add(c);
             }
         }
-    //        List<Challenge> makedChallenge = new ArrayList<>();
+        //        List<Challenge> makedChallenge = new ArrayList<>();
         List<Challenge> madeChallenge = challengeRepository.findByOwner(user.getUserId());
 
-        return new FeedUserDto(user,modifyflag,followflag,followingUserDtos,followerUserDtos,myFeed,runChallenge,completeChallenge,madeChallenge);
+        return new FeedUserDto(user, modifyflag, followflag, followingUserDtos, followerUserDtos, myFeed, runChallenge, completeChallenge, madeChallenge);
 
     }
 
@@ -164,7 +161,7 @@ public class UserService {
         String token = accessToken.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(token);
 
-        FollowUserDto userDto = new FollowUserDto(tokenuser.getUsername(),tokenuser.getImage());
+        FollowUserDto userDto = new FollowUserDto(tokenuser.getUsername(), tokenuser.getImage());
 
         return userDto;
     }
@@ -174,7 +171,7 @@ public class UserService {
         String token = accessToken.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(token);
 
-        if(image != null){
+        if (image != null) {
             //유저.image 경로 바꿔주기
             tokenuser.setImage(image);
             userRepository.save(tokenuser);
@@ -184,7 +181,7 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
-        if(user.getUsername() == null){
+        if (user.getUsername() == null) {
             tokenuser.setUsername(username);
             userRepository.save(tokenuser);
             return "success";

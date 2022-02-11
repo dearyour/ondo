@@ -35,7 +35,7 @@ const Feed = (props: any) => {
   // 피드 하나하나당이 있는 배열 default값!
   // console.log(props.dto);
 
-  console.log(props.dto.feed);
+  // console.log(props.dto.feed);
 
   //
   // challenges.map((item: any, idx: number) => {
@@ -57,7 +57,7 @@ const Feed = (props: any) => {
   //   (state: RootState) => state.feed.feeds.challengeId
   // );
   const __openFeedDetail = useCallback(() => {
-    console.log(props.dto.feed);
+    // console.log(props.dto.feed);
     dispatch(layoutAction.updateDetailData(props.dto));
     dispatch(layoutAction.updateDetailState(true));
   }, [dispatch]);
@@ -90,9 +90,9 @@ const Feed = (props: any) => {
     const date = parseInt(String(timeGap / oneDay));
     const hour = feedDate.getHours();
     const minutes = feedDate.getMinutes();
-    console.log(hour + "hour");
-    console.log(minutes);
-    console.log(startDate);
+    // console.log(hour + "hour");
+    // console.log(minutes);
+    // console.log(startDate);
 
     return ` ${hour > 12 ? "오후" : "오전"} ${
       hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
@@ -111,10 +111,10 @@ const Feed = (props: any) => {
 
     return sy + "-" + sm + "-" + sd;
   };
-  console.log(startDate);
+  // console.log(startDate);
   const adate = new Date(startDate);
   const newdate = adate.getMonth() + 1;
-  console.log(newdate);
+  // console.log(newdate);
   // const getDuration = () => {
   //   const endDate = new Date(startDate);
   //   endDate.setDate(endDate.getDate() + 2);

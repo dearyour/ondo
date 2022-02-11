@@ -10,11 +10,12 @@ import FightingDogye from 'public/images/dogye/fighting.png';
 import axios from 'axios';
 import useImg from "store/hooks/imgHooks";
 import Router from 'next/router';
+import CropImg from 'components/Cropper';
 
 const { TextArea } = Input;
 
 const WriteChallenge = () => {
-  const { file, setFile } = useImg();
+  const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [imageUrl, setImageUrl] = useState<string | ''>('');
   const [startDate, setStartDate] = useState<string | ''>('');
   const [category, setCategory] = useState<string | ''>('');
@@ -32,7 +33,7 @@ const WriteChallenge = () => {
   const onSubmitForm = useCallback(() => {
 
   }, []);
-
+  // 챌린지 생성 요청
   const openChallengeRequest = () => {
     console.log(process.env.BACK_EC2);
 
@@ -66,13 +67,14 @@ const WriteChallenge = () => {
 
   return (
     <AppLayout title='도전 생성 | 온도'>
+      {originalImg ? <CropImg></CropImg> : null}
       <Row>
         <Col xs={0} md={6}></Col>
         <Col xs={24} md={14}>
           <Write>
             <Space direction='horizontal'>
-              <Image src={FightingDogye} width={75} height={75}></Image>
-              <Writetitle>도전을 생성해주세요!</Writetitle>
+              <Image src={FightingDogye} width={100} height={100}></Image>
+              <SpeechBubble>도전을 생성해주세요!</SpeechBubble>
             </Space>
             <Row>
               <Col xs={11} md={11}>
@@ -125,6 +127,32 @@ const Writetitle = styled.h2`
   color: palevioletred;
   margin-top: 50px;
   margin-bottom: 40px;
+`
+
+const SpeechBubble = styled.div`
+  width: 250px;
+  margin: 50px auto;
+  background: #F0F0F0;
+  padding: 20px;
+  text-align: center;
+  font-weight: 1000;
+  color: palevioletred;
+  font-family: arial;
+  position: relative;
+  border-radius: 10px;
+
+  ::before {
+    content: '';
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid #F0F0F0;
+    border-top: 10px solid #F0F0F0;
+    border-bottom: 10px solid transparent;
+    left: -15px;
+    top: 20px;
+  }
 `
 
 const TitleInput = styled(Input)`

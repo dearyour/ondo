@@ -1,7 +1,7 @@
 
 import axios from 'axios';
-import React, { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/router'
+import React, { useCallback, useEffect, useState } from 'react';
+import Router, { useRouter } from 'next/router'
 import AppLayout from 'components/layout/AppLayout';
 import SearchResultChallenge from 'components/search/resultChallenge';
 import SearchResultUser from 'components/search/resultUser';
@@ -11,14 +11,12 @@ import styled from 'styled-components';
 
 
 const SearchPage = () => {
-  let data = {
-    challenges: [],
-    feeds: [],
-    users: [],
-  }
+  const [data, setData] = useState({ challenges: [], feeds: [], users: [], });
+
   const router = useRouter()
   const { keyword } = router.query
   useEffect(useCallback(() => {
+    // Router.reload()
     if (keyword) {
       const token = localStorage.getItem('Token');
       console.log(keyword)
@@ -29,7 +27,7 @@ const SearchPage = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          data = res.data
+          setData(res.data)
           console.log(data)
         })
     }
