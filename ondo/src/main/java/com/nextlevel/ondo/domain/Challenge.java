@@ -38,7 +38,7 @@ public class Challenge extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column
     private Category category;
-    @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
 
 

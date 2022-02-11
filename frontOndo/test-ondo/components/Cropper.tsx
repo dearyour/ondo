@@ -35,14 +35,25 @@ const CropImg: React.FC = () => {
         <CropImage src={image} alt="" />
       </div> */}
       {/* <Button onClick={onCrop}>미리보기</Button> */}
-      <Button onClick={onCrop}>적용</Button>
-      <Button onClick={() => { setOriginalImage(null) }}>종료</Button>
+      <BtnDiv>
+        <CropBtn onClick={onCrop}>적용</CropBtn>
+        <CropBtn onClick={() => { setOriginalImage(null) }}>종료</CropBtn>
+      </BtnDiv>
     </div>
   );
 };
 
 const CropImage = styled.img`
   width:30%;
+`
+
+const BtnDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`
+const CropBtn = styled(Button)`
+  margin-left: 10px;
+  margin-right: 10px;
 `
 
 export default CropImg;

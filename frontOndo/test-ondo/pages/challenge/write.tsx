@@ -10,11 +10,12 @@ import FightingDogye from 'public/images/dogye/fighting.png';
 import axios from 'axios';
 import useImg from "store/hooks/imgHooks";
 import Router from 'next/router';
+import CropImg from 'components/Cropper';
 
 const { TextArea } = Input;
 
 const WriteChallenge = () => {
-  const { file, setFile } = useImg();
+  const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [imageUrl, setImageUrl] = useState<string | ''>('');
   const [startDate, setStartDate] = useState<string | ''>('');
   const [category, setCategory] = useState<string | ''>('');
@@ -32,7 +33,7 @@ const WriteChallenge = () => {
   const onSubmitForm = useCallback(() => {
 
   }, []);
-
+  // 챌린지 생성 요청
   const openChallengeRequest = () => {
     console.log(process.env.BACK_EC2);
 
@@ -66,6 +67,7 @@ const WriteChallenge = () => {
 
   return (
     <AppLayout title='도전 생성 | 온도'>
+      {originalImg ? <CropImg></CropImg> : null}
       <Row>
         <Col xs={0} md={6}></Col>
         <Col xs={24} md={14}>
