@@ -3,13 +3,15 @@ import { fadeIn, staggerContainer } from 'variants';
 import styled from 'styled-components';
 import Image from 'next/image';
 import imageLogo from 'public/images/imageLogo.png';
+import Login from 'components/user/login';
+
 
 const TextContainer = () => {
   return (
     <TextContainerWrapper variants={staggerContainer} initial='initial' animate='animate'>
 
       <TextContainerTop>
-        <motion.span variants={fadeIn()} style={{ color: 'palevioletred'}} >
+        <motion.span variants={fadeIn()} style={{ color: 'palevioletred' }} >
           3일간의 뜨거운 도전
         </motion.span>
       </TextContainerTop>
@@ -21,12 +23,12 @@ const TextContainer = () => {
       </TextContainerMiddle>
 
       <TextContainerBottom>
-        <motion.button variants={fadeIn()}>카카오kakao 로그인</motion.button>
+        <Login />
         <motion.p variants={fadeIn()}>
-          몸과 마음 모두 건강해지는<br /> 그 날까지, <span style={{color: 'palevioletred'}}>온도</span>하세요!
+          몸과 마음 모두 건강해지는<br /> 그 날까지, <span style={{ color: 'palevioletred' }}>온도</span>하세요!
         </motion.p>
       </TextContainerBottom>
-    </TextContainerWrapper> 
+    </TextContainerWrapper>
   );
 }
 

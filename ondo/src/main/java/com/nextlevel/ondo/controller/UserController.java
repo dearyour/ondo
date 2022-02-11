@@ -200,7 +200,7 @@ public class UserController {
             image = s3Uploader.upload(multipartFile, "static", "user");
         }
         String result = userService.modifyUser(image,username,accessToken);
-        if(result == "fail"){
+        if(result.equals("fail")){
             return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<String>(result, HttpStatus.OK);

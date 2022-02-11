@@ -35,7 +35,7 @@ const WriteChallenge = () => {
   }, []);
   // 챌린지 생성 요청
   const openChallengeRequest = () => {
-    console.log(process.env.BACK_EC2);
+    // console.log(process.env.BACK_EC2);
 
     const data = {
       title: title,
@@ -53,9 +53,10 @@ const WriteChallenge = () => {
     // formdata.append('content', content)
     // formdata.append('category', category)
     const token = localStorage.getItem('Token')
+    console.log(data)
     axios({
       method: 'POST',
-      url: 'http://localhost:8080' + '/challenge/create',
+      url: process.env.BACK_EC2 + '/challenge/create',
       headers: { "Content-Type": `multipart/form-data`, Authorization: "Bearer " + token },
       data: formdata,
     })

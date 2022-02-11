@@ -181,6 +181,7 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
+        System.out.println(user.getUsername());
         if (user.getUsername() == null) {
             tokenuser.setUsername(username);
             userRepository.save(tokenuser);

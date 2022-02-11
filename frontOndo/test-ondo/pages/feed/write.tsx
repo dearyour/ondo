@@ -57,7 +57,7 @@ const Write_feed = () => {
   const [num, setNum] = useState<number>(0)
   const [hashArr, setHashArr] = useState<string[] | []>([])
   const [challenge, setChallenge] = useState<string | ''>('')
-  let challenges: Array<Object> = [];
+  let challenges: Array<any> = [];
   // for (let i = 10; i < 36; i++) {
   //   challenges.push(<Option key={i.toString(36) + i}>하루에 {i}보 걷기</Option>);
   // }
@@ -68,7 +68,7 @@ const Write_feed = () => {
     const token = localStorage.getItem('Token');
     axios({
       method: "get",
-      url: 'http://localhost:8080/feed/create',
+      url: process.env.BACK_EC2 + '/feed/create',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -124,7 +124,7 @@ const Write_feed = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',
-      url: 'http://localhost:8080' + '/feed/create',
+      url: process.env.BACK_EC2 + '/feed/create',
       headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
       data: formdata,
     })
@@ -198,7 +198,9 @@ const Write_feed = () => {
         </WriteDiv>
         <WriteDiv>
           <Label>도전</Label>
-          <WriteInput bordered={false}>{challenges}</WriteInput>
+          <WriteInput bordered={false}>{challenges.map((challenge) => {
+            return challenge.title
+          })}</WriteInput>
         </WriteDiv>
         <WriteDiv>
           <div className='HashWrapOuter'></div>

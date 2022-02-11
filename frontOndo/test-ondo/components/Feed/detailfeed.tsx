@@ -61,12 +61,10 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
   const __loadComments = useCallback(() => {
@@ -75,7 +73,7 @@ function Detailfeed() {
       const token = localStorage.getItem("Token");
       axios({
         method: "GET",
-        url: "http://localhost:8080" + "/comment/" + detailData.feed.feedId,
+        url: process.env.BACK_EC2 + "/comment/" + detailData.feed.feedId,
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -103,7 +101,7 @@ function Detailfeed() {
         const token = localStorage.getItem("Token");
         axios({
           method: "POST",
-          url: "http://localhost:8080" + "/comment/write",
+          url: process.env.BACK_EC2 + "/comment/write",
           headers: {
             Authorization: "Bearer " + token,
           },

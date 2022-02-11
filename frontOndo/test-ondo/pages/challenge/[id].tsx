@@ -20,7 +20,7 @@ const ReadChallenge = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'get',
-      url: 'http://localhost:8080/challenge/info/' + String(id),
+      url: process.env.BACK_EC2 + '/challenge/info/' + String(id),
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -33,7 +33,7 @@ const ReadChallenge = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'post',
-      url: 'http://localhost:8080/challenge/participate',
+      url: process.env.BACK_EC2 + '/challenge/participate',
       headers: { Authorization: "Bearer " + token },
       data: {
         challengeId: id,
