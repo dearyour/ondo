@@ -37,13 +37,13 @@ public class User extends BaseTimeEntity {
     @Column(columnDefinition = "varchar(10) default 'user'")
     private RoleType role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ChallengeParticipate> challengeParticipate = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Comment> comment = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<FeedLike> feedLikes = new ArrayList<>();
 

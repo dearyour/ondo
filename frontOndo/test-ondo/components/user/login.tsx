@@ -47,28 +47,20 @@ const LoginButton = styled(Button)`
   }
 `;
 
-const LoginDiv = styled.div`
-  display: grid;
-  width: 100%;
-  text-align: center;
-  grid-template-columns: 1fr 4fr;
-  margin: 10px 0px;
-`;
+
 const Kakao = styled.a``;
 
 const Login = () => {
   return (
-    <AppLayout>
-      <Pagebar title="로그인"></Pagebar>
-      <LoginForm>
-        <div>
-          <Kakao href={test}>
-            <Image src={kakao_login_large_wide}></Image>
-          </Kakao>
-        </div>
-      </LoginForm>
-    </AppLayout>
+    <LoginDiv>
+      <Kakao href={test}>
+        <Image src={kakao_login_large_wide}></Image>
+      </Kakao>
+    </LoginDiv>
   );
 };
 
+const LoginDiv = styled.div`
+  width:30%;
+`
 export default Login;

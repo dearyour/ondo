@@ -42,16 +42,16 @@ const Challenge = () => {
   const __GetChallengeState = useCallback((token: string | null) => {
     return axios({
       method: 'GET',
-      url: 'http://localhost:8080/challenge',
+      url: process.env.BACK_EC2 + '/challenge',
       headers: { Authorization: "Bearer " + token },
     })
-    .then((res) => {
-      setHotChallenges(res.data.top3Challenges);
-      setCatChallenges(res.data.allChallenges.reverse());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        setHotChallenges(res.data.top3Challenges);
+        setCatChallenges(res.data.allChallenges.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {

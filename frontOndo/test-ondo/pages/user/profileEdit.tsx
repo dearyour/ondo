@@ -14,6 +14,7 @@ import axios from "axios";
 import CropImg from "components/Cropper";
 import useImg from "store/hooks/imgHooks";
 
+
 function beforeUpload(file: any) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
@@ -35,32 +36,37 @@ function getBase64(img: Blob, callback: any) {
 const Edit = () => {
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [loading, setLoading] = useState<boolean>(false);
-  const [nickname, onChangeNick] = useInput("asdas");
+  const [username, onChangeNick] = useState("asdas");
+
   // const [image, setImage] = useState<string>();
   // const [file, setFiles] = useState<File | ''>('')
   // const [originalImg, setOriginalImage] = useState<string>()
   const onChangeNickname = useCallback((e) => {
-    onChangeNick(e);
+    onChangeNick(e.target.value);
   }, []);
 
-  const { GetUser } = useUser();
+  const { GetUser, profile, nickname, users } = useUser();
   useEffect(() => {
     GetUser();
+    setImage(users.image);
+    onChangeNick(nickname);
+
   }, [])
   const onEditNickname = () => {
     const token = localStorage.getItem('Token');
     const formdata = new FormData();
     console.log(file);
     formdata.append("file", file);
-    formdata.append("nickname", nickname);
+    formdata.append("username", username);
     axios({
       method: 'put',
-      url: 'http://localhost:8080/user/modify',
+      url: process.env.BACK_EC2 + '/user/modify',
       headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
       data: formdata,
     })
       .then((res) => {
         console.log(res)
+        // setImage(null)
       })
       .catch((err) => {
         console.log(err)
@@ -118,7 +124,7 @@ const Edit = () => {
           </Divide>
           <Divide>
             <h3 className={styles.mx_20}>닉네임</h3>
-            <NickInput value={nickname} onChange={onChangeNickname}></NickInput>
+            <NickInput defaultValue={users.username} onChange={onChangeNickname}></NickInput>
             <Button className={styles.mx_20} onClick={onEditNickname}>
               수정
             </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Modal, Button, Col, Row } from 'antd';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -6,11 +6,16 @@ import temp_profile from 'public/images/temp_profile.jpg'
 import { UserOutlined } from '@ant-design/icons';
 import FollowUser from './followUser';
 import Router from 'next/router';
+import useUser from 'store/hooks/userHooks';
 
 
-const UserProfile = ({ nowUser }: any) => {
+const UserProfile = ({ data }: any) => {
   const [followModalVisible, setfollowModalVisible] = useState(false);
-
+  const [user, setUser] = useState<any>([]);
+  const { users } = useUser();
+  useEffect(() => {
+    setUser(data.user)
+  }, [data])
   const showFollowModal = () => {
     setfollowModalVisible(true);
   };
@@ -40,16 +45,16 @@ const UserProfile = ({ nowUser }: any) => {
   return (
     <ProfileWrap>
       <Col span={6}>
-        <ProfileImg src={temp_profile}></ProfileImg>
+        <ProfileImg src={users.image}></ProfileImg>
       </Col>
       <ProfileRight span={6} offset={1}>
-        <Nick>{nowUser.nickname}</Nick>
+        <Nick>{user ? user.username : null}</Nick>
         <Profileedit onClick={() => { Router.push('/user/profileEdit') }}><UserOutlined /> 개인정보 수정</Profileedit>
       </ProfileRight>
       <Col span={10} offset={1}>
-        <UserStates>온도: {nowUser.ondo}°C</UserStates>
-        <ProfileDiv>도전 중 {nowUser.challenges.length} | 도전 완료 {nowUser.endChallenges.length}</ProfileDiv>
-        <ProfileDiv ><Fspan onClick={showFollowModal}>팔로워 {nowUser.follow.length}</Fspan> | <Fspan onClick={showfollowingModal}>팔로잉 {nowUser.following.length}</Fspan></ProfileDiv>
+        <UserStates>온도: {user ? user.ondo : null}°C</UserStates>
+        <ProfileDiv>도전 중 {user && user.challengeParticipate ? user.challengeParticipate.length : 0} | 도전 완료 {data.compeleteChallenge ? data.compeleteChallenge.length : 0}</ProfileDiv>
+        <ProfileDiv ><Fspan onClick={showFollowModal}>팔로워 {user && user.followerUserDtos ? user.followerUserDtos.length : 0}</Fspan> | <Fspan onClick={showfollowingModal}>팔로잉 {user && user.followingUserDtos ? user.followingUserDtos.length : 0}</Fspan></ProfileDiv>
       </Col>
       <FModal
         visible={followModalVisible}
@@ -59,8 +64,8 @@ const UserProfile = ({ nowUser }: any) => {
         cancelButtonProps={{ style: { display: 'none' } }}
         okButtonProps={{ style: { display: 'none' } }}
       >
-        {nowUser.follow.length >= 1 ?
-          nowUser.follow.map((user: any) => {
+        {user && user.followerUserDtos && user.followerUserDtos.length >= 1 ?
+          user.followerUserDtos.map((user: any) => {
             let key = 9
             return (
               <FModalDiv key={key++}>
@@ -79,8 +84,8 @@ const UserProfile = ({ nowUser }: any) => {
         cancelButtonProps={{ style: { display: 'none' } }}
         okButtonProps={{ style: { display: 'none' } }}
       >
-        {nowUser.following.length >= 1 ?
-          nowUser.following.map((user: any) => {
+        {user && user.followingUserDtos && user.followingUserDtos.length >= 1 ?
+          user.followingUserDtos.map((user: any) => {
             let key = 9
             return (
               <FModalDiv key={key++}>
@@ -105,7 +110,7 @@ const FModal = styled(Modal)`
   border-radius: 10px;
 `
 
-const ProfileImg = styled(Image)`
+const ProfileImg = styled.img`
   padding: 10px;
   border-radius: 100%;
 `

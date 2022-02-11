@@ -1,18 +1,36 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "store/module";
 import { layoutAction } from "store/slice/layout";
 import Reply from "components/Feed/reply";
 import Router from "next/router";
+import axios from "axios";
+
+function makeArray(obj: Object) {
+  const keys = Object.keys(obj);
+  const values = Object.values(obj);
+  const result = keys.map((item, idx) => {
+    return {
+      commnetId: item,
+      data: values[idx],
+    };
+  });
+
+  return result.reverse;
+}
 
 function Detailfeed() {
   const dispatch = useDispatch();
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const userImage = useSelector((state: RootState) => state.user.image);
+  const [comment, setComment] = useState("");
+  const commentRef = useRef(null);
+  const [commentData, setCommnetData] = useState([]);
   // const session = useSelector((state)=>state.auth.session);
   // const image = useSelector(
   //   (state: RootState) => state.layout.detailData.feed.image
   // );
+  console.log(detailData.feed.feedId);
   const startDate = detailData.feed.createdDate;
 
   // const __getProfileImage = useCallback(() => {}, [userImage]);
@@ -40,17 +58,72 @@ function Detailfeed() {
     const date = parseInt(String(timeGap / oneDay));
     const hour = feedDate.getHours();
     const minutes = feedDate.getMinutes();
-    console.log(hour + "hour");
-    console.log(minutes);
+    // console.log(hour + "hour");
+    // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
+  const __loadComments = useCallback(() => {
+    //코멘트 업로드 또는 불러올때 계속 새로고침
+    if (detailData) {
+      const token = localStorage.getItem("Token");
+      axios({
+        method: "GET",
+        url: process.env.BACK_EC2 + "/comment/" + detailData.feed.feedId,
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          console.log("######" + detailData.feed.feedId);
+          console.log(makeArray(res));
+          // setCommnetData(makeArray(res));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  const __uploadComment = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (detailData) {
+        const data = {
+          feedId: detailData.feed.feedId,
+          content: comment,
+        };
+        const token = localStorage.getItem("Token");
+        axios({
+          method: "POST",
+          url: process.env.BACK_EC2 + "/comment/write",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          data: data,
+        })
+          .then((res) => {
+            console.log(res);
+            // commentRef.current.value = "";
+            setComment("");
+            __loadComments;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
+    [
+      detailData,
+      comment,
+      // commentRef
+    ]
+  );
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
 
@@ -73,6 +146,10 @@ function Detailfeed() {
       window.removeEventListener("keydown", __whenKeyDown);
     };
   }, [__whenKeyDown]);
+
+  useEffect(() => {
+    __loadComments;
+  }, [__loadComments]);
   return (
     <div>
       <div className="feed-detail">
@@ -141,7 +218,7 @@ function Detailfeed() {
                 return <Reply key={idx} item={detailData} reply={item} />;
               })}
             </div>
-            <div className="feed-write-comment">
+            <form className="feed-write-comment" onSubmit={__uploadComment}>
               {userImage && (
                 <div
                   className="profile-image"
@@ -149,9 +226,14 @@ function Detailfeed() {
                 ></div>
               )}
               <div className="write-comment">
-                <input type="text" placeholder="댓글을 입력해 주세요" />
+                <input
+                  type="text"
+                  placeholder="댓글을 입력해 주세요"
+                  ref={commentRef}
+                  onChange={(e) => setComment(e.target.value)}
+                />
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -56,8 +56,8 @@ const Write_feed = () => {
   const [files, setFiles] = useState<any | ''>('')
   const [num, setNum] = useState<number>(0)
   const [hashArr, setHashArr] = useState<string[] | []>([])
-  const [challenge, setChallenge] = useState<string | ''>('')
-  let challenges: Array<Object> = [];
+  const [challenges, setChallenges] = useState<any>('')
+  const [challenge, setChallenge] = useState<any>('')
   // for (let i = 10; i < 36; i++) {
   //   challenges.push(<Option key={i.toString(36) + i}>하루에 {i}보 걷기</Option>);
   // }
@@ -68,21 +68,19 @@ const Write_feed = () => {
     const token = localStorage.getItem('Token');
     axios({
       method: "get",
-      url: 'http://localhost:8080/feed/create',
+      url: process.env.BACK_EC2 + '/feed/create',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
         console.log(res)
         if (res.data) {
-          challenges = res.data;
+          setChallenges(res.data);
         } else {
           // challenges = [{ 'name': '도전이 없습니다.' }]
         }
       })
-  })
-  const onChangeChallenge = (e: any) => {
-    setChallenge(e.target.value)
-  }
+  }, [])
+
   const onChangeHashtag: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHashtag(e.target.value);
   }
@@ -118,13 +116,14 @@ const Write_feed = () => {
       challengeId: 1,
       content: content,
     }
+    console.log(data)
     const formdata = new FormData();
     formdata.append('file', file)
     formdata.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }))
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',
-      url: 'http://localhost:8080' + '/feed/create',
+      url: process.env.BACK_EC2 + '/feed/create',
       headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
       data: formdata,
     })
@@ -139,7 +138,7 @@ const Write_feed = () => {
     border: 0px;
     color: #F3F3F3;
     padding: 4px 16px;
-    background-color: #ebc1c1;
+    background-color: #f5d2d2;
     border-radius: 5px;
     &:hover {
       cursor: pointer;
@@ -198,7 +197,9 @@ const Write_feed = () => {
         </WriteDiv>
         <WriteDiv>
           <Label>도전</Label>
-          <WriteInput bordered={false}>{challenges}</WriteInput>
+          <WriteInput bordered={false} onChange={(e: any) => { setChallenge(e.value) }}>{challenges ? challenges.map((challenge: any) => {
+            return <Option value={challenge.challengeId}>{challenge.title}</Option>
+          }) : null}</WriteInput>
         </WriteDiv>
         <WriteDiv>
           <div className='HashWrapOuter'></div>
@@ -223,6 +224,9 @@ const Write_feed = () => {
 const MyImage = styled.div`
   display: flex;
   justify-content: center;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
 `
 const UpImage = styled(Upload)`
   width: 10%;
@@ -255,7 +259,7 @@ const Label = styled.label`
 const WriteButton = styled(Button)`
   border: 0px;
   color: #F3F3F3;
-  background-color: #ebc1c1;
+  background-color: #f5d2d2;
   border-radius: 5px;
   padding: 10px 30px 30px 30px;  
   margin: 20px 10px;  
@@ -270,7 +274,7 @@ const WriteInput = styled(Select)`
   margin: 5px 0 5px 5px;
   padding: 5px;
   border-radius: 10px;
-  background-color: #fdfcf6;
+  background-color: #ffffff;
   border: 1px solid #EDBABA;
   width: 50%;
   outline: #EDBABA 1px;
@@ -281,7 +285,7 @@ const WriteTA = styled(TextArea)`
   margin: 5px 0 5px 5px;
   border-radius: 10px;
   padding: 5px;
-  background-color: #fdfcf6;
+  background-color: #ffffff;
   border-color: #EDBABA;
   width: 50%;
   &:focus {
@@ -294,7 +298,7 @@ const UploadInput = styled(Input)`
   margin: 5px 0 5px 5px;
   padding: 5px;
   border-radius: 10px;
-  background-color: #fdfcf6;
+  background-color: #ffffff;
   border: 1px solid #EDBABA;
   width: 40%;
   &:focus {

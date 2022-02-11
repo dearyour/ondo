@@ -68,31 +68,31 @@ public class FeedService {
             //을 Dto에 담기(불리안 더 담아서)
             List<DetailCommentDto> detailCommentDtos = new ArrayList<>();
 
-            for(Comment c : comments){
-                if(c.getUser().getUserId() == tokenuser.getUserId()){
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(),c.getUser().getImage(),false);
+            for (Comment c : comments) {
+                if (c.getUser().getUserId() == tokenuser.getUserId()) {
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c, c.getUser().getUsername(), c.getUser().getImage(), false);
                     detailCommentDtos.add(detailCommentDto);
                 } else {
-                    DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(),c.getUser().getImage(),true); //토큰아이디랑 작성아이디 다르면 활성화 true
+                    DetailCommentDto detailCommentDto = new DetailCommentDto(c, c.getUser().getUsername(), c.getUser().getImage(), true); //토큰아이디랑 작성아이디 다르면 활성화 true
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
             Boolean flag = true;
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
-            if(f.getFeedlike().contains(tokenuser)) flag = false;
+            if (f.getFeedlike().contains(tokenuser)) flag = false;
 
 
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user,f,detailCommentDtos,flag);
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag);
             detailFeedDtos.add(detailFeedDto);
         }
 
         List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
         List<RankUserDto> rankUserDtos = new ArrayList<>();
-        for(User u : ulist){
-            rankUserDtos.add(new RankUserDto(u.getUsername(),u.getImage(),u.getOndo()));
+        for (User u : ulist) {
+            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage(), u.getOndo()));
         }
 
-        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos,rankUserDtos);
+        MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos, rankUserDtos);
 
         return mainFeedDto;
     }
@@ -105,8 +105,8 @@ public class FeedService {
         // 1. 태그 테이블에서 태그명으로 태그 id 찾기.
         tagIdList = tagRepository.findByNameContaining(keyword);
         List<Feed> temp = new ArrayList<>();
-        for(Tag t : tagIdList){
-            for (FeedTag ft: t.getFeedTag()){
+        for (Tag t : tagIdList) {
+            for (FeedTag ft : t.getFeedTag()) {
                 temp.add(ft.getFeed());
             }
         }
@@ -180,10 +180,10 @@ public class FeedService {
 
         for (Comment c : comments) {
             if (c.getUser().getUserId() == tokenuser.getUserId()) {
-                DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(), c.getUser().getImage(),true);
+                DetailCommentDto detailCommentDto = new DetailCommentDto(c, c.getUser().getUsername(), c.getUser().getImage(), true);
                 detailCommentDtos.add(detailCommentDto);
             } else {
-                DetailCommentDto detailCommentDto = new DetailCommentDto(c,c.getUser().getUsername(), c.getUser().getImage(),false);
+                DetailCommentDto detailCommentDto = new DetailCommentDto(c, c.getUser().getUsername(), c.getUser().getImage(), false);
                 detailCommentDtos.add(detailCommentDto);
             }
         }
@@ -208,22 +208,22 @@ public class FeedService {
 
         // 태그 등록 (이미 디비에 같은 이름 저장되어있으면 x)
         ArrayList<String> tags = feedSaveDto.getTags();
-        for(String s : tags){
-            if(tagRepository.findByName(s) == null) {
-                Tag tag = tagRepository.save(new Tag(s));
-                //연결
-                feedTagRepository.save(new FeedTag(feed,tag));
-            } else {
+        for (String s : tags) {
+            if (tagRepository.findByName(s) != null) {
                 //연결
                 Tag tag = new Tag(s);
-                feedTagRepository.save(new FeedTag(feed,tag));
+                feedTagRepository.save(new FeedTag(feed, tag));
+            } else {
+                Tag tag = tagRepository.save(new Tag(s));
+                //연결
+                feedTagRepository.save(new FeedTag(feed, tag));
             }
         }
 
 
         //로직 구현
         Challenge challenge = challengeRepository.findByChallengeId(feedSaveDto.getChallengeId());
-        ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge,user);
+        ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge, user);
 
         // 현재 날짜 구하기
         LocalDate now = LocalDate.now();
@@ -232,36 +232,21 @@ public class FeedService {
         // 포맷 적용
         String formatedNow = now.format(formatter);
 
-        try {
-            if (formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 0))){
-                Boolean[] archive = challengeParticipate.getArchived();
-                archive[0] = true;
-                challengeParticipate.setArchived(archive);
-                challengeParticipateRepository.save(challengeParticipate);
-            } else if (formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 1))){
-                Boolean[] archive = challengeParticipate.getArchived();
-                archive[1] = true;
-                challengeParticipate.setArchived(archive);
-                challengeParticipateRepository.save(challengeParticipate);
-            } else if(formatedNow.equals(AddDate(challenge.getSDate(), 0, 0, 2))){
-                Boolean[] archive = challengeParticipate.getArchived();
-                archive[2] = true;
-                challengeParticipate.setArchived(archive);
-                challengeParticipateRepository.save(challengeParticipate);
-
-                //3번 다 true 인지 하나라도 안올렸으면 return 으로 종료
-                archive = challengeParticipate.getArchived();
-                for(int i = 0; i < 3; i++){
-                    if(archive[i] == false){
-                        return feed;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        // 날짜 차이 계산
+        int dif = Integer.parseInt(formatedNow) - Integer.parseInt(challenge.getSDate());
+        if (dif < 0) {
+            System.out.println("아직 시작 안함.");
         }
+
+        int archived = challengeParticipate.getArchived();
+        archived = archived | (1 << dif);
+        challengeParticipate.setArchived(archived);
+
+
         //3개 다 true면 위에 코드 통과해서 여기로 오고, 온도 1도 오르기
-        user.setOndo(user.getOndo()+1);
+        if (archived == 7) {
+            user.setOndo(user.getOndo() + 1);
+        }
         userRepository.save(user);
 
         System.out.println("피드 생성 완료");
@@ -289,14 +274,14 @@ public class FeedService {
         });
         List<FeedLike> FL = feedLikeRepository.findByFeed(feed);
         // 리스트 돌다가 목록에 있으면 ( 이미 눌렀으니 해제)
-        for(FeedLike f : FL){
-            if(f.getUser() == tokenuser){
+        for (FeedLike f : FL) {
+            if (f.getUser() == tokenuser) {
                 feedLikeRepository.delete(f);
                 return "delete";
             }
         }
         // 없으면 반복문 나와서
-        FeedLike feedLike = new FeedLike(tokenuser,feed);
+        FeedLike feedLike = new FeedLike(tokenuser, feed);
         feedLikeRepository.save(feedLike);
         return "ok";
 
@@ -311,7 +296,7 @@ public class FeedService {
             return new Feed();
         });
 
-        if(tokenuser.getUserId() != feed.getUserId()) return "no permission";
+        if (tokenuser.getUserId() != feed.getUserId()) return "no permission";
 
         feedRepository.delete(feed);
         return "delete complete";
@@ -326,9 +311,9 @@ public class FeedService {
 
         List<ChallengeParticipate> challengeParticipates = challengeParticipateRepository.findByUser(tokenuser);
 
-        for(ChallengeParticipate c : challengeParticipates){
-            if(challengeService.isProcessingChallenge(c.getChallenge()))
-                simpleChallengeDtos.add(new SimpleChallengeDto(c.getChallenge().getChallengeId(),c.getChallenge().getTitle()));
+        for (ChallengeParticipate c : challengeParticipates) {
+            if (challengeService.isProcessingChallenge(c.getChallenge()))
+                simpleChallengeDtos.add(new SimpleChallengeDto(c.getChallenge().getChallengeId(), c.getChallenge().getTitle()));
         }
 
         return simpleChallengeDtos;

@@ -6,7 +6,7 @@ const placeHolderurl = process.env.BACK_EC2 + "/feed";
 export const GetFeedState = (token: string | null) => {
   return axios({
     method: "GET",
-    url: "http://localhost:8080/feed",
+    url: Feedurl,
     // url: "https://jsonplaceholder.typicode.com/comments",
     headers: { Authorization: "Bearer " + token },
   })

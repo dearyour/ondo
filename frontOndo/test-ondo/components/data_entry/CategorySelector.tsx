@@ -4,21 +4,21 @@ import styled from 'styled-components';
 
 const { Option } = Select;
 
-function onSearch(val:any) {
+function onSearch(val: any) {
   console.log('search:', val);
 }
 
-function CategorySelector(props:any): JSX.Element {
+function CategorySelector(props: any): JSX.Element {
   const [category, setCategory] = useState('');
 
-  const onChange = (value:any) => {
+  const onChange = (value: any) => {
     setCategory(value);
-    console.log(value);
+    // console.log(value);
     props.changeCategory(value);
   }
-    
+
   return (
-    <Space direction='horizontal' style={{margin: '10px'}}>
+    <Space direction='horizontal' style={{ margin: '10px' }}>
       <label htmlFor='category'>카테고리</label>
       <StyledSelect
         showSearch
@@ -26,17 +26,17 @@ function CategorySelector(props:any): JSX.Element {
         optionFilterProp="children"
         onChange={onChange}
         onSearch={onSearch}
-        filterOption={(input, option:any) =>
+        filterOption={(input, option: any) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
         className='category'
-        style={{width: 200}}
-      > 
-      {
-        ['운동', '식습관', '취미', '학습', '친환경', '외모 관리', '기타'].map(category => (
-          <Option value={category} key={category}>{category}</Option>
-        ))
-      }
+        style={{ width: 200 }}
+      >
+        {
+          ['운동', '식습관', '취미', '학습', '친환경', '외모 관리', '기타'].map(category => (
+            <Option value={category} key={category}>{category}</Option>
+          ))
+        }
       </StyledSelect>
     </Space>
   );

@@ -31,7 +31,7 @@ function HotChallenge(props: any): JSX.Element {
 
   const renderHotChallenges = () => {
     const result = [];
-    for(let i = 0; i < Math.min(3, top3.length); i++) {
+    for (let i = 0; i < Math.min(3, top3.length); i++) {
       result.push(
         <HotChallengeFrame>
           <HotChallengeImg src={top3[i].image}></HotChallengeImg>
@@ -56,9 +56,9 @@ function HotChallenge(props: any): JSX.Element {
   return (
     <>
       <p><b>HOT Challenge🔥</b></p>
-        <Carousel autoplay>
-          {renderHotChallenges()}
-        </Carousel>
+      <Carousel autoplay>
+        {renderHotChallenges()}
+      </Carousel>
     </>
   );
 }

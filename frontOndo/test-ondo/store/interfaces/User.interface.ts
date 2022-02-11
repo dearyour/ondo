@@ -13,5 +13,6 @@ export interface UserParams {
 export interface User {
   isLoading: boolean;
   users: User[];
+  userObj: [];
   error: AxiosError | null;
 }

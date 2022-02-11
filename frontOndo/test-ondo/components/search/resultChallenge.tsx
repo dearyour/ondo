@@ -13,7 +13,7 @@ import Link from 'next/link';
 interface SearchResults {
   title?: string,
   keyword?: string,
-  results?: Array<Object>,
+  results: Array<Object>,
 }
 
 const Wrap = styled.div`
@@ -23,47 +23,52 @@ const Title = styled.h1`
   color: #dd7ed8;
 `
 const Nothing = styled.div`
-  
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-left: 5rem;
 `
 
-const swiper = new Swiper('.swiper', {
-  modules: [Navigation, Pagination],
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  slidesPerView: 2,
-  spaceBetween: 10,
-  // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 320px
-    320: {
-      slidesPerView: 2,
-      spaceBetween: 20
-    },
-    // when window width is >= 768px
-    768: {
-      slidesPerView: 3,
-      spaceBetween: 30
-    },
-    // when window width is >= 992px
-    992: {
-      slidesPerView: 4,
-      spaceBetween: 40
-    },
-  }
-});
 
 const SearchResultChallenge: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
   let i = 121211
+  useEffect(() => {
+    const swiper = new Swiper('.swiper', {
+      modules: [Navigation, Pagination],
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      slidesPerView: 2,
+      spaceBetween: 10,
+      // Responsive breakpoints
+      breakpoints: {
+        // when window width is >= 320px
+        320: {
+          slidesPerView: 2,
+          spaceBetween: 20
+        },
+        // when window width is >= 768px
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30
+        },
+        // when window width is >= 992px
+        992: {
+          slidesPerView: 4,
+          spaceBetween: 30
+        },
+      }
+    });
+
+  })
   return (
     <Wrap>
       <Title>Challenge</Title>
       <div>'{keyword}'에 대한 검색 결과: {results?.length}건</div>
       <div className='swiper'>
-        <div className='swiper-wrapper'>
+        <Swrapper className='swiper-wrapper'>
 
-          {results ? results.map((content: any) => {
+          {results.length >= 1 ? results.map((content: any) => {
             content = {
               ...content,
               url: '/challenge/' + content.id,
@@ -72,7 +77,7 @@ const SearchResultChallenge: React.FC<SearchResults> = ({ title = '', keyword, r
               <Imgbox obj={content} key={title + String(i++)}></Imgbox>
             )
           }) : <Nothing>검색 결과가 없습니다</Nothing>}
-        </div>
+        </Swrapper>
         {/* {results? 
         <div className="swiper-button-prev"></div> : null
       }
@@ -84,5 +89,9 @@ const SearchResultChallenge: React.FC<SearchResults> = ({ title = '', keyword, r
     </Wrap>
   )
 };
+
+const Swrapper = styled.div`
+
+`
 
 export default SearchResultChallenge;

@@ -30,12 +30,12 @@ function Mainfeed() {
   ////////////////////////
   useEffect(() => {
     // dispatch(userActions.getUser());
-    dispatch(feedAction.getFeed());
+    // dispatch(feedAction.getFeed());
   }, []);
   const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://localhost:8080/user/info",
+      url: process.env.BACK_EC2 + "/user/info",
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -63,7 +63,7 @@ function Mainfeed() {
   const __GetFeedState = useCallback((token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://localhost:8080/feed",
+      url: process.env.BACK_EC2 + "/feed",
       // url: "https://jsonplaceholder.typicode.com/comments",
       headers: { Authorization: "Bearer " + token },
     })
@@ -114,7 +114,8 @@ function Mainfeed() {
   //   console.log(item.feed);
   // });
   // console.log(test);
-  console.log(rankers);
+  // console.log(rankers);
+  // console.log(feeds);
   return (
     <div>
       <div className="mainfeed">
@@ -122,7 +123,7 @@ function Mainfeed() {
           <div className="feed-list">
             <form
               className="write-feed"
-              // onSubmit={__makeFeed}
+            // onSubmit={__makeFeed}
             >
               {image && (
                 <div
@@ -142,7 +143,7 @@ function Mainfeed() {
                   // ref={contextRef}
                   type="text"
                   placeholder="      오늘의 도전 완료 피드 쓰러가기"
-                  // onChange={(e) => setContext(e.target.value)}
+                // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -166,7 +167,7 @@ function Mainfeed() {
                   dto={item}
                   nickname={nickname}
                   image={image}
-                  // comments={comments}
+                // comments={comments}
                 />
               );
             })}

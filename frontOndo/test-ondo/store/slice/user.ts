@@ -3,6 +3,7 @@ import { UserParams } from "../interfaces/User.interface";
 
 const initialState: UserParams | any = {
   users: [],
+  userObj: [],
   nickname: "카리나",
   email: "base@base.com",
   session: "",
@@ -16,8 +17,8 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    profileEdit: (state) => { },
-    getUser: (state) => { },
+    profileEdit: (state) => {},
+    getUser: (state) => {},
     loadingStart: (state) => {
       state.isLoading = true;
     },
@@ -34,7 +35,7 @@ export const userSlice = createSlice({
       state.users = payload;
     },
     getKakaoKey: (state) => {
-      state.isLoading = true
+      state.isLoading = true;
     },
     getKakaoKeySuccess: (state, { payload }) => {
       state.session = payload;
@@ -49,6 +50,10 @@ export const userSlice = createSlice({
     getToken: (state) => {
       const token = localStorage.getItem("Token");
       state.session = token;
+    },
+    getUserObj: (state, { payload }) => {},
+    setUserObj: (state, { payload }) => {
+      state.userObj = payload;
     },
   },
 });

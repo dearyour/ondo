@@ -119,6 +119,7 @@ public class ChallengeService {
         Challenge challenge = challengeRepository.findById(joinChallengeDto.getChallengeId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 챌린지가 없습니다. id=" + joinChallengeDto.getChallengeId()));
         ChallengeParticipate challengeParticipate = joinChallengeDto.toEntity(user, challenge);
+        challengeParticipate.setArchived(0);
         if (challengeParticipateRepository.findByChallengeAndUser(challenge, user) != null) {
             // 이미 참가 중이거나 챌린지가 종료 되었을 경우.
             return null;

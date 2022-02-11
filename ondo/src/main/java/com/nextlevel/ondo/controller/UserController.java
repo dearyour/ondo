@@ -6,21 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextlevel.ondo.domain.KakaoProfile;
 import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
-import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
-import com.nextlevel.ondo.domain.dto.feed.FeedSaveDto;
 import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
 import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
 import com.nextlevel.ondo.service.UserService;
 import com.nextlevel.ondo.util.KakaoUtil;
 import com.nextlevel.ondo.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -40,6 +34,10 @@ public class UserController {
 
     @Value("${cos.key}")
     private String cosKey;
+    @Value("${kakao.client_id}")
+    private String kakaoCliendId;
+    @Value("${kakao.redirect_uri}")
+    private String kakaoRedirectUri;
 
     private final AuthenticationManager authenticationManager;
 
@@ -67,6 +65,7 @@ public class UserController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "44dad20dedd901c8ca6eb5d6fde58baa");
+
         params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
         params.add("code", code);
 
@@ -202,7 +201,7 @@ public class UserController {
             image = s3Uploader.upload(multipartFile, "static", "user");
         }
         String result = userService.modifyUser(image,username,accessToken);
-        if(result == "fail"){
+        if(result.equals("fail")){
             return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<String>(result, HttpStatus.OK);
