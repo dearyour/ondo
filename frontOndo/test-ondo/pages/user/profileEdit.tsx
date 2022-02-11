@@ -58,7 +58,7 @@ const Edit = () => {
     formdata.append("username", username);
     axios({
       method: 'put',
-      url: 'http://localhost:8080/user/modify',
+      url: process.env.BACK_EC2 + '/user/modify',
       headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
       data: formdata,
     })

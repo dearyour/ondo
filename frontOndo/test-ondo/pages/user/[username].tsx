@@ -19,7 +19,7 @@ const Userfeed = () => {
     const token = localStorage.getItem('Token');
     axios({
       method: 'get',
-      url: 'http://localhost:8080' + '/user/feed/' + username,
+      url: process.env.BACK_EC2 + '/user/feed/' + username,
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {

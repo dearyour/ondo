@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const Loginurl = process.env.BACK_EC2 + "/auth/kakao/callback";
-const Loginurl = "http://localhost:8080" + "/auth/kakao/callback";
+const Loginurl = process.env.BACK_EC2 + "/auth/kakao/callback";
+// const Loginurl = "http://localhost:8080" + "/auth/kakao/callback";
 
 const ProfileEditurl = process.env.BACK_EC2 + "/user/modify/";
 const GetUserurl = process.env.BACK_EC2 + "/user/info";
@@ -12,6 +12,7 @@ export const test = process.env.KAKAO_LOGIN;
 //response_type=code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}'
 // 카카오 로그인
 export const KakaoLogin = (code: string | null) => {
+
   return axios({
     method: "GET",
     url: Loginurl,
@@ -50,7 +51,7 @@ export const ProfileEdit = (nickname: string, token: string) => {
 export const GetUserState = (token: string | null) => {
   return axios({
     method: "GET",
-    url: "http://localhost:8080/user/info",
+    url: GetUserurl,
     // url: local,
     headers: { Authorization: "Bearer " + token },
   })
@@ -66,7 +67,7 @@ export const GetUserState = (token: string | null) => {
 export const getUserObjapi = (username: any, token: string | null) => {
   return axios({
     method: "GET",
-    url: "http://localhost:8080/user/feed/" + username,
+    url: base + "/user/feed/" + username,
     headers: { Authorization: "Bearer " + token },
   })
     .then((result) => {

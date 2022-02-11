@@ -68,7 +68,7 @@ const Write_feed = () => {
     const token = localStorage.getItem('Token');
     axios({
       method: "get",
-      url: 'http://localhost:8080/feed/create',
+      url: process.env.BACK_EC2 + '/feed/create',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -124,7 +124,7 @@ const Write_feed = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'POST',
-      url: 'http://localhost:8080' + '/feed/create',
+      url: process.env.BACK_EC2 + '/feed/create',
       headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
       data: formdata,
     })

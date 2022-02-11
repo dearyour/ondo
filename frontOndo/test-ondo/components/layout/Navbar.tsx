@@ -85,7 +85,7 @@ function Navbar(): JSX.Element {
 }
 const Logout = () => {
   localStorage.removeItem("Token");
-  Router.push("/user/login");
+  Router.push("/");
 };
 const XsLogo = styled(Col)`
   display: flex;

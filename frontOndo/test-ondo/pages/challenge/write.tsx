@@ -56,7 +56,7 @@ const WriteChallenge = () => {
     console.log(data)
     axios({
       method: 'POST',
-      url: 'http://localhost:8080' + '/challenge/create',
+      url: process.env.BACK_EC2 + '/challenge/create',
       headers: { "Content-Type": `multipart/form-data`, Authorization: "Bearer " + token },
       data: formdata,
     })
