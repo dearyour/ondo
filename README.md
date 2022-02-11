@@ -1,5 +1,5 @@
 # Ondo
-![ondo-001](/uploads/2414303df62042e5dcd18e7acca4ea97/ondo-001.png)
+![ondo-001](/uploads/13fb63fb36fd91e974b2cc2e6a1cb6a2/ondo-001.png)
 # dev
 
 ## commit messages
