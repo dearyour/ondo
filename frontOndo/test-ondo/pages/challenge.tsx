@@ -1,12 +1,64 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Col, Row, Carousel, Space } from "antd";
 import styled from "styled-components";
 import HotChallenge from "components/challenge/HotChallenge";
 import ChallengeByCategory from "components/challenge/ChallengeByCategory";
 import CategoryIcons from "components/challenge/CategoryIcons";
 import AppLayout from "components/layout/AppLayout";
+import axios from "axios";
+import { RootState } from "store/module";
+import { userActions } from "store/slice/user";
+import { challengeAction } from "store/slice/challenge";
+
 
 const Challenge = () => {
+  const [hotChallenges, setHotChallenges] = useState([]);
+  const [catChallenges, setCatChallenges] = useState([]);
+  const dispatch = useDispatch();
+
+  // const __GetUserState = (token: string | null) => {
+  //   return axios({
+  //     method: "GET",
+  //     url: "http://localhost:8080/user/info",
+  //     headers: { Authorization: "Bearer " + token },
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //       console.log(res.data);
+  //       return res.data;
+  //     })
+  //     .catch((err) => {
+  //       return err;
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("Token");
+  //   __GetUserState(token);
+  // }, []);
+
+  const __GetChallengeState = useCallback((token: string | null) => {
+    return axios({
+      method: 'GET',
+      url: 'http://localhost:8080/challenge',
+      headers: { Authorization: "Bearer " + token },
+    })
+    .then((res) => {
+      setHotChallenges(res.data.top3Challenges);
+      setCatChallenges(res.data.allChallenges.reverse());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    // __GetUserState(token);
+    __GetChallengeState(token);
+  }, []);
+
   const top3 = [
     {
       title: "취중고백",

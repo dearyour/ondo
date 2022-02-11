@@ -5,7 +5,8 @@ const placeHolderurl = process.env.BACK_EC2 + "/feed";
 const ChallengeAPI = (token: any) => {
   return axios({
     method: "GET",
-    url: challengeURL,
+    url: 'http://localhost:8080/challenge',
+    // url: challengeURL,
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { fadeIn, staggerContainer } from 'variants';
 import styled from 'styled-components';
+import Image from 'next/image';
+import imageLogo from 'public/images/imageLogo.png';
 
 const TextContainer = () => {
   return (
