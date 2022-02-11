@@ -7,6 +7,7 @@ import com.nextlevel.ondo.domain.Comment;
 import com.nextlevel.ondo.domain.dto.challenge.ChallengeSaveDto;
 import com.nextlevel.ondo.domain.dto.challenge.JoinChallengeDto;
 import com.nextlevel.ondo.domain.dto.comment.CreateCommentDto;
+import com.nextlevel.ondo.domain.dto.comment.DetailCommentDto;
 import com.nextlevel.ondo.domain.dto.comment.ModifyCommentDto;
 import com.nextlevel.ondo.service.ChallengeService;
 import com.nextlevel.ondo.service.CommentService;
@@ -49,8 +50,8 @@ public class CommentController {
         return new ResponseEntity<Long>(commentService.deleteComment(commentId,token), HttpStatus.OK);
     }
     @GetMapping("/{feed_id}")
-    public ResponseEntity<List<Comment>> getComment(@PathVariable("feed_id") Long feedId) {
-        return new ResponseEntity<List<Comment>>(commentService.getComment(feedId), HttpStatus.OK);
+    public ResponseEntity<List<DetailCommentDto>> getComment(@PathVariable("feed_id") Long feedId, @RequestHeader("Authorization") String token) {
+        return new ResponseEntity<List<DetailCommentDto>>(commentService.getComment(feedId, token), HttpStatus.OK);
     }
 
 }
