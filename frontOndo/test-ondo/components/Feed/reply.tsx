@@ -2,7 +2,7 @@ import React from "react";
 import Router from "next/router";
 
 export default function reply(props: any) {
-  console.log(props.item.user.userId);
+  // console.log(props.item.user.userId);
   return (
     <div className="comment-form comment">
       <div className="top">
@@ -18,7 +18,7 @@ export default function reply(props: any) {
             ></div>
           )}
           <div className="feed-desc">
-            {/* <div className="nickname">{props.item.user.username}</div> */}
+            {/* <div className="nickname">{props.item.username}</div> */}
             <div className="nickname">{props.reply.username}</div>
             <div className="timestamp">{props.reply.comment.createdDate}</div>
           </div>
