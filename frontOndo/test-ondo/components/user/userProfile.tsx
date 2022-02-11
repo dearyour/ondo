@@ -6,11 +6,13 @@ import temp_profile from 'public/images/temp_profile.jpg'
 import { UserOutlined } from '@ant-design/icons';
 import FollowUser from './followUser';
 import Router from 'next/router';
+import useUser from 'store/hooks/userHooks';
 
 
 const UserProfile = ({ data }: any) => {
   const [followModalVisible, setfollowModalVisible] = useState(false);
   const [user, setUser] = useState<any>([]);
+  const { users } = useUser();
   useEffect(() => {
     setUser(data.user)
   }, [data])
@@ -43,7 +45,7 @@ const UserProfile = ({ data }: any) => {
   return (
     <ProfileWrap>
       <Col span={6}>
-        <ProfileImg src={temp_profile}></ProfileImg>
+        <ProfileImg src={users.image}></ProfileImg>
       </Col>
       <ProfileRight span={6} offset={1}>
         <Nick>{user ? user.username : null}</Nick>
@@ -108,7 +110,7 @@ const FModal = styled(Modal)`
   border-radius: 10px;
 `
 
-const ProfileImg = styled(Image)`
+const ProfileImg = styled.img`
   padding: 10px;
   border-radius: 100%;
 `

@@ -12,16 +12,16 @@ export default function useUser() {
     const users = useSelector((state: RootState) => state.user.users);
     const loadingStart = useCallback(() => {
         dispatch(userActions.loadingStart());
-    }, [dispatch]);
+    }, []);
     const loadingEnd = useCallback(() => {
         dispatch(userActions.loadingEnd());
-    }, [dispatch]);
+    }, []);
     const editednickname = useSelector(
         (state: RootState) => state.user.editednickname
     );
     const kakaoLogin = useCallback(() => {
         dispatch(userActions.getKakaoKey());
-    }, [dispatch]);
+    }, []);
     const ProfileEditRequest = useCallback(
         (e) => {
             e.preventDefault();
@@ -31,7 +31,7 @@ export default function useUser() {
     );
     const GetUser = useCallback(() => {
         dispatch(userActions.getUser());
-    }, [dispatch]);
+    }, []);
 
     return { kakaoLogin, session, nickname, isLoading, profile, users, ProfileEditRequest, GetUser, loadingStart, loadingEnd };
 }

@@ -53,7 +53,7 @@ const WriteChallenge = () => {
     // formdata.append('content', content)
     // formdata.append('category', category)
     const token = localStorage.getItem('Token')
-    console.log(data)
+    // console.log(data)
     axios({
       method: 'POST',
       url: process.env.BACK_EC2 + '/challenge/create',
@@ -61,7 +61,7 @@ const WriteChallenge = () => {
       data: formdata,
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         Router.push('/challenge/' + String(res.data.challengeId))
       })
   }
@@ -77,15 +77,19 @@ const WriteChallenge = () => {
               <Image src={FightingDogye} width={100} height={100}></Image>
               <SpeechBubble>도전을 생성해주세요!</SpeechBubble>
             </Space>
-            <Row>
-              <Col xs={11} md={11}>
+            <RowStyle>
+              <Col xs={10} md={10}>
                 <UploadAvatar changeThumbnail={(imageUrl: string) => setImageUrl(imageUrl)} />
               </Col>
               <Col xs={13} md={13} style={{ display: 'flex', alignItems: 'center' }}>
                 <StartDatePicker changeStartDate={(dateString: string) => setStartDate(dateString)} />
               </Col>
+            </RowStyle>
+            <Row>
+              <Col>
+                <CategorySelector changeCategory={(value: string) => setCategory(value)} />
+              </Col>
             </Row>
-            <CategorySelector changeCategory={(value: string) => setCategory(value)} />
             <Space direction='horizontal' style={{ margin: '10px' }}>
               <label htmlFor='title'>제목</label>
               <TitleInput style={{ width: 300 }} name='title' value={title} onChange={onChangeTitle} />
@@ -115,7 +119,9 @@ const WriteChallenge = () => {
 
 //   )
 // }
-
+const RowStyle = styled(Row)`
+  margin-left:12px;
+`
 const Write = styled.div`
   display: flex;
   justify-content: center;

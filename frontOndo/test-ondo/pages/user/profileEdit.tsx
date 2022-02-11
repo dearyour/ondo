@@ -14,6 +14,7 @@ import axios from "axios";
 import CropImg from "components/Cropper";
 import useImg from "store/hooks/imgHooks";
 
+
 function beforeUpload(file: any) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
@@ -36,6 +37,7 @@ const Edit = () => {
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [loading, setLoading] = useState<boolean>(false);
   const [username, onChangeNick] = useState("asdas");
+
   // const [image, setImage] = useState<string>();
   // const [file, setFiles] = useState<File | ''>('')
   // const [originalImg, setOriginalImage] = useState<string>()
@@ -47,7 +49,7 @@ const Edit = () => {
   useEffect(() => {
     GetUser();
     setImage(users.image);
-    onChangeNick(users.username);
+    onChangeNick(nickname);
 
   }, [])
   const onEditNickname = () => {
@@ -64,6 +66,7 @@ const Edit = () => {
     })
       .then((res) => {
         console.log(res)
+        // setImage(null)
       })
       .catch((err) => {
         console.log(err)
@@ -121,7 +124,7 @@ const Edit = () => {
           </Divide>
           <Divide>
             <h3 className={styles.mx_20}>닉네임</h3>
-            <NickInput defaultValue={username} onChange={onChangeNickname}></NickInput>
+            <NickInput defaultValue={users.username} onChange={onChangeNickname}></NickInput>
             <Button className={styles.mx_20} onClick={onEditNickname}>
               수정
             </Button>
