@@ -3,19 +3,30 @@ import { Row, Col, Carousel } from 'antd';
 import styled from "styled-components";
 
 function HotChallenge(props: any): JSX.Element {
-  const top3: any = [...props.top3];
-  console.log(props)
-  const getDuration = (startDate: Date) => {
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 2);
+  const top3 = [...props.top3];
+  const getDuration = (startDate: string) => {
+    const sDate = startDate.substring(0, 10);
+    const sy = sDate.substring(0,4);
+    const sm = sDate.substring(5,7);
+    const sd = sDate.substring(8,10);
 
-    const sy = startDate.getFullYear();
-    const sm = startDate.getMonth() + 1;
-    const sd = startDate.getDate();
-    const ey = endDate.getFullYear();
-    const em = endDate.getMonth() + 1;
-    const ed = endDate.getDate();
-    return sy + '-' + sm + '-' + sd + ' ~ ' + ey + '-' + em + '-' + ed;
+    const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
+    const ey = eDate.getFullYear();
+    const em = eDate.getMonth() + 1;
+    const ed = eDate.getDate();
+
+    return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
+
+    // const endDate = new Date(startDate);
+    // endDate.setDate(endDate.getDate() + 2);
+  
+    // const sy = startDate.getFullYear();
+    // const sm = startDate.getMonth() + 1;
+    // const sd = startDate.getDate();
+    // const ey = endDate.getFullYear();
+    // const em = endDate.getMonth() + 1;
+    // const ed = endDate.getDate();
+    // return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
   }
 
   const renderHotChallenges = () => {
@@ -23,7 +34,7 @@ function HotChallenge(props: any): JSX.Element {
     for (let i = 0; i < Math.min(3, top3.length); i++) {
       result.push(
         <HotChallengeFrame>
-          <HotChallengeImg src={top3[i].img}></HotChallengeImg>
+          <HotChallengeImg src={top3[i].image}></HotChallengeImg>
           <TextOnImage>
             {/* <h1>{top3[i].title}</h1>
             <p>{getDuration(top3[i].startDate)}</p>
@@ -32,8 +43,8 @@ function HotChallenge(props: any): JSX.Element {
               <Col xs={12} md={10}><h1>{top3[i].title}</h1></Col>
               <Col xs={0} md={4}></Col>
               <Col xs={12} md={10}>
-                <p>{getDuration(top3[i].startDate)}</p>
-                <p>현재 {top3[i].participants}명 참여 중</p>
+                <p>{getDuration(top3[i].sdate)}</p>
+                <p>현재 {top3[i].challengeParticipate.length}명 참여 중</p>
               </Col>
             </Row>
           </TextOnImage>

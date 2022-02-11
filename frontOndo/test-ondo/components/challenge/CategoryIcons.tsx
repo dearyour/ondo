@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Row, Col, Space } from 'antd';
 import styled from "styled-components";
 import overall from 'public/images/category/overall.png';
@@ -10,10 +10,27 @@ import eco from 'public/images/category/eco.png';
 import appearance from 'public/images/category/appearance.png';
 import etc from 'public/images/category/etc.png';
 import Image from "next/image";
+import axios from "axios";
 
-const CategoryIcons = () => {
+const CategoryIcons = (props : any) => {
   const categoryIcons = [overall, exercise, eating, hobbies, learning, eco, appearance, etc];
-  const categoryLabels = ['전체', '운동', '식습관', '취미', '학습', '친환경', '외모 관리', '기타'];
+  const categoryLabels = ['전체', '운동', '식습관', '취미', '학습', '친환경', '외모관리', '기타'];
+  const categoryPath = ['/exercise', '/eating', '/hobbies', '/learning', '/eco', '/appearance', '/etc'];
+  // const [catChallenges, ]
+
+  // const __GetCatChallengeState = useCallback((path: string) => {
+  //   return axios({
+  //     method: 'GET',
+  //     url: 'http://localhost:8080/challenge/' + path,
+  //   })
+  //   .then((res) => {
+
+  //   })
+  // })
+
+  // const renderCatChallenges = () => {
+
+  // }
 
   return (
     <Row style={{ marginTop: '100px' }}>
@@ -21,7 +38,7 @@ const CategoryIcons = () => {
         categoryIcons.map((v, i) => (
           <ColCenter xs={3} md={3} key={i}>
             <Space direction="vertical">
-              <Image src={v} width={50} height={50} alt={categoryLabels[i]}></Image>
+              <Image src={v} width={50} height={50} name={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></Image>
               <LabelCenter htmlFor={categoryLabels[i]}>{categoryLabels[i]}</LabelCenter>
             </Space>
           </ColCenter>

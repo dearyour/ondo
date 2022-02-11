@@ -15,6 +15,7 @@ import { challengeAction } from "store/slice/challenge";
 const Challenge = () => {
   const [hotChallenges, setHotChallenges] = useState([]);
   const [catChallenges, setCatChallenges] = useState([]);
+  const [category, setCategory] = useState('전체');
   const dispatch = useDispatch();
 
   // const __GetUserState = (token: string | null) => {
@@ -58,6 +59,19 @@ const Challenge = () => {
     // __GetUserState(token);
     __GetChallengeState(token);
   }, []);
+
+  const renderCatChallenges = (selectedCategory:string) => {
+    axios({
+      method: 'GET',
+      url: 'http://localhost:8080/challenge/' + selectedCategory
+    })
+    .then((res) => {
+      setCatChallenges(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
 
   const top3 = [
     {
@@ -137,11 +151,11 @@ const Challenge = () => {
       <Row style={{ marginTop: 20 }}>
         <Col xs={0} md={2}></Col>
         <Col xs={24} md={20}>
-          <HotChallenge top3={top3}></HotChallenge>
-          <CategoryIcons></CategoryIcons>
+          <HotChallenge top3={hotChallenges}></HotChallenge>
+          <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons>
           {/* <Button></Button> */}
           <ChallengeByCategory
-            categorized={categorizedChallenges}
+            categorized={catChallenges}
           ></ChallengeByCategory>
         </Col>
         <Col xs={0} md={2}></Col>
