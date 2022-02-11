@@ -3,6 +3,7 @@ import TextContainer from 'components/landing/TextContainer';
 import { motion } from 'framer-motion';
 import { dogye, dogyeWrapper, firesContainer } from 'variants';
 import styled from 'styled-components';
+import Login from "../components/user/login";
 
 const Landing = () => {
   const fireWrapper1 = {
