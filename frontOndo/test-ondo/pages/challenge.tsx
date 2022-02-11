@@ -40,12 +40,16 @@ const Challenge = () => {
   // }, []);
 
   const __GetChallengeState = useCallback((token: string | null) => {
+    // console.log('__GetChallengeState 호출');
+    
     return axios({
       method: 'GET',
-      url: process.env.BACK_EC2 + '/challenge',
+      url: 'http://localhost:8080' + '/challenge',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
+        console.log('axios get challenge 성공');
+        
         setHotChallenges(res.data.top3Challenges);
         setCatChallenges(res.data.allChallenges.reverse());
       })
@@ -147,7 +151,7 @@ const Challenge = () => {
   ];
 
   return (
-    <AppLayout>
+    <AppLayout title="도전 둘러보기 | 온도">
       <Row style={{ marginTop: 20 }}>
         <Col xs={0} md={2}></Col>
         <Col xs={24} md={20}>

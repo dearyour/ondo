@@ -15,7 +15,8 @@ function HotChallenge(props: any): JSX.Element {
     const em = eDate.getMonth() + 1;
     const ed = eDate.getDate();
 
-    return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
+    return sy + '-' + sm + '-' + sd + ' ~ '
+        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
 
     // const endDate = new Date(startDate);
     // endDate.setDate(endDate.getDate() + 2);
@@ -65,6 +66,7 @@ function HotChallenge(props: any): JSX.Element {
 
 const HotChallengeFrame = styled.div`
   position: relative;
+  height: 200px;
 `
 
 const HotChallengeImg = styled.img`
