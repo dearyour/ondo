@@ -95,7 +95,7 @@ function Detailfeed() {
           // console.log(makeArray(res));
           // dispatch(layoutAction.updateDetailData(props.dto));
           // dispatch(layoutAction.updateDetailData(commentData));
-          setCommentData(res.data);
+          setCommentData(res.data.reverse());
         })
         .catch((err) => {
           console.log(err);

@@ -21,7 +21,7 @@ const CategoryIcons = () => {
         categoryIcons.map((v, i) => (
           <ColCenter xs={3} md={3} key={i}>
             <Space direction="vertical">
-              <Image src={v} width={50} height={50} name={categoryLabels[i]}></Image>
+              <Image src={v} width={50} height={50} alt={categoryLabels[i]}></Image>
               <LabelCenter htmlFor={categoryLabels[i]}>{categoryLabels[i]}</LabelCenter>
             </Space>
           </ColCenter>

@@ -9,6 +9,7 @@ import Searchbar from "./Searchbar";
 import Router from "next/router";
 import LoggedInForm from "./LoggedInForm";
 import styles from "css/index.module.css";
+import useUser from "store/hooks/userHooks";
 
 // const { Search } = Input;
 // const onSearch = (value:any) => console.log(value);
@@ -39,13 +40,14 @@ function Navbar(): JSX.Element {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { nickname } = useUser();
 
   return (
     <NavWrapper>
       {/* <img src={OndoLogo} alt='OndoLogo'/> */}
       <Nav>
         <XsLogo xs={24} lg={4} xl={6}>
-          <Link href="/">
+          <Link href="/feedMain">
             <a>
               <Image src={OndoLogo} />
             </a>
@@ -67,7 +69,7 @@ function Navbar(): JSX.Element {
             <MenuLink style={{ color: "red", fontWeight: "bold" }}>
               <Link href="/challenge">Challenge🔥</Link>
             </MenuLink>
-            <Link href="/user/s">
+            <Link href={"/user/" + nickname}>
               <a>
                 <MenuLink>
                   <LoggedInForm />
@@ -83,7 +85,7 @@ function Navbar(): JSX.Element {
 }
 const Logout = () => {
   localStorage.removeItem("Token");
-  Router.push("/user/login");
+  Router.push("/");
 };
 const XsLogo = styled(Col)`
   display: flex;

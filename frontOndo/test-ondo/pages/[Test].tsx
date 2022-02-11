@@ -13,7 +13,7 @@ const Login = () => {
   const __GetUserStates = useCallback((token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://localhost:8080/user/info",
+      url: process.env.BACK_EC2 + "/user/info",
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -28,7 +28,7 @@ const Login = () => {
   const __GetFeedState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://localhost:8080/feed",
+      url: process.env.BACK_EC2 + "/feed",
       // url: "https://jsonplaceholder.typicode.com/comments",
       headers: { Authorization: "Bearer " + token },
     })
@@ -78,7 +78,7 @@ const Login = () => {
   const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: "http://localhost:8080/user/feed/" + username,
+      url: process.env.BACK_EC2 + "/user/feed/" + username,
       headers: { Authorization: "Bearer " + token },
     })
       .then((result) => {
@@ -122,7 +122,7 @@ const Login = () => {
           const token = localStorage.getItem("Token");
           axios({
             method: "get",
-            url: "http://localhost:8080/user/info",
+            url: process.env.BACK_EC2 + "/user/info",
             headers: { Authorization: "Bearer " + token },
           })
             .then((res) => {

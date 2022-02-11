@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableWebMvc
+//@EnableWebMvc
 public class OndoApplication {
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.properties,"

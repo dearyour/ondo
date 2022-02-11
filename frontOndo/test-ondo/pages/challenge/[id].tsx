@@ -7,7 +7,7 @@ import AppLayout from 'components/layout/AppLayout';
 import LoggedInForm from 'components/layout/LoggedInForm';
 import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import 'antd/dist/antd.css';
 import axios from 'axios';
 
@@ -20,7 +20,7 @@ const ReadChallenge = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'get',
-      url: 'http://localhost:8080/challenge/info/' + String(id),
+      url: process.env.BACK_EC2 + '/challenge/info/' + String(id),
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -33,7 +33,7 @@ const ReadChallenge = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'post',
-      url: 'http://localhost:8080/challenge/participate',
+      url: process.env.BACK_EC2 + '/challenge/participate',
       headers: { Authorization: "Bearer " + token },
       data: {
         challengeId: id,
@@ -95,7 +95,7 @@ const ReadChallenge = () => {
                   {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
                   <button onClick={participate}>참여하기</button>
-                  <button>피드쓰기</button>
+                  <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>
                 </Button.Group>
               </BottomContent>
             </ChallengeContent>
