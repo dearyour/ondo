@@ -45,9 +45,9 @@ function Navbar(): JSX.Element {
       {/* <img src={OndoLogo} alt='OndoLogo'/> */}
       <Nav>
         <XsLogo xs={24} lg={4} xl={6}>
-          <Link href="/">
+          <Link href="/feedmain">
             <a>
-              <Image src={OndoLogo} />
+              <Image src={OndoLogo} width={60} height={42}/>
             </a>
           </Link>
           {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}
@@ -95,7 +95,7 @@ const XsLogo = styled(Col)`
 `;
 
 const NavWrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 5rem 1rem 5rem;
   @media (max-width: 768px) {
     padding: 1rem;
   }
