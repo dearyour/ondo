@@ -45,7 +45,7 @@ const CropImg: React.FC = () => {
         <CropBtn onClick={() => { setOriginalImage(null) }}>종료</CropBtn>
       </BtnDiv>
       <Description><h1>미리보기</h1></Description>
-      <MyImage><CropImage src={image}></CropImage></MyImage>
+      <MyImage>{image ? <CropImage src={image}></CropImage> : null}</MyImage>
     </Modal>
   );
 };

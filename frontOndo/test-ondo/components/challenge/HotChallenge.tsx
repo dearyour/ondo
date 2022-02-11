@@ -3,23 +3,24 @@ import { Row, Col, Carousel } from 'antd';
 import styled from "styled-components";
 
 function HotChallenge(props: any): JSX.Element {
-  const top3 = [...props.top3];
+  const top3: any = [...props.top3];
+  console.log(props)
   const getDuration = (startDate: Date) => {
     const endDate = new Date(startDate);
     endDate.setDate(endDate.getDate() + 2);
-  
+
     const sy = startDate.getFullYear();
     const sm = startDate.getMonth() + 1;
     const sd = startDate.getDate();
     const ey = endDate.getFullYear();
     const em = endDate.getMonth() + 1;
     const ed = endDate.getDate();
-    return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
+    return sy + '-' + sm + '-' + sd + ' ~ ' + ey + '-' + em + '-' + ed;
   }
 
   const renderHotChallenges = () => {
     const result = [];
-    for(let i = 0; i < Math.min(3, top3.length); i++) {
+    for (let i = 0; i < Math.min(3, top3.length); i++) {
       result.push(
         <HotChallengeFrame>
           <HotChallengeImg src={top3[i].img}></HotChallengeImg>
@@ -44,9 +45,9 @@ function HotChallenge(props: any): JSX.Element {
   return (
     <>
       <p><b>HOT Challenge🔥</b></p>
-        <Carousel autoplay>
-          {renderHotChallenges()}
-        </Carousel>
+      <Carousel autoplay>
+        {renderHotChallenges()}
+      </Carousel>
     </>
   );
 }

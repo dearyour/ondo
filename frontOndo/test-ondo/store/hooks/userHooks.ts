@@ -9,6 +9,7 @@ export default function useUser() {
     const nickname = useSelector((state: RootState) => state.user.nickname);
     const isLoading = useSelector((state: RootState) => state.user.isLoading);
     const profile = useSelector((state: RootState) => state.user.image);
+    const users = useSelector((state: RootState) => state.user.users);
     const loadingStart = useCallback(() => {
         dispatch(userActions.loadingStart());
     }, [dispatch]);
@@ -32,5 +33,5 @@ export default function useUser() {
         dispatch(userActions.getUser());
     }, [dispatch]);
 
-    return { kakaoLogin, session, nickname, isLoading, profile, ProfileEditRequest, GetUser, loadingStart, loadingEnd };
+    return { kakaoLogin, session, nickname, isLoading, profile, users, ProfileEditRequest, GetUser, loadingStart, loadingEnd };
 }

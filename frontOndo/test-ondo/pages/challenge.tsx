@@ -44,13 +44,13 @@ const Challenge = () => {
       url: 'http://localhost:8080/challenge',
       headers: { Authorization: "Bearer " + token },
     })
-    .then((res) => {
-      setHotChallenges(res.data.top3Challenges);
-      setCatChallenges(res.data.allChallenges.reverse());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        setHotChallenges(res.data.top3Challenges);
+        setCatChallenges(res.data.allChallenges.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {

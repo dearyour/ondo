@@ -19,11 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class ChallengeSaveDto {
     private String title;
     private String content;
     private String s_date;
-    private String image;
+//    private String image;
     private Category category;
 
     public Challenge toEntity(Long owner, String image) {
