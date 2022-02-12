@@ -7,20 +7,7 @@ import {
 
 // initialState
 export const initialState: Comment = {
-  comments: [
-    {
-      createdDate: new Date(),
-      modifiedDate: new Date(),
-      commentId: 1,
-      content: "댓글 컨텐츠 test",
-    },
-    {
-      createdDate: new Date(),
-      modifiedDate: new Date(),
-      commentId: 2,
-      content: "댓글 컨텐츠 test22",
-    },
-  ],
+  comments: [],
   isLoading: false,
   error: null,
 };
@@ -29,13 +16,12 @@ export const commentSlice = createSlice({
   name: "comment",
   initialState,
   reducers: {
-    getComment: (state, action: PayloadAction<CommentParamType>) => {
-      state.isLoading = false;
-    },
-    getCommentSuccess: (state, action: PayloadAction<CommentParams>) => {
+    getComment: (state, action) => {
       state.isLoading = true;
-      state.comments.length = 0;
-      state.comments = [...state.comments, action.payload];
+    },
+    getCommentSuccess: (state, action) => {
+      state.isLoading = false;
+      state.comments = action.payload;
     },
     getCommentFailure: (state, { payload: error }) => {
       state.isLoading = false;

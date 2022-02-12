@@ -6,6 +6,8 @@ import { RootState } from "store/module";
 import { useDispatch, useSelector } from "react-redux";
 import { layoutAction } from "store/slice/layout";
 import styled from "styled-components";
+import { commentAction } from "store/slice/comment";
+import Router from "next/router";
 // import Router from "next/router";
 //feedId, createDate, chaallengId , image , content , userId , feedlike, comment []
 // feeds: [feedId, createdDate, challengeId, image, content, userId, feedlike],
@@ -25,6 +27,9 @@ const Feed = (props: any) => {
   const comments = useSelector((state: RootState) => state.comment.comments);
   const ondo = useSelector((state: RootState) => state.user.ondo);
 
+  // useEffect(() => {
+  //   dispatch(commentAction.getComment);
+  // }, []);
   // const challengeTitle = useSelector(
   //   (state: RootState) => state.challenge.challenges
   // );
@@ -95,10 +100,12 @@ const Feed = (props: any) => {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
   //////////////////////////////
   const getStartDate = () => {
@@ -132,23 +139,33 @@ const Feed = (props: any) => {
   // console.log(props.feed.feed.feedlike);
 
   return (
-    <div className="feed" onClick={__openFeedDetail}>
+    <div className="feed">
       <div
         className="top"
-      // onClick={() => {
-      //   Router.push(`/user/${props.dto.username}`);
-      // }}
+        // onClick={() => {
+        //   Router.push(`/user/${props.dto.username}`);
+        // }}
       >
         {props.dto.user.image && (
           <div
             className="profile-image"
             style={{ backgroundImage: `url(${props.dto.user.image})` }}
+            onClick={() => {
+              Router.push(`/user/${props.dto.user.username}`);
+            }}
           >
             {/* { <img src={userimage} alt="온도이미지" />} */}
           </div>
         )}
         <div className="profile-desc">
-          <div className="nickname txt-bold">{props.dto.user.username}</div>
+          <div
+            className="nickname txt-bold"
+            onClick={() => {
+              Router.push(`/user/${props.dto.user.username}`);
+            }}
+          >
+            {props.dto.user.username}
+          </div>
           <div className="timestamp">
             온도 : {props.dto.user.ondo}
             ˚C
@@ -162,7 +179,7 @@ const Feed = (props: any) => {
           <div className="timestamp">피드 작성 시간 : {makeFeedTime()}</div>
         </div>
       </div>
-      <div className="contents">
+      <div className="contents" onClick={__openFeedDetail}>
         {props.dto.feed.content}
         {/* <img src={props.feed.image} alt="온도이미지" /> */}
         {props.dto.feed.image && (
@@ -172,7 +189,7 @@ const Feed = (props: any) => {
           ></div>
         )}
       </div>
-      <div className="bottom">
+      <div className="bottom" onClick={__openFeedDetail}>
         <div className="like">
           <div className="asset">
             <img src="/assets/feed/like-dac.svg" alt="좋아요" />
@@ -187,7 +204,7 @@ const Feed = (props: any) => {
             <img src="/assets/feed/comment.svg" alt="댓글" />
           </div>
           <div className="count txt-bold">
-            {props.dto.comments ? props.dto.comments.length : 0}
+            {props.dto.comments ? Object.keys(props.dto.comments).length : 0}
           </div>
           {/* </Link> */}
         </div>
@@ -195,7 +212,6 @@ const Feed = (props: any) => {
     </div>
   );
 };
-
 
 export default Feed;
 
