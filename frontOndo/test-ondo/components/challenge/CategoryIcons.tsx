@@ -12,7 +12,7 @@ import etc from 'public/images/category/etc.png';
 import Image from "next/image";
 import axios from "axios";
 
-const CategoryIcons = (props : any) => {
+const CategoryIcons = (props: any) => {
   const categoryIcons = [overall, exercise, eating, hobbies, learning, eco, appearance, etc];
   const categoryLabels = ['전체', '운동', '식습관', '취미', '학습', '친환경', '외모관리', '기타'];
   const categoryPath = ['/exercise', '/eating', '/hobbies', '/learning', '/eco', '/appearance', '/etc'];
@@ -38,7 +38,7 @@ const CategoryIcons = (props : any) => {
         categoryIcons.map((v, i) => (
           <ColCenter xs={3} md={3} key={i}>
             <Space direction="vertical">
-              <Image src={v} width={50} height={50} name={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></Image>
+              <Image src={v} width={50} height={50} alt={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></Image>
               <LabelCenter htmlFor={categoryLabels[i]}>{categoryLabels[i]}</LabelCenter>
             </Space>
           </ColCenter>
