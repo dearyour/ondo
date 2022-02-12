@@ -1,11 +1,8 @@
 import { Col, Row } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Imgbox from './resultCarouselImg';
 import Swiper, { Navigation, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import Router from 'next/router';
 import Link from 'next/link';
 
@@ -31,15 +28,19 @@ const Nothing = styled.div`
 
 const SearchResultChallenge: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
   let i = 121211
+  let [mySwiper, setMySwiper] = useState<any>(null);
   useEffect(() => {
-    const swiper = new Swiper('.swiper', {
-      modules: [Navigation, Pagination],
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+
+    let swiper = new Swiper('.swiper', {
+      // modules: [Navigation, Pagination],
+      // navigation: {
+      //   nextEl: '.swiper-button-next',
+      //   prevEl: '.swiper-button-prev',
+      // },
       slidesPerView: 2,
       spaceBetween: 10,
+      observer: true,
+      observeParents: true,
       // Responsive breakpoints
       breakpoints: {
         // when window width is >= 320px
@@ -59,12 +60,12 @@ const SearchResultChallenge: React.FC<SearchResults> = ({ title = '', keyword, r
         },
       }
     });
-
-  })
+    setMySwiper(swiper)
+  }, [])
   return (
     <Wrap>
       <Title>Challenge</Title>
-      <div>'{keyword}'에 대한 검색 결과: {results?.length}건</div>
+      <div>&quot;{keyword}&quot;에 대한 검색 결과: {results?.length}건</div>
       <div className='swiper'>
         <Swrapper className='swiper-wrapper'>
 
@@ -78,12 +79,12 @@ const SearchResultChallenge: React.FC<SearchResults> = ({ title = '', keyword, r
             )
           }) : <Nothing>검색 결과가 없습니다</Nothing>}
         </Swrapper>
-        {/* {results? 
-        <div className="swiper-button-prev"></div> : null
-      }
-        {results?
-        <div className="swiper-button-next"></div> : null
-      } */}
+        {/* {results ?
+          <div className="swiper-button-prev"></div> : null
+        }
+        {results ?
+          <div className="swiper-button-next"></div> : null
+        } */}
 
       </div>
     </Wrap>

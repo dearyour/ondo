@@ -45,7 +45,7 @@ const UserProfile = ({ data }: any) => {
   return (
     <ProfileWrap>
       <Col span={6}>
-        <ProfileImg src={users.image}></ProfileImg>
+        <ProfileImg src={user && user.image}></ProfileImg>
       </Col>
       <ProfileRight span={6} offset={1}>
         <Nick>{user ? user.username : null}</Nick>

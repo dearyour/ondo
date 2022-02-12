@@ -11,6 +11,8 @@ import axios from 'axios';
 const { TabPane } = Tabs;
 
 const Userfeed = () => {
+
+
   const router = useRouter()
   const { username } = router.query
   const [data, setdata] = useState<any>('');

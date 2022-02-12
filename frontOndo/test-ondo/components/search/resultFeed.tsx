@@ -1,11 +1,8 @@
 import { Col, Row } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Imgbox from './resultCarouselImg';
 import Swiper, { Navigation, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import Router from 'next/router';
 import Link from 'next/link';
 
@@ -30,16 +27,18 @@ const Nothing = styled.div`
 
 
 const SearchResultFeed: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
+  let [mySwiper, setMySwiper] = useState<any>(null);
   useEffect(() => {
-
-    const swiperFeed = new Swiper('.swiperFeed', {
-      modules: [Navigation, Pagination],
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
+    let swiperFeed = new Swiper('.swiperFeed', {
+      // modules: [Navigation, Pagination],
+      // navigation: {
+      //   nextEl: '.swiper-button-next',
+      //   prevEl: '.swiper-button-prev',
+      // },
       slidesPerView: 2,
       spaceBetween: 10,
+      observer: true,
+      observeParents: true,
       // Responsive breakpoints
       breakpoints: {
         // when window width is >= 320px
@@ -59,12 +58,14 @@ const SearchResultFeed: React.FC<SearchResults> = ({ title = '', keyword, result
         },
       }
     });
-  })
+    setMySwiper(swiperFeed);
+
+  }, [])
   let i = 1212
   return (
     <Wrap>
       <Title>Feed</Title>
-      <div>'{keyword}'에 대한 검색 결과: {results?.length}건</div>
+      <div>&quot;{keyword}&quot;에 대한 검색 결과: {results?.length}건</div>
       <div className='swiperFeed'>
         <div className='swiper-wrapper'>
 
