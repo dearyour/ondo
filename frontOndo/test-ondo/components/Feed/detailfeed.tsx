@@ -28,7 +28,7 @@ function Detailfeed() {
     (state: RootState) => state.layout.detailData.feed.feedId
   );
   const [comment, setComment] = useState(""); // 댓글작성
-  const commentRef = useRef(null);
+  const commentRef: any = useRef(null);
   const [commentData, setCommentData] = useState([]);
   // const session = useSelector((state)=>state.auth.session);
   // const image = useSelector(
