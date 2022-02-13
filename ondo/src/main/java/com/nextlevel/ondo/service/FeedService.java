@@ -142,10 +142,8 @@ public class FeedService {
         User user = kakaoUtil.getUserByEmail(accessToken);
 
         Feed feed = feedRepository.findByFeedId(modifyFeedDto.getFeedId()).orElseGet(() -> {
-            System.out.println("***test***");
             return new Feed();
         });
-        System.out.println(feed.getFeedId());
 
         // token 의 유저아이디와 feed 작성자 아이디가 동일하면 진행 아니면 에러
         if (feed.getUserId() != user.getUserId()) {
@@ -239,13 +237,12 @@ public class FeedService {
             System.out.println("아직 시작 안함.");
         }
 
+        int beforeArchived = challengeParticipate.getArchived();
         int archived = challengeParticipate.getArchived();
         archived = archived | (1 << dif);
         challengeParticipate.setArchived(archived);
 
-        System.out.println("현재 archived = " + archived);
-        //3개 다 true면 위에 코드 통과해서 여기로 오고, 온도 1도 오르기
-        if (archived == 7) {
+        if (beforeArchived != 7 && archived == 7) {
             user.setOndo(user.getOndo() + 1);
         }
         userRepository.save(user);
