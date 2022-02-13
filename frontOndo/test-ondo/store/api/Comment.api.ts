@@ -2,10 +2,10 @@ import axios from "axios";
 
 const challengeURL = process.env.BACK_EC2 + "/challenge";
 const placeHolderurl = process.env.BACK_EC2 + "/feed";
-const CommentApi = (token: any) => {
+const CommentApi = (feedssId: any, token: any) => {
   return axios({
     method: "GET",
-    url: challengeURL,
+    url: "http://localhost:8080" + "/comment/" + feedssId,
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {

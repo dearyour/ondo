@@ -198,7 +198,7 @@ const Write_feed = () => {
         <WriteDiv>
           <Label>도전</Label>
           <WriteInput bordered={false} onChange={(e: any) => { setChallenge(e.value) }}>{challenges ? challenges.map((challenge: any) => {
-            return <Option value={challenge.challengeId}>{challenge.title}</Option>
+            return <Option value={challenge.challengeId} key={challenge.challengeId}>{challenge.title}</Option>
           }) : null}</WriteInput>
         </WriteDiv>
         <WriteDiv>

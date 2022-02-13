@@ -30,10 +30,9 @@ public class FeedLike {
     private Feed feed;
 
     @Builder
-    public FeedLike(User user, Feed feed){
+    public FeedLike(User user, Feed feed) {
         this.user = user;
         this.feed = feed;
     }
-
 
 }

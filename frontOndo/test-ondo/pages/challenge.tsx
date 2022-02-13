@@ -10,11 +10,13 @@ import axios from "axios";
 import { RootState } from "store/module";
 import { userActions } from "store/slice/user";
 import { challengeAction } from "store/slice/challenge";
+import { Category } from "store/interfaces/Category.interface";
 
 
 const Challenge = () => {
   const [hotChallenges, setHotChallenges] = useState([]);
   const [catChallenges, setCatChallenges] = useState([]);
+  const [allChallenges, setAllChallenges] = useState([]);
   const [category, setCategory] = useState('전체');
   const dispatch = useDispatch();
 
@@ -44,7 +46,7 @@ const Challenge = () => {
     
     return axios({
       method: 'GET',
-      url: 'http://localhost:8080' + '/challenge',
+      url: process.env.BACK_EC2 + 'challenge',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -52,6 +54,7 @@ const Challenge = () => {
         
         setHotChallenges(res.data.top3Challenges);
         setCatChallenges(res.data.allChallenges.reverse());
+        setAllChallenges(res.data.allChallenges.reverse());
       })
       .catch((err) => {
         console.log(err);
@@ -65,14 +68,26 @@ const Challenge = () => {
   }, []);
 
   const renderCatChallenges = (selectedCategory:string) => {
+    if(selectedCategory === '전체') {
+      setCatChallenges(allChallenges);
+      console.log(allChallenges[0]);
+      
+      return;
+    }
+    const token = localStorage.getItem('Token');
     axios({
       method: 'GET',
-      url: 'http://localhost:8080/challenge/' + selectedCategory
+      url: 'http://localhost:8080/challenge/' + selectedCategory,
+      headers: { Authorization: "Bearer " + token },
     })
     .then((res) => {
+      console.log('categorizing 성공');
+      console.log(res.data[0]);
+      
       setCatChallenges(res.data);
     })
     .catch((err) => {
+      console.log(selectedCategory); 
       console.log(err);
     })
   }
@@ -156,6 +171,7 @@ const Challenge = () => {
         <Col xs={0} md={2}></Col>
         <Col xs={24} md={20}>
           <HotChallenge top3={hotChallenges}></HotChallenge>
+          {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
           <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons>
           {/* <Button></Button> */}
           <ChallengeByCategory
