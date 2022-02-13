@@ -17,6 +17,7 @@ const FollowUser = ({ user, off1, off2 }: any) => {
 
 const Profile = styled.img`
   border-radius: 100%;
+  border: 1px solid pink;
 `
 
 const FollowCol = styled(Col)`
@@ -26,9 +27,13 @@ const FollowCol = styled(Col)`
 `
 
 const FollowRow = styled(Row)`
+  width:95%;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
+  border: 1px solid pink;
+  padding: 5px;
+  cursor: pointer;
 `
 
 export default FollowUser;

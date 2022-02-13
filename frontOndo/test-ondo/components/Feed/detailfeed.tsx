@@ -91,7 +91,7 @@ function Detailfeed() {
       // const feedsId = detailData.feed.feedId;
       axios({
         method: "GET",
-        url: "http://localhost:8080" + "/comment/" + feedssId,
+        url: process.env.BACK_EC2 + "/comment/" + feedssId,
         // url: "http://localhost:8080" + "/feed",
         headers: {
           Authorization: "Bearer " + token,
@@ -124,7 +124,7 @@ function Detailfeed() {
         const token = localStorage.getItem("Token");
         axios({
           method: "POST",
-          url: "http://localhost:8080" + "/comment/write",
+          url: process.env.BACK_EC2 + "/comment/write",
           headers: {
             Authorization: "Bearer " + token,
           },

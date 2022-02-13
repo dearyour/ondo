@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { userActions } from "store/slice/user";
 
+
 // const GetUserurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/info";
 const GetUserurl = process.env.BACK_EC2 + "/user/info";
 // const GetFeedurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/feed";

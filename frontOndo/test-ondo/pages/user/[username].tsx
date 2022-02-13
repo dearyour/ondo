@@ -59,42 +59,42 @@ const Userfeed = () => {
       <UserProfile data={data}></UserProfile>
       <DivdeLine />
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
-        <TabPane tab="Feed" key="1">
-          <Row>
-            {data ? data.myFeed.map((feed: any) => {
+        <MyTab tab="Feed" key="1">
+          <ImageRow>
+            {data && data.myFeed.length >= 1 ? data.myFeed.map((feed: any) => {
               return (
                 <Feedbox feed={feed} key={nowUser.ondo++}></Feedbox>
               )
-            }) : null}
-          </Row>
-        </TabPane>
-        <TabPane tab="도전" key="2">
+            }) : <Nothing>작성한 피드가 없습니다.</Nothing>}
+          </ImageRow>
+        </MyTab>
+        <MyTab tab="도전" key="2">
           <ChallengeDiv>도전 중</ChallengeDiv>
-          <Row>
-            {data ? data.runChallenge.map((challenge: any) => {
+          <ImageRow>
+            {data && data.runChallenge.length >= 1 ? data.runChallenge.map((challenge: any) => {
               return (
                 <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
               )
-            }) : null}
-          </Row>
+            }) : <Nothing>진행 중인 도전이 없습니다.</Nothing>}
+          </ImageRow>
           <ChallengeDiv>도전 완료</ChallengeDiv>
-          <Row>
-            {data ? data.compeleteChallenge.map((challenge: any) => {
+          <ImageRow>
+            {data && data.compeleteChallenge.length >= 1 ? data.compeleteChallenge.map((challenge: any) => {
               return (
                 <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
               )
-            }) : null}
-          </Row>
+            }) : <Nothing>완료한 도전이 없습니다.</Nothing>}
+          </ImageRow>
 
           <ChallengeDiv>내가 만든 도전</ChallengeDiv>
-          <Row>
-            {data ? data.makedChallenge.map((challenge: any) => {
+          <ImageRow>
+            {data && data.makedChallenge.length >= 1 ? data.makedChallenge.map((challenge: any) => {
               return (
                 <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
               )
-            }) : null}
-          </Row>
-        </TabPane>
+            }) : <Nothing>개설한 도전이 없습니다.</Nothing>}
+          </ImageRow>
+        </MyTab>
       </Tabs>
     </AppLayout>
   )
@@ -108,11 +108,28 @@ const DivdeLine = styled.hr`
   margin-top: 25px;
   opacity: 50%;
 `
+const MyTab = styled(TabPane)`
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+`
+const ImageRow = styled(Row)`
+  /* width: 80%;
+  margin-left: auto;
+  margin-right: auto; */
+`
 
-const ChallengeDiv = styled.div`
+const ChallengeDiv = styled.h2`
   margin-top: 10px;
   margin-bottom: 10px;
   font-weight: 500;
+`
+
+const Nothing = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  color:gray;
 `
 
 export default Userfeed;

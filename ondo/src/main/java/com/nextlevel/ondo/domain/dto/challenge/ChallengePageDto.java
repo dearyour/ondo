@@ -12,6 +12,6 @@ import java.util.List;
 @Builder
 public class ChallengePageDto {
     private List<Challenge> allChallenges;
-    private List<Challenge> top3Challenges;
+    private List<Challenge> top10Challenges;
 }
     
