@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
@@ -15,16 +15,22 @@ const ReadChallenge = () => {
 
   const router = useRouter()
   const { id } = router.query
+  const [challenge, setChallenge] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'get',
-      url: process.env.BACK_EC2 + '/challenge/info/' + String(id),
+      url: 'http://localhost:8080' + '/challenge/detail/' + String(id),
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
         console.log(res)
+        setChallenge(res.data.challenge)
+      })
+      .catch((err) => {
+        console.log('상세보기 실패');
+        
       })
   })
 
@@ -41,22 +47,23 @@ const ReadChallenge = () => {
     })
       .then((res) => {
         console.log(res)
-        alert('ok')
+        alert('참여합니다.')
       })
   }
-  const title = '하루 30분 조깅하기';
-  const startDate = new Date(2022, 0, 31);
-  const getDuration = () => {
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 2);
 
-    const sy = startDate.getFullYear();
-    const sm = startDate.getMonth() + 1;
-    const sd = startDate.getDate();
-    const ey = endDate.getFullYear();
-    const em = endDate.getMonth() + 1;
-    const ed = endDate.getDate();
-    return sy + '-' + sm + '-' + sd + ' ~ ' + ey + '-' + em + '-' + ed;
+  const getDuration = (startDate: string) => {
+    const sDate = startDate.substring(0, 10);
+    const sy = sDate.substring(0,4);
+    const sm = sDate.substring(5,7);
+    const sd = sDate.substring(8,10);
+
+    const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
+    const ey = eDate.getFullYear();
+    const em = eDate.getMonth() + 1;
+    const ed = eDate.getDate();
+
+    return sy + '-' + sm + '-' + sd + ' ~ '
+        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
   }
   const content = "3일동안 다같이 런닝해여~ 조깅화와 시계를 찍어서 올려주시면 됩니다.";
   const participants = 7;
@@ -84,9 +91,9 @@ const ReadChallenge = () => {
           <ChallengeWrapper>
             <ChallengeImg src='https://picsum.photos/2500' alt="feed-image" />
             <ChallengeContent>
-              <ChallengeTitle>{title}</ChallengeTitle>
+              <ChallengeTitle>{}</ChallengeTitle>
               <LoggedInForm />
-              <ChallengeDuration>{getDuration()}</ChallengeDuration>
+              <ChallengeDuration>{}</ChallengeDuration>
               <p>{content}</p>
 
               <BottomContent>

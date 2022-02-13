@@ -34,7 +34,7 @@ function HotChallenge(props: any): JSX.Element {
     const result = [];
     for (let i = 0; i < Math.min(3, top3.length); i++) {
       result.push(
-        <HotChallengeFrame>
+        <HotChallengeFrame onClick={() => {console.log(i + '핫챌린지 클릭')}}>
           <HotChallengeImg src={top3[i].image}></HotChallengeImg>
           <TextOnImage>
             {/* <h1>{top3[i].title}</h1>
@@ -67,6 +67,7 @@ function HotChallenge(props: any): JSX.Element {
 const HotChallengeFrame = styled.div`
   position: relative;
   height: 200px;
+  cursor: pointer;
 `
 
 const HotChallengeImg = styled.img`
