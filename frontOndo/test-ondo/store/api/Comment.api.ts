@@ -5,7 +5,7 @@ const placeHolderurl = process.env.BACK_EC2 + "/feed";
 const CommentApi = (feedssId: any, token: any) => {
   return axios({
     method: "GET",
-    url: "http://localhost:8080" + "/comment/" + feedssId,
+    url: process.env.BACK_EC2 + "/comment/" + feedssId,
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {

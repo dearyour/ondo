@@ -145,16 +145,16 @@ public class ChallengeService {
     public ChallengePageDto findAllChallenge() {
         List<Challenge> allChallenges = challengeRepository.findAll();
         allChallenges.sort(((o1, o2) -> -Integer.compare(o1.getChallengeParticipate().size(), o2.getChallengeParticipate().size())));
-        List<Challenge> top3Challenges = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        List<Challenge> top10Challenges = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
             if (allChallenges.size() < i + 1) {
                 break;
             }
-            top3Challenges.add(allChallenges.get(i));
+            top10Challenges.add(allChallenges.get(i));
         }
         return ChallengePageDto.builder()
                 .allChallenges(allChallenges)
-                .top3Challenges(top3Challenges)
+                .top10Challenges(top10Challenges)
                 .build();
     }
 
