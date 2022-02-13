@@ -30,9 +30,9 @@ const ReadChallenge = () => {
       })
       .catch((err) => {
         console.log('상세보기 실패');
-        
+
       })
-  })
+  }, [])
 
   // 참여하기
   const participate = () => {
@@ -53,9 +53,9 @@ const ReadChallenge = () => {
 
   const getDuration = (startDate: string) => {
     const sDate = startDate.substring(0, 10);
-    const sy = sDate.substring(0,4);
-    const sm = sDate.substring(5,7);
-    const sd = sDate.substring(8,10);
+    const sy = sDate.substring(0, 4);
+    const sm = sDate.substring(5, 7);
+    const sd = sDate.substring(8, 10);
 
     const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
     const ey = eDate.getFullYear();
@@ -63,7 +63,7 @@ const ReadChallenge = () => {
     const ed = eDate.getDate();
 
     return sy + '-' + sm + '-' + sd + ' ~ '
-        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
+      + ey + '-' + (("00" + em.toString()).slice(-2)) + '-' + (("00" + ed.toString()).slice(-2));
   }
   const content = "3일동안 다같이 런닝해여~ 조깅화와 시계를 찍어서 올려주시면 됩니다.";
   const participants = 7;
@@ -91,9 +91,9 @@ const ReadChallenge = () => {
           <ChallengeWrapper>
             <ChallengeImg src='https://picsum.photos/2500' alt="feed-image" />
             <ChallengeContent>
-              <ChallengeTitle>{}</ChallengeTitle>
+              <ChallengeTitle>{ }</ChallengeTitle>
               <LoggedInForm />
-              <ChallengeDuration>{}</ChallengeDuration>
+              <ChallengeDuration>{ }</ChallengeDuration>
               <p>{content}</p>
 
               <BottomContent>

@@ -10,7 +10,7 @@ import axios from "axios";
 import { RootState } from "store/module";
 import { userActions } from "store/slice/user";
 import { challengeAction } from "store/slice/challenge";
-import { Category } from "store/interfaces/Category.interface";
+// import { Category } from "store/interfaces/Category.interface";
 
 
 const Challenge = () => {
@@ -43,15 +43,15 @@ const Challenge = () => {
 
   const __GetChallengeState = useCallback((token: string | null) => {
     // console.log('__GetChallengeState 호출');
-    
+
     return axios({
       method: 'GET',
-      url: process.env.BACK_EC2 + 'challenge',
+      url: process.env.BACK_EC2 + '/challenge',
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
         console.log('axios get challenge 성공');
-        
+
         setHotChallenges(res.data.top3Challenges);
         setCatChallenges(res.data.allChallenges.reverse());
         setAllChallenges(res.data.allChallenges.reverse());
@@ -67,11 +67,11 @@ const Challenge = () => {
     __GetChallengeState(token);
   }, []);
 
-  const renderCatChallenges = (selectedCategory:string) => {
-    if(selectedCategory === '전체') {
+  const renderCatChallenges = (selectedCategory: string) => {
+    if (selectedCategory === '전체') {
       setCatChallenges(allChallenges);
       console.log(allChallenges[0]);
-      
+
       return;
     }
     const token = localStorage.getItem('Token');
@@ -80,16 +80,16 @@ const Challenge = () => {
       url: 'http://localhost:8080/challenge/' + selectedCategory,
       headers: { Authorization: "Bearer " + token },
     })
-    .then((res) => {
-      console.log('categorizing 성공');
-      console.log(res.data[0]);
-      
-      setCatChallenges(res.data);
-    })
-    .catch((err) => {
-      console.log(selectedCategory); 
-      console.log(err);
-    })
+      .then((res) => {
+        console.log('categorizing 성공');
+        console.log(res.data[0]);
+
+        setCatChallenges(res.data);
+      })
+      .catch((err) => {
+        console.log(selectedCategory);
+        console.log(err);
+      })
   }
 
   const top3 = [
@@ -172,7 +172,7 @@ const Challenge = () => {
         <Col xs={24} md={20}>
           <HotChallenge top3={hotChallenges}></HotChallenge>
           {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
-          <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons>
+          <CategoryIcons changeCategory={(cat: string) => renderCatChallenges(cat)}></CategoryIcons>
           {/* <Button></Button> */}
           <ChallengeByCategory
             categorized={catChallenges}
