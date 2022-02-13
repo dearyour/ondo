@@ -5,7 +5,7 @@ import { layoutAction } from "store/slice/layout";
 import { RootState } from "store/module";
 import axios from "axios";
 
-export default function reply(props: any) {
+export default function Reply(props: any) {
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
@@ -142,7 +142,7 @@ export default function reply(props: any) {
           </div>
         </div>
       </div>
-      <div className="body">{props.reply.comment.content}</div>
+      {<div className="body">{props.reply.comment.content}</div>}
     </div>
   );
 }

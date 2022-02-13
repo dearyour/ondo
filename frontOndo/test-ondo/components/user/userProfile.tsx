@@ -45,20 +45,20 @@ const UserProfile = ({ data }: any) => {
 
   return (
     <ProfileWrap>
-      <Col span={6}>
+      <Col span={14} md={6}>
         <ProfileImg src={user && user.image}></ProfileImg>
       </Col>
-      <ProfileRight span={6} offset={1}>
+      <ProfileRight span={4} md={6} offset={1}>
         <Nick>{user ? user.username : null}</Nick>
         <Profileedit
           onClick={() => {
             Router.push("/user/profileEdit");
           }}
         >
-          <UserOutlined /> 개인정보 수정
+          {data.modifyflag ? <div><UserOutlined />개인정보 수정</div> : null}
         </Profileedit>
       </ProfileRight>
-      <Col span={10} offset={1}>
+      <Col span={4} md={8} offset={1}>
         <UserStates>온도: {user ? user.ondo : null}°C</UserStates>
         <ProfileDiv>
           도전 중{" "}
@@ -71,17 +71,17 @@ const UserProfile = ({ data }: any) => {
         <ProfileDiv>
           <Fspan onClick={showFollowModal}>
             팔로워{" "}
-            {user && user.followerUserDtos ? user.followerUserDtos.length : 0}
+            {data ? data.followerUserDtos.length : 0}
           </Fspan>{" "}
           |{" "}
           <Fspan onClick={showfollowingModal}>
             팔로잉{" "}
-            {user && user.followingUserDtos ? user.followingUserDtos.length : 0}
+            {data ? data.followingUserDtos.length : 0}
           </Fspan>
         </ProfileDiv>
         <div
           className="follow-btn txt-bold"
-          // onClick={__doFollow}
+        // onClick={__doFollow}
         >
           팔로우 하기
         </div>
@@ -94,12 +94,12 @@ const UserProfile = ({ data }: any) => {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
       >
-        {user && user.followerUserDtos && user.followerUserDtos.length >= 1 ? (
-          user.followerUserDtos.map((user: any) => {
+        {data && data.followerUserDtos.length >= 1 ? (
+          data.followerUserDtos.map((user: any) => {
             let key = 9;
             return (
               <FModalDiv key={key++}>
-                <FollowUser user={user}></FollowUser>
+                <FollowUser off1={setfollowModalVisible} off2={setfollowingModalVisible} user={user}></FollowUser>
                 <hr />
               </FModalDiv>
             );
@@ -116,14 +116,13 @@ const UserProfile = ({ data }: any) => {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
       >
-        {user &&
-        user.followingUserDtos &&
-        user.followingUserDtos.length >= 1 ? (
-          user.followingUserDtos.map((user: any) => {
+        {data &&
+          data.followingUserDtos.length >= 1 ? (
+          data.followingUserDtos.map((user: any) => {
             let key = 9;
             return (
               <FModalDiv key={key++}>
-                <FollowUser user={user}></FollowUser>
+                <FollowUser user={user} off1={setfollowModalVisible} off2={setfollowingModalVisible}></FollowUser>
                 <hr />
               </FModalDiv>
             );
@@ -149,6 +148,7 @@ const FModal = styled(Modal)`
 const ProfileImg = styled.img`
   padding: 10px;
   border-radius: 100%;
+  width: 100%;
 `;
 const FModalDiv = styled.div``;
 const ProfileRight = styled(Col)``;

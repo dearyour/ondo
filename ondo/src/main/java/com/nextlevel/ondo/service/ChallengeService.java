@@ -49,12 +49,24 @@ public class ChallengeService {
         }
         // 5. 해당 챌린지가 이미 종료된건지 검사
         boolean isFinished = !isProcessingChallenge(challenge);
+        boolean isStarted = false;
+        // 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+        if (Integer.parseInt(challenge.getSDate()) < Integer.parseInt(formatedNow)) {
+            isStarted = true;
+        }
+
         // 6. DTO에 담아서 리턴
         return ChallengeDetailDto.builder()
                 .challenge(challenge)
                 .feeds(feeds)
                 .amIParticipate(amIParticipate)
                 .isFinished(isFinished)
+                .isStarted(isStarted)
                 .build();
     }
 
@@ -107,7 +119,8 @@ public class ChallengeService {
         challengeSaveDto.setS_date(date);
         Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId(), image);
         Challenge challenge = challengeRepository.save(newChallenge);
-        System.out.println("챌린지 생성 완료");
+        participateChallenge(JoinChallengeDto.builder()
+                .challengeId(challenge.getChallengeId()).build(), token);
         return challenge;
     }
 

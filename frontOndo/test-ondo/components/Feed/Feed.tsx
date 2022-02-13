@@ -8,6 +8,7 @@ import { layoutAction } from "store/slice/layout";
 import styled from "styled-components";
 import { commentAction } from "store/slice/comment";
 import Router from "next/router";
+import { feedAction } from "store/slice/feed";
 // import Router from "next/router";
 //feedId, createDate, chaallengId , image , content , userId , feedlike, comment []
 // feeds: [feedId, createdDate, challengeId, image, content, userId, feedlike],

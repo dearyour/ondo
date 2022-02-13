@@ -12,6 +12,7 @@ import com.nextlevel.ondo.repository.FeedRepository;
 import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    @Transactional
     public Long deleteComment(Long commentId, String token) {
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);

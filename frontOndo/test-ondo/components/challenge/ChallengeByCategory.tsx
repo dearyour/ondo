@@ -4,13 +4,13 @@ import 'antd/dist/antd.css';
 import { Col, Row, Space } from "antd";
 import Router from 'next/router'
 
-const ChallengeByCategory = (props:any) => {
+const ChallengeByCategory = (props: any) => {
   const challenges = [...props.categorized];
   const getDuration = (startDate: string) => {
     const sDate = startDate.substring(0, 10);
-    const sy = sDate.substring(0,4);
-    const sm = sDate.substring(5,7);
-    const sd = sDate.substring(8,10);
+    const sy = sDate.substring(0, 4);
+    const sm = sDate.substring(5, 7);
+    const sd = sDate.substring(8, 10);
 
     const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
     const ey = eDate.getFullYear();
@@ -18,14 +18,14 @@ const ChallengeByCategory = (props:any) => {
     const ed = eDate.getDate();
 
     return sy + '-' + sm + '-' + sd + ' ~ '
-        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
+      + ey + '-' + (("00" + em.toString()).slice(-2)) + '-' + (("00" + ed.toString()).slice(-2));
   }
 
   const renderCategorizedChallenges = () => {
     const result = [];
-    for(let i = 0; i < challenges.length; i++) {
+    for (let i = 0; i < challenges.length; i++) {
       result.push(
-        <ChallengeWrapper onClick={() => {Router.push(`/challenge/${challenges[i].challengeId}`)}}>
+        <ChallengeWrapper onClick={() => { Router.push(`/challenge/${challenges[i].challengeId}`) }}>
           <ChallengeImg src={challenges[i].image} alt="challenge-image" />
           <ChallengeContent>
             <ChallengeTitle>{challenges[i].title}</ChallengeTitle>
@@ -43,7 +43,7 @@ const ChallengeByCategory = (props:any) => {
   return (
     <Row>
       <Col span={22} offset={1}>
-        <WriteBtnWrapper><WriteBtn onClick={()=> {Router.push('/challenge/write')}}>도전 개설하기</WriteBtn></WriteBtnWrapper>
+        <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper>
         {renderCategorizedChallenges()}
       </Col>
     </Row>

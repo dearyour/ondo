@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OndoLogo from "/public/images/ondo.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +19,13 @@ import useUser from "store/hooks/userHooks";
 // `;
 
 function Navbar(): JSX.Element {
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { nickname, GetUser } = useUser();
+  useEffect(() => {
+    GetUser();
+  }, [])
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -28,7 +35,7 @@ function Navbar(): JSX.Element {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="1">
-        <Link href="/user/1">
+        <Link href={"/user/" + nickname}>
           <a>mypage</a>
         </Link>
       </Menu.Item>
@@ -38,9 +45,6 @@ function Navbar(): JSX.Element {
       </Menu.Item>
     </Menu>
   );
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { nickname } = useUser();
 
   return (
     <NavWrapper>
@@ -49,7 +53,7 @@ function Navbar(): JSX.Element {
         <XsLogo xs={24} lg={4} xl={6}>
           <Link href="/feedMain">
             <a>
-              <Image src={OndoLogo} width={60} height={42}/>
+              <Image src={OndoLogo} width={60} height={42} />
             </a>
           </Link>
           {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}

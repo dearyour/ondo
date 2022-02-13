@@ -32,9 +32,6 @@ function Mainfeed() {
   // useEffect(() => {
   //   setUserProfileImage(image);
   // });
-  useMemo(() => {
-    feeds;
-  }, [feeds]);
 
   ////////////////////////
   useEffect(() => {
@@ -108,6 +105,7 @@ function Mainfeed() {
         return err;
       });
   }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
@@ -119,7 +117,7 @@ function Mainfeed() {
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
-  }, [__GetFeedState, setUserProfileImage]);
+  }, []);
 
   // const __openFeedDetail = useCallback(() => {
   //   feeds;
