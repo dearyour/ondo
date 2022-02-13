@@ -13,11 +13,11 @@ const LoggedInForm = () => {
   return (
     <Space direction="horizontal">
       <Avatar
-        style={image && { backgroundColor: "#edbaba" }}
+        style={image && { backgroundColor: "#edbaba", border: "1px solid pink" }}
         src={users.image}
         icon={<UserOutlined />}
       />
-      &nbsp;<b>{users.username}</b>
+      <b>Mypage</b>
     </Space>
   );
 };
