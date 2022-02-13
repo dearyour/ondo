@@ -7,10 +7,10 @@ import Router from 'next/router'
 const ChallengeByCategory = (props:any) => {
   const challenges = [...props.categorized];
   const getDuration = (startDate: string) => {
-    const sDate = startDate.substring(0, 10);
-    const sy = sDate.substring(0,4);
-    const sm = sDate.substring(5,7);
-    const sd = sDate.substring(8,10);
+    // const sDate = startDate.substring(0, 10);
+    const sy = startDate.substring(0,4);
+    const sm = startDate.substring(4,6);
+    const sd = startDate.substring(6,8);
 
     const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
     const ey = eDate.getFullYear();
