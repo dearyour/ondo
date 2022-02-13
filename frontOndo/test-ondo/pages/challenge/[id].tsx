@@ -32,7 +32,11 @@ const ReadChallenge = () => {
         console.log('상세보기 실패');
 
       })
+<<<<<<< HEAD
   }, [])
+=======
+  },[])
+>>>>>>> 50d56433b337cd49cc63dc48e9244bcd3b62a676
 
   // 참여하기
   const participate = () => {
