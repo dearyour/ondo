@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OndoLogo from "/public/images/ondo.png";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,7 +22,10 @@ function Navbar(): JSX.Element {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { nickname } = useUser();
+  const { nickname, GetUser } = useUser();
+  useEffect(() => {
+    GetUser();
+  }, [])
   const menu = (
     <Menu>
       <Menu.Item key="0">
