@@ -1,8 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
-import { Modal, Button, Col, Row, Divider } from 'antd';
+import { Modal, Button, Col, Row, Divider, Spin } from 'antd';
 import AppLayout from 'components/layout/AppLayout';
 import LoggedInForm from 'components/layout/LoggedInForm';
 import Image from 'next/image';
@@ -15,7 +15,11 @@ const ReadChallenge = () => {
 
   const router = useRouter()
   const { id } = router.query
-  const [challenge, setChallenge] = useState();
+  const [amIParticipant, setAmIParticipant] = useState(false);
+  const [challenge, setChallenge] = useState<any>({});
+  const [feeds, setFeeds] = useState([]);
+  const [finished, setFinished] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('Token')
@@ -25,8 +29,12 @@ const ReadChallenge = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res)
+        console.log(res.data)
+        setAmIParticipant(res.data.amIParticipate)
         setChallenge(res.data.challenge)
+        setFeeds(res.data.feeds)
+        setFinished(res.data.finished)
+        setLoading(false)
       })
       .catch((err) => {
         console.log('상세보기 실패');
@@ -48,37 +56,47 @@ const ReadChallenge = () => {
       .then((res) => {
         console.log(res)
         alert('참여합니다.')
+        location.reload();
       })
   }
 
   const getDuration = (startDate: string) => {
-    const sDate = startDate.substring(0, 10);
-    const sy = sDate.substring(0, 4);
-    const sm = sDate.substring(5, 7);
-    const sd = sDate.substring(8, 10);
-
-    const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
-    const ey = eDate.getFullYear();
-    const em = eDate.getMonth() + 1;
-    const ed = eDate.getDate();
+ 
+    const sy = startDate.substring(0,4);
+    const sm = startDate.substring(4,6);
+    const sd = startDate.substring(6,8);
+    
+    const endDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
+    const ey = endDate.getFullYear();
+    const em = endDate.getMonth() + 1;
+    const ed = endDate.getDate();
 
     return sy + '-' + sm + '-' + sd + ' ~ '
       + ey + '-' + (("00" + em.toString()).slice(-2)) + '-' + (("00" + ed.toString()).slice(-2));
   }
-  const content = "3일동안 다같이 런닝해여~ 조깅화와 시계를 찍어서 올려주시면 됩니다.";
-  const participants = 7;
-  const feedsPosted = ['https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250'];
 
   const renderPosts = () => {
     const result = [];
-    for (let i = 0; i < feedsPosted.length; i++) {
+    for (let i = 0; i < feeds.length; i++) {
       result.push(
         <Col xs={8} md={8} key={i}>
-          <FeedImg src={feedsPosted[i]}></FeedImg>
+          <FeedImg src={feeds[i].image}></FeedImg>
         </Col>
       );
     }
     return result;
+  }
+
+  if(isLoading) {
+    return (
+      <div>
+        <div className={styles.container}>
+          <Large>
+            <Spin size='large' />
+          </Large>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -89,20 +107,20 @@ const ReadChallenge = () => {
           오늘의 도전
           <Divider style={{ borderColor: 'black' }} />
           <ChallengeWrapper>
-            <ChallengeImg src='https://picsum.photos/2500' alt="feed-image" />
+            <ChallengeImg src={challenge.image} alt="feed-image" />
             <ChallengeContent>
-              <ChallengeTitle>{ }</ChallengeTitle>
+              <ChallengeTitle>{challenge.title}</ChallengeTitle>
               <LoggedInForm />
-              <ChallengeDuration>{ }</ChallengeDuration>
-              <p>{content}</p>
+              <ChallengeDuration>{getDuration(challenge.sdate)}</ChallengeDuration>
+              <p>{challenge.content}</p>
 
               <BottomContent>
-                <Participants>현재 {participants} 명 참여 중</Participants>
+                <Participants>현재 {challenge.challengeParticipate.length} 명 참여 중</Participants>
                 <Button.Group>
                   {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
-                  <button onClick={participate}>참여하기</button>
-                  <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>
+                  {!finished && <button onClick={participate}>참여하기</button>}
+                  {amIParticipant && <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>}
                 </Button.Group>
               </BottomContent>
             </ChallengeContent>
@@ -115,8 +133,15 @@ const ReadChallenge = () => {
   )
 }
 
+const Large = styled.div`
+  width: 100%;
+  margin-top: 30%;
+  display: flex;
+  justify-content: center;
+`
+
 const ChallengeWrapper = styled.div`
-  width: 780px;
+  width: 100%;
   height: 400px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
   background: #fff8f8;
