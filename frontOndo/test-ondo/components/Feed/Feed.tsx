@@ -171,9 +171,7 @@ const Feed = (props: any) => {
             온도 : {props.dto.user.ondo}
             ˚C
           </div>
-          <div className="timestamp">
-            도전 명 : {props.dto.feed.challengeId}
-          </div>
+          <div className="timestamp">도전 명 : {props.dto.title}</div>
           {/* <div className="timestamp">도전 명 : {challengeTitle}</div> */}
           {/* <div className="timestamp">도전 기간 :{getDuration()}</div> */}
           <div className="timestamp">참여 날짜 : {getStartDate()}</div>
@@ -196,7 +194,7 @@ const Feed = (props: any) => {
             <img src="/assets/feed/like-dac.svg" alt="좋아요" />
           </div>
           <div className="count txt-bold">
-            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 2}
+            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 0}
           </div>
         </div>
         <div className="comment">

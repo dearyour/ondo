@@ -96,8 +96,8 @@ export default function Reply(props: any) {
           },
         })
           .then((res) => {
-            console.log(res.data);
-            __loadComments();
+            console.log(res);
+            // __loadComments();
           })
           .catch((err) => {
             console.log(err);
@@ -130,10 +130,14 @@ export default function Reply(props: any) {
             </div>
           </div>
         </div>
-        <div className="right" onClick={__changeTargetId}>
+        <div className="right">
           <div className="like">
             <div className="asset">
-              <img src="/assets/feed/like-dac.svg" alt="좋아요" />
+              <img
+                src="/assets/feed/like-dac.svg"
+                alt="좋아요"
+                onClick={__changeTargetId}
+              />
             </div>
             <div className="title txt-bold">34k</div>
           </div>
