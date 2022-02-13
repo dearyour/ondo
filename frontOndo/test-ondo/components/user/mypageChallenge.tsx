@@ -6,11 +6,11 @@ import styled from 'styled-components';
 import Router from 'next/router'
 
 
-const Challengebox = ({challenge}: any) => {
-  
+const Challengebox = ({ challenge }: any) => {
+
   return (
     <Title span={24} sm={12} md={8} lg={6}>
-        <Content src={challenge.image} onClick={()=>{Router.push('/challenge/1')}}></Content>
+      <Content src={challenge.image} onClick={() => { Router.push('/challenge/' + challenge.challengeId) }}></Content>
     </Title>
 
   )
