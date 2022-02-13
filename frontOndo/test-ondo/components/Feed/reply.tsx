@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { layoutAction } from "store/slice/layout";
@@ -8,6 +8,7 @@ import axios from "axios";
 export default function reply(props: any) {
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
+  const [temp, setTemp] = useState(commentId);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
@@ -15,7 +16,6 @@ export default function reply(props: any) {
   const [commentData, setCommentData] = useState([]);
   const dispatch = useDispatch();
   const oneDay = 1000 * 60 * 60 * 24;
-
   function makeTwoDigits(time: any) {
     return time.toString().length !== 2 ? `0${time}` : time;
   }
@@ -51,7 +51,7 @@ export default function reply(props: any) {
   const __changeTargetId = useCallback(() => {
     dispatch(layoutAction.updateCommentTarget(props.reply.comment.commentId));
     dispatch(layoutAction.updateIsCommentToFeed(false));
-  }, [dispatch, props.reply.comment.commentId, detailData, __loadComments]);
+  }, [dispatch, props.reply.comment.commentId, detailData, commentId]);
   // console.log(props.item.user.userId);
 
   const __loadComments = useCallback(() => {

@@ -120,6 +120,11 @@ function Mainfeed() {
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
   }, [__GetFeedState, setUserProfileImage]);
+
+  // const __openFeedDetail = useCallback(() => {
+  //   feeds;
+  // }, [feeds]);
+
   //##################################################################################
   // const url = "http://i6a601.p.ssafy.io:8080/feed";
   // let test = eml.map((item: any) => {

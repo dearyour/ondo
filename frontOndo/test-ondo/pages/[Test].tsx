@@ -9,11 +9,16 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { userActions } from "store/slice/user";
 
+// const GetUserurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/info";
+const GetUserurl = process.env.BACK_EC2 + "/user/info";
+// const GetFeedurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/feed";
+const GetFeedurl = process.env.BACK_EC2 + "/feed";
 const Login = () => {
   const __GetUserStates = useCallback((token: string | null) => {
     return axios({
       method: "GET",
-      url: process.env.BACK_EC2 + "/user/info",
+      // url: "http://localhost:8080/user/info",
+      url: GetUserurl,
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -28,7 +33,8 @@ const Login = () => {
   const __GetFeedState = (token: string | null) => {
     return axios({
       method: "GET",
-      url: process.env.BACK_EC2 + "/feed",
+      // url: "http://localhost:8080/feed",
+      url: GetFeedurl,
       // url: "https://jsonplaceholder.typicode.com/comments",
       headers: { Authorization: "Bearer " + token },
     })
@@ -41,13 +47,115 @@ const Login = () => {
         return err;
       });
   };
-
+  const __GetFollowerState = (token: string | null) => {
+    return axios({
+      method: "GET",
+      url: "http://localhost:8080/follow/follower/나는짱이야",
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        console.log(res.data);
+        return setFeeds(res.data.detailFeedDtos);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+  const __GetFollowingState = (token: string | null) => {
+    return axios({
+      method: "GET",
+      url: "http://localhost:8080/follow/following/나는짱이야",
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        console.log(res.data);
+        return setFeeds(res.data.detailFeedDtos);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+  const usersss = "hunter";
+  const __postFollowing = (token: string | null) => {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/follow/" + usersss,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        console.log(res.data);
+        return setFeeds(res.data.detailFeedDtos);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+  const __delFollowing = (token: string | null) => {
+    return axios({
+      method: "delete",
+      url: "http://localhost:8080/follow/" + usersss,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        console.log(res.data);
+        return setFeeds(res.data.detailFeedDtos);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+  const feedsssId = 1;
+  const __feedinfoId = (token: string | null) => {
+    return axios({
+      method: "get",
+      url: "http://localhost:8080/feed/info/" + feedsssId,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        console.log(res.data);
+        return setFeeds(res.data.detailFeedDtos);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+  const __feedlike = (token: string | null) => {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/feed/like/" + feedsssId,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data.detailFeedDtos);
+        console.log(res.data);
+        return setFeeds(res.data.detailFeedDtos);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
   useEffect(() => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
-    __GetFeedState(token);
     __GetUserStates(token);
-    // GetFeedState(token);
+    __GetFeedState(token);
+    __GetFollowerState(token);
+    __GetFollowingState(token);
+    __postFollowing(token);
+    __delFollowing(token);
+    __feedinfoId(token);
+    __feedlike(token);
   }, [__GetUserStates]);
   //아래 얘는 작동인됨 위에는됨 도대체왜?????
   // const __GetFeedssssState = (token: string | null) => {
@@ -70,35 +178,36 @@ const Login = () => {
   //   const token = localStorage.getItem("Token");
   //   __GetFeedssssState(token);
   // }, []);
-  const dispatch = useDispatch();
-  const [userObj, setUserObj] = useState([]);
-  const router = useRouter();
-  const { username } = router.query;
-  let a = {};
-  const __GetUserState = (token: string | null) => {
-    return axios({
-      method: "GET",
-      url: process.env.BACK_EC2 + "/user/feed/" + username,
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((result) => {
-        console.log(result.data);
-        result.data;
-        setUserObj(result.data.user.image);
-        // setFeeds(result.data);
-        return result.data;
-      })
-      .catch((err) => {
-        return err;
-      });
-  };
-  useEffect(() => {
-    const token = localStorage.getItem("Token");
-    __GetUserState(token);
-    dispatch(userActions.getUserObj(username));
-    // dispatch(layoutAction.updateDetailData(userObj));
-    console.log(userObj);
-  }, [__GetUserState]);
+  //################################################################3
+  // const dispatch = useDispatch();
+  // const [userObj, setUserObj] = useState([]);
+  // const router = useRouter();
+  // const { username } = router.query;
+  // let a = {};
+  // const __GetUserState = (token: string | null) => {
+  //   return axios({
+  //     method: "GET",
+  //     url: process.env.BACK_EC2 + "/user/feed/" + username,
+  //     headers: { Authorization: "Bearer " + token },
+  //   })
+  //     .then((result) => {
+  //       console.log(result.data);
+  //       result.data;
+  //       setUserObj(result.data.user.image);
+  //       // setFeeds(result.data);
+  //       return result.data;
+  //     })
+  //     .catch((err) => {
+  //       return err;
+  //     });
+  // };
+  // useEffect(() => {
+  //   const token = localStorage.getItem("Token");
+  //   __GetUserState(token);
+  //   dispatch(userActions.getUserObj(username));
+  //   // dispatch(layoutAction.updateDetailData(userObj));
+  //   console.log(userObj);
+  // }, [__GetUserState]);
   return (
     <LoginForm>
       <LoginLabel htmlFor="Test-Warning">

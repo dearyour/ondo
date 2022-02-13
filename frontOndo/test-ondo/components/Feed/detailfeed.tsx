@@ -139,6 +139,8 @@ function Detailfeed() {
     },
     [detailData, comment, commentRef, __loadComments]
   );
+
+  const __updataLike = useCallback(() => {}, []);
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
 

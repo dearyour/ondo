@@ -1,21 +1,20 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Modal, Button, Col, Row } from 'antd';
-import Image from 'next/image';
-import styled from 'styled-components';
-import temp_profile from 'public/images/temp_profile.jpg'
-import { UserOutlined } from '@ant-design/icons';
-import FollowUser from './followUser';
-import Router from 'next/router';
-import useUser from 'store/hooks/userHooks';
-
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Modal, Button, Col, Row } from "antd";
+import Image from "next/image";
+import styled from "styled-components";
+import temp_profile from "public/images/temp_profile.jpg";
+import { UserOutlined } from "@ant-design/icons";
+import FollowUser from "./followUser";
+import Router from "next/router";
+import useUser from "store/hooks/userHooks";
 
 const UserProfile = ({ data }: any) => {
   const [followModalVisible, setfollowModalVisible] = useState(false);
   const [user, setUser] = useState<any>([]);
   const { users } = useUser();
   useEffect(() => {
-    setUser(data.user)
-  }, [data])
+    setUser(data.user);
+  }, [data]);
   const showFollowModal = () => {
     setfollowModalVisible(true);
   };
@@ -42,6 +41,8 @@ const UserProfile = ({ data }: any) => {
     setfollowingModalVisible(false);
   };
 
+  // const __doFollow = useCallback(() => {}, [nickname, param]);
+
   return (
     <ProfileWrap>
       <Col span={6}>
@@ -49,96 +50,126 @@ const UserProfile = ({ data }: any) => {
       </Col>
       <ProfileRight span={6} offset={1}>
         <Nick>{user ? user.username : null}</Nick>
-        <Profileedit onClick={() => { Router.push('/user/profileEdit') }}><UserOutlined /> 개인정보 수정</Profileedit>
+        <Profileedit
+          onClick={() => {
+            Router.push("/user/profileEdit");
+          }}
+        >
+          <UserOutlined /> 개인정보 수정
+        </Profileedit>
       </ProfileRight>
       <Col span={10} offset={1}>
         <UserStates>온도: {user ? user.ondo : null}°C</UserStates>
-        <ProfileDiv>도전 중 {user && user.challengeParticipate ? user.challengeParticipate.length : 0} | 도전 완료 {data.compeleteChallenge ? data.compeleteChallenge.length : 0}</ProfileDiv>
-        <ProfileDiv ><Fspan onClick={showFollowModal}>팔로워 {user && user.followerUserDtos ? user.followerUserDtos.length : 0}</Fspan> | <Fspan onClick={showfollowingModal}>팔로잉 {user && user.followingUserDtos ? user.followingUserDtos.length : 0}</Fspan></ProfileDiv>
+        <ProfileDiv>
+          도전 중{" "}
+          {user && user.challengeParticipate
+            ? user.challengeParticipate.length
+            : 0}{" "}
+          | 도전 완료{" "}
+          {data.compeleteChallenge ? data.compeleteChallenge.length : 0}
+        </ProfileDiv>
+        <ProfileDiv>
+          <Fspan onClick={showFollowModal}>
+            팔로워{" "}
+            {user && user.followerUserDtos ? user.followerUserDtos.length : 0}
+          </Fspan>{" "}
+          |{" "}
+          <Fspan onClick={showfollowingModal}>
+            팔로잉{" "}
+            {user && user.followingUserDtos ? user.followingUserDtos.length : 0}
+          </Fspan>
+        </ProfileDiv>
+        <div
+          className="follow-btn txt-bold"
+          // onClick={__doFollow}
+        >
+          팔로우 하기
+        </div>
       </Col>
       <FModal
         visible={followModalVisible}
         onOk={handleOkFollow}
         centered={true}
         onCancel={handleCancelFollow}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
       >
-        {user && user.followerUserDtos && user.followerUserDtos.length >= 1 ?
+        {user && user.followerUserDtos && user.followerUserDtos.length >= 1 ? (
           user.followerUserDtos.map((user: any) => {
-            let key = 9
+            let key = 9;
             return (
               <FModalDiv key={key++}>
-                <FollowUser user={user} ></FollowUser>
+                <FollowUser user={user}></FollowUser>
                 <hr />
               </FModalDiv>
-            )
-          }) : <div>팔로우 중인 유저가 없습니다.</div>
-        }
+            );
+          })
+        ) : (
+          <div>팔로우 중인 유저가 없습니다.</div>
+        )}
       </FModal>
       <FModal
         visible={followingModalVisible}
         onOk={handleOkfollowing}
         centered={true}
         onCancel={handleCancelFollowing}
-        cancelButtonProps={{ style: { display: 'none' } }}
-        okButtonProps={{ style: { display: 'none' } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        okButtonProps={{ style: { display: "none" } }}
       >
-        {user && user.followingUserDtos && user.followingUserDtos.length >= 1 ?
+        {user &&
+        user.followingUserDtos &&
+        user.followingUserDtos.length >= 1 ? (
           user.followingUserDtos.map((user: any) => {
-            let key = 9
+            let key = 9;
             return (
               <FModalDiv key={key++}>
-                <FollowUser user={user} ></FollowUser>
+                <FollowUser user={user}></FollowUser>
                 <hr />
               </FModalDiv>
-            )
-          }) : <div>팔로잉 중인 유저가 없습니다.</div>
-        }
+            );
+          })
+        ) : (
+          <div>팔로잉 중인 유저가 없습니다.</div>
+        )}
       </FModal>
     </ProfileWrap>
-  )
+  );
 };
 
 const ProfileWrap = styled(Row)`
   width: 80%;
   margin-left: auto;
-  margin-right:auto;
-`
+  margin-right: auto;
+`;
 
 const FModal = styled(Modal)`
   border-radius: 10px;
-`
+`;
 
 const ProfileImg = styled.img`
   padding: 10px;
   border-radius: 100%;
-`
-const FModalDiv = styled.div`
-    
-`
-const ProfileRight = styled(Col)`
-  
-`
+`;
+const FModalDiv = styled.div``;
+const ProfileRight = styled(Col)``;
 const Profileedit = styled.div`
   margin-top: 120px;
-  white-space:nowrap;
+  white-space: nowrap;
   cursor: pointer;
-  
-`
+`;
 const Fspan = styled.span`
   cursor: pointer;
-`
+`;
 
 const Nick = styled.h2`
   margin-top: 15px;
-`
+`;
 
 const UserStates = styled.div`
   margin-top: 60px;
-`
+`;
 
 const ProfileDiv = styled.div`
   margin-top: 10px;
-`
+`;
 export default UserProfile;
