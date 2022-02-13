@@ -11,6 +11,8 @@ const initialState: UserParams | any = {
   ondo: 30,
   image: "https://cdn.entermedia.co.kr/news/photo/202112/28096_52173_2023.jpg",
   isLoading: false,
+  following: [],
+  follower: [],
 };
 
 export const userSlice = createSlice({
@@ -54,6 +56,9 @@ export const userSlice = createSlice({
     getUserObj: (state, { payload }) => {},
     setUserObj: (state, { payload }) => {
       state.userObj = payload;
+    },
+    getFollowing: (state, { payload }) => {
+      state.following = payload;
     },
   },
 });

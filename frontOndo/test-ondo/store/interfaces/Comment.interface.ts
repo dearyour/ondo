@@ -10,7 +10,8 @@ export interface CommentParams {
 }
 
 export interface Comment {
-  comments: CommentParams[];
+  // comments: CommentParams[] | any;
+  comments: any;
   isLoading: boolean;
   error: AxiosError | null;
 }
