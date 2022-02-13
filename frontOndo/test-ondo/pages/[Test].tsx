@@ -146,17 +146,44 @@ const Login = () => {
         return err;
       });
   };
+  const commentIdss = 1;
+  const __loadComments = useCallback(() => {
+    //코멘트 업로드 또는 불러올때 계속 새로고침
+    const token = localStorage.getItem("Token");
+    // const feedsId = detailData.feed.feedId;
+    axios({
+      method: "GET",
+      url: "http://localhost:8080" + "/comment/" + commentIdss,
+      // url: "http://localhost:8080" + "/feed",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+        // console.log(makeArray(res));
+        // dispatch(layoutAction.updateDetailData(props.dto));
+        // dispatch(layoutAction.updateDetailData(commentData));
+
+        // setCommentData(makeArray(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   useEffect(() => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
-    __GetUserStates(token);
-    __GetFeedState(token);
-    __GetFollowerState(token);
-    __GetFollowingState(token);
-    __postFollowing(token);
-    __delFollowing(token);
-    __feedinfoId(token);
-    __feedlike(token);
+    // __GetUserStates(token);
+    // __GetFeedState(token);
+    // __GetFollowerState(token);
+    // __GetFollowingState(token);
+    // __postFollowing(token);
+    // __delFollowing(token);
+    // __feedinfoId(token);
+    // __feedlike(token);
+    __loadComments();
   }, [__GetUserStates]);
   //아래 얘는 작동인됨 위에는됨 도대체왜?????
   // const __GetFeedssssState = (token: string | null) => {
