@@ -3,9 +3,6 @@ import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import { Modal, Button, Col, Row } from 'antd';
 import styled from 'styled-components';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import Router from 'next/router';
 
 
@@ -32,7 +29,7 @@ const Content = styled.img`
     transition: all 0.3s ease-in-out;
     overflow: hidden;
   }
-
+  border: 1px solid black;
   cursor: pointer;
   border-radius:5px;
 `

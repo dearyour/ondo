@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { userActions } from "store/slice/user";
@@ -26,6 +32,9 @@ function Mainfeed() {
   // useEffect(() => {
   //   setUserProfileImage(image);
   // });
+  useMemo(() => {
+    feeds;
+  }, [feeds]);
 
   ////////////////////////
   useEffect(() => {
@@ -103,11 +112,19 @@ function Mainfeed() {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
+    //댓글개수 실시간카운트 하려면 호출 상태를 디펜던시에 넣는게 아니라
+    // 호출한상태값을 저장한변수를 디펜던시에 넣는다
     __GetFeedState(token);
+
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
-  }, []);
+  }, [__GetFeedState, setUserProfileImage]);
+
+  // const __openFeedDetail = useCallback(() => {
+  //   feeds;
+  // }, [feeds]);
+
   //##################################################################################
   // const url = "http://i6a601.p.ssafy.io:8080/feed";
   // let test = eml.map((item: any) => {
@@ -142,7 +159,7 @@ function Mainfeed() {
                   disabled
                   // ref={contextRef}
                   type="text"
-                  placeholder="      오늘의 도전 완료 피드 쓰러가기"
+                  placeholder=" 오늘의 도전 완료 피드 쓰러가기"
                   // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
@@ -191,7 +208,7 @@ function Mainfeed() {
                 className="
               name txt-bold"
               >
-                나의 온도 : {ondo} ˚C
+                나의 온도 : [ {ondo} ˚C ]
               </div>
               <div className="title txt-bold">Ondo 순위</div>
               {rankers.map((item: any, idx: number) => {

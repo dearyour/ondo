@@ -6,7 +6,7 @@ import Reply from "components/Feed/reply";
 import Router from "next/router";
 import axios from "axios";
 
-function makeArray(obj: Object) {
+function makeArray(obj: any) {
   const keys = Object.keys(obj);
   const values = Object.values(obj);
   const result = keys.map((item, idx) => {
@@ -21,11 +21,12 @@ function makeArray(obj: Object) {
 
 function Detailfeed() {
   const dispatch = useDispatch();
+  const layout = useSelector((state: RootState) => state.layout);
+  const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
-  const userImage = useSelector((state: RootState) => state.user.image);
   const [comment, setComment] = useState(""); // 댓글작성
   const commentRef = useRef(null);
   const [commentData, setCommentData] = useState([]);
@@ -80,6 +81,8 @@ function Detailfeed() {
     //코멘트 업로드 또는 불러올때 계속 새로고침
     if (detailData) {
       const token = localStorage.getItem("Token");
+      dispatch(layoutAction.updateCommentTarget(feedssId));
+      dispatch(layoutAction.updateIsCommentToFeed(true));
       // const feedsId = detailData.feed.feedId;
       axios({
         method: "GET",
@@ -95,6 +98,8 @@ function Detailfeed() {
           // console.log(makeArray(res));
           // dispatch(layoutAction.updateDetailData(props.dto));
           // dispatch(layoutAction.updateDetailData(commentData));
+
+          // setCommentData(makeArray(res.data));
           setCommentData(res.data.reverse());
         })
         .catch((err) => {
@@ -134,6 +139,8 @@ function Detailfeed() {
     },
     [detailData, comment, commentRef, __loadComments]
   );
+
+  const __updataLike = useCallback(() => {}, []);
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
 
@@ -178,16 +185,14 @@ function Detailfeed() {
           )}
           <div className="contents">
             <div className="feed-content">
-              <div
-                className="top"
-                onClick={() => {
-                  Router.push(`/user/${detailData.user.username}`);
-                }}
-              >
+              <div className="top">
                 {detailData.user.image && (
                   <div
                     className="profile-image"
                     style={{ backgroundImage: `url(${detailData.user.image})` }}
+                    onClick={() => {
+                      Router.push(`/user/${detailData.user.username}`);
+                    }}
                   ></div>
                 )}
                 <div className="feed-desc">
@@ -215,11 +220,7 @@ function Detailfeed() {
                   <div className="asset">
                     <img src="assets/feed/comment.svg" alt="댓글" />
                   </div>
-                  <div className="title txt-bold">
-                    {detailData.feed.comment
-                      ? detailData.feed.comment.length
-                      : 0}
-                  </div>
+                  <div className="title txt-bold">{commentData.length}</div>
                 </div>
               </div>
             </div>
@@ -230,10 +231,10 @@ function Detailfeed() {
               })}
             </div>
             <form className="feed-write-comment" onSubmit={__uploadComment}>
-              {userImage && (
+              {image && (
                 <div
                   className="profile-image"
-                  style={{ backgroundImage: `url(${userImage})` }}
+                  style={{ backgroundImage: `url(${image})` }}
                 ></div>
               )}
               <div className="write-comment">

@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { Layout } from 'antd';
 import NavBar from './Navbar';
@@ -7,8 +7,8 @@ import styled from 'styled-components';
 
 
 interface LayoutProps {
-    children?: ReactNode,
-    title?: string,
+  children?: ReactNode,
+  title?: string,
 }
 
 const Container = styled.div`
@@ -35,28 +35,28 @@ const Container = styled.div`
 
 const { Header, Content, Footer } = Layout;
 
-const AppLayout: React.FC<LayoutProps> = ({children, title = ''}:LayoutProps) => (
-    <div>
-        <Head>
-            <title>{title}</title>
-            <meta charSet="UTF-8" />
-            <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        </Head>
-        {/* <Layout> */}
-          {/* <Header> */}
-            <NavBar></NavBar>
-          {/* </Header> */}
-        {/* </Layout> */}
-        {/* <Content> */}
-          <Container>
-            { children }
-          </Container>
-        {/* </Content> */}
-        {/* <Footer> */}
+const AppLayout: React.FC<LayoutProps> = ({ children, title = '' }: LayoutProps) => (
+  <div>
+    <Head>
+      <title>{title}</title>
+      <meta charSet="UTF-8" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </Head>
+    {/* <Layout> */}
+    {/* <Header> */}
+    <NavBar></NavBar>
+    {/* </Header> */}
+    {/* </Layout> */}
+    {/* <Content> */}
+    <Container>
+      {children}
+    </Container>
+    {/* </Content> */}
+    {/* <Footer> */}
 
-        {/* </Footer> */}
-    </div>
+    {/* </Footer> */}
+  </div>
 )
 
 export default AppLayout;

@@ -100,6 +100,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 #__next .feed-detail .wrapper .contents .feed-content .top .feed-desc .nickname {
@@ -109,7 +110,7 @@
 
 #__next .feed-detail .wrapper .contents .feed-content .top .feed-desc .timestamp {
   font-size: 12px;
-  color: yellowgreen;
+  color: black;
   opacity: 0.7;
   margin-top: 4px;
 }
@@ -209,6 +210,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 #__next .feed-detail .wrapper .contents .feed-comments .comment-form .top .left .feed-desc .nickname {
@@ -218,7 +220,7 @@
 
 #__next .feed-detail .wrapper .contents .feed-comments .comment-form .top .left .feed-desc .timestamp {
   font-size: 10px;
-  color: yellowgreen;
+  color: black;
   opacity: 0.7;
   margin-top: 4px;
 }
@@ -265,6 +267,7 @@
   margin-top: 6px;
   font-size: 10px;
   color: #5085e8;
+  cursor: pointer;
 }
 
 #__next .feed-detail .wrapper .contents .feed-comments .comment-form .body {
@@ -300,6 +303,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 #__next .feed-detail .wrapper .contents .feed-write-comment .write-comment {
