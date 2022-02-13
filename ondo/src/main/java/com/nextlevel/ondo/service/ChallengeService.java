@@ -146,7 +146,7 @@ public class ChallengeService {
         List<Challenge> allChallenges = challengeRepository.findAll();
         allChallenges.sort(((o1, o2) -> -Integer.compare(o1.getChallengeParticipate().size(), o2.getChallengeParticipate().size())));
         List<Challenge> top3Challenges = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
             if (allChallenges.size() < i + 1) {
                 break;
             }
