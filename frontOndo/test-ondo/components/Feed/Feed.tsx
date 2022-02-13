@@ -194,7 +194,7 @@ const Feed = (props: any) => {
             <img src="/assets/feed/like-dac.svg" alt="좋아요" />
           </div>
           <div className="count txt-bold">
-            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 2}
+            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 0}
           </div>
         </div>
         <div className="comment">

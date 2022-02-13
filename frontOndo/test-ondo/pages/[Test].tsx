@@ -182,7 +182,7 @@ const Login = () => {
     // __postFollowing(token);
     // __delFollowing(token);
     // __feedinfoId(token);
-    // __feedlike(token);
+    __feedlike(token);
     __loadComments();
   }, [__GetUserStates]);
   //아래 얘는 작동인됨 위에는됨 도대체왜?????

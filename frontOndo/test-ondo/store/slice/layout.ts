@@ -9,6 +9,7 @@ const initialState: layoutParam = {
   commentData: undefined,
   targetId: 0,
   isToFeed: false,
+  likelist: [],
 };
 
 export const layoutSlice = createSlice({
@@ -32,6 +33,9 @@ export const layoutSlice = createSlice({
     },
     updateIsCommentToFeed: (state, { payload }) => {
       state.isToFeed = payload;
+    },
+    likeList: (state, { payload }) => {
+      state.likelist = payload;
     },
   },
 });

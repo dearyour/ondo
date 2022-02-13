@@ -5,4 +5,5 @@ export interface layoutParam {
   targetId: number;
   isToFeed: boolean;
   commentData: any;
+  likelist: [];
 }
