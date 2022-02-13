@@ -1,0 +1,12 @@
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAU4BMG5QQK6DKCPOB
+      secretKey: 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
+    s3:
+      bucket: ondobucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

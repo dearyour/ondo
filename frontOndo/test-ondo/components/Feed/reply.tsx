@@ -5,7 +5,7 @@ import { layoutAction } from "store/slice/layout";
 import { RootState } from "store/module";
 import axios from "axios";
 
-export default function reply(props: any) {
+export default function Reply(props: any) {
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
@@ -32,12 +32,10 @@ export default function reply(props: any) {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
   const getStartDate = (startDate: any) => {
     const newdate = new Date(startDate);
@@ -61,7 +59,7 @@ export default function reply(props: any) {
       // const feedsId = detailData.feed.feedId;
       axios({
         method: "GET",
-        url: "http://localhost:8080" + "/comment/" + feedssId,
+        url: process.env.BACK_EC2 + "/comment/" + feedssId,
         // url: "http://localhost:8080" + "/feed",
         headers: {
           Authorization: "Bearer " + token,
@@ -90,7 +88,7 @@ export default function reply(props: any) {
         const token = localStorage.getItem("Token");
         axios({
           method: "DELETE",
-          url: "http://localhost:8080" + "/comment/delete/" + commentId,
+          url: process.env.BACK_EC2 + "/comment/delete/" + commentId,
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -142,7 +140,7 @@ export default function reply(props: any) {
           </div>
         </div>
       </div>
-      <div className="body">{props.reply.comment.content}</div>
+      {<div className="body">{props.reply.comment.content}</div>}
     </div>
   );
 }

@@ -81,8 +81,8 @@ public class FeedService {
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
             if (f.getFeedlike().contains(tokenuser)) flag = false;
 
-
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag);
+            Challenge challenge = challengeRepository.findByChallengeId(f.getChallengeId());
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag, challenge.getTitle());
             detailFeedDtos.add(detailFeedDto);
         }
 
@@ -142,10 +142,8 @@ public class FeedService {
         User user = kakaoUtil.getUserByEmail(accessToken);
 
         Feed feed = feedRepository.findByFeedId(modifyFeedDto.getFeedId()).orElseGet(() -> {
-            System.out.println("***test***");
             return new Feed();
         });
-        System.out.println(feed.getFeedId());
 
         // token 의 유저아이디와 feed 작성자 아이디가 동일하면 진행 아니면 에러
         if (feed.getUserId() != user.getUserId()) {
@@ -191,9 +189,9 @@ public class FeedService {
         Boolean flag = false;
         // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
         if (feed.getFeedlike().contains(tokenuser)) flag = true;
+        Challenge challenge = challengeRepository.findByChallengeId(feed.getChallengeId());
 
-
-        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag);
+        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag, challenge.getTitle());
 
         return detailFeedDto;
     }
@@ -211,7 +209,7 @@ public class FeedService {
         for (String s : tags) {
             if (tagRepository.findByName(s) != null) {
                 //연결
-                Tag tag = new Tag(s);
+                Tag tag = tagRepository.findByName(s);
                 feedTagRepository.save(new FeedTag(feed, tag));
             } else {
                 Tag tag = tagRepository.save(new Tag(s));
@@ -239,13 +237,12 @@ public class FeedService {
             System.out.println("아직 시작 안함.");
         }
 
+        int beforeArchived = challengeParticipate.getArchived();
         int archived = challengeParticipate.getArchived();
         archived = archived | (1 << dif);
         challengeParticipate.setArchived(archived);
 
-
-        //3개 다 true면 위에 코드 통과해서 여기로 오고, 온도 1도 오르기
-        if (archived == 7) {
+        if (beforeArchived != 7 && archived == 7) {
             user.setOndo(user.getOndo() + 1);
         }
         userRepository.save(user);

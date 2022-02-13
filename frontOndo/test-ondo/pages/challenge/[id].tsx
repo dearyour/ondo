@@ -38,7 +38,7 @@ const ReadChallenge = () => {
       })
       .catch((err) => {
         console.log('상세보기 실패');
-        
+
       })
   }, [])
 
@@ -72,7 +72,7 @@ const ReadChallenge = () => {
     const ed = endDate.getDate();
 
     return sy + '-' + sm + '-' + sd + ' ~ '
-        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
+      + ey + '-' + (("00" + em.toString()).slice(-2)) + '-' + (("00" + ed.toString()).slice(-2));
   }
 
   const renderPosts = () => {
