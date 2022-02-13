@@ -81,8 +81,8 @@ public class FeedService {
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
             if (f.getFeedlike().contains(tokenuser)) flag = false;
 
-
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag);
+            Challenge challenge = challengeRepository.findByChallengeId(f.getChallengeId());
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag, challenge.getTitle());
             detailFeedDtos.add(detailFeedDto);
         }
 
@@ -191,9 +191,9 @@ public class FeedService {
         Boolean flag = false;
         // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
         if (feed.getFeedlike().contains(tokenuser)) flag = true;
+        Challenge challenge = challengeRepository.findByChallengeId(feed.getChallengeId());
 
-
-        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag);
+        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag, challenge.getTitle());
 
         return detailFeedDto;
     }
@@ -243,7 +243,7 @@ public class FeedService {
         archived = archived | (1 << dif);
         challengeParticipate.setArchived(archived);
 
-
+        System.out.println("현재 archived = " + archived);
         //3개 다 true면 위에 코드 통과해서 여기로 오고, 온도 1도 오르기
         if (archived == 7) {
             user.setOndo(user.getOndo() + 1);

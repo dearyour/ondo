@@ -15,15 +15,17 @@ public class DetailFeedDto {
 
     private User user;
     private Feed feed;
+    private String title;
     private List<DetailCommentDto> comments;
     private Boolean likeflag;
 
     @Builder
-    public DetailFeedDto(User user, Feed feed, List<DetailCommentDto> comments, Boolean likeflag) {
+    public DetailFeedDto(User user, Feed feed, List<DetailCommentDto> comments, Boolean likeflag, String title) {
         this.user = user;
         this.feed = feed;
         this.comments = comments;
         this.likeflag = likeflag;
+        this.title = title;
     }
 
 }

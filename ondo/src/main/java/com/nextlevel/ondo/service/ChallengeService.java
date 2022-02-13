@@ -119,7 +119,8 @@ public class ChallengeService {
         challengeSaveDto.setS_date(date);
         Challenge newChallenge = challengeSaveDto.toEntity(user.getUserId(), image);
         Challenge challenge = challengeRepository.save(newChallenge);
-        System.out.println("챌린지 생성 완료");
+        participateChallenge(JoinChallengeDto.builder()
+                .challengeId(challenge.getChallengeId()).build(), token);
         return challenge;
     }
 

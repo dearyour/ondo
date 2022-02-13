@@ -140,7 +140,7 @@ export default function Reply(props: any) {
           </div>
         </div>
       </div>
-      <div className="body">{props.reply.comment.content}</div>
+      {<div className="body">{props.reply.comment.content}</div>}
     </div>
   );
 }
