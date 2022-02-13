@@ -32,9 +32,6 @@ function Mainfeed() {
   // useEffect(() => {
   //   setUserProfileImage(image);
   // });
-  useMemo(() => {
-    feeds;
-  }, [feeds]);
 
   ////////////////////////
   useEffect(() => {
@@ -108,13 +105,16 @@ function Mainfeed() {
         return err;
       });
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("Token");
+    __GetFeedState(token);
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
     //댓글개수 실시간카운트 하려면 호출 상태를 디펜던시에 넣는게 아니라
     // 호출한상태값을 저장한변수를 디펜던시에 넣는다
-    __GetFeedState(token);
 
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
@@ -158,7 +158,7 @@ function Mainfeed() {
                   // ref={contextRef}
                   type="text"
                   placeholder=" 오늘의 도전 완료 피드 쓰러가기"
-                // onChange={(e) => setContext(e.target.value)}
+                  // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -182,7 +182,7 @@ function Mainfeed() {
                   dto={item}
                   nickname={nickname}
                   image={image}
-                // comments={comments}
+                  // comments={comments}
                 />
               );
             })}

@@ -32,10 +32,12 @@ export default function Reply(props: any) {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
   const getStartDate = (startDate: any) => {
     const newdate = new Date(startDate);
@@ -94,8 +96,8 @@ export default function Reply(props: any) {
           },
         })
           .then((res) => {
-            console.log(res.data);
-            __loadComments();
+            console.log(res);
+            // __loadComments();
           })
           .catch((err) => {
             console.log(err);
@@ -128,10 +130,14 @@ export default function Reply(props: any) {
             </div>
           </div>
         </div>
-        <div className="right" onClick={__changeTargetId}>
+        <div className="right">
           <div className="like">
             <div className="asset">
-              <img src="/assets/feed/like-dac.svg" alt="좋아요" />
+              <img
+                src="/assets/feed/like-dac.svg"
+                alt="좋아요"
+                onClick={__changeTargetId}
+              />
             </div>
             <div className="title txt-bold">34k</div>
           </div>

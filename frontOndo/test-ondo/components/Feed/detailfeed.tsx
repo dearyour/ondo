@@ -24,19 +24,24 @@ function Detailfeed() {
   const layout = useSelector((state: RootState) => state.layout);
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
+  const likelist = useSelector((state: RootState) => state.layout.likelist);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
   const [comment, setComment] = useState(""); // 댓글작성
   const commentRef: any = useRef(null);
   const [commentData, setCommentData] = useState([]);
+  const [likeCount, setLikeCount] = useState(detailData.feed.feedlike.length);
   // const session = useSelector((state)=>state.auth.session);
   // const image = useSelector(
   //   (state: RootState) => state.layout.detailData.feed.image
   // );
+  console.log(detailData.feed.feedlike.length);
   console.log(detailData);
   console.log(commentData);
   console.log(feedssId);
+  const likeFlag = detailData.likeflag;
+  console.log(likeFlag);
   const startDate = detailData.feed.createdDate;
   const [putUser, SetPutUser] = useState([]);
   // putUser = detailData.comment;
@@ -69,10 +74,12 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
 
   const __loadComments = useCallback(() => {
@@ -137,7 +144,28 @@ function Detailfeed() {
     [detailData, comment, commentRef, __loadComments]
   );
 
-  const __updataLike = useCallback(() => { }, []);
+  const __updateLike = useCallback(() => {
+    const token = localStorage.getItem("Token");
+    return axios({
+      method: "get",
+      url: "http://localhost:8080/feed/like/" + feedssId,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        console.log(res.data + "### 라이크!!");
+        if (res.data === "ok") {
+          setLikeCount(likeCount + 1);
+        } else {
+          setLikeCount(likeCount - 1);
+        }
+        dispatch(layoutAction.likeList(res.data));
+      })
+      .catch((err) => {
+        return err;
+      });
+  }, [likelist, layout, detailData, likeCount]);
+
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
 
@@ -163,7 +191,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => { };
+    return () => {};
   }, [__loadComments]);
   return (
     <div>
@@ -207,10 +235,20 @@ function Detailfeed() {
               <div className="bottom">
                 <div className="like">
                   <div className="asset">
-                    <img src="assets/feed/like-dac.svg" alt="좋아요" />
+                    <img
+                      src={
+                        likelist === "ok"
+                          ? "/assets/feed/like-ac.svg"
+                          : "/assets/feed/like-dac.svg"
+                      }
+                      alt="좋아요"
+                      onClick={__updateLike}
+                    />
                   </div>
                   <div className="title txt-bold">
-                    {detailData.feed.feedlike} 2
+                    {/* {layout.likelist}　 */}
+                    {/* {detailData.feed.feedlike.length} */}
+                    {likeCount}
                   </div>
                 </div>
                 <div className="comment">

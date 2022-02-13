@@ -44,11 +44,11 @@ $yong-blue: #5085e8;
             input {
               cursor: pointer;
               width: 100%;
-              font-size: 12px;
+              font-size: 13px;
               color: $yong-gray200;
               border: none;
               &::placeholder {
-                color: #edbaba;
+                color: gray;
               }
             }
           }
@@ -76,9 +76,9 @@ $yong-blue: #5085e8;
             align-items: center;
             .profile-image {
               cursor: pointer;
-              width: 40px;
-              height: 40px;
-              border-radius: 40px;
+              width: 110px;
+              height: 110px;
+              border-radius: 110px;
               background-color: $yong-gray;
               margin-right: 12px;
               background-position: center;
@@ -86,14 +86,14 @@ $yong-blue: #5085e8;
               background-repeat: no-repeat;
             }
             .profile-desc {
-              .nicknaeme {
+              .nickname {
                 font-size: 20px;
                 color: $yong-gray200;
                 cursor: pointer;
               }
               .timestamp {
                 font-size: 15px;
-                color: gray;
+                color: $yong-blue;
                 opacity: 0.8;
                 margin-top: 2px;
               }
@@ -101,10 +101,11 @@ $yong-blue: #5085e8;
           }
           .contents {
             cursor: pointer;
-            margin-top: 48px;
+            margin-top: 15px;
             font-size: 14px;
             color: $yong-gray200;
             line-height: 1.8;
+            border-top: 1px solid #edbaba;
             .image {
               width: 309px;
               height: 309px;
@@ -112,6 +113,7 @@ $yong-blue: #5085e8;
               background-repeat: no-repeat;
               background-position: center;
               background-size: cover;
+              border-radius: 20px;
               margin-top: 25px;
               margin-left: 120px;
             }
@@ -147,7 +149,7 @@ $yong-blue: #5085e8;
       .friend-list {
         position: sticky;
         padding: 20px 16px;
-        width: 270px;
+        width: 290px;
         border: 3px solid #edbaba;
         border-radius: 40px;
         background-color: white;
