@@ -38,7 +38,7 @@ const CategoryIcons = (props: any) => {
         categoryIcons.map((v, i) => (
           <ColCenter xs={3} md={3} key={i}>
             <Space direction="vertical">
-              <Image src={v} width={50} height={50} alt={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></Image>
+              <CategoryIcon src={v} width={50} height={50} id={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></CategoryIcon>
               <LabelCenter htmlFor={categoryLabels[i]}>{categoryLabels[i]}</LabelCenter>
             </Space>
           </ColCenter>
@@ -98,6 +98,10 @@ const CategoryIcons = (props: any) => {
 const ColCenter = styled(Col)`
   display: flex;
   justify-content: center;
+`
+
+const CategoryIcon = styled(Image)`
+  cursor: pointer;
 `
 
 const LabelCenter = styled.label`
