@@ -224,7 +224,8 @@ public class FeedService {
         //로직 구현
         Challenge challenge = challengeRepository.findByChallengeId(feedSaveDto.getChallengeId());
         ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge, user);
-
+        System.out.println("확인용");
+        System.out.println(challengeParticipate);
         // 현재 날짜 구하기
         LocalDate now = LocalDate.now();
         // 포맷 정의
