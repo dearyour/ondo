@@ -19,6 +19,7 @@ import useUser from "store/hooks/userHooks";
 // `;
 
 function Navbar(): JSX.Element {
+
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { nickname } = useUser();
