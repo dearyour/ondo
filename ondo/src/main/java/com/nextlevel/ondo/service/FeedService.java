@@ -211,7 +211,7 @@ public class FeedService {
         for (String s : tags) {
             if (tagRepository.findByName(s) != null) {
                 //연결
-                Tag tag = new Tag(s);
+                Tag tag = tagRepository.findByName(s);
                 feedTagRepository.save(new FeedTag(feed, tag));
             } else {
                 Tag tag = tagRepository.save(new Tag(s));
@@ -224,7 +224,8 @@ public class FeedService {
         //로직 구현
         Challenge challenge = challengeRepository.findByChallengeId(feedSaveDto.getChallengeId());
         ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge, user);
-
+        System.out.println("확인용");
+        System.out.println(challengeParticipate);
         // 현재 날짜 구하기
         LocalDate now = LocalDate.now();
         // 포맷 정의

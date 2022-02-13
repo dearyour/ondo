@@ -119,7 +119,7 @@ function Mainfeed() {
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
-  }, [__GetFeedState, setUserProfileImage]);
+  }, []);
 
   // const __openFeedDetail = useCallback(() => {
   //   feeds;
@@ -158,7 +158,7 @@ function Mainfeed() {
                   // ref={contextRef}
                   type="text"
                   placeholder=" 오늘의 도전 완료 피드 쓰러가기"
-                  // onChange={(e) => setContext(e.target.value)}
+                // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -182,7 +182,7 @@ function Mainfeed() {
                   dto={item}
                   nickname={nickname}
                   image={image}
-                  // comments={comments}
+                // comments={comments}
                 />
               );
             })}

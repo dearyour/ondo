@@ -27,7 +27,7 @@ public class Tag {
     private String name;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tag")
     private List<FeedTag> feedTag = new ArrayList<>();
 
     @Builder
