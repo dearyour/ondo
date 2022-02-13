@@ -45,10 +45,10 @@ public class ChallengeController {
         return new ResponseEntity<Challenge>(challengeService.createChallenge(challengeSaveDto, token, image), HttpStatus.OK);
     }
 
-    @GetMapping("/info/{challenge_id}") // 도전 상세보기2
-    public ResponseEntity<Challenge> challengeDetail(@PathVariable("challenge_id") Long challengeId) {
-        return new ResponseEntity<Challenge>(challengeService.challengeDetail(challengeId), HttpStatus.OK);
-    }
+//    @GetMapping("/info/{challenge_id}") // 도전 상세보기2
+//    public ResponseEntity<Challenge> challengeDetail(@PathVariable("challenge_id") Long challengeId) {
+//        return new ResponseEntity<Challenge>(challengeService.challengeDetail(challengeId), HttpStatus.OK);
+//    }
 
     @PostMapping("/participate")
     public ResponseEntity<ChallengeParticipate> participateChallenge(@RequestBody JoinChallengeDto joinChallengeDto, @RequestHeader("Authorization") String token) {
