@@ -13,6 +13,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from "axios";
 import CropImg from "components/Cropper";
 import useImg from "store/hooks/imgHooks";
+import Router from "next/router";
 
 
 function beforeUpload(file: any) {
@@ -34,9 +35,10 @@ function getBase64(img: Blob, callback: any) {
 }
 
 const Edit = () => {
+  const { GetUser, profile, nickname, users } = useUser();
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [loading, setLoading] = useState<boolean>(false);
-  const [username, onChangeNick] = useState("asdas");
+  const [username, onChangeNick] = useState(users.username);
 
   // const [image, setImage] = useState<string>();
   // const [file, setFiles] = useState<File | ''>('')
@@ -45,11 +47,10 @@ const Edit = () => {
     onChangeNick(e.target.value);
   }, []);
 
-  const { GetUser, profile, nickname, users } = useUser();
   useEffect(() => {
     GetUser();
     setImage(users.image);
-    onChangeNick(nickname);
+    onChangeNick(users.username);
 
   }, [])
   const onEditNickname = () => {
@@ -66,6 +67,7 @@ const Edit = () => {
     })
       .then((res) => {
         console.log(res)
+        Router.push('/feedMain');
         // setImage(null)
       })
       .catch((err) => {
@@ -112,7 +114,7 @@ const Edit = () => {
         <div>
           <Divide>
             <h3 className={styles.mx_20}>프로필</h3>
-            {image ? <Profile src={image}></Profile> : <DefaultProfile src={temp_profile}></DefaultProfile>}
+            {image ? <Profile src={image}></Profile> : <DefaultProfile src={users.image}></DefaultProfile>}
 
             <UpImage
               name="file"
@@ -124,7 +126,7 @@ const Edit = () => {
           </Divide>
           <Divide>
             <h3 className={styles.mx_20}>닉네임</h3>
-            <NickInput defaultValue={users.username} onChange={onChangeNickname}></NickInput>
+            <NickInput value={username} onChange={onChangeNickname}></NickInput>
             <Button className={styles.mx_20} onClick={onEditNickname}>
               수정
             </Button>
@@ -157,9 +159,10 @@ const Profile = styled.img`
   width: 20%;
   border: solid 1px black;
 `;
-const DefaultProfile = styled(Image)`
+const DefaultProfile = styled.img`
   border-radius: 100%;
-  width: 40%;
+  width: 20%;
+  border: solid 1px black;
 `;
 
 const NickInput = styled(Input)`
