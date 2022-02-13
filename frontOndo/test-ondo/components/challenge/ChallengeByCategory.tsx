@@ -17,20 +17,21 @@ const ChallengeByCategory = (props:any) => {
     const em = eDate.getMonth() + 1;
     const ed = eDate.getDate();
 
-    return sy+'-'+sm+'-'+sd + ' ~ ' + ey+'-'+em+'-'+ed;
+    return sy + '-' + sm + '-' + sd + ' ~ '
+        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
   }
 
   const renderCategorizedChallenges = () => {
     const result = [];
     for(let i = 0; i < challenges.length; i++) {
       result.push(
-        <ChallengeWrapper>
-          <ChallengeImg src={challenges[i].img} alt="challenge-image" />
+        <ChallengeWrapper onClick={() => {Router.push(`/challenge/${challenges[i].challengeId}`)}}>
+          <ChallengeImg src={challenges[i].image} alt="challenge-image" />
           <ChallengeContent>
             <ChallengeTitle>{challenges[i].title}</ChallengeTitle>
             {challenges[i].owner}
             <ChallengeDuration>{getDuration(challenges[i].sdate)}</ChallengeDuration>
-            <Participants>현재 {challenges[i].participants} 명 참여 중</Participants>
+            <Participants>현재 {challenges[i].challengeParticipate.length} 명 참여 중</Participants>
           </ChallengeContent>
         </ChallengeWrapper>
       )
@@ -74,7 +75,7 @@ const WriteBtn = styled.button`
 
 const ChallengeWrapper = styled.div`
   width: 100%;
-  height: 15%;
+  height: 180px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.05);
   background: #fffbfb;
   color: #000;
@@ -84,11 +85,13 @@ const ChallengeWrapper = styled.div`
   /* z-index: 10; */
   border-radius: 5px;
   margin-bottom: 30px;
+
+  cursor: pointer;
 `
 
 const ChallengeImg = styled.img`
   width: 100%;
-  height: 100%;
+  height: 180px;
   border-radius: 10px 0 0 10px;
   background: #000;
 `

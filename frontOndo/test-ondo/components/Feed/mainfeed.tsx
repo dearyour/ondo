@@ -140,7 +140,10 @@ function Mainfeed() {
           <div className="feed-list">
             <form
               className="write-feed"
-            // onSubmit={__makeFeed}
+              // onSubmit={__makeFeed}
+              onClick={() => {
+                Router.push("/feed/write");
+              }}
             >
               {image && (
                 <div
@@ -149,12 +152,7 @@ function Mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div
-                className="inp"
-                onClick={() => {
-                  Router.push("/feed/write");
-                }}
-              >
+              <div className="inp">
                 <input
                   disabled
                   // ref={contextRef}

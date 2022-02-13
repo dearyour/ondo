@@ -125,7 +125,6 @@ function Detailfeed() {
         })
           .then((res) => {
             console.log(res);
-            // setComment(res);
             commentRef.current.value = "";
             setComment("");
             __loadComments();
