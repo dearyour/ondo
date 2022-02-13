@@ -131,10 +131,11 @@ const Login = () => {
   };
   const __feedlike = (token: string | null) => {
     return axios({
-      method: "post",
+      method: "POST",
       url: "http://localhost:8080/feed/like/" + feedsssId,
       // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
+      data: {},
     })
       .then((res) => {
         // console.log(res.data.detailFeedDtos);
