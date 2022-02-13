@@ -59,7 +59,7 @@ export default function Reply(props: any) {
       // const feedsId = detailData.feed.feedId;
       axios({
         method: "GET",
-        url: "http://localhost:8080" + "/comment/" + feedssId,
+        url: process.env.BACK_EC2 + "/comment/" + feedssId,
         // url: "http://localhost:8080" + "/feed",
         headers: {
           Authorization: "Bearer " + token,
@@ -88,7 +88,7 @@ export default function Reply(props: any) {
         const token = localStorage.getItem("Token");
         axios({
           method: "DELETE",
-          url: "http://localhost:8080" + "/comment/delete/" + commentId,
+          url: process.env.BACK_EC2 + "/comment/delete/" + commentId,
           headers: {
             Authorization: "Bearer " + token,
           },

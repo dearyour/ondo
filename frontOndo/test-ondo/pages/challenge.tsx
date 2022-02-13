@@ -77,7 +77,7 @@ const Challenge = () => {
     const token = localStorage.getItem('Token');
     axios({
       method: 'GET',
-      url: 'http://localhost:8080/challenge/' + selectedCategory,
+      url: process.env.BACK_EC2+'/challenge/' + selectedCategory,
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {

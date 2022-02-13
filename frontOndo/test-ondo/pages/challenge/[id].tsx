@@ -21,7 +21,7 @@ const ReadChallenge = () => {
     const token = localStorage.getItem('Token')
     axios({
       method: 'get',
-      url: 'http://localhost:8080' + '/challenge/detail/' + String(id),
+      url: process.env.BACK_EC2 + '/challenge/detail/' + String(id),
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
