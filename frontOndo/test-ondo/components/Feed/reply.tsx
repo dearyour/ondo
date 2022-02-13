@@ -96,8 +96,8 @@ export default function Reply(props: any) {
           },
         })
           .then((res) => {
-            console.log(res.data);
-            __loadComments();
+            console.log(res);
+            // __loadComments();
           })
           .catch((err) => {
             console.log(err);

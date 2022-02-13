@@ -171,9 +171,7 @@ const Feed = (props: any) => {
             온도 : {props.dto.user.ondo}
             ˚C
           </div>
-          <div className="timestamp">
-            도전 명 : {props.dto.feed.challengeId}
-          </div>
+          <div className="timestamp">도전 명 : {props.dto.title}</div>
           {/* <div className="timestamp">도전 명 : {challengeTitle}</div> */}
           {/* <div className="timestamp">도전 기간 :{getDuration()}</div> */}
           <div className="timestamp">참여 날짜 : {getStartDate()}</div>
