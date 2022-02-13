@@ -32,7 +32,7 @@ const ReadChallenge = () => {
         console.log('상세보기 실패');
         
       })
-  })
+  },[])
 
   // 참여하기
   const participate = () => {

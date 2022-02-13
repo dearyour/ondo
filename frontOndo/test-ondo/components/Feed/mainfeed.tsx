@@ -119,7 +119,7 @@ function Mainfeed() {
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
-  }, [__GetFeedState, setUserProfileImage]);
+  }, []);
 
   // const __openFeedDetail = useCallback(() => {
   //   feeds;
@@ -141,6 +141,9 @@ function Mainfeed() {
             <form
               className="write-feed"
               // onSubmit={__makeFeed}
+              onClick={() => {
+                Router.push("/feed/write");
+              }}
             >
               {image && (
                 <div
@@ -149,18 +152,13 @@ function Mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div
-                className="inp"
-                onClick={() => {
-                  Router.push("/feed/write");
-                }}
-              >
+              <div className="inp">
                 <input
                   disabled
                   // ref={contextRef}
                   type="text"
                   placeholder=" 오늘의 도전 완료 피드 쓰러가기"
-                  // onChange={(e) => setContext(e.target.value)}
+                // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -184,7 +182,7 @@ function Mainfeed() {
                   dto={item}
                   nickname={nickname}
                   image={image}
-                  // comments={comments}
+                // comments={comments}
                 />
               );
             })}
