@@ -189,7 +189,12 @@ function Mainfeed() {
           </div>
 
           <div className="friend-list">
-            <div className="my-profile">
+            <div
+              className="my-profile"
+              onClick={() => {
+                Router.push(`/user/${nickname}`);
+              }}
+            >
               {image && (
                 <div
                   className="profile-image"
