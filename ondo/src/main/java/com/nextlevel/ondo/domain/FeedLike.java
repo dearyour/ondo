@@ -19,12 +19,12 @@ public class FeedLike {
     @Column(name = "feed_like_id")
     private long feedLikeId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feed_id")
     @JsonBackReference
     private Feed feed;

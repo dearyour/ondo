@@ -131,7 +131,7 @@ const Login = () => {
   };
   const __feedlike = (token: string | null) => {
     return axios({
-      method: "POST",
+      method: "GET",
       url: "http://localhost:8080/feed/like/" + feedsssId,
       // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
