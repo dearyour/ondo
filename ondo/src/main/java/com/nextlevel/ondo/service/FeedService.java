@@ -211,7 +211,7 @@ public class FeedService {
         for (String s : tags) {
             if (tagRepository.findByName(s) != null) {
                 //연결
-                Tag tag = new Tag(s);
+                Tag tag = tagRepository.findByName(s);
                 feedTagRepository.save(new FeedTag(feed, tag));
             } else {
                 Tag tag = tagRepository.save(new Tag(s));
