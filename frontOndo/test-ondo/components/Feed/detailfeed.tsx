@@ -246,7 +246,8 @@ function Detailfeed() {
                     />
                   </div>
                   <div className="title txt-bold">
-                    {layout.likelist}　{/* {detailData.feed.feedlike.length} */}
+                    {/* {layout.likelist}　 */}
+                    {/* {detailData.feed.feedlike.length} */}
                     {likeCount}
                   </div>
                 </div>
