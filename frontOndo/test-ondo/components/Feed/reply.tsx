@@ -5,7 +5,7 @@ import { layoutAction } from "store/slice/layout";
 import { RootState } from "store/module";
 import axios from "axios";
 
-export default function reply(props: any) {
+export default function Reply(props: any) {
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
@@ -32,12 +32,10 @@ export default function reply(props: any) {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
   const getStartDate = (startDate: any) => {
     const newdate = new Date(startDate);
