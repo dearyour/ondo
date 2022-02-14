@@ -180,7 +180,10 @@ public class UserService {
             return new User();
         });
         System.out.println(user.getUsername());
-        if (user.getUsername() == null) {
+        if(username == null) {
+            userRepository.save(tokenuser);
+            return "success";
+        } else if (user.getUsername() == null) {
             tokenuser.setUsername(username);
             userRepository.save(tokenuser);
             return "success";
