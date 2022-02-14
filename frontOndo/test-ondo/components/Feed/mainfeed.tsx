@@ -22,7 +22,7 @@ function Mainfeed() {
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user.users);
   const image = useSelector((state: RootState) => state.user.users.image);
-  // const { feeds } = useSelector((state: RootState) => state.feed);
+  const feedstate = useSelector((state: RootState) => state.feed.items);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
   const dispatch = useDispatch();
@@ -66,45 +66,48 @@ function Mainfeed() {
   //res.data.detailFeedDtos 여기까지가 action임
   //res.data.detailFeedDtos.feed 가 action.payload 임
   let eml: any = [];
-  const __GetFeedState = useCallback((token: string | null) => {
-    return axios({
-      method: "GET",
-      url: process.env.BACK_EC2 + "/feed",
-      // url: "https://jsonplaceholder.typicode.com/comments",
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((res) => {
-        // console.log(res.data.detailFeedDtos);
-        let feedss = res.data.detailFeedDtos;
-        //[{피드1},{피드2},{피드3}] 저장되어있음
-        console.log(res.data);
-        console.log(res.data.detailFeedDtos);
-        // console.log(feeds);
-        // feeds.map((els: any) => {
-        //   console.log(els);
-
-        // elss.finds((elw: any) => {
-        //   console.log(elw);
-        // });
-        // }),
-        ////
-        // console.log(res.data);
-        //
-        setRankers(res.data.rankusers);
-        //객체가들어있는 해당배열을 feeds에 저장, 프롭으로 내려주기위해, 최신순
-        setFeeds(res.data.detailFeedDtos.reverse());
-        return;
-
-        // feedss.map((elm: any) => {
-        //   console.log(elm.feed);
-        //   return elm.feed;
-        //   return setFeeds(res.data.detailFeedDtos);
-        // });
+  const __GetFeedState = useCallback(
+    (token: string | null) => {
+      return axios({
+        method: "GET",
+        url: process.env.BACK_EC2 + "/feed",
+        // url: "https://jsonplaceholder.typicode.com/comments",
+        headers: { Authorization: "Bearer " + token },
       })
-      .catch((err) => {
-        return err;
-      });
-  }, []);
+        .then((res) => {
+          // console.log(res.data.detailFeedDtos);
+          let feedss = res.data.detailFeedDtos;
+          //[{피드1},{피드2},{피드3}] 저장되어있음
+          console.log(res.data);
+          console.log(res.data.detailFeedDtos);
+          // console.log(feeds);
+          // feeds.map((els: any) => {
+          //   console.log(els);
+
+          // elss.finds((elw: any) => {
+          //   console.log(elw);
+          // });
+          // }),
+          ////
+          // console.log(res.data);
+          //
+          setRankers(res.data.rankusers);
+          //객체가들어있는 해당배열을 feeds에 저장, 프롭으로 내려주기위해, 최신순
+          setFeeds(res.data.detailFeedDtos.reverse());
+          return;
+
+          // feedss.map((elm: any) => {
+          //   console.log(elm.feed);
+          //   return elm.feed;
+          //   return setFeeds(res.data.detailFeedDtos);
+          // });
+        })
+        .catch((err) => {
+          return err;
+        });
+    },
+    [feeds]
+  );
   useEffect(() => {
     const token = localStorage.getItem("Token");
     __GetFeedState(token);
@@ -173,7 +176,7 @@ function Mainfeed() {
               </div>
             </form>
             {/* <Feed /> */}
-            {feeds.map((item: any, idx: number) => {
+            {feedstate.map((item: any, idx: number) => {
               // console.log(feeds);
 
               return (

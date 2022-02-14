@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/caveat": "^4.5.3",
     "@reduxjs/toolkit": "^1.7.1",
     "@types/react-dates": "^21.8.3",
     "@types/react-redux": "^7.1.22",

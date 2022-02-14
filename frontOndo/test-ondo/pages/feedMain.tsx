@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     const token = localStorage.getItem("Token");
     return axios({
       method: "get",
-      url: "http://localhost:8080/feed/like/" + feedssssId,
+      url: process.env.BACK_EC2+"/feed/like/" + feedssssId,
       // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
     })

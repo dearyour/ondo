@@ -5,6 +5,7 @@ import { layoutAction } from "store/slice/layout";
 import Reply from "components/Feed/reply";
 import Router from "next/router";
 import axios from "axios";
+import { feedAction } from "store/slice/feed";
 
 function makeArray(obj: any) {
   const keys = Object.keys(obj);
@@ -25,6 +26,7 @@ function Detailfeed() {
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const likelist = useSelector((state: RootState) => state.layout.likelist);
+  const feedstate = useSelector((state: RootState) => state.feed.items);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
@@ -32,6 +34,7 @@ function Detailfeed() {
   const commentRef: any = useRef(null);
   const [commentData, setCommentData] = useState([]);
   const [likeCount, setLikeCount] = useState(detailData.feed.feedlike.length);
+  const [likeState, setLikeState] = useState("");
   // const session = useSelector((state)=>state.auth.session);
   // const image = useSelector(
   //   (state: RootState) => state.layout.detailData.feed.image
@@ -112,7 +115,7 @@ function Detailfeed() {
         });
     }
   }, []);
-
+  // 댓글 작성
   const __uploadComment = useCallback(
     (e) => {
       e.preventDefault();
@@ -143,12 +146,12 @@ function Detailfeed() {
     },
     [detailData, comment, commentRef, __loadComments]
   );
-
+  //좋아요
   const __updateLike = useCallback(() => {
     const token = localStorage.getItem("Token");
     return axios({
       method: "get",
-      url: "http://localhost:8080/feed/like/" + feedssId,
+      url: process.env.BACK_EC2 + "/feed/like/" + feedssId,
       // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
     })
@@ -156,8 +159,10 @@ function Detailfeed() {
         console.log(res.data + "### 라이크!!");
         if (res.data === "ok") {
           setLikeCount(likeCount + 1);
+          setLikeState(res.data);
         } else {
           setLikeCount(likeCount - 1);
+          setLikeState(res.data);
         }
         dispatch(layoutAction.likeList(res.data));
       })
@@ -169,7 +174,10 @@ function Detailfeed() {
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
 
-    dispatch(layoutAction.updateDetailData(undefined));
+    // dispatch(layoutAction.updateDetailData(undefined));
+    // dispatch(layoutAction.updateDetailData(detailData));
+    // dispatch(layoutAction.likeList("ok" ? "delete" : "ok"));
+    dispatch(feedAction.getFeed());
   }, [dispatch]);
 
   const __whenKeyDown = useCallback(
@@ -237,9 +245,10 @@ function Detailfeed() {
                   <div className="asset">
                     <img
                       src={
-                        likelist === "ok"
-                          ? "/assets/feed/like-ac.svg"
-                          : "/assets/feed/like-dac.svg"
+                        likeState === "ok"
+                          ? //  && likelist === "ok"
+                            "/assets/feed/pngwing.com2.png"
+                          : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"
                       onClick={__updateLike}
@@ -253,7 +262,7 @@ function Detailfeed() {
                 </div>
                 <div className="comment">
                   <div className="asset">
-                    <img src="assets/feed/comment.svg" alt="댓글" />
+                    <img src="/assets/feed/pngwing.com4.png" alt="댓글" />
                   </div>
                   <div className="title txt-bold">{commentData.length}</div>
                 </div>
@@ -262,7 +271,14 @@ function Detailfeed() {
             <div className="feed-comments">
               {commentData.map((item: any, idx: number) => {
                 // {/* // console.log(feeds); */}
-                return <Reply key={idx} item={item} reply={item} />;
+                return (
+                  <Reply
+                    key={idx}
+                    item={item}
+                    reply={item}
+                    method={__loadComments}
+                  />
+                );
               })}
             </div>
             <form className="feed-write-comment" onSubmit={__uploadComment}>

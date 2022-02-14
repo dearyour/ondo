@@ -7,11 +7,16 @@ import axios from "axios";
 
 export default function Reply(props: any) {
   const detailData = useSelector((state: RootState) => state.layout.detailData);
+  const loginUserName = useSelector(
+    (state: RootState) => state.user.users.username
+  );
+  console.log(loginUserName);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
+  console.log(props.reply.comment.commentId + "$$$$$$$$$$$$");
   console.log(commentId);
   const [commentData, setCommentData] = useState([]);
   const dispatch = useDispatch();
@@ -54,34 +59,34 @@ export default function Reply(props: any) {
   }, [dispatch, props.reply.comment.commentId, detailData, commentId]);
   // console.log(props.item.user.userId);
 
-  const __loadComments = useCallback(() => {
-    //코멘트 업로드 또는 불러올때 계속 새로고침
-    if (detailData) {
-      const token = localStorage.getItem("Token");
-      // const feedsId = detailData.feed.feedId;
-      axios({
-        method: "GET",
-        url: process.env.BACK_EC2 + "/comment/" + feedssId,
-        // url: "http://localhost:8080" + "/feed",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => {
-          console.log(res.data);
-          console.log("######" + detailData.feed.feedId);
-          // console.log(makeArray(res));
-          // dispatch(layoutAction.updateDetailData(props.dto));
-          // dispatch(layoutAction.updateDetailData(commentData));
+  // const __loadComments = useCallback(() => {
+  //   //코멘트 업로드 또는 불러올때 계속 새로고침
+  //   if (detailData) {
+  //     const token = localStorage.getItem("Token");
+  //     // const feedsId = detailData.feed.feedId;
+  //     axios({
+  //       method: "GET",
+  //       url: process.env.BACK_EC2 + "/comment/" + feedssId,
+  //       // url: "http://localhost:8080" + "/feed",
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         console.log("######" + detailData.feed.feedId);
+  //         // console.log(makeArray(res));
+  //         // dispatch(layoutAction.updateDetailData(props.dto));
+  //         // dispatch(layoutAction.updateDetailData(commentData));
 
-          // setCommentData(makeArray(res.data));
-          setCommentData(res.data.reverse());
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
+  //         // setCommentData(makeArray(res.data));
+  //         setCommentData(res.data.reverse());
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, []);
 
   const __deleteComment = useCallback(
     (e) => {
@@ -90,21 +95,25 @@ export default function Reply(props: any) {
         const token = localStorage.getItem("Token");
         axios({
           method: "DELETE",
-          url: process.env.BACK_EC2 + "/comment/delete/" + commentId,
+          url:
+            process.env.BACK_EC2 +
+            "/comment/delete/" +
+            props.reply.comment.commentId,
           headers: {
             Authorization: "Bearer " + token,
           },
         })
           .then((res) => {
             console.log(res);
-            // __loadComments();
+            props.method();
+            // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
             console.log(err);
           });
       }
     },
-    [detailData, __loadComments]
+    [detailData, useCallback, props.reply]
   );
 
   return (
@@ -134,16 +143,20 @@ export default function Reply(props: any) {
           <div className="like">
             <div className="asset">
               <img
-                src="/assets/feed/like-dac.svg"
-                alt="좋아요"
-                onClick={__changeTargetId}
+              // src="/assets/feed/like-dac.svg"
+              // alt="좋아요"
+              // onClick={__changeTargetId}
               />
             </div>
-            <div className="title txt-bold">34k</div>
+            <div className="title txt-bold"></div>
           </div>
-          <div className="reply-btn" onClick={__deleteComment}>
-            삭제
-          </div>
+          {loginUserName === props.reply.username ? (
+            <div className="reply-btn" onClick={__deleteComment}>
+              삭제
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       {<div className="body">{props.reply.comment.content}</div>}

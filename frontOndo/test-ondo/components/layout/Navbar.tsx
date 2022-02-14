@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import OndoLogo from "/public/images/ondo.png";
+import OndoLogo from "/public/images/textLogo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Input, Row, Col, Menu, Dropdown } from "antd";
@@ -53,7 +53,7 @@ function Navbar(): JSX.Element {
         <XsLogo xs={24} lg={4} xl={6}>
           <Link href="/feedMain">
             <a>
-              <Image src={OndoLogo} width={60} height={42} />
+              <Image src={OndoLogo} width={150} height={50} />
             </a>
           </Link>
           {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}
@@ -70,7 +70,7 @@ function Navbar(): JSX.Element {
         </Col>
         <Col md={24} lg={12}>
           <Menuitem>
-            <MenuLink style={{ color: "red", fontWeight: "bold" }}>
+            {/* <MenuLink style={{ color: "red", fontWeight: "bold" }}>
               <Link href="/challenge">Challenge🔥</Link>
             </MenuLink>
             <Link href={"/user/" + nickname}>
@@ -80,6 +80,9 @@ function Navbar(): JSX.Element {
                 </MenuLink>
               </a>
             </Link>
+            <MenuLink onClick={Logout}>로그아웃</MenuLink> */}
+            <MenuLink onClick={() => {Router.push('/challenge')}}>Challenge🔥</MenuLink>|
+            <MenuLink onClick={() => {Router.push(`/user/${nickname}`)}}><LoggedInForm /></MenuLink>|
             <MenuLink onClick={Logout}>로그아웃</MenuLink>
           </Menuitem>
         </Col>
@@ -101,12 +104,12 @@ const XsLogo = styled(Col)`
 `;
 
 const NavWrapper = styled.div`
-  /* padding: 1rem 5rem 1rem 5rem; */
+  padding: 1rem 10rem 1rem 10rem;
   /* padding:10px; */
   /* background-color: black; */
   
   @media (max-width: 768px) {
-    /* padding: 1rem; */
+    padding: 1rem;
   }
   `;
 
@@ -131,7 +134,7 @@ const Hamburger = styled(Dropdown)`
 
 const MenuLink = styled.div`
   cursor: pointer;
-  padding: 0 10px;
+  padding: 0 20px;
   text-align: center;
   text-decoration: none;
   color: black;

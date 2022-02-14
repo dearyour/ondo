@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/follow")
+@RequestMapping("/api/follow")
 public class FollowController {
 
     private final FollowService followService;

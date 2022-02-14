@@ -20,7 +20,7 @@ const SearchPage = () => {
     if (keyword) {
       const token = localStorage.getItem('Token');
       console.log(keyword)
-      const url = process.env.NEXT_PUBLIC_BACK_LOCAL + '/search/' + keyword
+      const url = process.env.BACK_EC2 + '/search/' + keyword
       axios({
         method: 'get',
         url: url,
@@ -52,6 +52,7 @@ const DivideLine = styled.hr`
 `
 
 const Wrap = styled.div`
+  margin-top:20px;
   width: 90%;
   margin-left: auto;
   margin-right: auto;

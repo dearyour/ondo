@@ -106,7 +106,7 @@ const Edit = () => {
     <UpBtn icon={<UploadOutlined />}>Upload</UpBtn>
   );
   return (
-    <AppLayout>
+    <AppLayout title="내 정보 수정하기 | 온도">
       {originalImg ? <CropImg></CropImg> : null}
 
       <NowTitleBar title="개인정보 수정"></NowTitleBar>

@@ -11,9 +11,9 @@ function HotChallenge(props: any): JSX.Element {
 
   const getDuration = (startDate: string) => {
     // const sDate = startDate.substring(0, 10);
-    const sy = startDate.substring(0,4);
-    const sm = startDate.substring(4,6);
-    const sd = startDate.substring(6,8);
+    const sy = startDate.substring(0, 4);
+    const sm = startDate.substring(4, 6);
+    const sd = startDate.substring(6, 8);
 
     const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
     const ey = eDate.getFullYear();
@@ -21,7 +21,7 @@ function HotChallenge(props: any): JSX.Element {
     const ed = eDate.getDate();
 
     return sy + '-' + sm + '-' + sd + ' ~ '
-        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
+      + ey + '-' + (("00" + em.toString()).slice(-2)) + '-' + (("00" + ed.toString()).slice(-2));
   }
 
   let settings = {
@@ -35,9 +35,9 @@ function HotChallenge(props: any): JSX.Element {
 
   const renderHotChallenge = () => {
     const result = [];
-    for(let i =0; i< Math.min(10, hotChallenges.length); i++) {
+    for (let i = 0; i < Math.min(10, hotChallenges.length); i++) {
       result.push(
-        <CardWrapper onClick={() => {Router.push(`/challenge/${hotChallenges[i].challengeId}`)}}>
+        <CardWrapper onClick={() => { Router.push(`/challenge/${hotChallenges[i].challengeId}`) }}>
           <Card>
             <CardImage>
               <ChallengeImage src={hotChallenges[i].image} />
@@ -45,8 +45,10 @@ function HotChallenge(props: any): JSX.Element {
             <Details>
               <h2>
                 {hotChallenges[i].title}
-                <SubTitle>{getDuration(hotChallenges[i].sdate)}</SubTitle>
-                <SubTitle>현재 {hotChallenges[i].challengeParticipate.length}명 참여 중</SubTitle>                 
+                <SubTitle>
+                  {getDuration(hotChallenges[i].sdate)} <br/>
+                  현재 {hotChallenges[i].challengeParticipate.length}명 참여 중
+                </SubTitle>               
               </h2>
             </Details>
           </Card>
@@ -59,7 +61,7 @@ function HotChallenge(props: any): JSX.Element {
 
   return (
     <>
-      <p style={{marginTop: '30px'}}><b>HOT Challenge🔥</b></p>
+      <p style={{ marginTop: '30px' }}><b>HOT Challenge🔥</b></p>
       <SliderWrapper>
         <StyledSlider {...settings} >
           {renderHotChallenge()}
