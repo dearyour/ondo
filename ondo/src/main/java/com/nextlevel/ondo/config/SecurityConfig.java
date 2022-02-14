@@ -80,7 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and().addFilter(new TokenFilter(authenticationManager()))
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/auth/**", "/user/rank","/challenge","/challenge/info/**","/feed","/search/**")
+                .antMatchers("/api/auth/**", "/api/user/rank","/api/challenge","/api/challenge/info/**","/api/feed"
+                        ,"/api/search/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
