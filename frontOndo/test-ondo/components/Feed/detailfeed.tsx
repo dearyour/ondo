@@ -160,11 +160,11 @@ function Detailfeed() {
         console.log(res.data + "### 라이크!!");
         if (res.data === "ok") {
           setLikeCount(likeCount + 1);
-          // setLikeState(res.data);
+          setLikeState(res.data);
           dispatch(layoutAction.likeList(res.data));
         } else {
           setLikeCount(likeCount - 1);
-          // setLikeState(res.data);
+          setLikeState(res.data);
           dispatch(layoutAction.likeList(res.data));
         }
       })
@@ -175,11 +175,12 @@ function Detailfeed() {
 
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
-
+    dispatch(layoutAction.likeList(undefined));
     // dispatch(layoutAction.updateDetailData(undefined));
     // dispatch(layoutAction.updateDetailData(detailData));
     // dispatch(layoutAction.likeList("ok" ? "delete" : "ok"));
-    dispatch(feedAction.getFeed());
+    dispatch(feedAction.getFeed()); // 모달닫힐때 새로운정보를 최상위부모에 기록 그것을 다시 프롭으로 feed에 넘김
+    // 넘긴 feed는 다시 모달 열릴떄 그정보를 props.detail인  개별정보저장인 detailFeed로 넘긴다
   }, [dispatch]);
 
   const __whenKeyDown = useCallback(
@@ -248,8 +249,9 @@ function Detailfeed() {
                     <img
                       src={
                         // detailData.likeflag === false &&
-                        likelist === "ok"
-                          ? //  && likelist === "ok"
+                        likeState === "ok" || detailData.likeflag === false
+                          ? // && likelist === "ok"
+                            //  && likelist === "ok"
                             "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }

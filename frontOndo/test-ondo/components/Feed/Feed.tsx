@@ -66,7 +66,7 @@ const Feed = (props: any) => {
   const __openFeedDetail = useCallback(() => {
     // console.log(props.dto.feed);
     dispatch(feedAction.getFeed()); //전체 피드정보 다시 업데이트(자식컴포넌트에서 변경된값 부모에저장)
-    dispatch(layoutAction.updateDetailData(props.dto)); //개별 피드 정보 저장
+    dispatch(layoutAction.updateDetailData(props.dto)); //부모로부터 새로운 개별 피드 정보 저장
     dispatch(layoutAction.updateDetailState(true));
   }, [dispatch, props.dto]);
 
