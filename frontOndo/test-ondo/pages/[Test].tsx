@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { userActions } from "store/slice/user";
 
-
 // const GetUserurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/info";
 const GetUserurl = process.env.BACK_EC2 + "/user/info";
 // const GetFeedurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/feed";
@@ -177,14 +176,14 @@ const Login = () => {
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
     // __GetUserStates(token);
-    // __GetFeedState(token);
+    __GetFeedState(token);
     // __GetFollowerState(token);
     // __GetFollowingState(token);
     // __postFollowing(token);
     // __delFollowing(token);
     // __feedinfoId(token);
-    __feedlike(token);
-    __loadComments();
+    // __feedlike(token);
+    // __loadComments();
   }, [__GetUserStates]);
   //아래 얘는 작동인됨 위에는됨 도대체왜?????
   // const __GetFeedssssState = (token: string | null) => {
