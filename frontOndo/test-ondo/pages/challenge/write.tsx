@@ -22,12 +22,59 @@ const WriteChallenge = () => {
   const [title, setTitle] = useState<string | ''>('');
   const [content, setContent] = useState<string | ''>('');
 
+  const [imageErr, setImageErr] = useState<string>();
+  const [titleErr, setTitleErr] = useState<string>();
+  const [dateErr, setDateErr] = useState<string>();
+  const [contentErr, setContentErr] = useState<string>();
+  const [categoryErr, setCategoryErr] = useState<string>();
+
+
+  const CheckBeforeCreate = () => {
+    let i = 0
+    if (!file) {
+      setImageErr("이미지는 필수입니다.")
+      i++
+    } else {
+      setImageErr('')
+    }
+    if (!category) {
+      setCategoryErr('카테고리를 선택해주세요.')
+    } else {
+      setCategoryErr('')
+    }
+    if (!startDate) {
+      setDateErr("날짜를 선택해주세요.")
+      i++
+    } else {
+      setDateErr('')
+    }
+    if (!title) {
+      setTitleErr("도전을 선택해주세요.")
+      i++
+    } else {
+      setTitleErr('')
+    }
+    if (!content) {
+      setContentErr("내용을 입력해주세요.")
+      i++
+    } else {
+      setContentErr('')
+    }
+    if (i) {
+
+      return false;
+    }
+    return true
+  }
+
   const onChangeTitle = useCallback((e) => {
     setTitle(e.target.value);
+    setTitleErr('')
   }, []);
 
   const onChangeContent = useCallback((e) => {
     setContent(e.target.value);
+    setContentErr('')
   }, []);
 
   const onSubmitForm = useCallback(() => {
@@ -35,6 +82,9 @@ const WriteChallenge = () => {
   }, []);
   // 챌린지 생성 요청
   const openChallengeRequest = () => {
+    if (!CheckBeforeCreate()) {
+      return
+    }
     // console.log(process.env.BACK_EC2);
 
     const data = {
@@ -62,6 +112,7 @@ const WriteChallenge = () => {
     })
       .then((res) => {
         // console.log(res)
+        setFile(null)
         Router.push('/challenge/' + String(res.data.challengeId))
       })
   }
@@ -79,28 +130,39 @@ const WriteChallenge = () => {
             </Space>
             <RowStyle>
               <Col xs={10} md={10}>
-                <UploadAvatar changeThumbnail={(imageUrl: string) => setImageUrl(imageUrl)} />
+                <UploadAvatar offErr={setImageErr} changeThumbnail={(imageUrl: string) => setImageUrl(imageUrl)} />
               </Col>
               <Col xs={13} md={13} style={{ display: 'flex', alignItems: 'center' }}>
-                <StartDatePicker changeStartDate={(dateString: string) => setStartDate(dateString)} />
+                <StartDatePicker changeStartDate={(dateString: string) => { setStartDate(dateString); setDateErr(''); }} />
               </Col>
             </RowStyle>
             <Row>
+              <Col span={11}>
+                <ErrDiv>{imageErr}</ErrDiv>
+              </Col>
               <Col>
-                <CategorySelector changeCategory={(value: string) => setCategory(value)} />
+                <ErrDiv>{dateErr}</ErrDiv>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <CategorySelector changeCategory={(value: string) => { setCategory(value); setCategoryErr(''); }} />
+                <ErrDiv>{categoryErr}</ErrDiv>
               </Col>
             </Row>
             <Space direction='horizontal' style={{ margin: '10px' }}>
               <label htmlFor='title'>제목</label>
               <TitleInput style={{ width: 300 }} name='title' value={title} onChange={onChangeTitle} />
             </Space>
-            <Space direction='horizontal' style={{ margin: '10px' }}>
+            <ErrDiv>{titleErr}</ErrDiv>
+            <Space direction='horizontal' style={{ margin: '10px 10px 0 10px' }}>
               <label htmlFor='content'>내용</label>
               <ContentInput showCount maxLength={200} allowClear rows={4} style={{ width: 500 }} placeholder='도전 상세 내용, 인증 사진 찍는 법 등을 기재해 주세요.' name='content' value={content} onChange={onChangeContent} />
             </Space>
+            <ErrDiv2>{contentErr}</ErrDiv2>
             <Button.Group style={{ justifyContent: 'center' }}>
               <ConfirmBtn onClick={openChallengeRequest}>개설</ConfirmBtn>
-              <CancelBtn>취소</CancelBtn>
+              <CancelBtn onClick={() => { setFile(null); Router.push('/challenge') }}>취소</CancelBtn>
             </Button.Group>
           </Write>
         </Col>
@@ -119,6 +181,18 @@ const WriteChallenge = () => {
 
 //   )
 // }
+const ErrDiv = styled.div`
+  /* text-align: center; */
+  color: #ee3434;
+  margin-left: 10px;
+`
+
+const ErrDiv2 = styled.div`
+  color: #ee3434;
+  margin-left: 10px;
+  margin-bottom: 20px;
+`
+
 const RowStyle = styled(Row)`
   margin-left:12px;
 `
@@ -176,7 +250,7 @@ const ContentInput = styled(TextArea)`
   border-top: 0px;
   border-left: 0px;
   border-right: 0px;
-  margin: 5px;
+  margin: 5px 5px 0 5px;
   border-color: palevioletred;
   &:focus {
     outline: none;

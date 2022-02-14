@@ -53,11 +53,16 @@ const Write_feed = () => {
   const [hashtag, setHashtag] = useState<string | ''>('')
   const [imagename, setImagename] = useState<string | ''>('')
   const [content, setContent] = useState<string | ''>('')
-  const [files, setFiles] = useState<any | ''>('')
+  // const [files, setFiles] = useState<any | ''>('')
   const [num, setNum] = useState<number>(0)
   const [hashArr, setHashArr] = useState<string[] | []>([])
   const [challenges, setChallenges] = useState<any>('')
   const [challenge, setChallenge] = useState<any>('')
+
+  const [imageErr, setImageErr] = useState<string>();
+  const [challengeErr, setChallengeErr] = useState<string>();
+  const [tagErr, setTagErr] = useState<string>();
+  const [contentErr, setContentErr] = useState<string>();
   // for (let i = 10; i < 36; i++) {
   //   challenges.push(<Option key={i.toString(36) + i}>하루에 {i}보 걷기</Option>);
   // }
@@ -89,9 +94,50 @@ const Write_feed = () => {
   }
   const onChangeContent: React.ChangeEventHandler<HTMLTextAreaElement> = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+    setContentErr('')
+  }
+
+  const CheckBeforeCreate = () => {
+    let i = 0
+    if (!file) {
+      setImageErr("이미지는 필수입니다.")
+      i++
+    } else {
+      setImageErr('')
+    }
+    if (hashArr.length < 1) {
+      setTagErr("태그를 입력 후 엔터를 눌러주세요.")
+      i++
+    } else {
+      setTagErr('')
+    }
+    if (!challenge) {
+      console.log(challenge)
+      setChallengeErr("도전을 선택해주세요.")
+      i++
+    } else {
+      setChallengeErr('')
+    }
+    if (!content) {
+      setContentErr("내용을 입력해주세요.")
+      i++
+    } else {
+      setContentErr('')
+    }
+    if (i) {
+
+      return false;
+    }
+    return true
+  }
+
+  const ChallengeChange = (e: any) => {
+    setChallenge(e)
+    setChallengeErr('')
   }
 
   const handleChange = (info: any) => {
+    setImageErr('')
     // setFile(info.file)
     if (info.file.status === 'uploading') {
       setLoading(true);
@@ -110,27 +156,29 @@ const Write_feed = () => {
 
   // 피드 작성 axios
   const WriteRequest = () => {
-    const data = {
-      // image: new FormData(),
-      tags: hashArr,
-      challengeId: 1,
-      content: content,
-    }
-    console.log(data)
-    const formdata = new FormData();
-    formdata.append('file', file)
-    formdata.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }))
-    const token = localStorage.getItem('Token')
-    axios({
-      method: 'POST',
-      url: process.env.BACK_EC2 + '/feed/create',
-      headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
-      data: formdata,
-    })
-      .then((res) => {
-        console.log(res)
-        Router.push('/feedMain')
+    if (CheckBeforeCreate()) {
+      const data = {
+        // image: new FormData(),
+        tags: hashArr,
+        challengeId: challenge,
+        content: content,
+      }
+      console.log(data)
+      const formdata = new FormData();
+      formdata.append('file', file)
+      formdata.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }))
+      const token = localStorage.getItem('Token')
+      axios({
+        method: 'POST',
+        url: process.env.BACK_EC2 + '/feed/create',
+        headers: { "Content-Type": "multipart/form-data", Authorization: "Bearer " + token },
+        data: formdata,
       })
+        .then((res) => {
+          console.log(res)
+          Router.push('/feedMain')
+        })
+    }
 
   }
 
@@ -151,6 +199,7 @@ const Write_feed = () => {
 
 
   const onKeyUp = (e: any) => {
+
     if (process.browser) {
       /* 요소 불러오기, 만들기*/
       const $HashWrapOuter: Element | null = document.querySelector('.HashWrapOuter')
@@ -166,11 +215,20 @@ const Write_feed = () => {
 
       /* enter 키 코드 :13 */
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
+        if (hashArr.length > 1) {
+          if (hashArr.some((now) => {
+            return now === e.target.value
+          })) {
+            setTagErr('중복된 태그는 입력할 수 없습니다.')
+            return
+          }
+        }
         // console.log('Enter Key 입력됨!', e.target.value)
         $HashWrapInner.innerHTML = e.target.value
         $HashWrapOuter?.appendChild($HashWrapInner)
         setHashArr((hashArr) => [...hashArr, hashtag])
         setHashtag('')
+        setTagErr('')
         setNum((num + 1) % 3)
       }
     }
@@ -195,12 +253,14 @@ const Write_feed = () => {
             {uploadButton}
           </UpImage>
         </WriteDiv>
+        <ErrDiv>{imageErr}</ErrDiv>
         <WriteDiv>
           <Label>도전</Label>
-          <WriteInput placeholder="현재 진행중인 도전 목록" bordered={false} onChange={(e: any) => { setChallenge(e.value) }}>{challenges ? challenges.map((challenge: any) => {
+          <WriteInput placeholder="현재 진행중인 도전 목록" bordered={false} onChange={ChallengeChange}>{challenges ? challenges.map((challenge: any) => {
             return <Option value={challenge.challengeId} key={challenge.challengeId}>{challenge.title}</Option>
           }) : null}</WriteInput>
         </WriteDiv>
+        <ErrDiv>{challengeErr}</ErrDiv>
         <WriteDiv>
           <div className='HashWrapOuter'></div>
         </WriteDiv>
@@ -208,18 +268,25 @@ const Write_feed = () => {
           <Label>태그</Label>
           <TagInput placeholder='태그 입력 후 Enter를 눌러주세요' value={hashtag} onChange={onChangeHashtag} onKeyUp={onKeyUp}></TagInput>
         </WriteDiv>
+        <ErrDiv>{tagErr}</ErrDiv>
         <WriteDiv>
           <Label>내용</Label>
           <WriteTA rows={4} onChange={onChangeContent}></WriteTA>
         </WriteDiv>
+        <ErrDiv>{contentErr}</ErrDiv>
         <div className={`${styles.d_flex} ${styles.justify_content_end} ${styles.w_60}`}>
           <WriteButton onClick={WriteRequest}>작성</WriteButton>
-          <WriteButton onClick={() => { Router.push('/') }}>취소</WriteButton>
+          <WriteButton onClick={() => { setFile(null); Router.push('/feedMain'); }}>취소</WriteButton>
         </div>
       </Write>
     </AppLayout>
   )
 }
+
+const ErrDiv = styled.div`
+  text-align: center;
+  color: #ee3434;
+`
 
 const MyImage = styled.div`
   display: flex;

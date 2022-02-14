@@ -24,6 +24,7 @@ const FollowCol = styled(Col)`
   margin-left: 10px;
   margin-top: auto;
   margin-bottom: auto;
+  font-size: 1.2rem;
 `
 
 const FollowRow = styled(Row)`
