@@ -139,11 +139,11 @@ const Feed = (props: any) => {
   // console.log(props.feed.feedId);
   //
   // console.log(props.feed.feed.feedlike);
-  console.log(
-    props.dto.feed.feedTag.map((item: any, idx: number) => {
-      return item;
-    }) + "%%%%%%%%%%%"
-  );
+  // console.log(
+  //   props.dto.feed.feedTag.map((item: any, idx: number) => {
+  //     return item;
+  //   }) + "%%%%%%%%%%%"
+  // );
   return (
     <div className="feed">
       <div

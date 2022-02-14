@@ -68,7 +68,6 @@ public class UserController {
         params.add("client_id", "44dad20dedd901c8ca6eb5d6fde58baa");
 
         params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
-//        params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
         params.add("code", code);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기

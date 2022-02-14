@@ -39,12 +39,12 @@ function Detailfeed() {
   // const image = useSelector(
   //   (state: RootState) => state.layout.detailData.feed.image
   // );
-  console.log(detailData.feed.feedlike.length);
-  console.log(detailData);
-  console.log(commentData);
-  console.log(feedssId);
+  // console.log(detailData.feed.feedlike.length);
+  // console.log(detailData);
+  // console.log(commentData);
+  // console.log(feedssId);
   const likeFlag = detailData.likeflag;
-  console.log(likeFlag);
+  // console.log(likeFlag);
   const startDate = detailData.feed.createdDate;
   const [putUser, SetPutUser] = useState([]);
   // putUser = detailData.comment;
@@ -101,8 +101,8 @@ function Detailfeed() {
         },
       })
         .then((res) => {
-          console.log(res.data);
-          console.log("######" + detailData.feed.feedId);
+          // console.log(res.data);
+          // console.log("######" + detailData.feed.feedId);
           // console.log(makeArray(res));
           // dispatch(layoutAction.updateDetailData(props.dto));
           // dispatch(layoutAction.updateDetailData(commentData));
@@ -111,7 +111,7 @@ function Detailfeed() {
           setCommentData(res.data.reverse());
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     }
   }, []);
@@ -134,13 +134,13 @@ function Detailfeed() {
           data: data,
         })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             commentRef.current.value = "";
             setComment("");
             __loadComments();
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },
@@ -156,7 +156,7 @@ function Detailfeed() {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res.data + "### 라이크!!");
+        // console.log(res.data + "### 라이크!!");
         if (res.data === "ok") {
           setLikeCount(likeCount + 1);
           setLikeState(res.data);
