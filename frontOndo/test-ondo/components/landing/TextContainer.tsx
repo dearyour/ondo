@@ -28,7 +28,7 @@ const TextContainer = () => {
       <TextContainerBottom>
         <motion.div variants={fadeIn()}><Login /></motion.div>
         <motion.p variants={fadeIn()}>
-          몸과 몸 모두 건강해지는<br /> 그 날까지, <span style={{ color: 'palevioletred' }}>온도</span>하세요!
+          몸과 몸몸 모두 건강해지는<br /> 그 날까지, <span style={{ color: 'palevioletred' }}>온도</span>하세요!
         </motion.p>
       </TextContainerBottom>
     </TextContainerWrapper>
