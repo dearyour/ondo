@@ -138,7 +138,11 @@ const Feed = (props: any) => {
   // console.log(props.feed.feedId);
   //
   // console.log(props.feed.feed.feedlike);
-  console.log(props.dto.feed.feedTag[0] + "%%%%%%%%%%%");
+  console.log(
+    props.dto.feed.feedTag.map((item: any, idx: number) => {
+      return item;
+    }) + "%%%%%%%%%%%"
+  );
   return (
     <div className="feed">
       <div
@@ -172,6 +176,10 @@ const Feed = (props: any) => {
             ˚C
           </div>
           <div className="timestamp">도전 명 : {props.dto.title}</div>
+          <div className="timestamp">
+            {getStartDate()}
+            {makeFeedTime()}
+          </div>
           {/* <div className="timestamp">도전 명 : {challengeTitle}</div> */}
           {/* <div className="timestamp">도전 기간 :{getDuration()}</div> */}
           {/* <div className="timestamp">참여 날짜 : {getStartDate()}</div>
@@ -180,9 +188,10 @@ const Feed = (props: any) => {
       </div>
       <div className="contents" onClick={__openFeedDetail}>
         {props.dto.feed.content}
-        {props.dto.feed.feedTag.map((item: any, idx: number) => {
+        {/* {props.dto.feed.feedTag.map((item: any, idx: number) => {
           item;
-        })}
+        })} */}
+        {/* {props.dto.feed.feedTag[0]} */}
         {/* <img src={props.feed.image} alt="온도이미지" /> */}
         {props.dto.feed.image && (
           <div
@@ -194,7 +203,8 @@ const Feed = (props: any) => {
       <div className="bottom" onClick={__openFeedDetail}>
         <div className="like">
           <div className="asset">
-            <img src="/assets/feed/like-dac.svg" alt="좋아요" />
+            {/* <img src="/assets/feed/like-dac.svg" alt="좋아요" /> */}
+            <img src="/assets/feed/pngwing.com.png" alt="좋아요" />
           </div>
           <div className="count txt-bold">
             {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 0}
