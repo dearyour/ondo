@@ -18,7 +18,7 @@ The type is contained within the title and can be one of these types:
 
 ## Preview.
 
-![img](frontOndo/test-ondo/public/images/ondo.png)
+![img](frontOndo/test-ondo/public/images/textLogo.png)
 
 Ondo(오늘의 도전)
 
