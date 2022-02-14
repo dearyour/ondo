@@ -23,8 +23,8 @@ $yong-blue: #5085e8;
       opacity: 0.6;
     }
     .wrapper {
-      width: 1200px;
-      height: 687px;
+      width: 60%;
+      height: 80%;
       background-color: white;
       border-radius: 23px;
       position: relative;
@@ -40,11 +40,11 @@ $yong-blue: #5085e8;
         cursor: pointer;
       }
       .main-image {
-        width: 877px;
+        width: 70%;
         height: 100%;
         background-size: $yong-gray;
         flex-shrink: 0;
-        border-radius: 40px 0 0 40px;
+        border-radius: 23px 0 0 23px;
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
