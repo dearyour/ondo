@@ -65,8 +65,8 @@ const Feed = (props: any) => {
   // );
   const __openFeedDetail = useCallback(() => {
     // console.log(props.dto.feed);
-    dispatch(feedAction.getFeed());
-    dispatch(layoutAction.updateDetailData(props.dto));
+    dispatch(feedAction.getFeed()); //전체 피드정보 다시 업데이트(자식컴포넌트에서 변경된값 부모에저장)
+    dispatch(layoutAction.updateDetailData(props.dto)); //개별 피드 정보 저장
     dispatch(layoutAction.updateDetailState(true));
   }, [dispatch, props.dto]);
 
@@ -104,7 +104,7 @@ const Feed = (props: any) => {
 
     return ` ${hour > 12 ? "오후" : "오전"} ${
       hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
+    }:${makeTwoDigits(minutes)}  ${
       date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
     }`;
@@ -139,11 +139,11 @@ const Feed = (props: any) => {
   // console.log(props.feed.feedId);
   //
   // console.log(props.feed.feed.feedlike);
-  console.log(
-    props.dto.feed.feedTag.map((item: any, idx: number) => {
-      return item;
-    }) + "%%%%%%%%%%%"
-  );
+  // console.log(
+  //   props.dto.feed.feedTag.map((item: any, idx: number) => {
+  //     return item;
+  //   }) + "%%%%%%%%%%%"
+  // );
   return (
     <div className="feed">
       <div
@@ -178,8 +178,7 @@ const Feed = (props: any) => {
           </div>
           <div className="timestamp">도전 명 : {props.dto.title}</div>
           <div className="timestamp">
-            {getStartDate()}
-            {makeFeedTime()}
+            {getStartDate()} ,{makeFeedTime()}
           </div>
           {/* <div className="timestamp">도전 명 : {challengeTitle}</div> */}
           {/* <div className="timestamp">도전 기간 :{getDuration()}</div> */}
@@ -214,7 +213,7 @@ const Feed = (props: any) => {
         <div className="comment">
           {/* <Link href=""> */}
           <div className="asset">
-            <img src="/assets/feed/pngwing.com4.png" alt="댓글" />
+            <img src="/assets/feed/pngwing.com5.png" alt="댓글" />
           </div>
           <div className="count txt-bold">
             {props.dto.feed.comment

@@ -45,8 +45,8 @@ function Mainfeed() {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        // console.log(res);
+        // console.log(res.data);
         return res.data;
       })
       .catch((err) => {
@@ -78,8 +78,8 @@ function Mainfeed() {
           // console.log(res.data.detailFeedDtos);
           let feedss = res.data.detailFeedDtos;
           //[{피드1},{피드2},{피드3}] 저장되어있음
-          console.log(res.data);
-          console.log(res.data.detailFeedDtos);
+          // console.log(res.data);
+          // console.log(res.data.detailFeedDtos);
           // console.log(feeds);
           // feeds.map((els: any) => {
           //   console.log(els);
