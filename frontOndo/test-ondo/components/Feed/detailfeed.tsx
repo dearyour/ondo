@@ -146,7 +146,7 @@ function Detailfeed() {
     const token = localStorage.getItem("Token");
     return axios({
       method: "get",
-      url: "http://localhost:8080/feed/like/" + feedssId,
+      url: process.env.BACK_EC2+"/feed/like/" + feedssId,
       // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
     })
