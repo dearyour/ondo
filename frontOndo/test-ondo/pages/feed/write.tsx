@@ -138,11 +138,11 @@ const Write_feed = () => {
     border: 0px;
     color: #F3F3F3;
     padding: 4px 16px;
-    background-color: #f5d2d2;
+    background-color: #f5ebeb;
     border-radius: 5px;
     &:hover {
       cursor: pointer;
-      background-color: #e7adad;
+      background-color: #ebcdcd;
     }
   `
   const uploadButton = (
@@ -197,7 +197,7 @@ const Write_feed = () => {
         </WriteDiv>
         <WriteDiv>
           <Label>도전</Label>
-          <WriteInput bordered={false} onChange={(e: any) => { setChallenge(e.value) }}>{challenges ? challenges.map((challenge: any) => {
+          <WriteInput placeholder="현재 진행중인 도전 목록" bordered={false} onChange={(e: any) => { setChallenge(e.value) }}>{challenges ? challenges.map((challenge: any) => {
             return <Option value={challenge.challengeId} key={challenge.challengeId}>{challenge.title}</Option>
           }) : null}</WriteInput>
         </WriteDiv>
@@ -206,7 +206,7 @@ const Write_feed = () => {
         </WriteDiv>
         <WriteDiv className="">
           <Label>태그</Label>
-          <TagInput value={hashtag} onChange={onChangeHashtag} onKeyUp={onKeyUp}></TagInput>
+          <TagInput placeholder='태그 입력 후 Enter를 눌러주세요' value={hashtag} onChange={onChangeHashtag} onKeyUp={onKeyUp}></TagInput>
         </WriteDiv>
         <WriteDiv>
           <Label>내용</Label>
@@ -259,13 +259,13 @@ const Label = styled.label`
 const WriteButton = styled(Button)`
   border: 0px;
   color: #F3F3F3;
-  background-color: #f5d2d2;
+  background-color: #f5ebeb;
   border-radius: 5px;
   padding: 10px 30px 30px 30px;  
   margin: 20px 10px;  
   &:hover {
     cursor: pointer;
-    background-color: #e7adad;
+    background-color: #ebcdcd;
   }
 `
 

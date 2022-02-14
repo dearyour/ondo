@@ -52,6 +52,7 @@ const DivideLine = styled.hr`
 `
 
 const Wrap = styled.div`
+  margin-top:20px;
   width: 90%;
   margin-left: auto;
   margin-right: auto;

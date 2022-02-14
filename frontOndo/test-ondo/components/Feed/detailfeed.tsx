@@ -74,12 +74,10 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
   const __loadComments = useCallback(() => {
@@ -112,7 +110,7 @@ function Detailfeed() {
         });
     }
   }, []);
-
+  // 댓글 작성
   const __uploadComment = useCallback(
     (e) => {
       e.preventDefault();
@@ -143,7 +141,7 @@ function Detailfeed() {
     },
     [detailData, comment, commentRef, __loadComments]
   );
-
+  //좋아요
   const __updateLike = useCallback(() => {
     const token = localStorage.getItem("Token");
     return axios({
@@ -191,7 +189,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => {};
+    return () => { };
   }, [__loadComments]);
   return (
     <div>

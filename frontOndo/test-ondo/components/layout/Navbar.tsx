@@ -101,12 +101,12 @@ const XsLogo = styled(Col)`
 `;
 
 const NavWrapper = styled.div`
-  /* padding: 1rem 5rem 1rem 5rem; */
+  padding: 1rem 5rem 1rem 5rem;
   /* padding:10px; */
   /* background-color: black; */
   
   @media (max-width: 768px) {
-    /* padding: 1rem; */
+    padding: 1rem;
   }
   `;
 

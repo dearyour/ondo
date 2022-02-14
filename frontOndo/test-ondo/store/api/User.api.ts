@@ -56,7 +56,7 @@ export const GetUserState = (token: string | null) => {
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res.data;
     })
     .catch((err) => {
@@ -71,11 +71,11 @@ export const getUserObjapi = (username: any, token: string | null) => {
     headers: { Authorization: "Bearer " + token },
   })
     .then((result) => {
-      console.log(result.data);
+      // console.log(result.data);
       return result.data;
     })
     .catch((err) => {
-      console.log("#############" + username);
+      // console.log("#############" + username);
       return err;
     });
 };
