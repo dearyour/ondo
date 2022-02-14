@@ -42,7 +42,7 @@ const ChallengeByCategory = (props: any) => {
 
   return (
     <Row>
-      <Col span={22} offset={1}>
+      <Col span={20} offset={2}>
         <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper>
         {renderCategorizedChallenges()}
       </Col>

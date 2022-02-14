@@ -55,7 +55,7 @@ const Userfeed = () => {
 
   }
   return (
-    <AppLayout>
+    <AppLayout title='마이페이지 | 온도'>
       <UserProfile data={data}></UserProfile>
       <DivdeLine />
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
