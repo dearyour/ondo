@@ -44,6 +44,13 @@ function Detailfeed() {
   // console.log(detailData);
   // console.log(commentData);
   // console.log(feedssId);
+  useEffect(() => {
+    if (detailData.likeflag) {
+      setLikeState("delete")
+    } else {
+      setLikeState("ok")
+    }
+  }, [])
   const likeFlag = detailData.likeflag;
   // console.log(likeFlag);
   const startDate = detailData.feed.createdDate;
@@ -78,12 +85,10 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
   const __loadComments = useCallback(() => {
@@ -161,10 +166,12 @@ function Detailfeed() {
         if (res.data === "ok") {
           setLikeCount(likeCount + 1);
           setLikeState(res.data);
+          detailData.likeflag = false
           dispatch(layoutAction.likeList(res.data));
         } else {
           setLikeCount(likeCount - 1);
           setLikeState(res.data);
+
           dispatch(layoutAction.likeList(res.data));
         }
       })
@@ -202,7 +209,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => {};
+    return () => { };
   }, [__loadComments]);
   return (
     <div>
@@ -249,10 +256,10 @@ function Detailfeed() {
                     <img
                       src={
                         // detailData.likeflag === false &&
-                        likeState === "ok" || detailData.likeflag === false
+                        likeState === "ok"
                           ? // && likelist === "ok"
-                            //  && likelist === "ok"
-                            "/assets/feed/pngwing.com2.png"
+                          //  && likelist === "ok"
+                          "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"

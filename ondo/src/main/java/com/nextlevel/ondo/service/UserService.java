@@ -140,15 +140,13 @@ public class UserService {
         }
         //        List<Challenge> compeleteChallenge = new ArrayList<>();
         List<Challenge> completeChallenge = new ArrayList<>();
-        tp:
         for (Challenge c : challenges) {
-            if (!challengeService.isProcessingChallenge(c)) {
-                ChallengeParticipate cp = challengeParticipateRepository.findByChallenge(c);
-                Integer archived = cp.getArchived();
-                if (archived == 7)
-                    completeChallenge.add(c);
-            }
+            ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(c, user);
+            Integer archived = challengeParticipate.getArchived();
+            if (archived == 7)
+                completeChallenge.add(c);
         }
+
         //        List<Challenge> makedChallenge = new ArrayList<>();
         List<Challenge> madeChallenge = challengeRepository.findByOwner(user.getUserId());
 
