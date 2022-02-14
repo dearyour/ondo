@@ -39,20 +39,20 @@ const Landing = () => {
 
   return (
     <>
-    <Head><title>3일간의 뜨거운 도전, 온도</title></Head>
-    <Base>
-      <TextContainer />
-      <DogyeWrapper variants={dogyeWrapper} initial='initial' animate='animate'>
-        <Dogye src='/images/dogye/happy.png' variants={dogye} />
-      </DogyeWrapper>
-      {/* <motion.div variants={firesContainer} initial='initial' animate='animate'>
+      <Head><title>3일간의 뜨거운 도전, 온도</title></Head>
+      <Base>
+        <TextContainer />
+        <DogyeWrapper variants={dogyeWrapper} initial='initial' animate='animate'>
+          <Dogye src='/images/dogye/happy.png' variants={dogye} />
+        </DogyeWrapper>
+        {/* <motion.div variants={firesContainer} initial='initial' animate='animate'>
         <Fire animationSpeed={1.8} imageUrl='./images/landing/fire01.png' styles={fireWrapper1} />
         <Fire animationSpeed={1.6} imageUrl='./images/landing/fire02.png' styles={fireWrapper2} />
         <Fire animationSpeed={1.5} imageUrl='./images/landing/fire03.png' styles={fireWrapper3} />
         <Fire animationSpeed={1.7} imageUrl='./images/landing/fire04.png' styles={fireWrapper4} />
         <Fire animationSpeed={1.8} imageUrl='./images/landing/fire05.png' styles={fireWrapper5} />
       </motion.div> */}
-    </Base>
+      </Base>
     </>
   );
 }

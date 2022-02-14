@@ -98,10 +98,10 @@ const UserProfile = ({ data }: any) => {
         : null}
 
       <ProfileWrap>
-        <ProfileCol span={14} md={6}>
+        <ProfileCol span={14} md={8}>
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
-        <ProfileRight span={4} md={6} offset={1}>
+        <ProfileRight span={4} md={4} offset={1}>
           <Nick>{user ? user.username : null}</Nick>
           <Profileedit
             onClick={() => {
@@ -123,7 +123,7 @@ const UserProfile = ({ data }: any) => {
           </ProfileDiv>
           <ProfileDiv>
             <Fspan onClick={showFollowModal}>
-              <InnerDiv>팔로워</InnerDiv>
+              <InnerDiv>팔로워 </InnerDiv>
               {data ? <InnerDiv>{data.followerUserDtos.length}</InnerDiv> : 0}
             </Fspan>
             <Fspan onClick={showfollowingModal}>

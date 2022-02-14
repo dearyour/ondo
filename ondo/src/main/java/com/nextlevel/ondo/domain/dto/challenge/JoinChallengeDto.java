@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class JoinChallengeDto {
     // 원래는 Token, challengeId 두 개를 받아야 함..
     private Long challengeId;

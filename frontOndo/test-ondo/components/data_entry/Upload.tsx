@@ -44,6 +44,7 @@ const UploadAvatar = (props: any) => {
 
   const handleChange = (info: any) => {
     // setFile(info.file.originFileObj)
+    props.offErr();
     if (info.file.status === 'uploading') {
       setLoading(true);
       return;

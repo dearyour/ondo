@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Router from "next/router";
 
 function HotChallenge(props: any): JSX.Element {
-  const hotChallenges = [...props.top10]
+  const hotChallenges = [...props.top10];
 
   const getDuration = (startDate: string) => {
     // const sDate = startDate.substring(0, 10);
@@ -28,7 +28,7 @@ function HotChallenge(props: any): JSX.Element {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: Math.min(4, hotChallenges.length),
     slidesToScroll: 1,
     cssEase: 'linear'
   }

@@ -20,7 +20,15 @@ const ReadChallenge = () => {
   const [feeds, setFeeds] = useState<any>([]);
   const [finished, setFinished] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [started, setStarted] = useState(false);
+  const [Rstarted, setRstarted] = useState(false);
 
+
+  const asd = () => {
+    const now = new Date().toDateString()
+    console.log(now)
+    // challenge.sdate
+  }
   useEffect(() => {
     if (id) {
       const token = localStorage.getItem('Token')
@@ -35,7 +43,10 @@ const ReadChallenge = () => {
           setChallenge(res.data.challenge)
           setFeeds(res.data.feeds)
           setFinished(res.data.finished)
+          setStarted(res.data.started)
           setLoading(false)
+          const now = new Date()
+          setRstarted(Number(res.data.challenge.sdate) <= Number(now.getFullYear().toString() + ("00" + (now.getMonth() + 1).toString()).slice(-2) + now.getDate().toString()))
         })
         .catch((err) => {
           console.log('상세보기 실패');
@@ -121,8 +132,8 @@ const ReadChallenge = () => {
                 <Button.Group>
                   {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
-                  {!amIParticipant && !finished && <button onClick={participate}>참여하기</button>}
-                  {amIParticipant && <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>}
+                  {!amIParticipant && !started && <button onClick={participate}>참여하기</button>}
+                  {amIParticipant && Rstarted && !finished && <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>}
                 </Button.Group>
               </BottomContent>
             </ChallengeContent>
