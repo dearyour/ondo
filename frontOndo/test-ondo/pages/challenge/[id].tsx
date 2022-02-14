@@ -17,30 +17,32 @@ const ReadChallenge = () => {
   const { id } = router.query
   const [amIParticipant, setAmIParticipant] = useState(false);
   const [challenge, setChallenge] = useState<any>({});
-  const [feeds, setFeeds] = useState([]);
+  const [feeds, setFeeds] = useState<any>([]);
   const [finished, setFinished] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('Token')
-    axios({
-      method: 'get',
-      url: process.env.BACK_EC2 + '/challenge/detail/' + String(id),
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((res) => {
-        console.log(res.data)
-        setAmIParticipant(res.data.amIParticipate)
-        setChallenge(res.data.challenge)
-        setFeeds(res.data.feeds)
-        setFinished(res.data.finished)
-        setLoading(false)
+    if (id) {
+      const token = localStorage.getItem('Token')
+      axios({
+        method: 'get',
+        url: process.env.BACK_EC2 + '/challenge/detail/' + String(id),
+        headers: { Authorization: "Bearer " + token },
       })
-      .catch((err) => {
-        console.log('상세보기 실패');
+        .then((res) => {
+          console.log(res)
+          setAmIParticipant(res.data.amIParticipate)
+          setChallenge(res.data.challenge)
+          setFeeds(res.data.feeds)
+          setFinished(res.data.finished)
+          setLoading(false)
+        })
+        .catch((err) => {
+          console.log('상세보기 실패');
 
-      })
-  }, [])
+        })
+    }
+  }, [id])
 
   // 참여하기
   const participate = () => {
@@ -61,11 +63,11 @@ const ReadChallenge = () => {
   }
 
   const getDuration = (startDate: string) => {
- 
-    const sy = startDate.substring(0,4);
-    const sm = startDate.substring(4,6);
-    const sd = startDate.substring(6,8);
-    
+
+    const sy = startDate.substring(0, 4);
+    const sm = startDate.substring(4, 6);
+    const sd = startDate.substring(6, 8);
+
     const endDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
     const ey = endDate.getFullYear();
     const em = endDate.getMonth() + 1;
@@ -87,7 +89,7 @@ const ReadChallenge = () => {
     return result;
   }
 
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div>
         <div className={styles.container}>
@@ -119,7 +121,7 @@ const ReadChallenge = () => {
                 <Button.Group>
                   {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
-                  {!finished && <button onClick={participate}>참여하기</button>}
+                  {!amIParticipant && !finished && <button onClick={participate}>참여하기</button>}
                   {amIParticipant && <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>}
                 </Button.Group>
               </BottomContent>

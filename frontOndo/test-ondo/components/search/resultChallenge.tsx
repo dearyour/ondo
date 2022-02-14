@@ -65,7 +65,7 @@ const SearchResultChallenge = ({ title = '', keyword, results }: SearchResults) 
               url: '/challenge/' + content.challengeId,
             }
             return (
-              <SwiperSlide><Imgbox obj={content} key={title + String(i++)}></Imgbox></SwiperSlide>
+              <SwiperSlide key={title + String(i++)}><Imgbox obj={content}></Imgbox></SwiperSlide>
             )
           }) : <Nothing>검색 결과가 없습니다</Nothing>}
         </Swrapper>
