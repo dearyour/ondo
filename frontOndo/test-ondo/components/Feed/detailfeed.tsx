@@ -77,10 +77,12 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
 
   const __loadComments = useCallback(() => {
@@ -149,7 +151,7 @@ function Detailfeed() {
     const token = localStorage.getItem("Token");
     return axios({
       method: "get",
-      url: process.env.BACK_EC2+"/feed/like/" + feedssId,
+      url: process.env.BACK_EC2 + "/feed/like/" + feedssId,
       // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
     })
@@ -197,7 +199,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => { };
+    return () => {};
   }, [__loadComments]);
   return (
     <div>
@@ -260,7 +262,7 @@ function Detailfeed() {
                 </div>
                 <div className="comment">
                   <div className="asset">
-                    <img src="assets/feed/comment.svg" alt="댓글" />
+                    <img src="/assets/feed/pngwing.com4.png" alt="댓글" />
                   </div>
                   <div className="title txt-bold">{commentData.length}</div>
                 </div>

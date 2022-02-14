@@ -214,7 +214,7 @@ const Feed = (props: any) => {
         <div className="comment">
           {/* <Link href=""> */}
           <div className="asset">
-            <img src="/assets/feed/comment.svg" alt="댓글" />
+            <img src="/assets/feed/pngwing.com4.png" alt="댓글" />
           </div>
           <div className="count txt-bold">
             {props.dto.feed.comment
