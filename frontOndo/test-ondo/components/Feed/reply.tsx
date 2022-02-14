@@ -7,6 +7,10 @@ import axios from "axios";
 
 export default function Reply(props: any) {
   const detailData = useSelector((state: RootState) => state.layout.detailData);
+  const loginUserName = useSelector(
+    (state: RootState) => state.user.users.username
+  );
+  console.log(loginUserName);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
   const feedssId = useSelector(
@@ -146,9 +150,13 @@ export default function Reply(props: any) {
             </div>
             <div className="title txt-bold"></div>
           </div>
-          <div className="reply-btn" onClick={__deleteComment}>
-            삭제
-          </div>
+          {loginUserName === props.reply.username ? (
+            <div className="reply-btn" onClick={__deleteComment}>
+              삭제
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       {<div className="body">{props.reply.comment.content}</div>}
