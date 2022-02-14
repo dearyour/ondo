@@ -92,7 +92,7 @@ const UserProfile = ({ data }: any) => {
     setAlert(false)
   }
   return (
-    <div>
+    <Wrap>
       {alert ?
         <FollowAlert message="정상적으로 처리되었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
         : null}
@@ -112,7 +112,7 @@ const UserProfile = ({ data }: any) => {
           </Profileedit>
         </ProfileRight>
         <Col span={4} md={8} offset={1}>
-          <UserStates>온도: {user ? user.ondo : null}°C</UserStates>
+          <UserStates>온도  {user ? user.ondo : null}°C</UserStates>
           <ProfileDiv>
             <InnerDiv>도전 중</InnerDiv>
             {user && user.challengeParticipate
@@ -186,9 +186,13 @@ const UserProfile = ({ data }: any) => {
           )}
         </FModal>
       </ProfileWrap>
-    </div>
+    </Wrap>
   );
 };
+
+const Wrap = styled.div`
+  margin-top: 20px;
+`
 
 const FollowAlert = styled(Alert)`
   position: absolute;
@@ -213,7 +217,7 @@ const FollowBtn = styled(Button)`
 `
 
 const ProfileWrap = styled(Row)`
-  width: 80%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
   /* background-color: #f7eeef; */
@@ -235,7 +239,7 @@ const ProfileImg = styled.img`
   /* padding: 10px; */
   border-radius: 100%;
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid pink;
 `;
 const FModalDiv = styled.div``;
 const ProfileRight = styled(Col)``;

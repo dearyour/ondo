@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    loader: 'imgix',
-    path: 'https://ondobucket.s3.ap-northeast-2.amazonaws.com/static'
+    loader: 'akamai',
+    path: '/'
   },
   env: {
     BACK_EC2: process.env.BACK_EC2,
