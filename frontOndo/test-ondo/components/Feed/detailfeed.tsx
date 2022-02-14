@@ -21,6 +21,7 @@ function makeArray(obj: any) {
 }
 
 function Detailfeed() {
+  //layout 은 해당 피드 1 ,2 ,3 각각 에 대한 정보만 저장됨
   const dispatch = useDispatch();
   const layout = useSelector((state: RootState) => state.layout);
   const image = useSelector((state: RootState) => state.user.users.image);
@@ -34,7 +35,7 @@ function Detailfeed() {
   const commentRef: any = useRef(null);
   const [commentData, setCommentData] = useState([]);
   const [likeCount, setLikeCount] = useState(detailData.feed.feedlike.length);
-  const [likeState, setLikeState] = useState("");
+  const [likeState, setLikeState] = useState(""); //이거는 모달 껐다키면 초기값으로 설정됨 사용불가
   // const session = useSelector((state)=>state.auth.session);
   // const image = useSelector(
   //   (state: RootState) => state.layout.detailData.feed.image
@@ -159,12 +160,13 @@ function Detailfeed() {
         console.log(res.data + "### 라이크!!");
         if (res.data === "ok") {
           setLikeCount(likeCount + 1);
-          setLikeState(res.data);
+          // setLikeState(res.data);
+          dispatch(layoutAction.likeList(res.data));
         } else {
           setLikeCount(likeCount - 1);
-          setLikeState(res.data);
+          // setLikeState(res.data);
+          dispatch(layoutAction.likeList(res.data));
         }
-        dispatch(layoutAction.likeList(res.data));
       })
       .catch((err) => {
         return err;
@@ -245,7 +247,8 @@ function Detailfeed() {
                   <div className="asset">
                     <img
                       src={
-                        likeState === "ok"
+                        // detailData.likeflag === false &&
+                        likelist === "ok"
                           ? //  && likelist === "ok"
                             "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"

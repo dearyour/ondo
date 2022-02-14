@@ -204,7 +204,15 @@ const Feed = (props: any) => {
         <div className="like">
           <div className="asset">
             {/* <img src="/assets/feed/like-dac.svg" alt="좋아요" /> */}
-            <img src="/assets/feed/pngwing.com.png" alt="좋아요" />
+            <img
+              src={
+                props.dto.likeflag === false
+                  ? //  && likelist === "ok"
+                    "/assets/feed/pngwing.com2.png"
+                  : "/assets/feed/pngwing.com.png"
+              }
+              alt="좋아요"
+            />
           </div>
           <div className="count txt-bold">
             {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 0}
