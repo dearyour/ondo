@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Router from "next/router";
 
 function HotChallenge(props: any): JSX.Element {
-  const [hotChallenges, setHotChallenges] = useState(props.top10);
+  const hotChallenges = [...props.top10];
 
   const getDuration = (startDate: string) => {
     // const sDate = startDate.substring(0, 10);
