@@ -22,7 +22,7 @@ function Mainfeed() {
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user.users);
   const image = useSelector((state: RootState) => state.user.users.image);
-  // const { feeds } = useSelector((state: RootState) => state.feed);
+  const feedstate = useSelector((state: RootState) => state.feed.items);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
   const dispatch = useDispatch();
@@ -176,7 +176,7 @@ function Mainfeed() {
               </div>
             </form>
             {/* <Feed /> */}
-            {feeds.map((item: any, idx: number) => {
+            {feedstate.map((item: any, idx: number) => {
               // console.log(feeds);
 
               return (

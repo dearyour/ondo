@@ -26,6 +26,7 @@ function Detailfeed() {
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const likelist = useSelector((state: RootState) => state.layout.likelist);
+  const feedstate = useSelector((state: RootState) => state.feed.items);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
@@ -173,7 +174,7 @@ function Detailfeed() {
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
 
-    dispatch(layoutAction.updateDetailData(undefined));
+    // dispatch(layoutAction.updateDetailData(undefined));
     // dispatch(layoutAction.updateDetailData(detailData));
     // dispatch(layoutAction.likeList("ok" ? "delete" : "ok"));
     dispatch(feedAction.getFeed());

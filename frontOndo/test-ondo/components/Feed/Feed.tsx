@@ -65,9 +65,10 @@ const Feed = (props: any) => {
   // );
   const __openFeedDetail = useCallback(() => {
     // console.log(props.dto.feed);
+    dispatch(feedAction.getFeed());
     dispatch(layoutAction.updateDetailData(props.dto));
     dispatch(layoutAction.updateDetailState(true));
-  }, [dispatch]);
+  }, [dispatch, props.dto]);
 
   // // const comment = comments;
   // console.log(comments.length);
@@ -216,7 +217,9 @@ const Feed = (props: any) => {
             <img src="/assets/feed/comment.svg" alt="댓글" />
           </div>
           <div className="count txt-bold">
-            {props.dto.comments ? Object.keys(props.dto.comments).length : 0}
+            {props.dto.feed.comment
+              ? Object.keys(props.dto.feed.comment).length
+              : 0}
           </div>
           {/* </Link> */}
         </div>
