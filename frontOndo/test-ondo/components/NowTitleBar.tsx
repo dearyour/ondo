@@ -15,7 +15,7 @@ const Line = styled.hr`
 
 
 
-const Pagebar: React.FC<nowpage> = ({title}:nowpage) => {
+const Pagebar: React.FC<nowpage> = ({ title }: nowpage) => {
   return (
     <div>
       <div className={`${styles.mx_20} ${styles.mt_30} `}>{title}</div>

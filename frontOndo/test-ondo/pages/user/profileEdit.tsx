@@ -95,11 +95,11 @@ const Edit = () => {
     border: 0px;
     color: #F3F3F3;
     padding: 4px 16px;
-    background-color: #ebc1c1;
+    background-color: #f5ebeb;
     border-radius: 5px;
     &:hover {
       cursor: pointer;
-      background-color: #e7adad;
+      background-color: #ebcdcd;
     }
   `
   const uploadButton = (
@@ -127,15 +127,27 @@ const Edit = () => {
           <Divide>
             <h3 className={styles.mx_20}>닉네임</h3>
             <NickInput value={username} onChange={onChangeNickname}></NickInput>
-            <Button className={styles.mx_20} onClick={onEditNickname}>
+            <EditBtn className={styles.mx_20} onClick={onEditNickname}>
               수정
-            </Button>
+            </EditBtn>
           </Divide>
         </div>
       </BorderDiv>
     </AppLayout>
   );
 };
+
+const EditBtn = styled(Button)`
+  border: 0px;
+    color: #F3F3F3;
+    padding: 4px 16px;
+    background-color: #f5ebeb;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+      background-color: #ebcdcd;
+    }
+`
 
 const UpImage = styled(Upload)`
   width: 10%;

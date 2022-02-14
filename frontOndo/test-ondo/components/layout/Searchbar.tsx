@@ -10,7 +10,7 @@ const SearchContainer = styled.div`
     width: 100%;
     height: 48px;
     background: #f2f2f2;
-    border-radius: 0;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;

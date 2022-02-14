@@ -185,7 +185,7 @@ const Write_feed = () => {
         <MyImage>{image ? <img src={image} alt="avatar" style={{ width: '50%', border: '1px solid #ebc1c1' }} /> : ''}</MyImage>
         <WriteDiv>
           <Label>이미지</Label>
-          <UploadInput value={image}></UploadInput>
+          <UploadInput value={imagename}></UploadInput>
           <UpImage {...ImageUploadInputSetting}
             className="avatar-uploader"
             showUploadList={false}

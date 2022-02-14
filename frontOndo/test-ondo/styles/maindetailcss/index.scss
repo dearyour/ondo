@@ -2,12 +2,13 @@ $yong-gray: #e8e8e8;
 $yong-gray100: #9d9d9f;
 $yong-gray200: #454545;
 $yong-blue: #5085e8;
+
 #__next {
   .feed-detail {
     z-index: 31;
     position: fixed;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     left: 0;
     top: 0;
     display: flex;
@@ -23,13 +24,14 @@ $yong-blue: #5085e8;
       opacity: 0.6;
     }
     .wrapper {
-      width: 1200px;
-      height: 687px;
+      width: 50%;
+      height: 60%;
       background-color: white;
       border-radius: 23px;
       position: relative;
       z-index: 2;
       display: flex;
+      overflow-x: hidden;
       .close {
         width: 24px;
         display: flex;
@@ -40,11 +42,11 @@ $yong-blue: #5085e8;
         cursor: pointer;
       }
       .main-image {
-        width: 877px;
+        width: 60%;
         height: 100%;
         background-size: $yong-gray;
         flex-shrink: 0;
-        border-radius: 40px 0 0 40px;
+        border-radius: 23px 0 0 23px;
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;

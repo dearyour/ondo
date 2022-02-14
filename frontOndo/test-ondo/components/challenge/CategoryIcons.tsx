@@ -44,53 +44,6 @@ const CategoryIcons = (props: any) => {
           </ColCenter>
         ))
       }
-      {/* <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space> 
-      </ColCenter> */}
     </Row>
   )
 }
