@@ -6,6 +6,7 @@ import Reply from "components/Feed/reply";
 import Router from "next/router";
 import axios from "axios";
 import { feedAction } from "store/slice/feed";
+import Tags from "./tag";
 
 function makeArray(obj: any) {
   const keys = Object.keys(obj);
@@ -270,6 +271,8 @@ function Detailfeed() {
     __loadComments();
     return () => {};
   }, [__loadComments]);
+  // console.log(detailData.tags.map((it: any) => it) + "###");
+  // console.log(detailData.tags[0].name + "###");
   return (
     <div>
       <div className="feed-detail">
@@ -319,9 +322,12 @@ function Detailfeed() {
                   )}
                 </div>
               </div>
-              {/* {detailData.feed.feedtag.map((item: any, idx: number) => {
-                return item.;
-              })} */}
+              <div className="body-tag">
+                {detailData.tags.map((item: any, idx: number) => {
+                  return <div className="body-tag">[# {item.name} ]　</div>;
+                  // <Tags item={item.name}></Tags>;
+                })}
+              </div>
               <div className="body">{detailData.feed.content}</div>
               <div className="bottom">
                 <div className="like">

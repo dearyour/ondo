@@ -186,16 +186,20 @@ const Feed = (props: any) => {
           <div className="timestamp">피드 작성 시간 : {makeFeedTime()}</div> */}
         </div>
       </div>
-      <div className="contents" onClick={__openFeedDetail}>
+      <div className="contents">
+        <div className="body-tag">
+          {props.dto.tags.map((item: any, idx: number) => {
+            return <div className="body-tag">[# {item.name} ]　</div>;
+            // <Tags item={item.name}></Tags>;
+          })}
+        </div>
         {props.dto.feed.content}
-        {props.dto.feed.feedTag.map((item: any, idx: number) => {
-          item;
-        })}
         {/* {props.dto.feed.feedTag[0]} */}
         {/* <img src={props.feed.image} alt="온도이미지" /> */}
         {props.dto.feed.image && (
           <div
             className="image"
+            onClick={__openFeedDetail}
             style={{ backgroundImage: `url(${props.dto.feed.image})` }}
           ></div>
         )}

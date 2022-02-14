@@ -100,13 +100,13 @@ $yong-blue: #5085e8;
             }
           }
           .contents {
-            cursor: pointer;
             margin-top: 15px;
-            font-size: 14px;
+            font-size: 15px;
             color: $yong-gray200;
             line-height: 1.8;
             border-top: 1px solid #edbaba;
             .image {
+              cursor: pointer;
               width: 309px;
               height: 309px;
               background-color: $yong-gray;
@@ -116,6 +116,12 @@ $yong-blue: #5085e8;
               border-radius: 20px;
               margin-top: 25px;
               margin-left: 120px;
+            }
+            .body-tag {
+              display: flex;
+              align-items: center;
+              margin-top: 7px;
+              color: blueviolet;
             }
           }
           .bottom {
