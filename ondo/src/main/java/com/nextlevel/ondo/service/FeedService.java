@@ -77,12 +77,24 @@ public class FeedService {
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
-            Boolean flag = true;
+            Boolean likeflag = true;
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
-            if (f.getFeedlike().contains(tokenuser)) flag = false;
+            List<FeedLike> feedlike = feedLikeRepository.findByFeed(f);
+            for(FeedLike fl : feedlike) {
+                if (fl.getUser() == tokenuser) {
+                    likeflag = false;
+                    break;
+                }
+            }
+
+            List<Tag> tags = new ArrayList<>();
+            List<FeedTag> feedTags = feedTagRepository.findByFeed(f);
+            for(FeedTag ft : feedTags){
+                tags.add(ft.getTag());
+            }
 
             Challenge challenge = challengeRepository.findByChallengeId(f.getChallengeId());
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag, challenge.getTitle());
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos,tags, likeflag, challenge.getTitle());
             detailFeedDtos.add(detailFeedDto);
         }
 
@@ -186,12 +198,25 @@ public class FeedService {
             }
         }
 
-        Boolean flag = false;
-        // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
-        if (feed.getFeedlike().contains(tokenuser)) flag = true;
-        Challenge challenge = challengeRepository.findByChallengeId(feed.getChallengeId());
+        Boolean likeflag = true;
+        // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
+        List<FeedLike> feedlike = feedLikeRepository.findByFeed(feed);
+        for(FeedLike fl : feedlike) {
+            if (fl.getUser() == tokenuser) {
+                likeflag = false;
+                break;
+            }
+        }
 
-        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag, challenge.getTitle());
+        Challenge challenge = challengeRepository.findByChallengeId(feed.getChallengeId());
+        //태그담기
+        List<Tag> tags = new ArrayList<>();
+        List<FeedTag> feedTags = feedTagRepository.findByFeed(feed);
+        for(FeedTag ft : feedTags){
+            tags.add(ft.getTag());
+        }
+
+        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos,tags, likeflag, challenge.getTitle());
 
         return detailFeedDto;
     }
