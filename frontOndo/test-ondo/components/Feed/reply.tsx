@@ -105,7 +105,7 @@ export default function Reply(props: any) {
         })
           .then((res) => {
             console.log(res);
-            props.method();
+            props.method(); // 로드 comment 다시 부른다
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
