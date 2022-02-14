@@ -28,7 +28,7 @@ function HotChallenge(props: any): JSX.Element {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 4,
     slidesToScroll: 1,
     cssEase: 'linear'
   }
@@ -59,15 +59,26 @@ function HotChallenge(props: any): JSX.Element {
 
   return (
     <>
-      <p><b>HOT Challenge🔥</b></p>
-      <StyledSlider {...settings} >
-        {renderHotChallenge()}
-      </StyledSlider>
+      <p style={{marginTop: '30px'}}><b>HOT Challenge🔥</b></p>
+      <SliderWrapper>
+        <StyledSlider {...settings} >
+          {renderHotChallenge()}
+        </StyledSlider>
+      </SliderWrapper>
     </>
   )
 }
 
+const SliderWrapper = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+`
+
 const StyledSlider = styled(Slider)`
+
+    width: 90%;
+    
     .slick-dots{
         bottom:-2.5vw;
         li{
@@ -125,6 +136,7 @@ const StyledSlider = styled(Slider)`
     .slick-prev{
         left:-55px;
     }
+
 `
 
 const CardWrapper = styled.div`
@@ -142,7 +154,7 @@ const CardWrapper = styled.div`
 
 const Card = styled.div`
   width: 100%;
-  height: 300px;
+  height: 250px;
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;

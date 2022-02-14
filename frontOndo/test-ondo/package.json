@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,6 +12,7 @@
     "@types/react-dates": "^21.8.3",
     "@types/react-redux": "^7.1.22",
     "@types/react-router-redux": "^5.0.21",
+    "@types/react-slick": "^0.23.8",
     "antd": "^4.18.5",
     "axios": "^0.25.0",
     "cropperjs": "^1.5.12",

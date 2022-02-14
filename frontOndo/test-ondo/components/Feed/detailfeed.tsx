@@ -170,6 +170,7 @@ function Detailfeed() {
     dispatch(layoutAction.updateDetailState(false));
 
     dispatch(layoutAction.updateDetailData(undefined));
+    // dispatch(layoutAction.updateDetailData(detailData));
   }, [dispatch]);
 
   const __whenKeyDown = useCallback(
@@ -262,7 +263,14 @@ function Detailfeed() {
             <div className="feed-comments">
               {commentData.map((item: any, idx: number) => {
                 // {/* // console.log(feeds); */}
-                return <Reply key={idx} item={item} reply={item} />;
+                return (
+                  <Reply
+                    key={idx}
+                    item={item}
+                    reply={item}
+                    method={__loadComments}
+                  />
+                );
               })}
             </div>
             <form className="feed-write-comment" onSubmit={__uploadComment}>
