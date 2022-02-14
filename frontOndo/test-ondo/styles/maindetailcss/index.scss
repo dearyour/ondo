@@ -7,7 +7,7 @@ $yong-blue: #5085e8;
     z-index: 31;
     position: fixed;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     left: 0;
     top: 0;
     display: flex;
@@ -30,6 +30,7 @@ $yong-blue: #5085e8;
       position: relative;
       z-index: 2;
       display: flex;
+      overflow-x: hidden;
       .close {
         width: 24px;
         display: flex;
