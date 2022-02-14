@@ -30,6 +30,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class UserController {
 
     @Value("${cos.key}")
