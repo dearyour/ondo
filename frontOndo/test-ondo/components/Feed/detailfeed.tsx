@@ -46,11 +46,11 @@ function Detailfeed() {
   // console.log(feedssId);
   useEffect(() => {
     if (detailData.likeflag) {
-      setLikeState("delete")
+      setLikeState("delete");
     } else {
-      setLikeState("ok")
+      setLikeState("ok");
     }
-  }, [])
+  }, []);
   const likeFlag = detailData.likeflag;
   // console.log(likeFlag);
   const startDate = detailData.feed.createdDate;
@@ -85,11 +85,41 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
+
+  // const __deleteComment = useCallback(
+  //   (e) => {
+  //     e.preventDefault();
+  //     if (detailData) {
+  //       const token = localStorage.getItem("Token");
+  //       axios({
+  //         method: "DELETE",
+  //         url:
+  //           process.env.BACK_EC2 +
+  //           "/comment/delete/" +
+  //           props.reply.comment.commentId,
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //         },
+  //       })
+  //         .then((res) => {
+  //           console.log(res);
+  //           props.method();
+  //           // dispatch(layoutAction.updateDetailData(commentData));
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     }
+  //   },
+  //   [detailData, useCallback, props.reply]
+  // );
 
   const __loadComments = useCallback(() => {
     //코멘트 업로드 또는 불러올때 계속 새로고침
@@ -166,14 +196,13 @@ function Detailfeed() {
         if (res.data === "ok") {
           setLikeCount(likeCount + 1);
           setLikeState(res.data);
-          detailData.likeflag = false
-          dispatch(layoutAction.likeList(res.data));
+          // dispatch(layoutAction.likeList(res.data));
         } else {
           setLikeCount(likeCount - 1);
           setLikeState(res.data);
-
-          dispatch(layoutAction.likeList(res.data));
+          // dispatch(layoutAction.likeList(res.data));
         }
+        dispatch(feedAction.getFeed());
       })
       .catch((err) => {
         return err;
@@ -209,7 +238,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => { };
+    return () => {};
   }, [__loadComments]);
   return (
     <div>
@@ -248,7 +277,9 @@ function Detailfeed() {
                   </div>
                 </div>
               </div>
-
+              {/* {detailData.feed.feedtag.map((item: any, idx: number) => {
+                return item.;
+              })} */}
               <div className="body">{detailData.feed.content}</div>
               <div className="bottom">
                 <div className="like">
@@ -257,9 +288,10 @@ function Detailfeed() {
                       src={
                         // detailData.likeflag === false &&
                         likeState === "ok"
-                          ? // && likelist === "ok"
-                          //  && likelist === "ok"
-                          "/assets/feed/pngwing.com2.png"
+                          ? // || detailData.likeflag === false
+                            // && likelist === "ok"
+                            //  && likelist === "ok"
+                            "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"

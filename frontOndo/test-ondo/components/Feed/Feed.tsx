@@ -188,9 +188,9 @@ const Feed = (props: any) => {
       </div>
       <div className="contents" onClick={__openFeedDetail}>
         {props.dto.feed.content}
-        {/* {props.dto.feed.feedTag.map((item: any, idx: number) => {
+        {props.dto.feed.feedTag.map((item: any, idx: number) => {
           item;
-        })} */}
+        })}
         {/* {props.dto.feed.feedTag[0]} */}
         {/* <img src={props.feed.image} alt="온도이미지" /> */}
         {props.dto.feed.image && (
