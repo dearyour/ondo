@@ -18,7 +18,7 @@ const Wrap = styled.div`
   
 `
 const Title = styled.h1`
-  color: #dd7ed8;
+  /* color: #edbaba; */
 `
 const Nothing = styled.div`
   margin-top: 3rem;

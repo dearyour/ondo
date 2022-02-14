@@ -6,9 +6,17 @@ import { RootState } from "store/module";
 import axios from "axios";
 
 export default function Reply(props: any) {
+
   const detailData = useSelector((state: RootState) => state.layout.detailData);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
-  const [temp, setTemp] = useState(commentId);
+  const [id, setId] = useState(commentId);
+  useEffect(() => {
+    if (props.comment) {
+
+      console.log(props.comment.commentId)
+      setId(props.comment.commentId)
+    }
+  }, [props])
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
@@ -32,12 +40,10 @@ export default function Reply(props: any) {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
   const getStartDate = (startDate: any) => {
     const newdate = new Date(startDate);
@@ -82,15 +88,16 @@ export default function Reply(props: any) {
         });
     }
   }, []);
-
+  // 댓글 삭제
   const __deleteComment = useCallback(
     (e) => {
       e.preventDefault();
+      console.log(id)
       if (detailData) {
         const token = localStorage.getItem("Token");
         axios({
           method: "DELETE",
-          url: process.env.BACK_EC2 + "/comment/delete/" + commentId,
+          url: process.env.BACK_EC2 + "/comment/delete/" + id,
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -104,7 +111,7 @@ export default function Reply(props: any) {
           });
       }
     },
-    [detailData, __loadComments]
+    []
   );
 
   return (
