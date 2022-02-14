@@ -101,10 +101,12 @@ const Feed = (props: any) => {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
   //////////////////////////////
   const getStartDate = () => {
@@ -136,14 +138,14 @@ const Feed = (props: any) => {
   // console.log(props.feed.feedId);
   //
   // console.log(props.feed.feed.feedlike);
-
+  console.log(props.dto.feed.feedTag[0] + "%%%%%%%%%%%");
   return (
     <div className="feed">
       <div
         className="top"
-      // onClick={() => {
-      //   Router.push(`/user/${props.dto.username}`);
-      // }}
+        // onClick={() => {
+        //   Router.push(`/user/${props.dto.username}`);
+        // }}
       >
         {props.dto.user.image && (
           <div
@@ -178,6 +180,9 @@ const Feed = (props: any) => {
       </div>
       <div className="contents" onClick={__openFeedDetail}>
         {props.dto.feed.content}
+        {props.dto.feed.feedTag.map((item: any, idx: number) => {
+          item;
+        })}
         {/* <img src={props.feed.image} alt="온도이미지" /> */}
         {props.dto.feed.image && (
           <div
