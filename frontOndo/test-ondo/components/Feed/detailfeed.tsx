@@ -262,7 +262,7 @@ function Detailfeed() {
                 </div>
                 <div className="comment">
                   <div className="asset">
-                    <img src="/assets/feed/pngwing.com4.png" alt="댓글" />
+                    <img src="/assets/feed/pngwing.com5.png" alt="댓글" />
                   </div>
                   <div className="title txt-bold">{commentData.length}</div>
                 </div>
