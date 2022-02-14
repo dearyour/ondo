@@ -110,7 +110,7 @@
 
 #__next .feed-detail .wrapper .contents .feed-content .top .feed-desc .timestamp {
   font-size: 12px;
-  color: black;
+  color: #5085e8;
   opacity: 0.7;
   margin-top: 4px;
 }
@@ -275,6 +275,7 @@
   line-height: 1.67;
   color: #454545;
   margin-top: 18px;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 #__next .feed-detail .wrapper .contents .feed-comments .reply {
