@@ -23,6 +23,12 @@ function makeArray(obj: any) {
 function Detailfeed() {
   //layout 은 해당 피드 1 ,2 ,3 각각 에 대한 정보만 저장됨
   const dispatch = useDispatch();
+  const loginUserName = useSelector(
+    (state: RootState) => state.user.users.username
+  );
+  const feedUserName = useSelector(
+    (state: RootState) => state.layout.detailData.user.username
+  );
   const layout = useSelector((state: RootState) => state.layout);
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
@@ -120,6 +126,30 @@ function Detailfeed() {
   //   },
   //   [detailData, useCallback, props.reply]
   // );
+  const __deleteFeed = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (detailData) {
+        const token = localStorage.getItem("Token");
+        axios({
+          method: "DELETE",
+          url: process.env.BACK_EC2 + "/feed/delete/" + feedssId,
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => {
+            console.log(res.data);
+            dispatch(feedAction.getFeed());
+            // dispatch(layoutAction.updateDetailData(commentData));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
+    [detailData, useCallback]
+  );
 
   const __loadComments = useCallback(() => {
     //코멘트 업로드 또는 불러올때 계속 새로고침
@@ -268,13 +298,25 @@ function Detailfeed() {
                   ></div>
                 )}
                 <div className="feed-desc">
-                  <div className="nickname txt-bold">
+                  <div
+                    className="nickname txt-bold"
+                    onClick={() => {
+                      Router.push(`/user/${detailData.user.username}`);
+                    }}
+                  >
                     {detailData.user.username}
                   </div>
                   <div className="timestamp">
                     {getStartDate()}
                     {makeFeedTime()}
                   </div>
+                  {loginUserName === feedUserName ? (
+                    <div className="reply-btn" onClick={__deleteFeed}>
+                      <img src="/assets/feed/pngwing.com7.png" alt="삭제" />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               {/* {detailData.feed.feedtag.map((item: any, idx: number) => {
@@ -290,7 +332,6 @@ function Detailfeed() {
                         likeState === "ok"
                           ? // || detailData.likeflag === false
                             // && likelist === "ok"
-                            //  && likelist === "ok"
                             "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }

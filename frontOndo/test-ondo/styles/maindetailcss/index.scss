@@ -77,12 +77,21 @@ $yong-blue: #5085e8;
               .nickname {
                 font-size: 16px;
                 color: $yong-gray200;
+                cursor: pointer;
               }
               .timestamp {
                 font-size: 12px;
                 color: $yong-blue;
                 opacity: 0.7;
                 margin-top: 4px;
+              }
+              .reply-btn {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin-left: 150px;
+                cursor: pointer;
+                width: 25px;
               }
             }
           }
@@ -116,6 +125,7 @@ $yong-blue: #5085e8;
             }
             .like {
               margin-right: 16px;
+              cursor: pointer;
             }
           }
         }
