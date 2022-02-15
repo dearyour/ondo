@@ -6,6 +6,7 @@ import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Router from 'next/router';
 import Link from 'next/link';
+import ImgboxChallenge from 'components/search/resultCarouselImgChallenge';
 
 
 interface SearchResults {
@@ -65,7 +66,7 @@ const SearchResultChallenge = ({ title = '', keyword, results }: SearchResults) 
               url: '/challenge/' + content.challengeId,
             }
             return (
-              <SwiperSlide key={title + String(i++)}><Imgbox obj={content}></Imgbox></SwiperSlide>
+              <SwiperSlide key={title + String(i++)}><ImgboxChallenge obj={content}></ImgboxChallenge></SwiperSlide>
             )
           }) : <Nothing>검색 결과가 없습니다</Nothing>}
         </Swrapper>

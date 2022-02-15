@@ -51,9 +51,9 @@ const Challenge = () => {
     })
       .then((res) => {
         console.log('axios get challenge 성공');
-        
+
         // console.log(res.data);
-        
+
         setHotChallenges(res.data.top10Challenges);
         setCatChallenges(res.data.allChallenges.reverse());
         setAllChallenges(res.data.allChallenges.reverse());
@@ -97,21 +97,21 @@ const Challenge = () => {
   return (
     <AppLayout title="도전 둘러보기 | 온도">
       {/* <Row style={{ marginTop: 20 }}> */}
-        {/* <Col xs={0} md={2}></Col> */}
-        {/* <Col xs={24} md={24}> */}
+      {/* <Col xs={0} md={2}></Col> */}
+      {/* <Col xs={24} md={24}> */}
       <HotChallenge top10={hotChallenges}></HotChallenge>
-          {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
-          <Row>
-            <Col xs={0} md={2}></Col>
-            <Col xs={24} md={20}>
-              <CategoryIcons changeCategory={(cat: string) => renderCatChallenges(cat)} />
-              {/* <Button></Button> */}
-              <ChallengeByCategory categorized={catChallenges} />
-            </Col>
-            <Col xs={0} md={2}></Col>
-          </Row>
-        {/* </Col> */}
-        {/* <Col xs={0} md={2}></Col> */}
+      {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
+      <Row>
+        <Col xs={0} md={2}></Col>
+        <Col xs={24} md={20}>
+          <CategoryIcons changeCategory={(cat: string) => renderCatChallenges(cat)} />
+          {/* <Button></Button> */}
+          <ChallengeByCategory categorized={catChallenges} />
+        </Col>
+        <Col xs={0} md={2}></Col>
+      </Row>
+      {/* </Col> */}
+      {/* <Col xs={0} md={2}></Col> */}
       {/* </Row> */}
     </AppLayout>
   );

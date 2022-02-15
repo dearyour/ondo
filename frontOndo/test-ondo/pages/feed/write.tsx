@@ -71,6 +71,7 @@ const Write_feed = () => {
   // 도전 받아오기
   useEffect(() => {
     const token = localStorage.getItem('Token');
+    setImage(null)
     axios({
       method: "get",
       url: process.env.BACK_EC2 + '/feed/create',
@@ -105,12 +106,12 @@ const Write_feed = () => {
     } else {
       setImageErr('')
     }
-    if (hashArr.length < 1) {
-      setTagErr("태그를 입력 후 엔터를 눌러주세요.")
-      i++
-    } else {
-      setTagErr('')
-    }
+    // if (hashArr.length < 1) {
+    //   setTagErr("태그를 입력 후 엔터를 눌러주세요.")
+    //   i++
+    // } else {
+    // }
+    setTagErr('')
     if (!challenge) {
       console.log(challenge)
       setChallengeErr("도전을 선택해주세요.")

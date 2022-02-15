@@ -4,9 +4,10 @@ import UserProfile from 'components/user/userProfile';
 import styled from 'styled-components';
 import Challengebox from 'components/user/mypageChallenge';
 import Feedbox from 'components/user/mypageFeed';
-import { Tabs, Row } from 'antd';
+import { Tabs, Row, Progress } from 'antd';
 import { useRouter } from 'next/router'
 import axios from 'axios';
+
 
 const { TabPane } = Tabs;
 
@@ -16,6 +17,7 @@ const Userfeed = () => {
   const router = useRouter()
   const { username } = router.query
   const [data, setdata] = useState<any>('');
+
   useEffect(() => {
     if (!username) { return }
     const token = localStorage.getItem('Token');
@@ -57,6 +59,7 @@ const Userfeed = () => {
   return (
     <AppLayout title='마이페이지 | 온도'>
       <UserProfile data={data}></UserProfile>
+      {/* <FeedModal setShowModal={setShowModal} showModal={showModal}></FeedModal> */}
       <DivdeLine />
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
         <MyTab tab="Feed" key="1">
