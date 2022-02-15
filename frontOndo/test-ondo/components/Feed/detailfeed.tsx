@@ -143,6 +143,7 @@ function Detailfeed() {
           .then((res) => {
             console.log(res.data);
             dispatch(feedAction.getFeed());
+            __closeDetail();
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
@@ -243,7 +244,7 @@ function Detailfeed() {
 
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
-    dispatch(layoutAction.likeList(undefined));
+    dispatch(layoutAction.likeList(undefined)); //이거 거의안씀
     // dispatch(layoutAction.updateDetailData(undefined));
     // dispatch(layoutAction.updateDetailData(detailData));
     // dispatch(layoutAction.likeList("ok" ? "delete" : "ok"));
