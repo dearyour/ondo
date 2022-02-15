@@ -35,7 +35,7 @@ const ChallengeByCategory2 = (props : any) => {
             <h2>{challenges[i].title}</h2>
             <p>{getDuration(challenges[i].sdate)} | {challenges[i].category}</p>
             <h3>현재 {challenges[i].challengeParticipate.length} 명 참여 중</h3>
-            <button>자세히 보기</button>
+            <button onClick={() => { Router.push(`/challenge/${challenges[i].challengeId}`) }}>자세히 보기</button>
           </CardBody>
         </Card>
       )
@@ -88,6 +88,8 @@ const Wrapper = styled.div`
   gap: 1rem;
   grid-template-columns: 1fr;
   justify-content: center;
+
+  font-family: 'Noto Sans KR';
 
   @media screen and (min-width: 600px) {
     grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
@@ -151,7 +153,7 @@ const CardBody = styled.div`
     cursor: pointer;
 
     &:hover {
-      color: #0e48fe;
+      color: palevioletred;
     }
   }
 `

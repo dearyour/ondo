@@ -13,6 +13,7 @@ import { RootState } from "store/module";
 import { userActions } from "store/slice/user";
 import { challengeAction } from "store/slice/challenge";
 import ScrollToTop from "components/ScrollToTop";
+import Head from "next/head";
 
 
 const Challenge = () => {
@@ -101,6 +102,7 @@ const Challenge = () => {
       {/* <Row style={{ marginTop: 20 }}> */}
       {/* <Col xs={0} md={2}></Col> */}
       {/* <Col xs={24} md={24}> */}
+      <Head><link href='https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap' rel="stylesheet"></link></Head>
       <HotChallenge top10={hotChallenges}></HotChallenge>
       {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
       <Row>
@@ -115,23 +117,9 @@ const Challenge = () => {
       {/* </Col> */}
       {/* <Col xs={0} md={2}></Col> */}
       {/* </Row> */}
-      {/* <ScrollToTop /> */}
-      <BackTop>
-        <AntBackTopInner>UP</AntBackTopInner>
-      </BackTop>
+      <ScrollToTop />
     </AppLayout>
   );
 };
-
-const AntBackTopInner = styled.div`
-  height: 40px;
-  width: 40px;
-  line-height: 40px;
-  border-radius: 40px;
-  background-color: #edbaba;
-  color: #fff;
-  text-align: center;
-  font-size: 15px;
-`
 
 export default Challenge;

@@ -124,7 +124,7 @@ const Feed = (props: any) => {
     const sm = newdate.getMonth() + 1;
     const sd = newdate.getDate();
 
-    return sy + "-" + sm + "-" + sd;
+    return sy + "-" + (("00" + sm.toString()).slice(-2)) + "-" + (("00" + sd.toString()).slice(-2));
   };
   // console.log(startDate);
   const adate = new Date(startDate);

@@ -10,6 +10,7 @@ import { RootState } from "../store/module";
 import { useCallback, useEffect } from "react";
 import axios from "axios";
 import { layoutAction } from "store/slice/layout";
+import ScrollToTop from "components/ScrollToTop";
 const Home: NextPage = () => {
   const isDetailOpen = useSelector(
     (state: RootState) => state.layout.isDetailOpen
@@ -41,6 +42,7 @@ const Home: NextPage = () => {
     <AppLayout title="index page">
       <Mainfeed />
       {isDetailOpen && <Detailfeed />}
+      <ScrollToTop />
     </AppLayout>
   );
 };
