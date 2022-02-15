@@ -5,6 +5,7 @@ import { BiArrowFromBottom } from 'react-icons/bi';
 import styled from "styled-components";
 import HotChallenge from "components/challenge/HotChallenge";
 import ChallengeByCategory from "components/challenge/ChallengeByCategory";
+import ChallengeByCategory2 from "components/challenge/ChallengeByCategory2";
 import CategoryIcons from "components/challenge/CategoryIcons";
 import AppLayout from "components/layout/AppLayout";
 import axios from "axios";
@@ -103,13 +104,13 @@ const Challenge = () => {
       <HotChallenge top10={hotChallenges}></HotChallenge>
       {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
       <Row>
-        <Col xs={0} md={2}></Col>
-        <Col xs={24} md={20}>
+        <Col xs={0} md={0}></Col>
+        <Col xs={24} md={24}>
           <CategoryIcons changeCategory={(cat: string) => renderCatChallenges(cat)} />
           {/* <Button></Button> */}
-          <ChallengeByCategory categorized={catChallenges} />
+          <ChallengeByCategory2 categorized={catChallenges} />
         </Col>
-        <Col xs={0} md={2}></Col>
+        <Col xs={0} md={0}></Col>
       </Row>
       {/* </Col> */}
       {/* <Col xs={0} md={2}></Col> */}

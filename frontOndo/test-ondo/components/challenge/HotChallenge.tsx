@@ -47,7 +47,7 @@ function HotChallenge(props: any): JSX.Element {
                 {hotChallenges[i].title}
                 <SubTitle>
                   {getDuration(hotChallenges[i].sdate)} <br/>
-                  현재 {hotChallenges[i].challengeParticipate.length}명 참여 중
+                  현재 {hotChallenges[i].challengeParticipate.length} 명 참여 중
                 </SubTitle>               
               </h2>
             </Details>

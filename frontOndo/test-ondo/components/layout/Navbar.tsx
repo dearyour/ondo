@@ -81,7 +81,7 @@ function Navbar(): JSX.Element {
               </a>
             </Link>
             <MenuLink onClick={Logout}>로그아웃</MenuLink> */}
-            <MenuLink onClick={() => { Router.push('/challenge') }}>Challenge🔥</MenuLink>|
+            <MenuLink onClick={() => { Router.push('/challenge') }}>오늘의 도전🔥</MenuLink>|
             <MenuLink onClick={() => { Router.push(`/user/${nickname}`) }}><LoggedInForm /></MenuLink>|
             <MenuLink onClick={Logout}>로그아웃</MenuLink>
           </Menuitem>

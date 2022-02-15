@@ -43,7 +43,7 @@ const Landing = () => {
       <Base>
         <TextContainer />
         <DogyeWrapper variants={dogyeWrapper} initial='initial' animate='animate'>
-          <Dogye src='/images/dogye/happy.png' variants={dogye} />
+          <Dogye src='/images/imageLogo.png' variants={dogye} />
         </DogyeWrapper>
         {/* <motion.div variants={firesContainer} initial='initial' animate='animate'>
         <Fire animationSpeed={1.8} imageUrl='./images/landing/fire01.png' styles={fireWrapper1} />

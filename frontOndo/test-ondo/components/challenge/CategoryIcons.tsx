@@ -36,7 +36,7 @@ const CategoryIcons = (props: any) => {
     <Row style={{ marginTop: '100px' }}>
       {
         categoryIcons.map((v, i) => (
-          <ColCenter xs={3} md={3} key={i}>
+          <ColCenter xs={6} md={3} key={i}>
             <Space direction="vertical">
               <CategoryIcon src={v} width={50} height={50} id={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></CategoryIcon>
               <LabelCenter htmlFor={categoryLabels[i]}>{categoryLabels[i]}</LabelCenter>
