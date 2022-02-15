@@ -7,6 +7,7 @@ import Feedbox from 'components/user/mypageFeed';
 import { Tabs, Row, Progress } from 'antd';
 import { useRouter } from 'next/router'
 import axios from 'axios';
+import { UpCircleOutlined } from '@ant-design/icons';
 
 
 const { TabPane } = Tabs;
@@ -58,6 +59,9 @@ const Userfeed = () => {
   }
   return (
     <AppLayout title='마이페이지 | 온도'>
+      <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
+        <UpCircleOutlined />
+      </GoTopBtn>
       <UserProfile data={data}></UserProfile>
       {/* <FeedModal setShowModal={setShowModal} showModal={showModal}></FeedModal> */}
       <DivdeLine />
@@ -102,6 +106,14 @@ const Userfeed = () => {
     </AppLayout>
   )
 };
+
+const GoTopBtn = styled.div`
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 2.5rem;
+    cursor: pointer;
+  `
 
 const DivdeLine = styled.hr`
   border-color:#f7e4f4;

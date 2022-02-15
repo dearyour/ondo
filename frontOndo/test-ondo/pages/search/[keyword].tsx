@@ -27,6 +27,7 @@ const SearchPage = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
+          console.log(res.data)
           setData(res.data)
         })
     }

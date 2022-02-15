@@ -44,12 +44,16 @@ $yong-blue: #5085e8;
             input {
               cursor: pointer;
               width: 100%;
-              font-size: 13px;
+              font-size: 1rem;
               color: $yong-gray200;
               border: none;
+              &:hover {
+                color: palevioletred;
+              }
               &::placeholder {
                 color: gray;
               }
+
             }
           }
           .get-image {
