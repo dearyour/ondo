@@ -199,6 +199,28 @@ const Write_feed = () => {
   `;
   const uploadButton = <UpBtn icon={<UploadOutlined />}>Upload</UpBtn>;
 
+  const Nodata = () => {
+    return (
+      <NodataDiv>
+        <DogyeImg src="/images/dogye/sad.png"></DogyeImg>
+        <DogyeContent>진행중인 도전이 없어요...</DogyeContent>
+      </NodataDiv>
+    )
+  }
+
+  const DogyeImg = styled.img`
+    width: 20%;
+  `
+  const DogyeContent = styled.span`
+    text-align: center;
+  `
+
+  const NodataDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
   const onKeyUp = (e: any) => {
     if (process.browser) {
       /* 요소 불러오기, 만들기*/
@@ -273,6 +295,8 @@ const Write_feed = () => {
             placeholder="현재 진행중인 도전 목록"
             bordered={false}
             onChange={ChallengeChange}
+            notFoundContent={Nodata()}
+            dropdownStyle={{ boxShadow: 'none', border: '1px solid pink', borderRadius: '10px' }}
           >
             {challenges
               ? challenges.map((challenge: any) => {

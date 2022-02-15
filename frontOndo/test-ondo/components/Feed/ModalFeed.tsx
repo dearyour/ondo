@@ -10,6 +10,7 @@ import Modal from "antd/lib/modal/Modal";
 import { Controller } from "react-spring";
 import produce from 'immer';
 import { useRouter } from 'next/router';
+import useUser from 'store/hooks/userHooks';
 
 interface nowProps {
   show: number, // 상위에서 state로 show, control 설정. show에 feedId 넣어서 내려준다
@@ -25,6 +26,7 @@ const FeedForModal = (props: nowProps) => {
   const [likeState, setLikeState] = useState<any>({ like: false, count: 0 });
   const [flag, setFlag] = useState<boolean>(false);
   const router = useRouter();
+  const { users } = useUser();
 
   // 날짜 표현
   const getStartDate = (startDate: any) => {
@@ -81,7 +83,7 @@ const FeedForModal = (props: nowProps) => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          // console.log(res)
+          console.log(res)
           setData(res.data)
           setLikeState({ like: !res.data.likeflag, count: res.data.feed.feedlike.length })
           setDate(getStartDate(res.data.feed.createdDate) + makeFeedTime((res.data.feed.createdDate)))
@@ -211,7 +213,7 @@ const FeedForModal = (props: nowProps) => {
                     <CommentImg src="/assets/feed/pngwing.com5.png"></CommentImg>
                     <span> {data && data.comments ? data.comments.length : 0}</span>
                   </CommentCount>
-                  <DeleteImg src="/assets/feed/pngwing.com6.png" onClick={deleteFeed} />
+                  {data && users.username === data.user.username ? <DeleteImg src="/assets/feed/pngwing.com6.png" onClick={deleteFeed} /> : null}
                 </ImgWrap>
                 <CommentLine></CommentLine>
                 <CommentWrap>

@@ -19,6 +19,7 @@ const UserProfile = ({ data }: any) => {
   const [ondo, setOndo] = useState<number>(1);
   useEffect(() => {
     setUser(data.user);
+    setOndo(1);
     if (data) {
       setFollowed(data.followflag)
       setTimeout(() => {
