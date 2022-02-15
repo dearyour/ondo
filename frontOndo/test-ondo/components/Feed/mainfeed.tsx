@@ -140,42 +140,42 @@ function Mainfeed() {
   // console.log(test);
   // console.log(rankers);
   // console.log(feeds);
-  const Dogye = styled.div`
-    position: absolute;
-    transition: all 0.3s ease-in-out;
-    @media (min-width: 476px) {
-      top: 180px;
-      left: 10%;
-    }
-    @media (min-width: 768px) {
-      top: 180px;
-      left: 10%;
-    }
-    @media (min-width: 992px) {
-      top: 120px;
-      left: 10%;
-    }
-    @media (min-width: 1400px) {
-      top: 120px;
-      left: 19%;
-    }
-  `;
+  // const Dogye = styled.div`
+  //   position: absolute;
+  //   transition: all 0.3s ease-in-out;
+  //   @media (min-width: 476px) {
+  //     top: 180px;
+  //     left: 10%;
+  //   }
+  //   @media (min-width: 768px) {
+  //     top: 180px;
+  //     left: 10%;
+  //   }
+  //   @media (min-width: 992px) {
+  //     top: 120px;
+  //     left: 10%;
+  //   }
+  //   @media (min-width: 1400px) {
+  //     top: 120px;
+  //     left: 19%;
+  //   }
+  // `;
 
-  const GoTopBtn = styled.div`
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    font-size: 2.5rem;
-    cursor: pointer;
-  `;
+  // const GoTopBtn = styled.div`
+  //   position: fixed;
+  //   bottom: 10px;
+  //   right: 10px;
+  //   font-size: 2.5rem;
+  //   cursor: pointer;
+  // `;
   return (
     <div>
       <div className="mainfeed">
         <div className="wrapper">
           <div className="feed-list">
-            <Dogye>
+            {/* <Dogye>
               <Image src={happy} width={120} height={120}></Image>
-            </Dogye>
+            </Dogye> */}
             <form
               className="write-feed"
               // onSubmit={__makeFeed}
@@ -261,13 +261,13 @@ function Mainfeed() {
           </div>
         </div>
       </div>
-      <GoTopBtn
+      {/* <GoTopBtn
         onClick={() => {
           window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         }}
       >
         <UpCircleOutlined />
-      </GoTopBtn>
+      </GoTopBtn> */}
     </div>
   );
 }
