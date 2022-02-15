@@ -70,6 +70,7 @@ public class ChallengeService {
                 .amIParticipate(amIParticipate)
                 .isFinished(isFinished)
                 .isStarted(isStarted)
+                .username(user.getUsername())
                 .build();
     }
 
