@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row, Carousel, Space } from "antd";
+import { Col, Row, Carousel, Space, BackTop } from "antd";
+import { BiArrowFromBottom } from 'react-icons/bi';
 import styled from "styled-components";
 import HotChallenge from "components/challenge/HotChallenge";
 import ChallengeByCategory from "components/challenge/ChallengeByCategory";
@@ -10,7 +11,7 @@ import axios from "axios";
 import { RootState } from "store/module";
 import { userActions } from "store/slice/user";
 import { challengeAction } from "store/slice/challenge";
-// import { Category } from "store/interfaces/Category.interface";
+import ScrollToTop from "components/ScrollToTop";
 
 
 const Challenge = () => {
@@ -113,8 +114,23 @@ const Challenge = () => {
       {/* </Col> */}
       {/* <Col xs={0} md={2}></Col> */}
       {/* </Row> */}
+      {/* <ScrollToTop /> */}
+      <BackTop>
+        <AntBackTopInner>UP</AntBackTopInner>
+      </BackTop>
     </AppLayout>
   );
 };
+
+const AntBackTopInner = styled.div`
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 40px;
+  background-color: #edbaba;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+`
 
 export default Challenge;
