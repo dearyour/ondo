@@ -92,12 +92,10 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
   // const __deleteComment = useCallback(
@@ -269,7 +267,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => {};
+    return () => { };
   }, [__loadComments]);
   // console.log(detailData.tags.map((it: any) => it) + "###");
   // console.log(detailData.tags[0].name + "###");
@@ -324,7 +322,7 @@ function Detailfeed() {
               </div>
               <div className="body-tag">
                 {detailData.tags.map((item: any, idx: number) => {
-                  return <div className="body-tag">[# {item.name} ]　</div>;
+                  return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
                   // <Tags item={item.name}></Tags>;
                 })}
               </div>
@@ -337,8 +335,8 @@ function Detailfeed() {
                         // detailData.likeflag === false &&
                         likeState === "ok"
                           ? // || detailData.likeflag === false
-                            // && likelist === "ok"
-                            "/assets/feed/pngwing.com2.png"
+                          // && likelist === "ok"
+                          "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"
