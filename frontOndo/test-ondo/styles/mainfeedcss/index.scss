@@ -125,13 +125,13 @@ $yong-blue: #5085e8;
             }
           }
           .bottom {
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             margin-top: 25px;
             .like,
             .comment {
+              cursor: pointer;
               display: flex;
               align-items: center;
               .asset {

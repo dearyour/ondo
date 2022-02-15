@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { commentAction } from "store/slice/comment";
 import Router from "next/router";
 import { feedAction } from "store/slice/feed";
+import axios from "axios";
 // import Router from "next/router";
 //feedId, createDate, chaallengId , image , content , userId , feedlike, comment []
 // feeds: [feedId, createdDate, challengeId, image, content, userId, feedlike],
@@ -27,7 +28,15 @@ const Feed = (props: any) => {
   const nickname = useSelector((state: RootState) => state.user.nickname);
   const comments = useSelector((state: RootState) => state.comment.comments);
   const ondo = useSelector((state: RootState) => state.user.ondo);
-
+  const [likeCount, setLikeCount] = useState(props.dto.feed.feedlike.length);
+  const [likeState, setLikeState] = useState("");
+  useEffect(() => {
+    if (props.dto.likeflag) {
+      setLikeState("delete");
+    } else {
+      setLikeState("ok");
+    }
+  }, []);
   // useEffect(() => {
   //   dispatch(commentAction.getComment);
   // }, []);
@@ -144,6 +153,32 @@ const Feed = (props: any) => {
   //     return item;
   //   }) + "%%%%%%%%%%%"
   // );
+
+  const __updateLike = useCallback(() => {
+    const token = localStorage.getItem("Token");
+    return axios({
+      method: "get",
+      url: process.env.BACK_EC2 + "/feed/like/" + props.dto.feed.feedId,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data + "### 라이크!!");
+        if (res.data === "ok") {
+          setLikeCount(likeCount + 1);
+          setLikeState(res.data);
+          // dispatch(layoutAction.likeList(res.data));
+        } else {
+          setLikeCount(likeCount - 1);
+          setLikeState(res.data);
+          // dispatch(layoutAction.likeList(res.data));
+        }
+        dispatch(feedAction.getFeed());
+      })
+      .catch((err) => {
+        return err;
+      });
+  }, [props.dto, likeCount]);
   return (
     <div className="feed">
       <div
@@ -204,8 +239,8 @@ const Feed = (props: any) => {
           ></div>
         )}
       </div>
-      <div className="bottom" onClick={__openFeedDetail}>
-        <div className="like">
+      <div className="bottom">
+        <div className="like" onClick={__updateLike}>
           <div className="asset">
             {/* <img src="/assets/feed/like-dac.svg" alt="좋아요" /> */}
             <img
@@ -222,7 +257,7 @@ const Feed = (props: any) => {
             {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 0}
           </div>
         </div>
-        <div className="comment">
+        <div className="comment" onClick={__openFeedDetail}>
           {/* <Link href=""> */}
           <div className="asset">
             <img src="/assets/feed/pngwing.com5.png" alt="댓글" />
