@@ -10,7 +10,9 @@ const Challengebox = ({ challenge }: any) => {
   const [showTitle, setShowTitle] = useState<boolean>(false);
 
   const mouseOver = () => {
-    setShowTitle(true)
+    setTimeout(() => {
+      setShowTitle(true)
+    }, 200)
   }
 
   const mouseOut = () => {
@@ -45,6 +47,8 @@ const Content = styled.img`
   /* box-shadow: 0 1px 1px 0; */
 `
 const ChallengeTitle = styled.div`
+/* background-color: gray;
+opacity: 50%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,11 +58,8 @@ const ChallengeTitle = styled.div`
   width: 100%;
   height: 100%;
   font-size: 2rem;
-  /* transition: all 0.3s ease-in-out; */
+  transition: all 1.3s ease-in-out;
   position: absolute;
-
-
-  
 `
 
 export default Challengebox;

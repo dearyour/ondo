@@ -140,26 +140,28 @@ function Mainfeed() {
   // console.log(test);
   // console.log(rankers);
   // console.log(feeds);
-  // const Dogye = styled.div`
-  //   position: absolute;
-  //   transition: all 0.3s ease-in-out;
-  //   @media (min-width: 476px) {
-  //     top: 180px;
-  //     left: 10%;
-  //   }
-  //   @media (min-width: 768px) {
-  //     top: 180px;
-  //     left: 10%;
-  //   }
-  //   @media (min-width: 992px) {
-  //     top: 120px;
-  //     left: 10%;
-  //   }
-  //   @media (min-width: 1400px) {
-  //     top: 120px;
-  //     left: 19%;
-  //   }
-  // `;
+  const Dogye = styled.div`
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+    width: 120px;
+    height: 120px;
+    @media (min-width: 476px) {
+      top: 180px;
+      left: 10%;
+    }
+    @media (min-width: 768px) {
+      top: 180px;
+      left: 10%;
+    }
+    @media (min-width: 992px) {
+      top: 120px;
+      left: 10%;
+    }
+    @media (min-width: 1400px) {
+      top: 120px;
+      left: 19%;
+    }
+  `
 
   // const GoTopBtn = styled.div`
   //   position: fixed;
@@ -173,9 +175,9 @@ function Mainfeed() {
       <div className="mainfeed">
         <div className="wrapper">
           <div className="feed-list">
-            {/* <Dogye>
-              <Image src={happy} width={120} height={120}></Image>
-            </Dogye> */}
+            <Dogye>
+              <img src="images/dogye/happy.png"></img>
+            </Dogye>
             <form
               className="write-feed"
               // onSubmit={__makeFeed}
@@ -196,7 +198,7 @@ function Mainfeed() {
                   // ref={contextRef}
                   type="text"
                   placeholder=" 피드 쓰러가기"
-                  // onChange={(e) => setContext(e.target.value)}
+                // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -221,7 +223,7 @@ function Mainfeed() {
                     dto={item}
                     nickname={nickname}
                     image={image}
-                    // comments={comments}
+                  // comments={comments}
                   />
                 );
               })}

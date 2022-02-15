@@ -8,7 +8,7 @@ import { Tabs, Row, Progress } from 'antd';
 import { useRouter } from 'next/router'
 import axios from 'axios';
 import { UpCircleOutlined } from '@ant-design/icons';
-
+import FeedForModal from 'components/Feed/ModalFeed';
 
 const { TabPane } = Tabs;
 
@@ -18,6 +18,7 @@ const Userfeed = () => {
   const router = useRouter()
   const { username } = router.query
   const [data, setdata] = useState<any>('');
+  const [showModal, setShowModal] = useState<number>(0);
 
   useEffect(() => {
     if (!username) { return }
@@ -28,8 +29,9 @@ const Userfeed = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setdata(res.data)
+        router.push('/user/' + username);
       })
   }, [username])
   const people = {
@@ -59,6 +61,7 @@ const Userfeed = () => {
   }
   return (
     <AppLayout title='마이페이지 | 온도'>
+      <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
       <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
         <UpCircleOutlined />
       </GoTopBtn>
@@ -70,7 +73,7 @@ const Userfeed = () => {
           <ImageRow>
             {data && data.myFeed.length >= 1 ? data.myFeed.map((feed: any) => {
               return (
-                <Feedbox feed={feed} key={nowUser.ondo++}></Feedbox>
+                <Feedbox show={showModal} control={setShowModal} feed={feed} key={nowUser.ondo++} onClick={() => { setShowModal(feed.feedId) }}></Feedbox>
               )
             }) : <Nothing>작성한 피드가 없습니다.</Nothing>}
           </ImageRow>
