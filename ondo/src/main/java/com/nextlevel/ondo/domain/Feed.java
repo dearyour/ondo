@@ -41,7 +41,7 @@ public class Feed extends BaseTimeEntity {
     private List<Comment> comment = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "feed")
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     private List<FeedTag> feedTag = new ArrayList<>();
 
     @Builder
