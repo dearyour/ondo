@@ -62,7 +62,7 @@ public class ChallengeService {
         if (Integer.parseInt(challenge.getSDate()) < Integer.parseInt(formatedNow)) {
             isStarted = true;
         }
-
+        user = userRepository.findByUserId(challenge.getOwner());
         // 6. DTO에 담아서 리턴
         return ChallengeDetailDto.builder()
                 .challenge(challenge)
