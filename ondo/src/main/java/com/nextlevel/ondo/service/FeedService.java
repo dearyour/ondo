@@ -321,6 +321,11 @@ public class FeedService {
 
         if (tokenuser.getUserId() != feed.getUserId()) return "no permission";
 
+        List<FeedTag> feedTags = feedTagRepository.findByFeed(feed);
+        for(FeedTag ft : feedTags){
+            feedTagRepository.delete(ft);
+        }
+
         feedRepository.delete(feed);
         return "delete complete";
     }
