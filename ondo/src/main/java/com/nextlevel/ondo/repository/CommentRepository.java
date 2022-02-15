@@ -12,6 +12,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findByCommentId(Long commentId);
     Optional<Long> deleteByCommentId(Long commentId);
     Optional<List<Comment>> findAllByFeed(Feed feed);
-
-
+    List<Comment> findByFeed(Feed feed);
 }
