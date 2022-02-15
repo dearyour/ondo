@@ -143,6 +143,8 @@ function Mainfeed() {
   const Dogye = styled.div`
     position: absolute;
     transition: all 0.3s ease-in-out;
+    width: 120px;
+    height: 120px;
     @media (min-width: 476px) {
       top: 180px;
       left: 10%;
@@ -174,7 +176,7 @@ function Mainfeed() {
         <div className="wrapper">
           <div className="feed-list">
             <Dogye>
-              <Image src={happy} width={120} height={120}></Image>
+              <img src="images/dogye/happy.png"></img>
             </Dogye>
             <form
               className="write-feed"
