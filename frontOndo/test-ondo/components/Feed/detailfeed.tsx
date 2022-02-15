@@ -30,6 +30,7 @@ function Detailfeed() {
   const feedUserName = useSelector(
     (state: RootState) => state.layout.detailData.user.username
   );
+
   const layout = useSelector((state: RootState) => state.layout);
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
@@ -140,6 +141,7 @@ function Detailfeed() {
           .then((res) => {
             console.log(res.data);
             dispatch(feedAction.getFeed());
+            __closeDetail();
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
@@ -240,7 +242,7 @@ function Detailfeed() {
 
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
-    dispatch(layoutAction.likeList(undefined));
+    dispatch(layoutAction.likeList(undefined)); //이거 거의안씀
     // dispatch(layoutAction.updateDetailData(undefined));
     // dispatch(layoutAction.updateDetailData(detailData));
     // dispatch(layoutAction.likeList("ok" ? "delete" : "ok"));
@@ -313,7 +315,7 @@ function Detailfeed() {
                   </div>
                   {loginUserName === feedUserName ? (
                     <div className="reply-btn" onClick={__deleteFeed}>
-                      <img src="/assets/feed/pngwing.com7.png" alt="삭제" />
+                      <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
                     </div>
                   ) : (
                     ""
