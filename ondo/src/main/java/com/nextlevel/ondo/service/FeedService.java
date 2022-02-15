@@ -320,7 +320,7 @@ public class FeedService {
         });
 
         if (tokenuser.getUserId() != feed.getUserId()) return "no permission";
-
+/*
         //중간테이블 삭제
         List<FeedTag> feedTags = feedTagRepository.findByFeed(feed);
         for(FeedTag ft : feedTags){
@@ -331,6 +331,7 @@ public class FeedService {
         for(FeedLike fl : feedLikes){
             feedLikeRepository.delete(fl);
         }
+*/
 
         feedRepository.delete(feed);
         return "delete complete";
