@@ -30,6 +30,7 @@ function Detailfeed() {
   const feedUserName = useSelector(
     (state: RootState) => state.layout.detailData.user.username
   );
+
   const layout = useSelector((state: RootState) => state.layout);
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
@@ -315,7 +316,7 @@ function Detailfeed() {
                   </div>
                   {loginUserName === feedUserName ? (
                     <div className="reply-btn" onClick={__deleteFeed}>
-                      <img src="/assets/feed/pngwing.com7.png" alt="삭제" />
+                      <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
                     </div>
                   ) : (
                     ""

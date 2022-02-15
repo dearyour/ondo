@@ -176,19 +176,20 @@ function Mainfeed() {
               </div>
             </form>
             {/* <Feed /> */}
-            {feedstate.map((item: any, idx: number) => {
-              // console.log(feeds);
+            {feedstate &&
+              feedstate.map((item: any, idx: number) => {
+                // console.log(feeds);
 
-              return (
-                <Feed
-                  key={idx}
-                  dto={item}
-                  nickname={nickname}
-                  image={image}
-                  // comments={comments}
-                />
-              );
-            })}
+                return (
+                  <Feed
+                    key={idx}
+                    dto={item}
+                    nickname={nickname}
+                    image={image}
+                    // comments={comments}
+                  />
+                );
+              })}
           </div>
 
           <div className="friend-list">
