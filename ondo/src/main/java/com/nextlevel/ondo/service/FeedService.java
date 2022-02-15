@@ -342,27 +342,29 @@ public class FeedService {
                     targetChallenges.add(c);
                 }
             }
+            System.out.println("현재 챌린지의 카테고리 : " + category);
             // 4.
-            String styleName;
-            if (category.equals("운동")) {
+            String styleName = "";
+            if (category.name().equals("운동")) {
                 styleName = "헬스왕";
-            } else if (category.equals("식습관")) {
+            } else if (category.name().equals("식습관")) {
                 styleName = "바른 먹거리";
-            } else if (category.equals("취미")) {
+            } else if (category.name().equals("취미")) {
                 styleName = "취향입니다 존중해주시죠";
-            } else if (category.equals("학습")) {
+            } else if (category.name().equals("학습")) {
                 styleName = "공부벌레";
-            } else if (category.equals("친환경")) {
+            } else if (category.name().equals("친환경")) {
                 styleName = "환경미화원";
-            } else if (category.equals("외모관리")) {
+            } else if (category.name().equals("외모관리")) {
                 styleName = "아이돌";
-            } else {
+            } else if (category.name().equals("기타")) {
                 styleName = "넓고 깊은";
             }
+            System.out.println("styleName : " + styleName);
             Styles styles = stylesRepository.findByStyleName(styleName);
             UserStyle userStyle = userStyleRepository.findByUserAndStyles(user, styles);
             // 없을때만 추가
-            if (userStyle == null) {
+            if (userStyle == null && targetChallenges.size() >= 5) {
                 userStyle = UserStyle.builder()
                         .styles(styles)
                         .user(user)
