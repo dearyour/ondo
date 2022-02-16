@@ -67,8 +67,8 @@ public class UserController {
         params.add("grant_type", "authorization_code");
         params.add("client_id", "44dad20dedd901c8ca6eb5d6fde58baa");
 
-        params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
-//        params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
+//        params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
+        params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
         params.add("code", code);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -134,7 +134,7 @@ public class UserController {
         System.out.println("블로그서버 패스워드 : " + cosKey);
 
         User kakaoUser = User.builder()
-                .username(kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId())
+                .username("Ondo" + kakaoProfile.getId())
                 .password(cosKey)
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .build();
