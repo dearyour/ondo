@@ -139,7 +139,7 @@ const UserProfile = ({ data }: any) => {
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
         <ProfileRight span={4} md={4} offset={1}>
-          {user ? <Nick><div><Style className={users.chooseStyle}>{users.chooseStyle}</Style></div> {user.username}</Nick> : null}
+          {user ? <Nick><div><Style className={user.chooseStyle}>{user.chooseStyle}</Style></div> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
               Router.push("/user/profileEdit");
