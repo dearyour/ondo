@@ -142,13 +142,13 @@ function Detailfeed() {
           },
         })
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             dispatch(feedAction.getFeed());
             __closeDetail();
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },

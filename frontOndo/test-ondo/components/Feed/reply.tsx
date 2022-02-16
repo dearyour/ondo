@@ -13,14 +13,14 @@ export default function Reply(props: any) {
   const feedUserName = useSelector(
     (state: RootState) => state.layout.detailData.user.username
   );
-  console.log(loginUserName);
+  // console.log(loginUserName);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
-  console.log(props.reply.comment.commentId + "$$$$$$$$$$$$");
-  console.log(commentId);
+  // console.log(props.reply.comment.commentId + "$$$$$$$$$$$$");
+  // console.log(commentId);
   const [commentData, setCommentData] = useState([]);
   const dispatch = useDispatch();
   const oneDay = 1000 * 60 * 60 * 24;
@@ -107,12 +107,12 @@ export default function Reply(props: any) {
           },
         })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             props.method(); // 로드 comment 다시 부른다
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },
