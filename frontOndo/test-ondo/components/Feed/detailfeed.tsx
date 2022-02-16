@@ -187,29 +187,32 @@ function Detailfeed() {
   const __uploadComment = useCallback(
     (e) => {
       e.preventDefault();
-      if (detailData) {
-        const data = {
-          feedId: detailData.feed.feedId,
-          content: comment,
-        };
-        const token = localStorage.getItem("Token");
-        axios({
-          method: "POST",
-          url: process.env.BACK_EC2 + "/comment/write",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          data: data,
-        })
-          .then((res) => {
-            // console.log(res);
-            commentRef.current.value = "";
-            setComment("");
-            __loadComments();
+      if (comment && comment.trim()) {
+
+        if (detailData) {
+          const data = {
+            feedId: detailData.feed.feedId,
+            content: comment,
+          };
+          const token = localStorage.getItem("Token");
+          axios({
+            method: "POST",
+            url: process.env.BACK_EC2 + "/comment/write",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+            data: data,
           })
-          .catch((err) => {
-            // console.log(err);
-          });
+            .then((res) => {
+              // console.log(res);
+              commentRef.current.value = "";
+              setComment("");
+              __loadComments();
+            })
+            .catch((err) => {
+              // console.log(err);
+            });
+        }
       }
     },
     [detailData, comment, commentRef, __loadComments]
@@ -316,9 +319,9 @@ function Detailfeed() {
                   </div>
                   {loginUserName === feedUserName ? (
                     <Popconfirm placement="bottomRight" title='이 피드를 삭제하시겠습니까?' onConfirm={__deleteFeed} okText='네' cancelText='아니요'>
-                    <div className="reply-btn">
-                      <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
-                    </div>
+                      <div className="reply-btn">
+                        <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
+                      </div>
                     </Popconfirm>
                   ) : (
                     ""

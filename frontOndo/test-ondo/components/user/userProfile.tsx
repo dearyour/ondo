@@ -18,10 +18,7 @@ const UserProfile = ({ data }: any) => {
   const [alert, setAlert] = useState<boolean>(false);
   const [isFollowed, setFollowed] = useState<boolean>(true);
   const [ondo, setOndo] = useState<number>(1);
-  const [loading, setLoading] = useState(false);
-  const [followdata, setFollowData] = useState([]);
-  const [followcount, setFollowCount] = useState({ follow: 3, following: 3 });
-  const [followingdata, setFollowingData] = useState([]);
+
 
   useEffect(() => {
     setfollowModalVisible(false);
@@ -30,8 +27,7 @@ const UserProfile = ({ data }: any) => {
     console.log(data)
     if (data) {
       setFollowed(data.followflag)
-      setFollowData(data.followerUserDtos)
-      setFollowingData(data.followingUserDtos)
+
       setTimeout(() => {
         setOndo(data.user.ondo)
 
@@ -39,25 +35,6 @@ const UserProfile = ({ data }: any) => {
     }
   }, [data]);
 
-  const loadMoreDataFollow = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    setFollowCount((prev) => ({ follow: prev.follow + 3, following: prev.following }))
-    setLoading(false)
-
-  };
-
-  const loadMoreDataFollowing = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    setFollowCount((prev) => ({ follow: prev.follow, following: prev.following + 3 }))
-    setLoading(false)
-
-  };
 
   const showFollowModal = () => {
     setfollowModalVisible(true);
@@ -128,6 +105,28 @@ const UserProfile = ({ data }: any) => {
   const handleClose = () => {
     setAlert(false)
   }
+  const Nodata = () => {
+    return (
+      <NodataDiv>
+        <DogyeImg src="/images/dogye/sad.png"></DogyeImg>
+        <DogyeContent>진행중인 도전이 없어요...</DogyeContent>
+      </NodataDiv>
+    )
+  }
+
+  const DogyeImg = styled.img`
+    width: 20%;
+  `
+  const DogyeContent = styled.span`
+    text-align: center;
+  `
+
+  const NodataDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
   return (
     <Wrap>
       {alert ?

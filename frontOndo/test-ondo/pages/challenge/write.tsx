@@ -49,7 +49,7 @@ const WriteChallenge = () => {
       setDateErr('')
     }
     if (!title) {
-      setTitleErr("도전을 선택해주세요.")
+      setTitleErr("제목을 입력해주세요.")
       i++
     } else {
       setTitleErr('')

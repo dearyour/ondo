@@ -35,31 +35,8 @@ const Userfeed = () => {
         router.push('/user/' + username);
       })
   }, [username])
-  const people = {
-    image: 'https://picsum.photos/2500',
-    nickname: 'asdasd',
-  }
-  const Challenge = {
-    image: 'https://picsum.photos/2500',
-  }
-  const Feed = {
-    image: 'https://picsum.photos/2500',
-  }
-  const nowUser = {
-    username: 'asd',
-    image: '',
-    ondo: 22,
-    challenges: [Challenge, Challenge],
-    endChallenges: [Challenge, Challenge, Challenge, Challenge],
-    myChallenges: [Challenge, Challenge, Challenge],
-    feeds: [Feed, Feed, Feed, Feed, Feed],
-    follow: [people, people, people, people,],
-    following: [],
-  }
-  if (username) {
-    nowUser.username = String(username)
 
-  }
+
   return (
     <AppLayout title='마이페이지 | 온도'>
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
@@ -72,9 +49,9 @@ const Userfeed = () => {
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
         <MyTab tab="Feed" key="1">
           <ImageRow>
-            {data && data.myFeed.length >= 1 ? data.myFeed.map((feed: any) => {
+            {data && data.myFeed.length >= 1 ? data.myFeed.map((feed: any, idx: any) => {
               return (
-                <Feedbox show={showModal} control={setShowModal} feed={feed} key={nowUser.ondo++} onClick={() => { setShowModal(feed.feedId) }}></Feedbox>
+                <Feedbox show={showModal} control={setShowModal} feed={feed} key={idx} onClick={() => { setShowModal(feed.feedId) }}></Feedbox>
               )
             }) : <Nothing>작성한 피드가 없습니다.</Nothing>}
           </ImageRow>
@@ -82,26 +59,26 @@ const Userfeed = () => {
         <MyTab tab="도전" key="2">
           <ChallengeDiv>도전 중</ChallengeDiv>
           <ImageRow>
-            {data && data.runChallenge.length >= 1 ? data.runChallenge.map((challenge: any) => {
+            {data && data.runChallenge.length >= 1 ? data.runChallenge.map((challenge: any, idx: any) => {
               return (
-                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+                <Challengebox challenge={challenge} key={idx}></Challengebox>
               )
             }) : <Nothing>진행 중인 도전이 없습니다.</Nothing>}
           </ImageRow>
           <ChallengeDiv>도전 완료</ChallengeDiv>
           <ImageRow>
-            {data && data.compeleteChallenge.length >= 1 ? data.compeleteChallenge.map((challenge: any) => {
+            {data && data.compeleteChallenge.length >= 1 ? data.compeleteChallenge.map((challenge: any, idx: any) => {
               return (
-                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+                <Challengebox challenge={challenge} key={idx}></Challengebox>
               )
             }) : <Nothing>완료한 도전이 없습니다.</Nothing>}
           </ImageRow>
 
           <ChallengeDiv>내가 만든 도전</ChallengeDiv>
           <ImageRow>
-            {data && data.makedChallenge.length >= 1 ? data.makedChallenge.map((challenge: any) => {
+            {data && data.makedChallenge.length >= 1 ? data.makedChallenge.map((challenge: any, idx: any) => {
               return (
-                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+                <Challengebox challenge={challenge} key={idx}></Challengebox>
               )
             }) : <Nothing>개설한 도전이 없습니다.</Nothing>}
           </ImageRow>
