@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Row } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router';
+
 
 
 const FollowUser = ({ user, off1, off2 }: any) => {
@@ -32,7 +33,7 @@ const FollowRow = styled(Row)`
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
   padding: 5px;
   cursor: pointer;
 `

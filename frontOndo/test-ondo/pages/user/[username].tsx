@@ -18,7 +18,7 @@ const Userfeed = () => {
   const router = useRouter()
   const { username } = router.query
   const [data, setdata] = useState<any>('');
-  const [showModal, setShowModal] = useState<number>(0);
+  const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
 
   useEffect(() => {
     if (!username) { return }
@@ -29,7 +29,7 @@ const Userfeed = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        // console.log(res)
+        console.log(res)
         setdata(res.data)
         router.push('/user/' + username);
       })

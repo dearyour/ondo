@@ -8,6 +8,7 @@ import FollowUser from "./followUser";
 import Router, { useRouter } from "next/router";
 import useUser from "store/hooks/userHooks";
 import axios from "axios";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const UserProfile = ({ data }: any) => {
   const router = useRouter();
@@ -17,6 +18,9 @@ const UserProfile = ({ data }: any) => {
   const [alert, setAlert] = useState<boolean>(false);
   const [isFollowed, setFollowed] = useState<boolean>(true);
   const [ondo, setOndo] = useState<number>(1);
+  const [loading, setLoading] = useState(false);
+  const [followdata, setFollowData] = useState([]);
+
   useEffect(() => {
     setUser(data.user);
     setOndo(1);

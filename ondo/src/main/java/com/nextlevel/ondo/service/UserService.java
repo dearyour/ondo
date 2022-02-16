@@ -180,19 +180,18 @@ public class UserService {
         if (image != null) {
             //유저.image 경로 바꿔주기
             tokenuser.setImage(image);
-            userRepository.save(tokenuser);
         }
         //닉네임 바꾸기
         //중복 체크
         User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
-        if (username == null) {
-            tokenuser.setChooseStyle(chooseStyle);
+        tokenuser.setChooseStyle(chooseStyle);
+//        userRepository.save(tokenuser);
+        if (username.equals(tokenuser.getUsername())) {
             userRepository.save(tokenuser);
             return "success";
         } else if (user.getUsername() == null) {
-            tokenuser.setChooseStyle(chooseStyle);
             tokenuser.setUsername(username);
             userRepository.save(tokenuser);
             return "success";

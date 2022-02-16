@@ -40,25 +40,48 @@ const Edit = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [username, onChangeNick] = useState(users.username); // input값
   const [chooseStyle, setChooseStyle] = useState<any>();
+  const [style, setStyle] = useState<any>();
+  const [usernameErr, setUsernameErr] = useState<string>();
+  const { Option } = Select;
 
   const onChangeNickname = useCallback((e) => {
+    setUsernameErr('')
     onChangeNick(e.target.value);
   }, []);
 
+  const StyleChallenge = (e: any) => {
+    setStyle(e);
+  }
+
   useEffect(() => {
+    const token = localStorage.getItem('Token');
+    axios({
+      method: 'get',
+      url: process.env.BACK_EC2 + '/user/modify',
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then(res => {
+        console.log(res)
+        // setImage(res.data.image)
+        // onChangeNick(res.data.username)
+        setChooseStyle(res.data.stylesList)
+      })
     GetUser();
     setImage(users.image);
     onChangeNick(users.username);
+    setStyle(users.chooseStyle)
+    // console.log(users)
 
   }, [])
   // 개인정보 수정
   const onEditNickname = () => {
     const token = localStorage.getItem('Token');
     const formdata = new FormData();
-    console.log(file);
+    // console.log(file);
+    const name = username !== users.username ? username : null;
     formdata.append("file", file);
     formdata.append("username", username);
-    formdata.append("chooseStyle", chooseStyle)
+    formdata.append("chooseStyle", style)
 
     axios({
       method: 'put',
@@ -72,7 +95,7 @@ const Edit = () => {
         // setImage(null)
       })
       .catch((err) => {
-        console.log(err)
+        setUsernameErr("중복된 닉네임입니다.")
       })
   }
 
@@ -153,23 +176,26 @@ const Edit = () => {
             <Title>칭호</Title>
             <StyleInput
               placeholder="현재 보유중인 칭호 목록"
+              value={style ? style : null}
               bordered={false}
               notFoundContent={Nodata()}
               dropdownStyle={{ boxShadow: 'none', border: '1px solid pink', borderRadius: '10px' }}
-            // onChange={ChallengeChange}
+              onChange={StyleChallenge}
             >
-              {/* {challenges
-              ? challenges.map((challenge: any) => {
-                return (
-                  <Option
-                    value={challenge.challengeId}
-                    key={challenge.challengeId}
-                  >
-                    {challenge.title}
-                  </Option>
-                );
-              })
-              : null} */}
+              {chooseStyle && chooseStyle.length > 0
+                ? chooseStyle.map((now: any) => {
+                  return (
+                    <Option
+                      value={now.styleName}
+                      key={now.stylesId}
+                      title={now.content}
+
+                    >
+                      <span className={now.styleName}>{now.styleName}</span> - {now.content}
+                    </Option>
+                  );
+                })
+                : null}
             </StyleInput>
           </Divide>
           <Divide>
@@ -179,11 +205,18 @@ const Edit = () => {
               수정
             </EditBtn>
           </Divide>
+          <Errmsg>{usernameErr ? usernameErr : null}</Errmsg>
         </div>
       </BorderDiv>
     </AppLayout >
   );
 };
+
+const Errmsg = styled.div`
+  color: red;
+  opacity: 80%;
+  margin-left: 100px;
+`
 
 const Title = styled.h3`
   margin-left: 40px;

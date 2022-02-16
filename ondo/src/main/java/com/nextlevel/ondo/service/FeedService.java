@@ -264,6 +264,7 @@ public class FeedService {
         int archived = challengeParticipate.getArchived();
         archived = archived | (1 << dif);
         challengeParticipate.setArchived(archived);
+        challengeParticipateRepository.save(challengeParticipate);
 
         if (beforeArchived != 7 && archived == 7) {
             user.setOndo(user.getOndo() + 1);
