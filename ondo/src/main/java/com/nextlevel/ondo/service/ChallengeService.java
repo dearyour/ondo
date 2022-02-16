@@ -180,4 +180,23 @@ public class ChallengeService {
         return challengeRepository.findByTitleContaining(keyword);
     }
 
+    public List<Challenge> canparticipate() {
+
+        List<Challenge> challenges = challengeRepository.findAll();
+        List<Challenge> canChallenge = new ArrayList<>();
+
+        // 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+        for(Challenge c : challenges){
+            if(Integer.parseInt(formatedNow) <= Integer.parseInt(c.getSDate())){
+                canChallenge.add(c);
+            }
+        }
+       return canChallenge;
+
+    }
 }
