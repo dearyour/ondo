@@ -4,7 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 function Rankfeed(props: any) {
-  console.log(props)
+  // console.log(props)
   return (
     <ul className="friend-list-wrapper">
       {props.num}위 　[ {props.dto.ondo} ˚C ]

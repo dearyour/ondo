@@ -68,8 +68,8 @@ public class UserController {
         params.add("grant_type", "authorization_code");
         params.add("client_id", "44dad20dedd901c8ca6eb5d6fde58baa");
 
-        params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
-        // params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
+//        params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
+         params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
 
         params.add("code", code);
 
@@ -143,8 +143,9 @@ public class UserController {
 
         // 가입자 혹은 비가입자 체크 해서 처리
         User originUser = userService.findUser(kakaoUser.getEmail());
-
+        boolean newUser = false;
         if (originUser.getUsername() == null) {
+            newUser=true;
             System.out.println("기존 회원이 아니기에 자동 회원가입을 진행합니다");
             userService.signUp(kakaoUser);
             originUser = userService.findUser(kakaoUser.getEmail());
@@ -161,6 +162,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("token", oauthToken.getAccess_token());
         resultMap.put("username", originUser.getUsername());
+        resultMap.put("newUser", newUser);
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
