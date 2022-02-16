@@ -22,7 +22,16 @@ function Rankfeed(props: any) {
             {" "}
           </div>
         )}
-        <div className="nickname txt-bold">{props.dto.chooseStyle ? <div><Style className={props.dto.chooseStyle}>{props.dto.chooseStyle}</Style></div> : null}{props.dto.username}</div>
+        <div className="nickname txt-bold">
+          {props.dto.chooseStyle ? (
+            <div>
+              <Style className={props.dto.chooseStyle}>
+                {props.dto.chooseStyle}
+              </Style>
+            </div>
+          ) : null}
+          {props.dto.username}
+        </div>
       </li>
     </ul>
   );
@@ -31,6 +40,6 @@ function Rankfeed(props: any) {
 export default Rankfeed;
 
 const Style = styled.span`
-font-size:10px;
+  font-size: 10px;
   margin-right: 10px;
-`
+`;

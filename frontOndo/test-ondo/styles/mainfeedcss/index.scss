@@ -53,7 +53,6 @@ $yong-blue: #5085e8;
               &::placeholder {
                 color: gray;
               }
-
             }
           }
           .get-image {
@@ -101,6 +100,13 @@ $yong-blue: #5085e8;
                 opacity: 0.8;
                 margin-top: 2px;
               }
+              .timestamps {
+                font-size: 15px;
+                color: rgb(180, 47, 174);
+                opacity: 0.8;
+                margin-top: 2px;
+                cursor: pointer;
+              }
             }
           }
           .contents {
@@ -126,6 +132,7 @@ $yong-blue: #5085e8;
               align-items: center;
               margin-top: 7px;
               color: blueviolet;
+              cursor: pointer;
             }
           }
           .bottom {
