@@ -126,7 +126,7 @@ const WriteChallenge = () => {
           <Write>
             <Space direction='horizontal'>
               <Image src={FightingDogye} width={100} height={100}></Image>
-              <SpeechBubble>도전을 생성해주세요!</SpeechBubble>
+              <SpeechBubble>멋진 도전을 개설해 주세요!</SpeechBubble>
             </Space>
             <RowStyle>
               <Col xs={10} md={10}>
@@ -211,14 +211,15 @@ const Writetitle = styled.h2`
 `
 
 const SpeechBubble = styled.div`
-  width: 250px;
+  width: 300px;
   margin: 50px auto;
   background: #F0F0F0;
   padding: 20px;
   text-align: center;
   font-weight: 1000;
-  color: palevioletred;
-  font-family: arial;
+  font-size: large;
+  /* color: palevioletred;
+  font-family: arial; */
   position: relative;
   border-radius: 10px;
 

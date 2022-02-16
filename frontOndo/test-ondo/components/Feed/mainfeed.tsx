@@ -197,7 +197,7 @@ function Mainfeed() {
                   disabled
                   // ref={contextRef}
                   type="text"
-                  placeholder=" 피드 쓰러가기"
+                  placeholder=" 오늘의 도전 인증하기"
                 // onChange={(e) => setContext(e.target.value)}
                 />
               </div>

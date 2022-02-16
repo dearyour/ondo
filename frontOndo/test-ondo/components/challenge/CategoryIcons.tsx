@@ -33,7 +33,7 @@ const CategoryIcons = (props: any) => {
   // }
 
   return (
-    <Row style={{ marginTop: '100px' }}>
+    <Row style={{ marginTop: '100px', marginBottom: '-20px' }}>
       {
         categoryIcons.map((v, i) => (
           <ColCenter xs={6} md={3} key={i}>

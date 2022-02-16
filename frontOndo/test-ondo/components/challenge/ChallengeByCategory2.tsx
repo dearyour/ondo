@@ -1,9 +1,11 @@
 import React from "react";
-import { Row, Col } from 'antd';
+import { Row, Col, Space } from 'antd';
 import styled from "styled-components";
 import Image from "next/image";
 import Router from "next/router";
 import Head from "next/head";
+import HappyDogye from 'public/images/dogye/happy.png'
+import Link from "next/link";
 
 const ChallengeByCategory2 = (props : any) => {
   const challenges = [...props.categorized];
@@ -47,8 +49,15 @@ const ChallengeByCategory2 = (props : any) => {
     <>
     <Head><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"></link></Head>
     <Row>
-      <Col span={24} offset={0}>
-        <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper>
+      <Col span={24}>
+        {/* <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper> */}
+        <Space direction='horizontal' style={{display: 'flex', justifyContent: 'right', marginBottom: '-2rem'}}>
+          <SpeechBubble>
+            원하는 도전이 없나요? <br />
+            그렇다면 <Link href='/challenge/write'><a>직접 개설</a></Link>해 보세요!
+          </SpeechBubble>
+          <Image src={HappyDogye} width={100} height={100} />
+        </Space>
         <Wrapper>
           {renderCategorizedChallenges()}
         </Wrapper>
@@ -78,6 +87,38 @@ const WriteBtn = styled.button`
   &:hover {
     cursor: pointer;
     background-color: #e7adad;
+  }
+`
+
+const SpeechBubble = styled.div`
+  width: 250px;
+  margin: 50px auto;
+  background: #F0F0F0;
+  padding: 20px;
+  text-align: center;
+  font-weight: 100;
+  font-size: small;
+  /* color: palevioletred;
+  font-family: arial; */
+  position: relative;
+  border-radius: 10px;
+
+  ::before {
+    content: '';
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid #F0F0F0;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #F0F0F0;
+    border-bottom: 10px solid transparent;
+    right: -15px;
+    top: 20px;
+  }
+
+  a{
+    color: #4979ff;
+    text-decoration: underline;
   }
 `
 
