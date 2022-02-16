@@ -20,6 +20,7 @@ const Userfeed = () => {
   const { username } = router.query
   const [data, setdata] = useState<any>('');
   const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
+  const layoutTitle = username + ' 님의 페이지 | 온도'
 
   useEffect(() => {
     if (!username) { return }
@@ -60,8 +61,9 @@ const Userfeed = () => {
     nowUser.username = String(username)
 
   }
+
   return (
-    <AppLayout title='마이페이지 | 온도'>
+    <AppLayout title={layoutTitle}>
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
       {/* <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
         <UpCircleOutlined />
