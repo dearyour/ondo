@@ -139,7 +139,7 @@ const UserProfile = ({ data }: any) => {
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
         <ProfileRight span={4} md={4} offset={1}>
-          {user ? <Nick><Style className={users.chooseStyle}>{users.chooseStyle}</Style> {user.username}</Nick> : null}
+          {user ? <Nick><div><Style className={users.chooseStyle}>{users.chooseStyle}</Style></div> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
               Router.push("/user/profileEdit");
@@ -253,7 +253,7 @@ const UserProfile = ({ data }: any) => {
   );
 };
 
-const Style = styled.div`
+const Style = styled.span`
   font-size: 1rem;
 
 `
@@ -300,7 +300,8 @@ const InnerDiv = styled.div`
 const FollowBtn = styled(Button)`
   margin-top: 10px;
   border-radius: 5px;
-  background-color: #f1e8f1;
+  border: 1px solid #f57af5;
+  background-color: #f5e4f5;
   &:hover {
     background-color: #ebd4eb;
   }
@@ -312,6 +313,7 @@ const ProfileWrap = styled(Row)`
   margin-right: auto;
   /* background-color: #f7eeef; */
   border: 1px solid pink;
+  background-color: #fcf6f7;
   border-radius: 10px;
   padding-top: 20px;
   padding-bottom: 20px;

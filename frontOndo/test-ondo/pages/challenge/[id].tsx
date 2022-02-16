@@ -11,6 +11,7 @@ import Router, { useRouter } from 'next/router'
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import FeedForModal from 'components/Feed/ModalFeed';
+import Pagebar from 'components/NowTitleBar';
 
 const ReadChallenge = () => {
 
@@ -99,7 +100,7 @@ const ReadChallenge = () => {
     const result = [];
     for (let i = 0; i < feeds.length; i++) {
       result.push(
-        <Col xs={8} md={8} key={i}>
+        <Col xs={8} md={6} key={i}>
           <FeedImg src={feeds[i].image} onClick={() => { setShowModal(feeds[i].feedId) }}></FeedImg>
         </Col>
       );
@@ -119,13 +120,20 @@ const ReadChallenge = () => {
     )
   }
 
+  const Title = styled.div`
+    font-size: 1rem;
+    /* padding-left: 3px; */
+    font-family: 'SCDream3';
+
+  `
+
   return (
     <AppLayout title={layoutTitle}>
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
       <Row style={{ marginTop: 20, fontFamily: 'sans-serif' }}>
         <Col xs={0} md={4} />
         <Col xs={24} md={16}>
-          오늘의 도전
+          <Title>오늘의 도전</Title>
           <Divider style={{ borderColor: 'black' }} />
           <ChallengeWrapper>
             <ChallengeImg src={challenge.image} alt="feed-image" />
@@ -197,7 +205,7 @@ const FeedImg = styled.img`
     transition: all 0.3s ease-in-out;
     overflow: hidden;
   }
-  border: 1px solid black;
+  border: none;
   cursor: pointer;
   border-radius:5px;
   /* padding: 2px; */

@@ -246,7 +246,7 @@ function Mainfeed() {
               )}
               {/* <div className="profile-image"></div> */}
 
-              {nickname ? <div className="nickname txt-bold"><Style className={chooseStyle}>{chooseStyle}</Style> {user.nickname}</div> : null}
+              {nickname ? <div className="nickname txt-bold"><div><Style className={chooseStyle}>{chooseStyle}</Style></div> {user.nickname}</div> : null}
             </div>
             <div className="my-friends">
               <div
@@ -276,7 +276,7 @@ function Mainfeed() {
 }
 export default Mainfeed;
 
-const Style = styled.div`
+const Style = styled.span`
   font-size: 12px;
 `
 //유저 이미지 불러오기 ##########

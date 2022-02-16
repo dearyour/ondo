@@ -9,7 +9,7 @@ import { stringify } from "querystring";
 import Modal from "antd/lib/modal/Modal";
 import { Controller } from "react-spring";
 import produce from 'immer';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import useUser from 'store/hooks/userHooks';
 
 interface nowProps {
@@ -197,7 +197,7 @@ const FeedForModal = (props: nowProps) => {
                 <TagWrap>
                   {data && data.tags.map((tag: any, idx: any) => {
                     return (
-                      <Tag key={idx}>#{tag.name}</Tag>
+                      <Tag key={idx} onClick={() => { Router.push('/search/' + tag.name) }}>#{tag.name}</Tag>
                     )
                   })}
                 </TagWrap>
@@ -347,6 +347,10 @@ const Tag = styled.span`
   /* padding:10px; */
   margin-right: 10px;
   color: palevioletred;
+  cursor: pointer;
+  &:hover {
+    color: #709edb;
+  }
 `
 const TagWrap = styled.div`
   padding-left: 20px;
