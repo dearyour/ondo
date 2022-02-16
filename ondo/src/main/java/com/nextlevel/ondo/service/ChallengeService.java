@@ -71,6 +71,7 @@ public class ChallengeService {
                 .isFinished(isFinished)
                 .isStarted(isStarted)
                 .username(user.getUsername())
+                .image(user.getImage())
                 .build();
     }
 
