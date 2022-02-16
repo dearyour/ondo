@@ -133,6 +133,9 @@ $yong-blue: #5085e8;
               margin-top: 7px;
               color: blueviolet;
               cursor: pointer;
+              &:hover {
+                color: #709edb;
+              }
             }
           }
           .bottom {
