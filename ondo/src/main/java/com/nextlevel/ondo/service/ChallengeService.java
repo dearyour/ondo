@@ -150,7 +150,23 @@ public class ChallengeService {
 
     @Transactional(readOnly = true)
     public ChallengePageDto findAllChallenge() {
-        List<Challenge> allChallenges = challengeRepository.findAll();
+        //List<Challenge> allChallenges = challengeRepository.findAll();
+
+        List<Challenge> challenges = challengeRepository.findAll();
+        List<Challenge> allChallenges = new ArrayList<>();
+
+        // 현재 날짜 구하기
+        LocalDate now = LocalDate.now();
+        // 포맷 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 포맷 적용
+        String formatedNow = now.format(formatter);
+        for(Challenge c : challenges){
+            if(Integer.parseInt(formatedNow) <= Integer.parseInt(c.getSDate())){
+                allChallenges.add(c);
+            }
+        }
+
         allChallenges.sort(((o1, o2) -> -Integer.compare(o1.getChallengeParticipate().size(), o2.getChallengeParticipate().size())));
         List<Challenge> top10Challenges = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
