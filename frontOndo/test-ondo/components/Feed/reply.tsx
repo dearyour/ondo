@@ -10,6 +10,9 @@ export default function Reply(props: any) {
   const loginUserName = useSelector(
     (state: RootState) => state.user.users.username
   );
+  const feedUserName = useSelector(
+    (state: RootState) => state.layout.detailData.user.username
+  );
   console.log(loginUserName);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
@@ -150,7 +153,8 @@ export default function Reply(props: any) {
             </div>
             <div className="title txt-bold"></div>
           </div>
-          {loginUserName === props.reply.username ? (
+          {loginUserName === feedUserName ||
+          loginUserName === props.reply.username ? (
             <div className="reply-btn" onClick={__deleteComment}>
               삭제
             </div>

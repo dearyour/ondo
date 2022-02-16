@@ -25,7 +25,9 @@ function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user.users);
-  const chooseStyle = useSelector((state: RootState) => state.user.users.chooseStyle);
+  const chooseStyle = useSelector(
+    (state: RootState) => state.user.users.chooseStyle
+  );
   const image = useSelector((state: RootState) => state.user.users.image);
   const feedstate = useSelector((state: RootState) => state.feed.items);
   const { comments } = useSelector((state: RootState) => state.comment);
@@ -163,7 +165,7 @@ function Mainfeed() {
       top: 120px;
       left: 19%;
     }
-  `
+  `;
 
   // const GoTopBtn = styled.div`
   //   position: fixed;
@@ -199,8 +201,8 @@ function Mainfeed() {
                   disabled
                   // ref={contextRef}
                   type="text"
-                  placeholder=" 오늘의 도전 인증하기"
-                // onChange={(e) => setContext(e.target.value)}
+                  placeholder="     오늘의 도전 인증하기"
+                  // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
               <div className="get-image">
@@ -225,7 +227,7 @@ function Mainfeed() {
                     dto={item}
                     nickname={nickname}
                     image={image}
-                  // comments={comments}
+                    // comments={comments}
                   />
                 );
               })}
@@ -246,7 +248,14 @@ function Mainfeed() {
               )}
               {/* <div className="profile-image"></div> */}
 
-              {nickname ? <div className="nickname txt-bold"><div><Style className={chooseStyle}>{chooseStyle}</Style></div> {user.nickname}</div> : null}
+              {nickname ? (
+                <div className="nickname txt-bold">
+                  <div>
+                    <Style className={chooseStyle}>{chooseStyle}</Style>
+                  </div>{" "}
+                  {user.nickname}
+                </div>
+              ) : null}
             </div>
             <div className="my-friends">
               <div
@@ -278,7 +287,7 @@ export default Mainfeed;
 
 const Style = styled.span`
   font-size: 12px;
-`
+`;
 //유저 이미지 불러오기 ##########
 // const __getUserProfileImage = useCallback(() => {
 //   if (user) {
