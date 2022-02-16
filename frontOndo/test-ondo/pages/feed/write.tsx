@@ -30,7 +30,7 @@ function beforeUpload(file: any) {
   if (!isJpgOrPng) {
     message.error("You can only upload JPG/PNG file!");
   }
-  const isLt10M = file.size / 1024 / 1024 < 10;
+  const isLt10M = true;
   if (!isLt10M) {
     message.error("Image must smaller than 10MB!");
   }
@@ -265,7 +265,7 @@ const Write_feed = () => {
     <AppLayout>
       <Write>
         {/* <Writetitle>피드 작성하기</Writetitle> */}
-        <Space direction='horizontal' style={{justifyContent: 'center'}}>
+        <Space direction='horizontal' style={{ justifyContent: 'center' }}>
           <Image src={FightingDogye} width={100} height={100} />
           <SpeechBubble>피드로 인증해주세요!</SpeechBubble>
         </Space>
