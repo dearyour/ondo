@@ -340,7 +340,7 @@ function Detailfeed() {
                 {detailData.tags.map((item: any, idx: number) => {
                   return (
                     <div
-                      className="body-tag"
+                      className="body-tags"
                       key={idx}
                       onClick={() => {
                         Router.push("/search/" + item.name);
