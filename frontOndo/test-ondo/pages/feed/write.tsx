@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Space } from "antd";
 import AppLayout from "../../components/layout/AppLayout";
 import styles from "css/index.module.css";
 import { Select } from "antd";
@@ -12,6 +12,8 @@ import { feed } from "store/slice/feed";
 import useImg from "store/hooks/imgHooks";
 import CropImg from "components/Cropper";
 import useUser from "store/hooks/userHooks";
+import FightingDogye from 'public/images/dogye/fighting.png';
+import Image from "next/image";
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -262,7 +264,11 @@ const Write_feed = () => {
   return (
     <AppLayout>
       <Write>
-        <Writetitle>피드 작성하기</Writetitle>
+        {/* <Writetitle>피드 작성하기</Writetitle> */}
+        <Space direction='horizontal' style={{justifyContent: 'center'}}>
+          <Image src={FightingDogye} width={100} height={100} />
+          <SpeechBubble>피드로 인증해주세요!</SpeechBubble>
+        </Space>
         {originalImg ? <CropImg></CropImg> : null}
         <MyImage>
           {image ? (
@@ -378,6 +384,33 @@ const Writetitle = styled.h1`
   margin-top: 40px;
   margin-bottom: 20px;
 `;
+
+const SpeechBubble = styled.div`
+  width: 250px;
+  margin: 50px auto;
+  background: #F0F0F0;
+  padding: 20px;
+  text-align: center;
+  font-weight: 1000;
+  font-size: large;
+  /* color: palevioletred;
+  font-family: arial; */
+  position: relative;
+  border-radius: 10px;
+
+  ::before {
+    content: '';
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid #F0F0F0;
+    border-top: 10px solid #F0F0F0;
+    border-bottom: 10px solid transparent;
+    left: -15px;
+    top: 20px;
+  }
+`
 
 const Label = styled.label`
   padding-top: 5px;
