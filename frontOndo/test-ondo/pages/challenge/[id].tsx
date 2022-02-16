@@ -4,7 +4,7 @@ import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
 import { Modal, Button, Col, Row, Divider, Spin } from 'antd';
 import AppLayout from 'components/layout/AppLayout';
-import LoggedInForm from 'components/layout/LoggedInForm';
+import ChallengeOwner from 'components/challenge/ChallengeOwner';
 import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import Router, { useRouter } from 'next/router'
@@ -22,7 +22,9 @@ const ReadChallenge = () => {
   const [isLoading, setLoading] = useState(true);
   const [started, setStarted] = useState(false);
   const [Rstarted, setRstarted] = useState(false);
-
+  const [layoutTitle, setLayoutTitle] = useState<string>();
+  const [ownerImg, setOwnerImg] = useState<string>();
+  const [ownerName, setOwnerName] = useState<string>();
 
   const asd = () => {
     const now = new Date().toDateString()
@@ -44,9 +46,14 @@ const ReadChallenge = () => {
           setFeeds(res.data.feeds)
           setFinished(res.data.finished)
           setStarted(res.data.started)
+          setLayoutTitle(res.data.challenge.title + ' | 온도')
+          setOwnerImg(res.data.image)
+          setOwnerName(res.data.username)
           setLoading(false)
           const now = new Date()
           setRstarted(Number(res.data.challenge.sdate) <= Number(now.getFullYear().toString() + ("00" + (now.getMonth() + 1).toString()).slice(-2) + now.getDate().toString()))
+          console.log(res.data);
+          
         })
         .catch((err) => {
           console.log('상세보기 실패');
@@ -113,7 +120,7 @@ const ReadChallenge = () => {
   }
 
   return (
-    <AppLayout title="도전 상세보기 | 온도">
+    <AppLayout title={layoutTitle}>
       <Row style={{ marginTop: 20, fontFamily: 'sans-serif' }}>
         <Col xs={0} md={4} />
         <Col xs={24} md={16}>
@@ -123,7 +130,8 @@ const ReadChallenge = () => {
             <ChallengeImg src={challenge.image} alt="feed-image" />
             <ChallengeContent>
               <ChallengeTitle>{challenge.title}</ChallengeTitle>
-              <LoggedInForm />
+              {/* <LoggedInForm /> */}
+              <ChallengeOwner img={ownerImg} name={ownerName} />
               <ChallengeDuration>{getDuration(challenge.sdate)}</ChallengeDuration>
               <p>{challenge.content}</p>
 
@@ -157,7 +165,7 @@ const ChallengeWrapper = styled.div`
   width: 100%;
   height: 400px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-  background: #fff8f8;
+  background: #fffafa;
   color: #000;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -186,7 +194,7 @@ const ChallengeTitle = styled.h1`
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0;
-  color: palevioletred;
+  /* color: palevioletred; */
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 `
 

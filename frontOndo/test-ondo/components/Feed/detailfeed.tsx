@@ -7,6 +7,7 @@ import Router from "next/router";
 import axios from "axios";
 import { feedAction } from "store/slice/feed";
 import Tags from "./tag";
+import { Popconfirm } from "antd";
 
 function makeArray(obj: any) {
   const keys = Object.keys(obj);
@@ -314,9 +315,11 @@ function Detailfeed() {
                     {makeFeedTime()}
                   </div>
                   {loginUserName === feedUserName ? (
-                    <div className="reply-btn" onClick={__deleteFeed}>
+                    <Popconfirm placement="bottomRight" title='이 피드를 삭제하시겠습니까?' onConfirm={__deleteFeed} okText='네' cancelText='아니요'>
+                    <div className="reply-btn">
                       <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
                     </div>
+                    </Popconfirm>
                   ) : (
                     ""
                   )}

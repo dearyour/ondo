@@ -102,7 +102,7 @@ const Challenge = () => {
       {/* <Row style={{ marginTop: 20 }}> */}
       {/* <Col xs={0} md={2}></Col> */}
       {/* <Col xs={24} md={24}> */}
-      <Head><link href='https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap' rel="stylesheet"></link></Head>
+      {/* <Head><link href='https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap' rel="stylesheet"></link></Head> */}
       <HotChallenge top10={hotChallenges}></HotChallenge>
       {/* <CategoryIcons changeCategory={(cat:string) => renderCatChallenges(cat)}></CategoryIcons> */}
       <Row>
