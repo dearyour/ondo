@@ -68,51 +68,120 @@ a {
 .자 {
  /* color:aqua; */
  padding: 2px;
- border: 1px solid rgb(216, 123, 139);
- background-color: #f1cdcd;
- color:rgb(230, 109, 109);
+ border: 1px solid rgb(112, 186, 199);
+ background-color: #d7eeee;
+ color:rgb(37, 153, 192);
+ border-radius: 2px;
 }
 
 .헬스왕 {
-
+  padding: 2px;
+  border: 1px solid rgb(209, 196, 76);
+  background-color: #f0f3d9;
+  color:rgb(176, 179, 28);
+  border-radius: 2px;
 }
 
 .환경미화원 {
-
+  padding: 2px;
+  border: 1px solid rgb(76, 209, 83);
+  background-color: #d9f3dd;
+  color:rgb(28, 179, 73);
+  border-radius: 2px;
 }
 
 .취향입니다 {
-
+  padding: 2px;
+  border: 1px solid rgb(76, 178, 209);
+  background-color: #d9ecf3;
+  color:rgb(28, 124, 179);
+  border-radius: 2px;
 }
 
 .공부벌레 {
-
+  padding: 2px;
+  border: 1px solid rgb(96, 76, 209);
+  background-color: #ddd9f3;
+  color:rgb(51, 28, 179);
+  border-radius: 2px;
 }
 
 .바른{
-
+  padding: 2px;
+  border: 1px solid rgb(76, 209, 143);
+  background-color: #d9f3e7;
+  color:rgb(28, 179, 141);
+  border-radius: 2px;
 }
 
 .넓고{
-
+  padding: 2px;
+  border: 1px solid rgb(183, 76, 209);
+  background-color: #f0d9f3;
+  color:rgb(124, 28, 179);
+  border-radius: 2px;
 }
 
 .아이돌{
-  
+  padding: 2px;
+  border: 1px solid rgb(209, 76, 158);
+  background-color: #f3d9ef;
+  color:palevioletred;
+  border-radius: 2px;
 }
 
 .따뜻한{
-
+  padding: 2px;
+  border: 1px solid rgb(185, 209, 76);
+  background-color: #eff3d9;
+  color:rgb(146, 179, 28);
+  border-radius: 2px;
 }
 
 .뜨거운{
-
+  padding: 2px;
+  border: 1px solid rgb(206, 179, 61);
+  background-color: #faf3e1;
+  color:rgb(194, 168, 19);
+  border-radius: 2px;
 }
 
 .불타오르는{
+  padding: 2px;
+  /* border: 2px solid rgb(209, 129, 76); */
+  border: 2px solid;
+  background-color: #f3e6d9;
+  color:rgb(179, 109, 28);
+  border-radius: 2px;
+  border-image: linear-gradient(var(--angle),rgb(245, 206, 77), rgb(253, 157, 31)) 1;
+  --angle: 90deg;
+  /* animation: 5s rotate linear infinite; */
+}
+
+
+.태양 {
+  padding: 2px;
+  border: 2px solid ;
+  /* border-image-slice: 1; */
+  /* border-image-source: linear-gradient(to right,rgb(240, 236, 0) ,rgb(207, 93, 17), rgb(212, 16, 16)); */
+  border-image: linear-gradient(var(--angle), palevioletred , pink, rgb(207, 93, 17), rgb(212, 16, 16)) 1;
+  background-color: #f3d9d9;
+  color:rgb(179, 28, 28);
+  border-radius: 2px;
+
+  --angle: 0deg;
+  animation: 2s rotate linear infinite;
 
 }
 
-.태양{
-  color:red;
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle{
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
 }

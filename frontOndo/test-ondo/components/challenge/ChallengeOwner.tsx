@@ -5,7 +5,7 @@ import { UserOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import Router from "next/router";
 
-const ChallengeOwner = ({img, name} :any) => {
+const ChallengeOwner = ({ img, name, style }: any) => {
   // const image = useSelector((state: RootState) => state.user.image);
   // const { users } = useUser();
   return (
@@ -15,11 +15,13 @@ const ChallengeOwner = ({img, name} :any) => {
         src={img}
         icon={<UserOutlined />}
       />
-      <UserPageLink>{name}</UserPageLink>
+      <UserPageLink><Style className={style}>{style}</Style>{name}</UserPageLink>
     </Space>
   );
 };
-
+const Style = styled.span`
+  margin-right: 10px;
+`
 const UserPageLink = styled.div`
   cursor: pointer;
   padding-left: 3px;

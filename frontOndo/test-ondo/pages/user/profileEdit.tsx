@@ -14,6 +14,7 @@ import axios from "axios";
 import CropImg from "components/Cropper";
 import useImg from "store/hooks/imgHooks";
 import Router from "next/router";
+import StyleDrawer from 'components/user/StyleInfo';
 
 
 function beforeUpload(file: any) {
@@ -191,12 +192,13 @@ const Edit = () => {
                       title={now.content}
 
                     >
-                      <span className={now.styleName}>{now.styleName}</span> - {now.content}
+                      <OptionContent><span className={now.styleName}>{now.styleName}</span> - {now.content}</OptionContent>
                     </Option>
                   );
                 })
                 : null}
             </StyleInput>
+            <StyleDrawer></StyleDrawer>
           </Divide>
           <Divide>
             <h3 className={styles.mx_20}>닉네임</h3>
@@ -211,7 +213,10 @@ const Edit = () => {
     </AppLayout >
   );
 };
-
+const OptionContent = styled.div`
+  padding: 2px 0 2px 0;
+  /* margin: 0px 1px 1px 1px; */
+`
 const Errmsg = styled.div`
   color: red;
   opacity: 80%;
@@ -226,7 +231,7 @@ const Title = styled.h3`
 const StyleInput = styled(Select)`
   box-shadow: none;
   margin: 5px 0 5px 5px;
-  padding: 5px;
+  padding: 5px 5px 5px 5px;
   border-radius: 10px;
   background-color: #ffffff;
   border: 1px solid #edbaba;

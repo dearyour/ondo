@@ -10,6 +10,7 @@ import temp_profile from 'public/images/temp_profile.jpg'
 import Router, { useRouter } from 'next/router'
 import 'antd/dist/antd.css';
 import axios from 'axios';
+import FeedForModal from 'components/Feed/ModalFeed';
 
 const ReadChallenge = () => {
 
@@ -25,12 +26,10 @@ const ReadChallenge = () => {
   const [layoutTitle, setLayoutTitle] = useState<string>();
   const [ownerImg, setOwnerImg] = useState<string>();
   const [ownerName, setOwnerName] = useState<string>();
+  const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
+  const [ownerStyle, setOwnerStyle] = useState();
 
-  const asd = () => {
-    const now = new Date().toDateString()
-    console.log(now)
-    // challenge.sdate
-  }
+
   useEffect(() => {
     if (id) {
       const token = localStorage.getItem('Token')
@@ -49,11 +48,12 @@ const ReadChallenge = () => {
           setLayoutTitle(res.data.challenge.title + ' | 온도')
           setOwnerImg(res.data.image)
           setOwnerName(res.data.username)
+          setOwnerStyle(res.data.style)
           setLoading(false)
           const now = new Date()
           setRstarted(Number(res.data.challenge.sdate) <= Number(now.getFullYear().toString() + ("00" + (now.getMonth() + 1).toString()).slice(-2) + now.getDate().toString()))
           console.log(res.data);
-          
+
         })
         .catch((err) => {
           console.log('상세보기 실패');
@@ -74,7 +74,7 @@ const ReadChallenge = () => {
       }
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         alert('참여합니다.')
         location.reload();
       })
@@ -100,7 +100,7 @@ const ReadChallenge = () => {
     for (let i = 0; i < feeds.length; i++) {
       result.push(
         <Col xs={8} md={8} key={i}>
-          <FeedImg src={feeds[i].image}></FeedImg>
+          <FeedImg src={feeds[i].image} onClick={() => { setShowModal(feeds[i].feedId) }}></FeedImg>
         </Col>
       );
     }
@@ -121,6 +121,7 @@ const ReadChallenge = () => {
 
   return (
     <AppLayout title={layoutTitle}>
+      <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
       <Row style={{ marginTop: 20, fontFamily: 'sans-serif' }}>
         <Col xs={0} md={4} />
         <Col xs={24} md={16}>
@@ -131,7 +132,7 @@ const ReadChallenge = () => {
             <ChallengeContent>
               <ChallengeTitle>{challenge.title}</ChallengeTitle>
               {/* <LoggedInForm /> */}
-              <ChallengeOwner img={ownerImg} name={ownerName} />
+              <ChallengeOwner img={ownerImg} name={ownerName} style={ownerStyle} />
               <ChallengeDuration>{getDuration(challenge.sdate)}</ChallengeDuration>
               <p>{challenge.content}</p>
 
@@ -146,7 +147,7 @@ const ReadChallenge = () => {
               </BottomContent>
             </ChallengeContent>
           </ChallengeWrapper>
-          <Row gutter={8}>{renderPosts()}</Row>
+          <FeedImgWrap gutter={8}>{renderPosts()}</FeedImgWrap>
         </Col>
         <Col xs={0} md={4} />
       </Row>
@@ -181,12 +182,25 @@ const ChallengeImg = styled.img`
   border-radius: 10px 0 0 10px;
   background: #000;
 `
-
+const FeedImgWrap = styled(Row)`
+  margin: 10px 0 20px 0;
+  padding:2px;
+`
 const FeedImg = styled.img`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   padding-top: 10px;
-  border-radius: 10px 0 0 10px;
+  border-radius: 10px 0 0 10px; */
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+  }
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius:5px;
+  /* padding: 2px; */
 `
 
 const ChallengeTitle = styled.h1`

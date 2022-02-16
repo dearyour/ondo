@@ -240,6 +240,7 @@ const FeedForModal = (props: nowProps) => {
                 <CommentInputWrap>
                   <CommentInput
                     type="text"
+                    // autoFocus={true}
                     placeholder="댓글을 입력해 주세요"
                     ref={CommentRef}
                     onKeyUp={(e) => { if (e.key === 'Enter') { WriteComment(); } }}
@@ -267,7 +268,7 @@ const CommentInput = styled.input`
   border: none;
   padding: 5px;
   width: 100%;
-
+  /* height: 100%; */
 `
 const CommentDeleteBtn = styled.span`
   font-size:0.7rem;

@@ -247,8 +247,31 @@ const Login = () => {
         올바른 URL을 다시 입력해 주세요
       </LoginLabel>
       <div>
-        <div className="태양">닉네임</div>
+        {/* <div className="태양">닉네임</div> */}
+        <div><span className="자" style={{ marginRight: '10px' }}>자 이제 시작이야</span>닉네임</div>
+        <br />
+        <div><span className="헬스왕" style={{ marginRight: '10px' }}>헬스왕</span>닉네임</div>
+        <br />
+        <div><span className="환경미화원" style={{ marginRight: '10px' }}>환경미화원</span>닉네임</div>
+        <br />
+        <div><span className="취향입니다" style={{ marginRight: '10px' }}>취향입니다</span>닉네임</div>
+        <br />
+        <div><span className="공부벌레" style={{ marginRight: '10px' }}>공부벌레</span>닉네임</div>
+        <br />
+        <div><span className="바른" style={{ marginRight: '10px' }}>바른</span>닉네임</div>
+        <br />
+        <div><span className="넓고" style={{ marginRight: '10px' }}>넓고</span>닉네임</div>
+        <br />
+        <div><span className="아이돌" style={{ marginRight: '10px' }}>아이돌</span>닉네임</div>
+        <br />
+        <div><span className="따뜻한" style={{ marginRight: '10px' }}>따뜻한</span>닉네임</div>
+        <br />
+        <div><span className="뜨거운" style={{ marginRight: '10px' }}>뜨거운</span>닉네임</div>
+        <br />
+        <div><span className="불타오르는" style={{ marginRight: '10px' }}>불타오르는</span>닉네임</div>
+        <br />
         <div><span className="태양" style={{ marginRight: '10px' }}>태양</span>닉네임</div>
+        {/* <div><span className="따뜻한" style={{ marginRight: '10px' }}>태양</span>닉네임</div> */}
       </div>
       <LoginDiv>
         <LoginLabel htmlFor="user-id">이메일</LoginLabel>

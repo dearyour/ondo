@@ -68,13 +68,9 @@ public class UserController {
         params.add("grant_type", "authorization_code");
         params.add("client_id", "44dad20dedd901c8ca6eb5d6fde58baa");
 
-<<<<<<< HEAD
-//        params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
-        params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
-=======
         params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
-//      params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
->>>>>>> 1385764d3d4dbc0ae352a0b80f06c4cfd511d62f
+        // params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
+
         params.add("code", code);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -157,9 +153,10 @@ public class UserController {
         System.out.println("자동 로그인을 진행합니다.");
         // 로그인 처리
         /*
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+         * Authentication authentication = authenticationManager
+         * .authenticate(new
+         * UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
+         * SecurityContextHolder.getContext().setAuthentication(authentication);
          */
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("token", oauthToken.getAccess_token());
@@ -167,10 +164,10 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
-
     // 유저 피드 페이지
     @GetMapping("/user/feed/{username}")
-    public ResponseEntity<FeedUserDto> feedUser(@PathVariable String username, @RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<FeedUserDto> feedUser(@PathVariable String username,
+            @RequestHeader("Authorization") String accessToken) {
         FeedUserDto feedUserDto = userService.feedUser(username, accessToken);
         return new ResponseEntity<FeedUserDto>(feedUserDto, HttpStatus.OK);
     }
@@ -198,14 +195,13 @@ public class UserController {
     }
 
     // 개인 정보 수정 버튼 클릭
-    @PutMapping(value = "/user/modify", consumes = {"multipart/form-data"})
+    @PutMapping(value = "/user/modify", consumes = { "multipart/form-data" })
     public ResponseEntity<String> modifyUser(
-            @RequestPart(value = "file", required = false) MultipartFile multipartFile
-            , @RequestPart String username
-            , @RequestPart String chooseStyle
-            , @RequestHeader("Authorization") String accessToken) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart String username,
+            @RequestPart String chooseStyle, @RequestHeader("Authorization") String accessToken) throws IOException {
         String image = null;
-        if (multipartFile == null) image = null;
+        if (multipartFile == null)
+            image = null;
         else {
             image = s3Uploader.upload(multipartFile, "static", "user");
         }
