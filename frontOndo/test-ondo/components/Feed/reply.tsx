@@ -135,7 +135,14 @@ export default function Reply(props: any) {
           )}
           <div className="feed-desc">
             {/* <div className="nickname">{props.item.username}</div> */}
-            <div className="nickname">{props.reply.username}</div>
+            <div
+              className="nickname"
+              onClick={() => {
+                Router.push(`/user/${props.reply.username}`);
+              }}
+            >
+              {props.reply.username}
+            </div>
             <div className="timestamp">
               {getStartDate(props.reply.comment.createdDate)}{" "}
               {makeFeedTime(props.reply.comment.createdDate)}
