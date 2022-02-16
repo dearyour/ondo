@@ -4,7 +4,7 @@ import { UserParams } from "../interfaces/User.interface";
 const initialState: UserParams | any = {
   users: [],
   userObj: [],
-  nickname: "카리나",
+  nickname: "",
   email: "base@base.com",
   session: "",
   error: null,
@@ -19,8 +19,8 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    profileEdit: (state) => {},
-    getUser: (state) => {},
+    profileEdit: (state) => { },
+    getUser: (state) => { },
     loadingStart: (state) => {
       state.isLoading = true;
     },
@@ -53,7 +53,7 @@ export const userSlice = createSlice({
       const token = localStorage.getItem("Token");
       state.session = token;
     },
-    getUserObj: (state, { payload }) => {},
+    getUserObj: (state, { payload }) => { },
     setUserObj: (state, { payload }) => {
       state.userObj = payload;
     },

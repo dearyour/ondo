@@ -1,22 +1,21 @@
 package com.nextlevel.ondo.domain.dto.user;
 
-import com.nextlevel.ondo.domain.Feed;
+import com.nextlevel.ondo.domain.Styles;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
-@NoArgsConstructor
 public class ModifyUserDto {
-    private Long feedId;
+    private String username;
     private String image;
-    private String content;
+    private List<Styles> stylesList;
 
-    public Feed toEntity(long challengeId, long userId) {
-        return Feed.builder()
-                .challengeId(challengeId)
-                .image(image)
-                .content(content)
-                .userId(userId)
-                .build();
+    @Builder
+    public ModifyUserDto(String username, String image, List<Styles> stylesList) {
+        this.username = username;
+        this.image = image;
+        this.stylesList = stylesList;
     }
 }

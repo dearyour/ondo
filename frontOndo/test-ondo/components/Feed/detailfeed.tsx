@@ -30,6 +30,7 @@ function Detailfeed() {
   const feedUserName = useSelector(
     (state: RootState) => state.layout.detailData.user.username
   );
+
   const layout = useSelector((state: RootState) => state.layout);
   const image = useSelector((state: RootState) => state.user.users.image);
   const detailData = useSelector((state: RootState) => state.layout.detailData);
@@ -92,12 +93,10 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
   // const __deleteComment = useCallback(
@@ -142,6 +141,7 @@ function Detailfeed() {
           .then((res) => {
             console.log(res.data);
             dispatch(feedAction.getFeed());
+            __closeDetail();
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
@@ -242,7 +242,7 @@ function Detailfeed() {
 
   const __closeDetail = useCallback(() => {
     dispatch(layoutAction.updateDetailState(false));
-    dispatch(layoutAction.likeList(undefined));
+    dispatch(layoutAction.likeList(undefined)); //이거 거의안씀
     // dispatch(layoutAction.updateDetailData(undefined));
     // dispatch(layoutAction.updateDetailData(detailData));
     // dispatch(layoutAction.likeList("ok" ? "delete" : "ok"));
@@ -269,7 +269,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => {};
+    return () => { };
   }, [__loadComments]);
   // console.log(detailData.tags.map((it: any) => it) + "###");
   // console.log(detailData.tags[0].name + "###");
@@ -315,7 +315,7 @@ function Detailfeed() {
                   </div>
                   {loginUserName === feedUserName ? (
                     <div className="reply-btn" onClick={__deleteFeed}>
-                      <img src="/assets/feed/pngwing.com7.png" alt="삭제" />
+                      <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
                     </div>
                   ) : (
                     ""
@@ -324,7 +324,7 @@ function Detailfeed() {
               </div>
               <div className="body-tag">
                 {detailData.tags.map((item: any, idx: number) => {
-                  return <div className="body-tag">[# {item.name} ]　</div>;
+                  return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
                   // <Tags item={item.name}></Tags>;
                 })}
               </div>
@@ -337,8 +337,8 @@ function Detailfeed() {
                         // detailData.likeflag === false &&
                         likeState === "ok"
                           ? // || detailData.likeflag === false
-                            // && likelist === "ok"
-                            "/assets/feed/pngwing.com2.png"
+                          // && likelist === "ok"
+                          "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"

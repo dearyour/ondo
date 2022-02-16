@@ -67,7 +67,8 @@ const Write_feed = () => {
 
   // 도전 받아오기
   useEffect(() => {
-    const token = localStorage.getItem("Token");
+    const token = localStorage.getItem('Token');
+    setImage(null)
     axios({
       method: "get",
       url: process.env.BACK_EC2 + "/feed/create",
@@ -105,14 +106,14 @@ const Write_feed = () => {
       setImageErr("이미지는 필수입니다.");
       i++;
     } else {
-      setImageErr("");
+      setImageErr('')
     }
     // if (hashArr.length < 1) {
     //   setTagErr("태그를 입력 후 엔터를 눌러주세요.")
     //   i++
     // } else {
-    setTagErr("");
     // }
+    setTagErr('')
     if (!challenge) {
       console.log(challenge);
       setChallengeErr("도전을 선택해주세요.");
@@ -198,6 +199,28 @@ const Write_feed = () => {
   `;
   const uploadButton = <UpBtn icon={<UploadOutlined />}>Upload</UpBtn>;
 
+  const Nodata = () => {
+    return (
+      <NodataDiv>
+        <DogyeImg src="/images/dogye/sad.png"></DogyeImg>
+        <DogyeContent>진행중인 도전이 없어요...</DogyeContent>
+      </NodataDiv>
+    )
+  }
+
+  const DogyeImg = styled.img`
+    width: 20%;
+  `
+  const DogyeContent = styled.span`
+    text-align: center;
+  `
+
+  const NodataDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
   const onKeyUp = (e: any) => {
     if (process.browser) {
       /* 요소 불러오기, 만들기*/
@@ -272,18 +295,20 @@ const Write_feed = () => {
             placeholder="현재 진행중인 도전 목록"
             bordered={false}
             onChange={ChallengeChange}
+            notFoundContent={Nodata()}
+            dropdownStyle={{ boxShadow: 'none', border: '1px solid pink', borderRadius: '10px' }}
           >
             {challenges
               ? challenges.map((challenge: any) => {
-                  return (
-                    <Option
-                      value={challenge.challengeId}
-                      key={challenge.challengeId}
-                    >
-                      {challenge.title}
-                    </Option>
-                  );
-                })
+                return (
+                  <Option
+                    value={challenge.challengeId}
+                    key={challenge.challengeId}
+                  >
+                    {challenge.title}
+                  </Option>
+                );
+              })
               : null}
           </WriteInput>
         </WriteDiv>

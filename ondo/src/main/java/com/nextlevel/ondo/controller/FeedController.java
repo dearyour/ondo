@@ -43,8 +43,8 @@ public class FeedController {
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<Feed> feedModify(@RequestBody ModifyFeedDto modifyFeedDtoDto, @RequestHeader("Authorization") String token) {
-        Feed feed = feedService.modifyFeed(modifyFeedDtoDto, token);
+    public ResponseEntity<Feed> feedModify(@RequestBody ModifyFeedDto modifyFeedDto, @RequestHeader("Authorization") String token) {
+        Feed feed = feedService.modifyFeed(modifyFeedDto, token);
         // 토큰에서 온 아이디랑 피드 아이디가 다를 때 (작성자가 아니므로 못고침)
         if (feed == null) {
             return ResponseEntity.status(403).body(null);

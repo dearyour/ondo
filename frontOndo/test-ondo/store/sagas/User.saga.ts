@@ -68,7 +68,7 @@ function* getUserState() {
       // console.log("유저통신전");
       const userdata: AxiosResponse = yield call(GetUserState, token);
       // console.log("유저통신후");
-      console.log(userdata);
+      // console.log(userdata);
       yield put(userActions.setEmail(userdata));
       yield put(userActions.setnickname(userdata));
       yield put(userActions.setuserdata(userdata));
@@ -94,7 +94,7 @@ function* getUserObjState(username: any) {
         token
       );
       console.log("객체유저통신후");
-      console.log(userObjdata);
+      // console.log(userObjdata);
       yield put(userActions.setUserObj(userObjdata));
     }
   } catch (err) {

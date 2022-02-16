@@ -74,6 +74,7 @@ const TextContainerMiddle = styled.div`
   display: grid;
   flex: 1 1 0%;
   place-items: center;
+  z-index: 10;
 
   span {
     font-size: 3rem;

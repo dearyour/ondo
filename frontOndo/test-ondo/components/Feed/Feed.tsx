@@ -111,12 +111,10 @@ const Feed = (props: any) => {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)}  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)}  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
   //////////////////////////////
   const getStartDate = () => {
@@ -126,7 +124,7 @@ const Feed = (props: any) => {
     const sm = newdate.getMonth() + 1;
     const sd = newdate.getDate();
 
-    return sy + "-" + sm + "-" + sd;
+    return sy + "-" + (("00" + sm.toString()).slice(-2)) + "-" + (("00" + sd.toString()).slice(-2));
   };
   // console.log(startDate);
   const adate = new Date(startDate);
@@ -183,9 +181,9 @@ const Feed = (props: any) => {
     <div className="feed">
       <div
         className="top"
-        // onClick={() => {
-        //   Router.push(`/user/${props.dto.username}`);
-        // }}
+      // onClick={() => {
+      //   Router.push(`/user/${props.dto.username}`);
+      // }}
       >
         {props.dto.user.image && (
           <div
@@ -224,7 +222,7 @@ const Feed = (props: any) => {
       <div className="contents">
         <div className="body-tag">
           {props.dto.tags.map((item: any, idx: number) => {
-            return <div className="body-tag">[# {item.name} ]　</div>;
+            return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
             // <Tags item={item.name}></Tags>;
           })}
         </div>
@@ -247,7 +245,7 @@ const Feed = (props: any) => {
               src={
                 props.dto.likeflag === false
                   ? //  && likelist === "ok"
-                    "/assets/feed/pngwing.com2.png"
+                  "/assets/feed/pngwing.com2.png"
                   : "/assets/feed/pngwing.com.png"
               }
               alt="좋아요"

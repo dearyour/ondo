@@ -3,34 +3,34 @@ import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import { Modal, Button, Col, Row } from 'antd';
 import styled from 'styled-components';
-import Router from 'next/router'
+import Router from 'next/router';
 
 
-const Challengebox = ({ challenge }: any) => {
+const ImgboxChallenge = ({ obj }: any) => {
   const [showTitle, setShowTitle] = useState<boolean>(false);
 
   const mouseOver = () => {
-    setTimeout(() => {
-      setShowTitle(true)
-    }, 200)
+    setShowTitle(true)
   }
 
   const mouseOut = () => {
     setShowTitle(false)
   }
-
   return (
-    <Title span={24} sm={12} md={8} lg={6}>
-      <Content src={challenge.image} onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={() => { Router.push('/challenge/' + challenge.challengeId) }}></Content>
-      {showTitle ? <ChallengeTitle>{challenge.title}</ChallengeTitle> : null}
+    <Title className='swiper-slide'>
+      {/* <Content src={obj.image}></Content> */}
+      <Content src={obj.image} onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={() => { Router.push(obj.url) }}></Content>
+      {showTitle ? <ChallengeTitle>{obj.title}</ChallengeTitle> : null}
     </Title>
 
   )
 }
 
-const Title = styled(Col)`
+const Title = styled.div`
   padding: 10px;
-  position: relative;
+  margin-top:auto;
+  margin-bottom:auto;
+  height: 100%;
 
 `
 
@@ -41,14 +41,11 @@ const Content = styled.img`
     overflow: hidden;
     opacity: 20%;
   }
+  border: 1px solid black;
   cursor: pointer;
   border-radius:5px;
-  border: 1px solid pink;
-  /* box-shadow: 0 1px 1px 0; */
 `
 const ChallengeTitle = styled.div`
-/* background-color: gray;
-opacity: 50%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,8 +55,8 @@ opacity: 50%; */
   width: 100%;
   height: 100%;
   font-size: 2rem;
-  transition: all 1.3s ease-in-out;
+  /* transition: all 0.3s ease-in-out; */
   position: absolute;
 `
 
-export default Challengebox;
+export default ImgboxChallenge;

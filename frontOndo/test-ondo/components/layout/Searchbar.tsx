@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
 import useInput from 'store/hooks/useInput';
@@ -20,6 +20,7 @@ const SearchContainer = styled.div`
 
 const SearchInput = styled.input`
     padding-left: 48px;
+    padding-right:36px;
     border: none;
     position: absolute;
     top: 0;
@@ -44,6 +45,8 @@ const IconButton = styled.button`
     z-index: 1;
     cursor: pointer;
     background: none;
+    /* transform: scale(1.05); */
+    transition: all 1.3s ease-in-out;
 
     &:hover {
         color: white;
@@ -70,11 +73,18 @@ const IconButton = styled.button`
 
 function Searchbar(): JSX.Element {
     const router = useRouter();
-    const [keyword, setKeyword] = useInput('');
+    const [keyword, setKeyword] = useState('');
     const [isActive, setIsActive] = useState(false);
     const keywordChange: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setKeyword(e)
+        setKeyword(e.target.value)
     }
+    useEffect(() => {
+        if (keyword) {
+            setIsActive(true)
+        } else {
+            setIsActive(false)
+        }
+    }, [keyword])
 
     const toggleSearch = () => {
         setIsActive(!isActive);
@@ -88,14 +98,15 @@ function Searchbar(): JSX.Element {
     return (
         <SearchContainer>
             <IconButton onClick={Search}>
-                {isActive ? (
-                    <CloseOutlined size={18} />
-                ) : (
-                    <SearchOutlined size={22} />
-                )
-                }
+                <SearchOutlined size={22} />
             </IconButton>
             <SearchInput placeholder='검색' value={keyword} onKeyUp={(e) => { if (e.key === 'Enter') { Search(); } }} onChange={keywordChange} />
+            {isActive ? (
+                <IconButton onClick={() => { setKeyword('') }}>
+                    <CloseOutlined size={18} />
+                </IconButton>
+            ) : null
+            }
         </SearchContainer>
     );
 }

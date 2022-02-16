@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Modal, Button, Col, Row, Alert } from "antd";
+import { Modal, Button, Col, Row, Alert, Progress } from "antd";
 import Image from "next/image";
 import styled from "styled-components";
 import temp_profile from "public/images/temp_profile.jpg";
@@ -8,6 +8,7 @@ import FollowUser from "./followUser";
 import Router, { useRouter } from "next/router";
 import useUser from "store/hooks/userHooks";
 import axios from "axios";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const UserProfile = ({ data }: any) => {
   const router = useRouter();
@@ -16,10 +17,19 @@ const UserProfile = ({ data }: any) => {
   const { users } = useUser();
   const [alert, setAlert] = useState<boolean>(false);
   const [isFollowed, setFollowed] = useState<boolean>(true);
+  const [ondo, setOndo] = useState<number>(1);
+  const [loading, setLoading] = useState(false);
+  const [followdata, setFollowData] = useState([]);
+
   useEffect(() => {
     setUser(data.user);
+    setOndo(1);
     if (data) {
       setFollowed(data.followflag)
+      setTimeout(() => {
+        setOndo(data.user.ondo)
+
+      }, 1000);
     }
   }, [data]);
   const showFollowModal = () => {
@@ -108,11 +118,18 @@ const UserProfile = ({ data }: any) => {
               Router.push("/user/profileEdit");
             }}
           >
-            {data.modifyflag ? <div><UserOutlined />개인정보 수정</div> : null}
+            {data.modifyflag ? <ProfileEdit><UserOutlined />개인정보 수정</ProfileEdit> : null}
           </Profileedit>
         </ProfileRight>
         <Col span={4} md={8} offset={1}>
-          <UserStates>온도  {user ? user.ondo : null}°C</UserStates>
+          <UserStates>온도   {user ? <span>   {user.ondo}</span> : null}°C  {user ? <OndoProgress
+            strokeColor={{
+              '0%': '#058cec',
+              '100%': '#ff0000',
+            }}
+            percent={ondo}
+            showInfo={false}
+          /> : null}</UserStates>
           <ProfileDiv>
             <InnerDiv>도전 중</InnerDiv>
             {user && user.challengeParticipate
@@ -123,11 +140,11 @@ const UserProfile = ({ data }: any) => {
           </ProfileDiv>
           <ProfileDiv>
             <Fspan onClick={showFollowModal}>
-              <InnerDiv>팔로워 </InnerDiv>
+              <FollowDiv>팔로워</FollowDiv><span> </span>
               {data ? <InnerDiv>{data.followerUserDtos.length}</InnerDiv> : 0}
             </Fspan>
             <Fspan onClick={showfollowingModal}>
-              <InnerDiv>팔로잉</InnerDiv>
+              <FollowDiv>팔로잉</FollowDiv>
               {data ? <InnerDiv>{data.followingUserDtos.length}</InnerDiv> : 0}
             </Fspan>
           </ProfileDiv>
@@ -190,6 +207,28 @@ const UserProfile = ({ data }: any) => {
   );
 };
 
+const OndoProgress = styled(Progress)`
+  transition: all 2.0s ease-in-out;
+`
+
+const FollowDiv = styled.div`
+  border-radius: 5px;
+  /* border: 1px solid palevioletred; */
+  margin: 0 20px 0 0;
+  color: #9e1b7d;
+  display:inline;
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    color: palevioletred;
+  }
+`
+
+const ProfileEdit = styled.div`
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    color: palevioletred;
+  }
+`
 const Wrap = styled.div`
   margin-top: 20px;
 `
@@ -250,6 +289,9 @@ const Profileedit = styled.div`
 `;
 const Fspan = styled.span`
   cursor: pointer;
+  /* border: 1px solid palevioletred;
+  padding: 3px;
+  margin-right: 5px; */
 `;
 
 const Nick = styled.h2`

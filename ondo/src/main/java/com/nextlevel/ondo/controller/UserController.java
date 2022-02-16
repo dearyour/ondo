@@ -8,6 +8,7 @@ import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
 import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
+import com.nextlevel.ondo.domain.dto.user.ModifyUserDto;
 import com.nextlevel.ondo.service.UserService;
 import com.nextlevel.ondo.util.KakaoUtil;
 import com.nextlevel.ondo.util.S3Uploader;
@@ -186,9 +187,9 @@ public class UserController {
 
     // 개인 정보 수정 화면
     @GetMapping("/user/modify")
-    public ResponseEntity<FollowUserDto> beforemodifyUser(@RequestHeader("Authorization") String accessToken){
-        FollowUserDto userDto = userService.beforemodifyUser(accessToken);
-        return new ResponseEntity<FollowUserDto>(userDto, HttpStatus.OK);
+    public ResponseEntity<ModifyUserDto> beforemodifyUser(@RequestHeader("Authorization") String accessToken) {
+        ModifyUserDto userDto = userService.beforemodifyUser(accessToken);
+        return new ResponseEntity<ModifyUserDto>(userDto, HttpStatus.OK);
     }
 
     // 개인 정보 수정 버튼 클릭
@@ -196,14 +197,15 @@ public class UserController {
     public ResponseEntity<String> modifyUser(
             @RequestPart(value = "file", required = false) MultipartFile multipartFile
             , @RequestPart String username
+            , @RequestPart String chooseStyle
             , @RequestHeader("Authorization") String accessToken) throws IOException {
         String image = null;
-        if(multipartFile == null) image = null;
-        else{
+        if (multipartFile == null) image = null;
+        else {
             image = s3Uploader.upload(multipartFile, "static", "user");
         }
-        String result = userService.modifyUser(image,username,accessToken);
-        if(result.equals("fail")){
+        String result = userService.modifyUser(image, username, accessToken, chooseStyle);
+        if (result.equals("fail")) {
             return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<String>(result, HttpStatus.OK);
