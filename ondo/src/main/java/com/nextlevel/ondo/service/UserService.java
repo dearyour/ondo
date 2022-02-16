@@ -172,7 +172,7 @@ public class UserService {
         return userDto;
     }
 
-    public String modifyUser(String image, String username, String accessToken,String chooseStyle) {
+    public String modifyUser(String image, String username, String accessToken, String chooseStyle) {
 
         String token = accessToken.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(token);
@@ -186,7 +186,8 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
-        tokenuser.setChooseStyle(chooseStyle);
+        if (!"null".equals(chooseStyle))
+            tokenuser.setChooseStyle(chooseStyle);
 //        userRepository.save(tokenuser);
         if (username.equals(tokenuser.getUsername())) {
             userRepository.save(tokenuser);
