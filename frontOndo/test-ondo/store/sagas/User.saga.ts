@@ -37,8 +37,9 @@ function* getKakaoKey() {
     yield put(userActions.getKakaoKeySuccess(response.token));
     if (response.newUser) {
       Router.push("/user/profileEdit")
+    } else {
+      Router.push("/feedMain");
     }
-    Router.push("/feedMain");
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
     Router.push("/")
