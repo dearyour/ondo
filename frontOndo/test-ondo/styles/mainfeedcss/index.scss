@@ -162,7 +162,7 @@ $yong-blue: #5085e8;
             .like {
               margin-right: 24px;
               &:active {
-                animation: box-ani 1s linear forwards; /* 애니메이션 적용 */
+                animation: box-ani 0.1s linear forwards; /* 애니메이션 적용 */
               }
             }
           }
@@ -244,6 +244,6 @@ $yong-blue: #5085e8;
     transform: translate(0, 0);
   }
   to {
-    transform: translate(100px, 100px);
+    transform: translate(10px, 10px);
   }
 }
