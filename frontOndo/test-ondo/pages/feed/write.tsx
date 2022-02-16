@@ -262,7 +262,7 @@ const Write_feed = () => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout title="도전 인증 피드 작성하기 | 온도">
       <Write>
         {/* <Writetitle>피드 작성하기</Writetitle> */}
         <Space direction='horizontal' style={{ justifyContent: 'center' }}>

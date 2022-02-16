@@ -118,7 +118,7 @@ const WriteChallenge = () => {
   }
 
   return (
-    <AppLayout title='도전 생성 | 온도'>
+    <AppLayout title='도전 개설하기 | 온도'>
       {originalImg ? <CropImg></CropImg> : null}
       <Row>
         <Col xs={0} md={6}></Col>

@@ -12,6 +12,7 @@ import styled from 'styled-components';
 
 const SearchPage = () => {
   const [data, setData] = useState({ challenges: [], feeds: [], users: [], });
+  const [layoutTitle, setLayoutTitle] = useState('');
 
   const router = useRouter()
   const { keyword } = router.query
@@ -29,13 +30,14 @@ const SearchPage = () => {
         .then((res) => {
           console.log(res.data)
           setData(res.data)
+          setLayoutTitle(keyword + ' : 온도 통합검색')
         })
     }
   }, [keyword]), [keyword])
 
 
   return (
-    <AppLayout>
+    <AppLayout title={layoutTitle}>
       <Wrap>
         <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={data.challenges}></SearchResultChallenge>
         <DivideLine />
