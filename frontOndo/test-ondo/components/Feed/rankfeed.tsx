@@ -22,7 +22,7 @@ function Rankfeed(props: any) {
             {" "}
           </div>
         )}
-        <div className="nickname txt-bold"><div><Style className={props.dto.chooseStyle}>{props.dto.chooseStyle}</Style></div>{props.dto.username}</div>
+        <div className="nickname txt-bold">{props.dto.chooseStyle ? <div><Style className={props.dto.chooseStyle}>{props.dto.chooseStyle}</Style></div> : null}{props.dto.username}</div>
       </li>
     </ul>
   );
