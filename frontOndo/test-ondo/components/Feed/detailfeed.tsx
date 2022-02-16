@@ -354,7 +354,7 @@ function Detailfeed() {
               </div>
               <div className="body">{detailData.feed.content}</div>
               <div className="bottom">
-                <div className="like">
+                <div className="like" onClick={__updateLike}>
                   <div className="asset">
                     <img
                       src={
@@ -366,7 +366,6 @@ function Detailfeed() {
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"
-                      onClick={__updateLike}
                     />
                   </div>
                   <div className="title txt-bold">
