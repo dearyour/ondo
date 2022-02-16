@@ -129,16 +129,22 @@ const UserProfile = ({ data }: any) => {
 
   return (
     <Wrap>
-      {alert ?
+      {/* {alert ?
         <FollowAlert message="정상적으로 처리되었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
-        : null}
+        : null} */}
+        {
+          alert && !isFollowed && <FollowAlert message="팔로우하였습니다." type="info" closable afterClose={handleClose}></FollowAlert>
+        }
 
-      <ProfileWrap>
-        <ProfileCol span={14} md={8}>
+        {
+          alert && isFollowed && <FollowAlert message="언팔로우하었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
+        }
+      <ProfileWrap justify="space-around">
+        <ProfileCol md={7}>
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
-        <ProfileRight span={4} md={4} offset={1}>
-          {user ? <Nick><div><Style className={user.chooseStyle}>{user.chooseStyle}</Style></div> {user.username}</Nick> : null}
+        <ProfileRight md={7}>
+          {user ? <Nick><div><Style className={users.chooseStyle}>{users.chooseStyle}</Style></div> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
               Router.push("/user/profileEdit");
@@ -147,7 +153,7 @@ const UserProfile = ({ data }: any) => {
             {data.modifyflag ? <ProfileEdit><UserOutlined />개인정보 수정</ProfileEdit> : null}
           </Profileedit>
         </ProfileRight>
-        <Col span={4} md={8} offset={1}>
+        <Col md={8}>
           <UserStates>온도   {user ? <span>   {user.ondo}</span> : null}°C  {user ? <OndoProgress
             strokeColor={{
               '0%': '#058cec',

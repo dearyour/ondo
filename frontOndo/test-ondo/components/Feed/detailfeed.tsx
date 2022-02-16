@@ -184,11 +184,11 @@ function Detailfeed() {
     }
   }, []);
   // 댓글 작성
+
   const __uploadComment = useCallback(
     (e) => {
       e.preventDefault();
-      if (comment && comment.trim()) {
-
+      if (comment.length > 0 && comment.trim()) {
         if (detailData) {
           const data = {
             feedId: detailData.feed.feedId,
@@ -318,7 +318,13 @@ function Detailfeed() {
                     {makeFeedTime()}
                   </div>
                   {loginUserName === feedUserName ? (
-                    <Popconfirm placement="bottomRight" title='이 피드를 삭제하시겠습니까?' onConfirm={__deleteFeed} okText='네' cancelText='아니요'>
+                    <Popconfirm
+                      placement="bottomRight"
+                      title="이 피드를 삭제하시겠습니까?"
+                      onConfirm={__deleteFeed}
+                      okText="네"
+                      cancelText="아니요"
+                    >
                       <div className="reply-btn">
                         <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
                       </div>
@@ -330,7 +336,11 @@ function Detailfeed() {
               </div>
               <div className="body-tag">
                 {detailData.tags.map((item: any, idx: number) => {
-                  return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
+                  return (
+                    <div className="body-tag" key={idx}>
+                      [# {item.name} ]
+                    </div>
+                  );
                   // <Tags item={item.name}></Tags>;
                 })}
               </div>
