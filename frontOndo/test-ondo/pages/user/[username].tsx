@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios';
 import { UpCircleOutlined } from '@ant-design/icons';
 import FeedForModal from 'components/Feed/ModalFeed';
+import ScrollToTop from 'components/ScrollToTop';
 
 const { TabPane } = Tabs;
 
@@ -62,9 +63,9 @@ const Userfeed = () => {
   return (
     <AppLayout title='마이페이지 | 온도'>
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
-      <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
+      {/* <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
         <UpCircleOutlined />
-      </GoTopBtn>
+      </GoTopBtn> */}
       <UserProfile data={data}></UserProfile>
       {/* <FeedModal setShowModal={setShowModal} showModal={showModal}></FeedModal> */}
       <DivdeLine />
@@ -106,6 +107,7 @@ const Userfeed = () => {
           </ImageRow>
         </MyTab>
       </Tabs>
+      <ScrollToTop />
     </AppLayout>
   )
 };

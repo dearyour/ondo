@@ -3,8 +3,7 @@ import { Row, Col } from 'antd';
 import styled from "styled-components";
 import Image from "next/image";
 import Router from "next/router";
-// import 'styles/challengecss/challenge.scss';
-
+import Head from "next/head";
 
 const ChallengeByCategory2 = (props : any) => {
   const challenges = [...props.categorized];
@@ -45,6 +44,8 @@ const ChallengeByCategory2 = (props : any) => {
   }
 
   return (
+    <>
+    <Head><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"></link></Head>
     <Row>
       <Col span={24} offset={0}>
         <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper>
@@ -53,6 +54,7 @@ const ChallengeByCategory2 = (props : any) => {
         </Wrapper>
       </Col>
     </Row>
+    </>
   )
 }
 
@@ -80,7 +82,7 @@ const WriteBtn = styled.button`
 `
 
 const Wrapper = styled.div`
-  /* font-family: "Noto Sans", sans-serif; */
+  font-family: "Noto Sans", sans-serif;
   color: #4f546c;
   
   margin: 2rem;
@@ -88,8 +90,6 @@ const Wrapper = styled.div`
   gap: 1rem;
   grid-template-columns: 1fr;
   justify-content: center;
-
-  font-family: 'Noto Sans KR';
 
   @media screen and (min-width: 600px) {
     grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
