@@ -5,6 +5,8 @@ import { Button, Form, Input } from "antd";
 import { test } from "../../store/api/User.api";
 import Image from "next/image";
 import kakao_login_large_wide from "public/images/kakao_login_large_wide.png";
+import kakao_login_large_narrow from 'public/images/kakao_login_large_narrow.png';
+import kakao_login_medium_narrow from 'public/images/kakao_login_medium_narrow.png';
 import AppLayout from "components/layout/AppLayout";
 import Pagebar from "components/NowTitleBar";
 
@@ -52,15 +54,15 @@ const Kakao = styled.a``;
 
 const Login = () => {
   return (
-    <LoginDiv>
-      <Kakao href={test}>
-        <Image src={kakao_login_large_wide}></Image>
-      </Kakao>
-    </LoginDiv>
+    // <LoginDiv>
+      <a href={test}>
+        <Image src={kakao_login_medium_narrow}></Image>
+      </a>
+    // </LoginDiv>
   );
 };
 
-const LoginDiv = styled.div`
-  width:50%;
-`
+// const LoginDiv = styled.div`
+//   width:50%;
+// `
 export default Login;

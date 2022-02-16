@@ -33,7 +33,7 @@ export const dogyeWrapper: Variants = {
   },
   animate: {
     y: 0,
-    opacity: 0.8,
+    opacity: 1,
     transition: {
       delay: 2.6,
       duration: 0.8,
