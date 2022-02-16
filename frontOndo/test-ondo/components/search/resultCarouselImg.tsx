@@ -6,10 +6,11 @@ import styled from 'styled-components';
 import Router from 'next/router';
 
 
-const Imgbox = ({ obj }: any) => {
+const Imgbox = ({ obj, show, control }: any) => {
   return (
     <Title className='swiper-slide'>
-      <Content src={obj.image} onClick={() => { Router.push(obj.url) }}></Content>
+      {/* <Content src={obj.image}></Content> */}
+      <Content src={obj.image} onClick={() => { if (control) { control(obj.feedId) } }}></Content>
     </Title>
 
   )

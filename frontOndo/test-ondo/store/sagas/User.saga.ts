@@ -27,16 +27,22 @@ import { useRouter } from "next/router";
 function* getKakaoKey() {
   interface tokentype extends AxiosResponse {
     token: string;
+    newUser: boolean;
   }
   try {
     const code = new URL(window.location.href).searchParams.get("code");
     const response: tokentype = yield call(KakaoLogin, code);
-    console.log(response);
-    console.log(code);
+    // console.log(response);
+    // console.log(code);
     yield put(userActions.getKakaoKeySuccess(response.token));
-    Router.push("/feedMain");
+    if (response.newUser) {
+      Router.push("/user/profileEdit")
+    } else {
+      Router.push("/feedMain");
+    }
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
+    Router.push("/")
     // Router.push("/");
   }
 }
@@ -65,10 +71,10 @@ function* getUserState() {
   try {
     const token = localStorage.getItem("Token");
     if (token) {
-      console.log("유저통신전");
+      // console.log("유저통신전");
       const userdata: AxiosResponse = yield call(GetUserState, token);
-      console.log("유저통신후");
-      console.log(userdata);
+      // console.log("유저통신후");
+      // console.log(userdata);
       yield put(userActions.setEmail(userdata));
       yield put(userActions.setnickname(userdata));
       yield put(userActions.setuserdata(userdata));
@@ -94,7 +100,7 @@ function* getUserObjState(username: any) {
         token
       );
       console.log("객체유저통신후");
-      console.log(userObjdata);
+      // console.log(userObjdata);
       yield put(userActions.setUserObj(userObjdata));
     }
   } catch (err) {

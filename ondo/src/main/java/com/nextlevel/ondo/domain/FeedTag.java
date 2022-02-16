@@ -19,11 +19,11 @@ public class FeedTag {
     @Column(name = "feed_tag_id")
     private Long feedTagId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "feed_id")
     @JsonBackReference
     private Feed feed;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "tag_id")
     @JsonBackReference
     private Tag tag;

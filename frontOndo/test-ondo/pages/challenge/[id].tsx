@@ -1,38 +1,67 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
-import { Modal, Button, Col, Row, Divider } from 'antd';
+import { Modal, Button, Col, Row, Divider, Spin } from 'antd';
 import AppLayout from 'components/layout/AppLayout';
-import LoggedInForm from 'components/layout/LoggedInForm';
+import ChallengeOwner from 'components/challenge/ChallengeOwner';
 import Image from 'next/image';
 import temp_profile from 'public/images/temp_profile.jpg'
 import Router, { useRouter } from 'next/router'
 import 'antd/dist/antd.css';
 import axios from 'axios';
+import FeedForModal from 'components/Feed/ModalFeed';
+import Pagebar from 'components/NowTitleBar';
 
 const ReadChallenge = () => {
 
   const router = useRouter()
   const { id } = router.query
-  const [challenge, setChallenge] = useState();
+  const [amIParticipant, setAmIParticipant] = useState(false);
+  const [challenge, setChallenge] = useState<any>({});
+  const [feeds, setFeeds] = useState<any>([]);
+  const [finished, setFinished] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [started, setStarted] = useState(false);
+  const [Rstarted, setRstarted] = useState(false);
+  const [layoutTitle, setLayoutTitle] = useState<string>();
+  const [ownerImg, setOwnerImg] = useState<string>();
+  const [ownerName, setOwnerName] = useState<string>();
+  const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
+  const [ownerStyle, setOwnerStyle] = useState();
+
 
   useEffect(() => {
-    const token = localStorage.getItem('Token')
-    axios({
-      method: 'get',
-      url: 'http://localhost:8080' + '/challenge/detail/' + String(id),
-      headers: { Authorization: "Bearer " + token },
-    })
-      .then((res) => {
-        console.log(res)
-        setChallenge(res.data.challenge)
+    if (id) {
+      const token = localStorage.getItem('Token')
+      axios({
+        method: 'get',
+        url: process.env.BACK_EC2 + '/challenge/detail/' + String(id),
+        headers: { Authorization: "Bearer " + token },
       })
-      .catch((err) => {
-        console.log('상세보기 실패');
-        
-      })
-  })
+        .then((res) => {
+          console.log(res)
+          setAmIParticipant(res.data.amIParticipate)
+          setChallenge(res.data.challenge)
+          setFeeds(res.data.feeds)
+          setFinished(res.data.finished)
+          setStarted(res.data.started)
+          setLayoutTitle(res.data.challenge.title + ' | 온도')
+          setOwnerImg(res.data.image)
+          setOwnerName(res.data.username)
+          setOwnerStyle(res.data.style)
+          setLoading(false)
+          const now = new Date()
+          setRstarted(Number(res.data.challenge.sdate) <= Number(now.getFullYear().toString() + ("00" + (now.getMonth() + 1).toString()).slice(-2) + now.getDate().toString()))
+          console.log(res.data);
+
+        })
+        .catch((err) => {
+          console.log('상세보기 실패');
+
+        })
+    }
+  }, [id])
 
   // 참여하기
   const participate = () => {
@@ -46,68 +75,87 @@ const ReadChallenge = () => {
       }
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         alert('참여합니다.')
+        location.reload();
       })
   }
 
   const getDuration = (startDate: string) => {
-    const sDate = startDate.substring(0, 10);
-    const sy = sDate.substring(0,4);
-    const sm = sDate.substring(5,7);
-    const sd = sDate.substring(8,10);
 
-    const eDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
-    const ey = eDate.getFullYear();
-    const em = eDate.getMonth() + 1;
-    const ed = eDate.getDate();
+    const sy = startDate.substring(0, 4);
+    const sm = startDate.substring(4, 6);
+    const sd = startDate.substring(6, 8);
+
+    const endDate = new Date(Number(sy), Number(sm) - 1, Number(sd) + 2);
+    const ey = endDate.getFullYear();
+    const em = endDate.getMonth() + 1;
+    const ed = endDate.getDate();
 
     return sy + '-' + sm + '-' + sd + ' ~ '
-        + ey + '-' + (("00"+em.toString()).slice(-2)) + '-' + (("00"+ed.toString()).slice(-2));
+      + ey + '-' + (("00" + em.toString()).slice(-2)) + '-' + (("00" + ed.toString()).slice(-2));
   }
-  const content = "3일동안 다같이 런닝해여~ 조깅화와 시계를 찍어서 올려주시면 됩니다.";
-  const participants = 7;
-  const feedsPosted = ['https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250', 'https://picsum.photos/250'];
 
   const renderPosts = () => {
     const result = [];
-    for (let i = 0; i < feedsPosted.length; i++) {
+    for (let i = 0; i < feeds.length; i++) {
       result.push(
-        <Col xs={8} md={8} key={i}>
-          <FeedImg src={feedsPosted[i]}></FeedImg>
+        <Col xs={8} md={6} key={i}>
+          <FeedImg src={feeds[i].image} onClick={() => { setShowModal(feeds[i].feedId) }}></FeedImg>
         </Col>
       );
     }
     return result;
   }
 
+  if (isLoading) {
+    return (
+      <div>
+        <div className={styles.container}>
+          <Large>
+            <Spin size='large' />
+          </Large>
+        </div>
+      </div>
+    )
+  }
+
+  const Title = styled.div`
+    font-size: 1rem;
+    /* padding-left: 3px; */
+    font-family: 'SCDream3';
+
+  `
+
   return (
-    <AppLayout title="도전 상세보기 | 온도">
+    <AppLayout title={layoutTitle}>
+      <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
       <Row style={{ marginTop: 20, fontFamily: 'sans-serif' }}>
         <Col xs={0} md={4} />
         <Col xs={24} md={16}>
-          오늘의 도전
+          <Title>오늘의 도전</Title>
           <Divider style={{ borderColor: 'black' }} />
           <ChallengeWrapper>
-            <ChallengeImg src='https://picsum.photos/2500' alt="feed-image" />
+            <ChallengeImg src={challenge.image} alt="feed-image" />
             <ChallengeContent>
-              <ChallengeTitle>{}</ChallengeTitle>
-              <LoggedInForm />
-              <ChallengeDuration>{}</ChallengeDuration>
-              <p>{content}</p>
+              <ChallengeTitle>{challenge.title}</ChallengeTitle>
+              {/* <LoggedInForm /> */}
+              <ChallengeOwner img={ownerImg} name={ownerName} style={ownerStyle} />
+              <ChallengeDuration>{getDuration(challenge.sdate)}</ChallengeDuration>
+              <p>{challenge.content}</p>
 
               <BottomContent>
-                <Participants>현재 {participants} 명 참여 중</Participants>
+                <Participants>현재 {challenge.challengeParticipate.length} 명 참여 중</Participants>
                 <Button.Group>
                   {/* <ParticipateOrWriteFeed>개설</ParticipateOrWriteFeed>
             <ParticipateOrWriteFeed>취소</ParticipateOrWriteFeed> */}
-                  <button onClick={participate}>참여하기</button>
-                  <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>
+                  {!amIParticipant && !started && <button onClick={participate}>참여하기</button>}
+                  {amIParticipant && Rstarted && !finished && <button onClick={() => { Router.push('/feed/write') }}>피드쓰기</button>}
                 </Button.Group>
               </BottomContent>
             </ChallengeContent>
           </ChallengeWrapper>
-          <Row gutter={8}>{renderPosts()}</Row>
+          <FeedImgWrap gutter={8}>{renderPosts()}</FeedImgWrap>
         </Col>
         <Col xs={0} md={4} />
       </Row>
@@ -115,11 +163,18 @@ const ReadChallenge = () => {
   )
 }
 
+const Large = styled.div`
+  width: 100%;
+  margin-top: 30%;
+  display: flex;
+  justify-content: center;
+`
+
 const ChallengeWrapper = styled.div`
-  width: 780px;
+  width: 100%;
   height: 400px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-  background: #fff8f8;
+  background: #fffafa;
   color: #000;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -135,12 +190,25 @@ const ChallengeImg = styled.img`
   border-radius: 10px 0 0 10px;
   background: #000;
 `
-
+const FeedImgWrap = styled(Row)`
+  margin: 10px 0 20px 0;
+  padding:2px;
+`
 const FeedImg = styled.img`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   padding-top: 10px;
-  border-radius: 10px 0 0 10px;
+  border-radius: 10px 0 0 10px; */
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+  }
+  border: none;
+  cursor: pointer;
+  border-radius:5px;
+  /* padding: 2px; */
 `
 
 const ChallengeTitle = styled.h1`
@@ -148,7 +216,7 @@ const ChallengeTitle = styled.h1`
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0;
-  color: palevioletred;
+  /* color: palevioletred; */
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 `
 

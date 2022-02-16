@@ -45,6 +45,9 @@ public class FeedService {
     private final KakaoUtil kakaoUtil;
     private final TagRepository tagRepository;
     private final FeedTagRepository feedTagRepository;
+    private final StylesRepository stylesRepository;
+    private final UserStyleRepository userStyleRepository;
+
 
     private final ChallengeService challengeService;
 
@@ -77,19 +80,31 @@ public class FeedService {
                     detailCommentDtos.add(detailCommentDto);
                 }
             }
-            Boolean flag = true;
+            Boolean likeflag = true;
             // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
-            if (f.getFeedlike().contains(tokenuser)) flag = false;
+            List<FeedLike> feedlike = feedLikeRepository.findByFeed(f);
+            for (FeedLike fl : feedlike) {
+                if (fl.getUser() == tokenuser) {
+                    likeflag = false;
+                    break;
+                }
+            }
 
+            List<Tag> tags = new ArrayList<>();
+            List<FeedTag> feedTags = feedTagRepository.findByFeed(f);
+            for (FeedTag ft : feedTags) {
+                tags.add(ft.getTag());
+            }
 
-            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, flag);
+            Challenge challenge = challengeRepository.findByChallengeId(f.getChallengeId());
+            DetailFeedDto detailFeedDto = new DetailFeedDto(user, f, detailCommentDtos, tags, likeflag, challenge.getTitle());
             detailFeedDtos.add(detailFeedDto);
         }
 
         List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
         List<RankUserDto> rankUserDtos = new ArrayList<>();
         for (User u : ulist) {
-            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage(), u.getOndo()));
+            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage(), u.getOndo(), u.getChooseStyle()));
         }
 
         MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos, rankUserDtos);
@@ -142,10 +157,8 @@ public class FeedService {
         User user = kakaoUtil.getUserByEmail(accessToken);
 
         Feed feed = feedRepository.findByFeedId(modifyFeedDto.getFeedId()).orElseGet(() -> {
-            System.out.println("***test***");
             return new Feed();
         });
-        System.out.println(feed.getFeedId());
 
         // token 의 유저아이디와 feed 작성자 아이디가 동일하면 진행 아니면 에러
         if (feed.getUserId() != user.getUserId()) {
@@ -188,12 +201,25 @@ public class FeedService {
             }
         }
 
-        Boolean flag = false;
-        // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 true;
-        if (feed.getFeedlike().contains(tokenuser)) flag = true;
+        Boolean likeflag = true;
+        // 토큰에 있는 유저 아이디가 좋아요 목록에 있는 유저 아이디에 존재하면 false;
+        List<FeedLike> feedlike = feedLikeRepository.findByFeed(feed);
+        for (FeedLike fl : feedlike) {
+            if (fl.getUser() == tokenuser) {
+                likeflag = false;
+                break;
+            }
+        }
 
+        Challenge challenge = challengeRepository.findByChallengeId(feed.getChallengeId());
+        //태그담기
+        List<Tag> tags = new ArrayList<>();
+        List<FeedTag> feedTags = feedTagRepository.findByFeed(feed);
+        for (FeedTag ft : feedTags) {
+            tags.add(ft.getTag());
+        }
 
-        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, flag);
+        DetailFeedDto detailFeedDto = new DetailFeedDto(user, feed, detailCommentDtos, tags, likeflag, challenge.getTitle());
 
         return detailFeedDto;
     }
@@ -211,7 +237,7 @@ public class FeedService {
         for (String s : tags) {
             if (tagRepository.findByName(s) != null) {
                 //연결
-                Tag tag = new Tag(s);
+                Tag tag = tagRepository.findByName(s);
                 feedTagRepository.save(new FeedTag(feed, tag));
             } else {
                 Tag tag = tagRepository.save(new Tag(s));
@@ -224,7 +250,6 @@ public class FeedService {
         //로직 구현
         Challenge challenge = challengeRepository.findByChallengeId(feedSaveDto.getChallengeId());
         ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(challenge, user);
-
         // 현재 날짜 구하기
         LocalDate now = LocalDate.now();
         // 포맷 정의
@@ -234,22 +259,122 @@ public class FeedService {
 
         // 날짜 차이 계산
         int dif = Integer.parseInt(formatedNow) - Integer.parseInt(challenge.getSDate());
-        if (dif < 0) {
-            System.out.println("아직 시작 안함.");
-        }
 
+        int beforeArchived = challengeParticipate.getArchived();
         int archived = challengeParticipate.getArchived();
         archived = archived | (1 << dif);
         challengeParticipate.setArchived(archived);
+        challengeParticipateRepository.save(challengeParticipate);
 
-
-        //3개 다 true면 위에 코드 통과해서 여기로 오고, 온도 1도 오르기
-        if (archived == 7) {
+        if (beforeArchived != 7 && archived == 7) {
             user.setOndo(user.getOndo() + 1);
+            // find 하기 전 repo에 저장.
+            userRepository.save(user);
+            // 챌린지 첫 완료
+            int cnt = 0;
+            // challengeParticipates
+            // challenges = 내가 도전했던 모든 챌린지들
+            // completeChallenges = 내가 완료한 모든 챌린지들
+            List<ChallengeParticipate> challengeParticipates = challengeParticipateRepository.findByUser(user);
+            List<Challenge> challenges = new ArrayList<>();
+            List<Challenge> completeChallenges = new ArrayList<>();
+            for (ChallengeParticipate c : challengeParticipates) {
+                challenges.add(c.getChallenge());
+            }
+            cnt = 0;
+            for (ChallengeParticipate c : challengeParticipates) {
+                // 도전 완료
+                if (c.getArchived() == 7) {
+                    cnt++;
+                }
+            }
+            if (cnt >= 1) {
+                // 도전 완료가 1개일 때 해당 유저가 칭호가 있는지 확인
+                Styles styles = stylesRepository.findByStyleName("자 이제 시작이야");
+                UserStyle userStyle = userStyleRepository.findByUserAndStyles(user, styles);
+                // 없을때만 추가
+                if (userStyle == null) {
+                    userStyle = UserStyle.builder()
+                            .styles(styles)
+                            .user(user)
+                            .build();
+                    userStyleRepository.save(userStyle);
+                }
+            }
+            if (user.getOndo() >= 40) {
+                String styleName;
+                if (user.getOndo() >= 100) {
+                    styleName = "태양";
+                } else if (user.getOndo() >= 80) {
+                    styleName = "불타오르는";
+                } else if (user.getOndo() >= 60) {
+                    styleName = "뜨거운";
+                } else {
+                    styleName = "따뜻한";
+                }
+                Styles styles = stylesRepository.findByStyleName(styleName);
+                UserStyle userStyle = userStyleRepository.findByUserAndStyles(user, styles);
+                // 없을때만 추가
+                if (userStyle == null) {
+                    userStyle = UserStyle.builder()
+                            .styles(styles)
+                            .user(user)
+                            .build();
+                    userStyleRepository.save(userStyle);
+                }
+            }
+            // 카테고리 별 칭호 부여하기
+//            1. 해당 챌린지의 카테고리를 찾는다.
+//            2. 도전 완료 목록을 찾는다.
+//            3. 도전 완료 목록에서 챌린지를 추출하여 카테고리와 일치하는 챌린지를 가져온다.
+//            4. 5개 이상이면 칭호를 부여한다.
+            // 1.
+            Category category = challenge.getCategory();
+            // 2.
+            for (ChallengeParticipate c : challengeParticipates) {
+                if (c.getArchived() == 7) {
+                    completeChallenges.add(c.getChallenge());
+                }
+            }
+            // 3.
+            List<Challenge> targetChallenges = new ArrayList<>();
+            for (Challenge c : completeChallenges) {
+                if (c.getCategory().equals(category)) {
+                    targetChallenges.add(c);
+                }
+            }
+            System.out.println("현재 챌린지의 카테고리 : " + category);
+            // 4.
+            String styleName = "";
+            if (category.name().equals("운동")) {
+                styleName = "헬스왕";
+            } else if (category.name().equals("식습관")) {
+                styleName = "바른 먹거리";
+            } else if (category.name().equals("취미")) {
+                styleName = "취향입니다 존중해주시죠";
+            } else if (category.name().equals("학습")) {
+                styleName = "공부벌레";
+            } else if (category.name().equals("친환경")) {
+                styleName = "환경미화원";
+            } else if (category.name().equals("외모관리")) {
+                styleName = "아이돌";
+            } else if (category.name().equals("기타")) {
+                styleName = "넓고 깊은";
+            }
+            System.out.println("styleName : " + styleName);
+            Styles styles = stylesRepository.findByStyleName(styleName);
+            UserStyle userStyle = userStyleRepository.findByUserAndStyles(user, styles);
+            // 없을때만 추가
+            if (userStyle == null && targetChallenges.size() >= 5) {
+                userStyle = UserStyle.builder()
+                        .styles(styles)
+                        .user(user)
+                        .build();
+                userStyleRepository.save(userStyle);
+            }
         }
-        userRepository.save(user);
 
-        System.out.println("피드 생성 완료");
+        userRepository.save(user);
         return feed;
     }
 
@@ -297,6 +422,18 @@ public class FeedService {
         });
 
         if (tokenuser.getUserId() != feed.getUserId()) return "no permission";
+/*
+        //중간테이블 삭제
+        List<FeedTag> feedTags = feedTagRepository.findByFeed(feed);
+        for(FeedTag ft : feedTags){
+            feedTagRepository.delete(ft);
+        }
+        //중간테이블 삭제
+        List<FeedLike> feedLikes = feedLikeRepository.findByFeed(feed);
+        for(FeedLike fl : feedLikes){
+            feedLikeRepository.delete(fl);
+        }
+*/
 
         feedRepository.delete(feed);
         return "delete complete";

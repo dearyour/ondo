@@ -25,8 +25,8 @@ $yong-blue: #5085e8;
           justify-content: flex-end;
           margin-left: 155px;
           padding: 20px 24px;
-          border: 3px solid #edbaba;
-          border-radius: 40px;
+          border: 1px solid #edbaba;
+          border-radius: 20px;
           cursor: pointer;
 
           .profile-image {
@@ -44,12 +44,16 @@ $yong-blue: #5085e8;
             input {
               cursor: pointer;
               width: 100%;
-              font-size: 12px;
+              font-size: 1rem;
               color: $yong-gray200;
               border: none;
-              &::placeholder {
-                color: #edbaba;
+              &:hover {
+                color: palevioletred;
               }
+              &::placeholder {
+                color: gray;
+              }
+
             }
           }
           .get-image {
@@ -65,8 +69,8 @@ $yong-blue: #5085e8;
         }
 
         .feed {
-          border: 3px solid #edbaba;
-          border-radius: 40px;
+          border: 1px solid #edbaba;
+          border-radius: 20px;
           background-color: white;
           margin-top: 25px;
           padding: 20px 24px;
@@ -76,9 +80,9 @@ $yong-blue: #5085e8;
             align-items: center;
             .profile-image {
               cursor: pointer;
-              width: 40px;
-              height: 40px;
-              border-radius: 40px;
+              width: 80px;
+              height: 80px;
+              border-radius: 80px;
               background-color: $yong-gray;
               margin-right: 12px;
               background-position: center;
@@ -86,44 +90,52 @@ $yong-blue: #5085e8;
               background-repeat: no-repeat;
             }
             .profile-desc {
-              .nicknaeme {
+              .nickname {
                 font-size: 20px;
                 color: $yong-gray200;
                 cursor: pointer;
               }
               .timestamp {
                 font-size: 15px;
-                color: gray;
+                color: $yong-blue;
                 opacity: 0.8;
                 margin-top: 2px;
               }
             }
           }
           .contents {
-            cursor: pointer;
-            margin-top: 48px;
-            font-size: 14px;
+            margin-top: 15px;
+            font-size: 15px;
             color: $yong-gray200;
             line-height: 1.8;
+            border-top: 1px solid #edbaba;
             .image {
+              cursor: pointer;
               width: 309px;
               height: 309px;
               background-color: $yong-gray;
               background-repeat: no-repeat;
               background-position: center;
               background-size: cover;
+              border-radius: 12px;
               margin-top: 25px;
               margin-left: 120px;
             }
+            .body-tag {
+              display: flex;
+              align-items: center;
+              margin-top: 7px;
+              color: blueviolet;
+            }
           }
           .bottom {
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             margin-top: 25px;
             .like,
             .comment {
+              cursor: pointer;
               display: flex;
               align-items: center;
               .asset {
@@ -134,7 +146,7 @@ $yong-blue: #5085e8;
               }
               .count {
                 font-size: 16px;
-                color: $yong-gray;
+                color: gray;
               }
             }
             .like {
@@ -147,9 +159,9 @@ $yong-blue: #5085e8;
       .friend-list {
         position: sticky;
         padding: 20px 16px;
-        width: 270px;
-        border: 3px solid #edbaba;
-        border-radius: 40px;
+        width: 290px;
+        border: 1px solid #edbaba;
+        border-radius: 20px;
         background-color: white;
         top: 84px;
         .my-profile {

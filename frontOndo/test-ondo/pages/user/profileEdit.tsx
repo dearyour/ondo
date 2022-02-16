@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect, ReactNode } from "react";
 import NowTitleBar from "components/NowTitleBar";
 import AppLayout from "components/layout/AppLayout";
 import styled from "styled-components";
 import styles from "css/index.module.css";
-import { Modal, Button, Col, Row, Input, Upload, message } from "antd";
+import { Modal, Button, Col, Row, Input, Upload, message, Select } from "antd";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import temp_profile from "public/images/temp_profile.jpg";
@@ -13,6 +13,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import axios from "axios";
 import CropImg from "components/Cropper";
 import useImg from "store/hooks/imgHooks";
+import Router from "next/router";
+import StyleDrawer from 'components/user/StyleInfo';
 
 
 function beforeUpload(file: any) {
@@ -34,30 +36,54 @@ function getBase64(img: Blob, callback: any) {
 }
 
 const Edit = () => {
+  const { GetUser, profile, nickname, users } = useUser();
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [loading, setLoading] = useState<boolean>(false);
-  const [username, onChangeNick] = useState("asdas");
+  const [username, onChangeNick] = useState(users.username); // input값
+  const [chooseStyle, setChooseStyle] = useState<any>();
+  const [style, setStyle] = useState<any>();
+  const [usernameErr, setUsernameErr] = useState<string>();
+  const { Option } = Select;
 
-  // const [image, setImage] = useState<string>();
-  // const [file, setFiles] = useState<File | ''>('')
-  // const [originalImg, setOriginalImage] = useState<string>()
   const onChangeNickname = useCallback((e) => {
+    setUsernameErr('')
     onChangeNick(e.target.value);
   }, []);
 
-  const { GetUser, profile, nickname, users } = useUser();
+  const StyleChallenge = (e: any) => {
+    setStyle(e);
+  }
+
   useEffect(() => {
+    const token = localStorage.getItem('Token');
+    axios({
+      method: 'get',
+      url: process.env.BACK_EC2 + '/user/modify',
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then(res => {
+        console.log(res)
+        // setImage(res.data.image)
+        // onChangeNick(res.data.username)
+        setChooseStyle(res.data.stylesList)
+      })
     GetUser();
     setImage(users.image);
-    onChangeNick(nickname);
+    onChangeNick(users.username);
+    setStyle(users.chooseStyle)
+    // console.log(users)
 
   }, [])
+  // 개인정보 수정
   const onEditNickname = () => {
     const token = localStorage.getItem('Token');
     const formdata = new FormData();
-    console.log(file);
+    // console.log(file);
+    const name = username !== users.username ? username : null;
     formdata.append("file", file);
     formdata.append("username", username);
+    formdata.append("chooseStyle", style)
+
     axios({
       method: 'put',
       url: process.env.BACK_EC2 + '/user/modify',
@@ -66,10 +92,11 @@ const Edit = () => {
     })
       .then((res) => {
         console.log(res)
+        Router.push('/feedMain');
         // setImage(null)
       })
       .catch((err) => {
-        console.log(err)
+        setUsernameErr("중복된 닉네임입니다.")
       })
   }
 
@@ -93,18 +120,43 @@ const Edit = () => {
     border: 0px;
     color: #F3F3F3;
     padding: 4px 16px;
-    background-color: #ebc1c1;
+    background-color: #f5ebeb;
     border-radius: 5px;
     &:hover {
       cursor: pointer;
-      background-color: #e7adad;
+      background-color: #ebcdcd;
     }
   `
   const uploadButton = (
     <UpBtn icon={<UploadOutlined />}>Upload</UpBtn>
   );
+
+  const Nodata = () => {
+    return (
+      <NodataDiv>
+        <DogyeImg src="/images/dogye/sad.png"></DogyeImg>
+        <DogyeContent>보유중인 칭호가 없어요...</DogyeContent>
+      </NodataDiv>
+    )
+  }
+
+  const DogyeImg = styled.img`
+    width: 20%;
+  `
+  const DogyeContent = styled.span`
+    text-align: center;
+  `
+
+  const NodataDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* align-items: center; */
+  `
+
   return (
-    <AppLayout>
+    <AppLayout title="내 정보 수정하기 | 온도">
       {originalImg ? <CropImg></CropImg> : null}
 
       <NowTitleBar title="개인정보 수정"></NowTitleBar>
@@ -112,7 +164,7 @@ const Edit = () => {
         <div>
           <Divide>
             <h3 className={styles.mx_20}>프로필</h3>
-            {image ? <Profile src={image}></Profile> : <DefaultProfile src={temp_profile}></DefaultProfile>}
+            {image ? <Profile src={image}></Profile> : <DefaultProfile src={users.image}></DefaultProfile>}
 
             <UpImage
               name="file"
@@ -121,19 +173,83 @@ const Edit = () => {
               beforeUpload={beforeUpload}
               maxCount={1}
             >{uploadButton}</UpImage>
+
+            <Title>칭호</Title>
+            <StyleInput
+              placeholder="현재 보유중인 칭호 목록"
+              value={style ? style : null}
+              bordered={false}
+              notFoundContent={Nodata()}
+              dropdownStyle={{ boxShadow: 'none', border: '1px solid pink', borderRadius: '10px' }}
+              onChange={StyleChallenge}
+            >
+              {chooseStyle && chooseStyle.length > 0
+                ? chooseStyle.map((now: any) => {
+                  return (
+                    <Option
+                      value={now.styleName}
+                      key={now.stylesId}
+                      title={now.content}
+
+                    >
+                      <OptionContent><span className={now.styleName}>{now.styleName}</span> - {now.content}</OptionContent>
+                    </Option>
+                  );
+                })
+                : null}
+            </StyleInput>
+            <StyleDrawer></StyleDrawer>
           </Divide>
           <Divide>
             <h3 className={styles.mx_20}>닉네임</h3>
-            <NickInput defaultValue={users.username} onChange={onChangeNickname}></NickInput>
-            <Button className={styles.mx_20} onClick={onEditNickname}>
+            <NickInput value={username} onChange={onChangeNickname}></NickInput>
+            <EditBtn className={styles.mx_20} onClick={onEditNickname}>
               수정
-            </Button>
+            </EditBtn>
           </Divide>
+          <Errmsg>{usernameErr ? usernameErr : null}</Errmsg>
         </div>
       </BorderDiv>
-    </AppLayout>
+    </AppLayout >
   );
 };
+const OptionContent = styled.div`
+  padding: 2px 0 2px 0;
+  /* margin: 0px 1px 1px 1px; */
+`
+const Errmsg = styled.div`
+  color: red;
+  opacity: 80%;
+  margin-left: 100px;
+`
+
+const Title = styled.h3`
+  margin-left: 40px;
+  margin-right: 20px;
+`
+
+const StyleInput = styled(Select)`
+  box-shadow: none;
+  margin: 5px 0 5px 5px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1px solid #edbaba;
+  width: 50%;
+  outline: #edbaba 1px;
+`;
+
+const EditBtn = styled(Button)`
+  border: 0px;
+    color: #F3F3F3;
+    padding: 4px 16px;
+    background-color: #f5ebeb;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+      background-color: #ebcdcd;
+    }
+`
 
 const UpImage = styled(Upload)`
   width: 10%;
@@ -157,9 +273,10 @@ const Profile = styled.img`
   width: 20%;
   border: solid 1px black;
 `;
-const DefaultProfile = styled(Image)`
+const DefaultProfile = styled.img`
   border-radius: 100%;
-  width: 40%;
+  width: 20%;
+  border: solid 1px black;
 `;
 
 const NickInput = styled(Input)`

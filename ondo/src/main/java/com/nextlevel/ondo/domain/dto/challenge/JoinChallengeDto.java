@@ -6,13 +6,14 @@ import com.nextlevel.ondo.domain.ChallengeParticipate;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.repository.ChallengeRepository;
 import com.nextlevel.ondo.repository.UserRepository;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Getter
+@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class JoinChallengeDto {
     // 원래는 Token, challengeId 두 개를 받아야 함..

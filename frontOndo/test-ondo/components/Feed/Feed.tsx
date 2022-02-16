@@ -8,6 +8,8 @@ import { layoutAction } from "store/slice/layout";
 import styled from "styled-components";
 import { commentAction } from "store/slice/comment";
 import Router from "next/router";
+import { feedAction } from "store/slice/feed";
+import axios from "axios";
 // import Router from "next/router";
 //feedId, createDate, chaallengId , image , content , userId , feedlike, comment []
 // feeds: [feedId, createdDate, challengeId, image, content, userId, feedlike],
@@ -26,7 +28,15 @@ const Feed = (props: any) => {
   const nickname = useSelector((state: RootState) => state.user.nickname);
   const comments = useSelector((state: RootState) => state.comment.comments);
   const ondo = useSelector((state: RootState) => state.user.ondo);
-
+  const [likeCount, setLikeCount] = useState(props.dto.feed.feedlike.length);
+  const [likeState, setLikeState] = useState("");
+  useEffect(() => {
+    if (props.dto.likeflag) {
+      setLikeState("delete");
+    } else {
+      setLikeState("ok");
+    }
+  }, []);
   // useEffect(() => {
   //   dispatch(commentAction.getComment);
   // }, []);
@@ -64,9 +74,10 @@ const Feed = (props: any) => {
   // );
   const __openFeedDetail = useCallback(() => {
     // console.log(props.dto.feed);
-    dispatch(layoutAction.updateDetailData(props.dto));
+    dispatch(feedAction.getFeed()); //전체 피드정보 다시 업데이트(자식컴포넌트에서 변경된값 부모에저장)
+    dispatch(layoutAction.updateDetailData(props.dto)); //부모로부터 새로운 개별 피드 정보 저장
     dispatch(layoutAction.updateDetailState(true));
-  }, [dispatch]);
+  }, [dispatch, props.dto]);
 
   // // const comment = comments;
   // console.log(comments.length);
@@ -100,12 +111,10 @@ const Feed = (props: any) => {
     // console.log(minutes);
     // console.log(startDate);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)}  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
   //////////////////////////////
   const getStartDate = () => {
@@ -115,7 +124,7 @@ const Feed = (props: any) => {
     const sm = newdate.getMonth() + 1;
     const sd = newdate.getDate();
 
-    return sy + "-" + sm + "-" + sd;
+    return sy + "-" + (("00" + sm.toString()).slice(-2)) + "-" + (("00" + sd.toString()).slice(-2));
   };
   // console.log(startDate);
   const adate = new Date(startDate);
@@ -137,14 +146,44 @@ const Feed = (props: any) => {
   // console.log(props.feed.feedId);
   //
   // console.log(props.feed.feed.feedlike);
+  // console.log(
+  //   props.dto.feed.feedTag.map((item: any, idx: number) => {
+  //     return item;
+  //   }) + "%%%%%%%%%%%"
+  // );
 
+  const __updateLike = useCallback(() => {
+    const token = localStorage.getItem("Token");
+    return axios({
+      method: "get",
+      url: process.env.BACK_EC2 + "/feed/like/" + props.dto.feed.feedId,
+      // url: GetFeedurl,
+      headers: { Authorization: "Bearer " + token },
+    })
+      .then((res) => {
+        // console.log(res.data + "### 라이크!!");
+        if (res.data === "ok") {
+          setLikeCount(likeCount + 1);
+          setLikeState(res.data);
+          // dispatch(layoutAction.likeList(res.data));
+        } else {
+          setLikeCount(likeCount - 1);
+          setLikeState(res.data);
+          // dispatch(layoutAction.likeList(res.data));
+        }
+        dispatch(feedAction.getFeed());
+      })
+      .catch((err) => {
+        return err;
+      });
+  }, [props.dto, likeCount]);
   return (
     <div className="feed">
       <div
         className="top"
-        // onClick={() => {
-        //   Router.push(`/user/${props.dto.username}`);
-        // }}
+      // onClick={() => {
+      //   Router.push(`/user/${props.dto.username}`);
+      // }}
       >
         {props.dto.user.image && (
           <div
@@ -164,47 +203,67 @@ const Feed = (props: any) => {
               Router.push(`/user/${props.dto.user.username}`);
             }}
           >
-            {props.dto.user.username}
+            <Style className={props.dto.user.chooseStyle}>{props.dto.user.chooseStyle}</Style>{props.dto.user.username}
           </div>
           <div className="timestamp">
             온도 : {props.dto.user.ondo}
             ˚C
           </div>
+          <div className="timestamp">도전 명 : {props.dto.title}</div>
           <div className="timestamp">
-            도전 명 : {props.dto.feed.challengeId}
+            {getStartDate()} ,{makeFeedTime()}
           </div>
           {/* <div className="timestamp">도전 명 : {challengeTitle}</div> */}
           {/* <div className="timestamp">도전 기간 :{getDuration()}</div> */}
-          <div className="timestamp">참여 날짜 : {getStartDate()}</div>
-          <div className="timestamp">피드 작성 시간 : {makeFeedTime()}</div>
+          {/* <div className="timestamp">참여 날짜 : {getStartDate()}</div>
+          <div className="timestamp">피드 작성 시간 : {makeFeedTime()}</div> */}
         </div>
       </div>
-      <div className="contents" onClick={__openFeedDetail}>
+      <div className="contents">
+        <div className="body-tag">
+          {props.dto.tags.map((item: any, idx: number) => {
+            return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
+            // <Tags item={item.name}></Tags>;
+          })}
+        </div>
         {props.dto.feed.content}
+        {/* {props.dto.feed.feedTag[0]} */}
         {/* <img src={props.feed.image} alt="온도이미지" /> */}
         {props.dto.feed.image && (
           <div
             className="image"
+            onClick={__openFeedDetail}
             style={{ backgroundImage: `url(${props.dto.feed.image})` }}
           ></div>
         )}
       </div>
-      <div className="bottom" onClick={__openFeedDetail}>
-        <div className="like">
+      <div className="bottom">
+        <div className="like" onClick={__updateLike}>
           <div className="asset">
-            <img src="/assets/feed/like-dac.svg" alt="좋아요" />
+            {/* <img src="/assets/feed/like-dac.svg" alt="좋아요" /> */}
+            <img
+              src={
+                props.dto.likeflag === false
+                  ? //  && likelist === "ok"
+                  "/assets/feed/pngwing.com2.png"
+                  : "/assets/feed/pngwing.com.png"
+              }
+              alt="좋아요"
+            />
           </div>
           <div className="count txt-bold">
-            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 2}
+            {props.dto.feed.feedlike ? props.dto.feed.feedlike.length : 0}
           </div>
         </div>
-        <div className="comment">
+        <div className="comment" onClick={__openFeedDetail}>
           {/* <Link href=""> */}
           <div className="asset">
-            <img src="/assets/feed/comment.svg" alt="댓글" />
+            <img src="/assets/feed/pngwing.com5.png" alt="댓글" />
           </div>
           <div className="count txt-bold">
-            {props.dto.comments ? Object.keys(props.dto.comments).length : 0}
+            {props.dto.feed.comment
+              ? Object.keys(props.dto.feed.comment).length
+              : 0}
           </div>
           {/* </Link> */}
         </div>
@@ -215,6 +274,10 @@ const Feed = (props: any) => {
 
 export default Feed;
 
+const Style = styled.span`
+  /* font-size: 1rem; */
+  margin-right: 10px;
+`
 // const [
 //   {
 //     feed: {

@@ -1,4 +1,5 @@
 import { Avatar, Image, Space } from "antd";
+import styled from "styled-components";
 import { UserOutlined } from "@ant-design/icons";
 import React from "react";
 import "antd/dist/antd.css";
@@ -13,13 +14,26 @@ const LoggedInForm = () => {
   return (
     <Space direction="horizontal">
       <Avatar
-        style={image && { backgroundColor: "#edbaba" }}
+        style={image && { backgroundColor: "#edbaba", border: "1px solid pink" }}
         src={users.image}
         icon={<UserOutlined />}
       />
-      &nbsp;<b>{users.username}</b>
+      <MyPageLink>마이페이지</MyPageLink>
     </Space>
   );
 };
+
+const MyPageLink = styled.div`
+  cursor: pointer;
+  padding-left: 3px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s ease-in;
+
+  &:hover {
+    color: palevioletred;
+  }
+`
 
 export default LoggedInForm;

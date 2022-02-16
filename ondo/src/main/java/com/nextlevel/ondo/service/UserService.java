@@ -4,6 +4,7 @@ import com.nextlevel.ondo.domain.*;
 import com.nextlevel.ondo.domain.dto.feed.DetailFeedDto;
 import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
 import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
+import com.nextlevel.ondo.domain.dto.user.ModifyUserDto;
 import com.nextlevel.ondo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class UserService {
     private final ChallengeParticipateRepository challengeParticipateRepository;
     private final FollowRepository followRepository;
     private final ChallengeRepository challengeRepository;
+    private final UserStyleRepository userStyleRepository;
+
 
     @Transactional(readOnly = true)
     public List<User> rankUser() {
@@ -140,15 +143,13 @@ public class UserService {
         }
         //        List<Challenge> compeleteChallenge = new ArrayList<>();
         List<Challenge> completeChallenge = new ArrayList<>();
-        tp:
         for (Challenge c : challenges) {
-            if (!challengeService.isProcessingChallenge(c)) {
-                ChallengeParticipate cp = challengeParticipateRepository.findByChallenge(c);
-                Integer archived = cp.getArchived();
-                if (archived == 7)
-                    completeChallenge.add(c);
-            }
+            ChallengeParticipate challengeParticipate = challengeParticipateRepository.findByChallengeAndUser(c, user);
+            Integer archived = challengeParticipate.getArchived();
+            if (archived == 7)
+                completeChallenge.add(c);
         }
+
         //        List<Challenge> makedChallenge = new ArrayList<>();
         List<Challenge> madeChallenge = challengeRepository.findByOwner(user.getUserId());
 
@@ -157,16 +158,21 @@ public class UserService {
     }
 
 
-    public FollowUserDto beforemodifyUser(String accessToken) {
+    public ModifyUserDto beforemodifyUser(String accessToken) {
         String token = accessToken.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(token);
-
-        FollowUserDto userDto = new FollowUserDto(tokenuser.getUsername(), tokenuser.getImage());
+        // 유저로 UserStyle 찾기
+        List<UserStyle> userStyles = userStyleRepository.findByUser(tokenuser);
+        List<Styles> styles = new ArrayList<>();
+        for (UserStyle userStyle : userStyles) {
+            styles.add(userStyle.getStyles());
+        }
+        ModifyUserDto userDto = new ModifyUserDto(tokenuser.getUsername(), tokenuser.getImage(), styles);
 
         return userDto;
     }
 
-    public String modifyUser(String image, String username, String accessToken) {
+    public String modifyUser(String image, String username, String accessToken, String chooseStyle) {
 
         String token = accessToken.split(" ")[1];
         User tokenuser = kakaoUtil.getUserByEmail(token);
@@ -174,15 +180,19 @@ public class UserService {
         if (image != null) {
             //유저.image 경로 바꿔주기
             tokenuser.setImage(image);
-            userRepository.save(tokenuser);
         }
         //닉네임 바꾸기
         //중복 체크
         User user = userRepository.findByUsername(username).orElseGet(() -> {
             return new User();
         });
-        System.out.println(user.getUsername());
-        if (user.getUsername() == null) {
+        if (!"null".equals(chooseStyle))
+            tokenuser.setChooseStyle(chooseStyle);
+//        userRepository.save(tokenuser);
+        if (username.equals(tokenuser.getUsername())) {
+            userRepository.save(tokenuser);
+            return "success";
+        } else if (user.getUsername() == null) {
             tokenuser.setUsername(username);
             userRepository.save(tokenuser);
             return "success";

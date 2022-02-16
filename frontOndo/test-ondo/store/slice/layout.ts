@@ -6,8 +6,10 @@ const initialState: layoutParam = {
   isHeaderOpen: false,
   isDetailOpen: false,
   detailData: undefined,
+  commentData: undefined,
   targetId: 0,
   isToFeed: false,
+  likelist: [],
 };
 
 export const layoutSlice = createSlice({
@@ -23,11 +25,17 @@ export const layoutSlice = createSlice({
     updateDetailData: (state, { payload }) => {
       state.detailData = payload;
     },
+    updateCommentData: (state, { payload }) => {
+      state.commentData = payload;
+    },
     updateCommentTarget: (state, { payload }) => {
       state.targetId = payload;
     },
     updateIsCommentToFeed: (state, { payload }) => {
       state.isToFeed = payload;
+    },
+    likeList: (state, { payload }) => {
+      state.likelist = payload;
     },
   },
 });

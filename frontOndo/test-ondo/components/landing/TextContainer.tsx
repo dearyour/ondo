@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import imageLogo from 'public/images/imageLogo.png';
 import Login from 'components/user/login';
+import '@fontsource/caveat';
 
 
 const TextContainer = () => {
+  
   return (
     <TextContainerWrapper variants={staggerContainer} initial='initial' animate='animate'>
 
@@ -18,8 +20,8 @@ const TextContainer = () => {
       </TextContainerTop>
 
       <TextContainerMiddle>
-        <motion.span variants={fadeIn()} initial='initial' animate='animate' >
-          ONDO
+        <motion.span variants={fadeIn()} initial='initial' animate='animate' style={{fontFamily: 'Caveat', fontSize: '250px', fontWeight: 400}} >
+          ondo
         </motion.span>
       </TextContainerMiddle>
 
@@ -72,6 +74,7 @@ const TextContainerMiddle = styled.div`
   display: grid;
   flex: 1 1 0%;
   place-items: center;
+  /* z-index: 10; */
 
   span {
     font-size: 3rem;

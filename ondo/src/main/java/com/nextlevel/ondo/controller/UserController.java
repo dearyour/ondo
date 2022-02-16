@@ -8,6 +8,7 @@ import com.nextlevel.ondo.domain.OAuthToken;
 import com.nextlevel.ondo.domain.User;
 import com.nextlevel.ondo.domain.dto.user.FeedUserDto;
 import com.nextlevel.ondo.domain.dto.user.FollowUserDto;
+import com.nextlevel.ondo.domain.dto.user.ModifyUserDto;
 import com.nextlevel.ondo.service.UserService;
 import com.nextlevel.ondo.util.KakaoUtil;
 import com.nextlevel.ondo.util.S3Uploader;
@@ -30,6 +31,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class UserController {
 
     @Value("${cos.key}")
@@ -66,7 +68,9 @@ public class UserController {
         params.add("grant_type", "authorization_code");
         params.add("client_id", "44dad20dedd901c8ca6eb5d6fde58baa");
 
-        params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
+        params.add("redirect_uri", "http://i6a601.p.ssafy.io/auth/kakao/callback");
+//         params.add("redirect_uri", "http://localhost:3000/auth/kakao/callback");
+
         params.add("code", code);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -132,15 +136,16 @@ public class UserController {
         System.out.println("블로그서버 패스워드 : " + cosKey);
 
         User kakaoUser = User.builder()
-                .username(kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId())
+                .username(kakaoProfile.getId().toString())
                 .password(cosKey)
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .build();
 
         // 가입자 혹은 비가입자 체크 해서 처리
         User originUser = userService.findUser(kakaoUser.getEmail());
-
+        boolean newUser = false;
         if (originUser.getUsername() == null) {
+            newUser=true;
             System.out.println("기존 회원이 아니기에 자동 회원가입을 진행합니다");
             userService.signUp(kakaoUser);
             originUser = userService.findUser(kakaoUser.getEmail());
@@ -149,20 +154,22 @@ public class UserController {
         System.out.println("자동 로그인을 진행합니다.");
         // 로그인 처리
         /*
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+         * Authentication authentication = authenticationManager
+         * .authenticate(new
+         * UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), cosKey));
+         * SecurityContextHolder.getContext().setAuthentication(authentication);
          */
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("token", oauthToken.getAccess_token());
         resultMap.put("username", originUser.getUsername());
+        resultMap.put("newUser", newUser);
         return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.ACCEPTED);
     }
 
-
     // 유저 피드 페이지
     @GetMapping("/user/feed/{username}")
-    public ResponseEntity<FeedUserDto> feedUser(@PathVariable String username, @RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<FeedUserDto> feedUser(@PathVariable String username,
+            @RequestHeader("Authorization") String accessToken) {
         FeedUserDto feedUserDto = userService.feedUser(username, accessToken);
         return new ResponseEntity<FeedUserDto>(feedUserDto, HttpStatus.OK);
     }
@@ -184,24 +191,24 @@ public class UserController {
 
     // 개인 정보 수정 화면
     @GetMapping("/user/modify")
-    public ResponseEntity<FollowUserDto> beforemodifyUser(@RequestHeader("Authorization") String accessToken){
-        FollowUserDto userDto = userService.beforemodifyUser(accessToken);
-        return new ResponseEntity<FollowUserDto>(userDto, HttpStatus.OK);
+    public ResponseEntity<ModifyUserDto> beforemodifyUser(@RequestHeader("Authorization") String accessToken) {
+        ModifyUserDto userDto = userService.beforemodifyUser(accessToken);
+        return new ResponseEntity<ModifyUserDto>(userDto, HttpStatus.OK);
     }
 
     // 개인 정보 수정 버튼 클릭
-    @PutMapping(value = "/user/modify", consumes = {"multipart/form-data"})
+    @PutMapping(value = "/user/modify", consumes = { "multipart/form-data" })
     public ResponseEntity<String> modifyUser(
-            @RequestPart(value = "file", required = false) MultipartFile multipartFile
-            , @RequestPart String username
-            , @RequestHeader("Authorization") String accessToken) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile, @RequestPart String username,
+            @RequestPart String chooseStyle, @RequestHeader("Authorization") String accessToken) throws IOException {
         String image = null;
-        if(multipartFile == null) image = null;
-        else{
+        if (multipartFile == null)
+            image = null;
+        else {
             image = s3Uploader.upload(multipartFile, "static", "user");
         }
-        String result = userService.modifyUser(image,username,accessToken);
-        if(result.equals("fail")){
+        String result = userService.modifyUser(image, username, accessToken, chooseStyle);
+        if (result.equals("fail")) {
             return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<String>(result, HttpStatus.OK);

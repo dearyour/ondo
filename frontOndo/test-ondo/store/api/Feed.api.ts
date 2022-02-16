@@ -12,7 +12,7 @@ export const GetFeedState = (token: string | null) => {
   })
     .then((comments) => {
       console.log(comments.data.detailFeedDtos);
-      return comments.data.detailFeedDtos;
+      return comments.data.detailFeedDtos.reverse();
     })
     .catch((err) => {
       return err;

@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/feed")
+@RequestMapping("/api/feed")
 public class FeedController {
 
     private final FeedService feedService;
@@ -43,8 +43,8 @@ public class FeedController {
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<Feed> feedModify(@RequestBody ModifyFeedDto modifyFeedDtoDto, @RequestHeader("Authorization") String token) {
-        Feed feed = feedService.modifyFeed(modifyFeedDtoDto, token);
+    public ResponseEntity<Feed> feedModify(@RequestBody ModifyFeedDto modifyFeedDto, @RequestHeader("Authorization") String token) {
+        Feed feed = feedService.modifyFeed(modifyFeedDto, token);
         // 토큰에서 온 아이디랑 피드 아이디가 다를 때 (작성자가 아니므로 못고침)
         if (feed == null) {
             return ResponseEntity.status(403).body(null);
@@ -74,9 +74,6 @@ public class FeedController {
             , @RequestPart(value = "data") FeedSaveDto feedSaveDto
             , @RequestHeader("Authorization") String token
     ) throws Exception {
-        System.out.println("FeedController 요청 성공.");
-        System.out.println("file");
-        System.out.println(multipartFile);
         String image = s3Uploader.upload(multipartFile, "static", "feed");
         return new ResponseEntity<Feed>(feedService.createFeed(image, feedSaveDto, token), HttpStatus.OK);
     }

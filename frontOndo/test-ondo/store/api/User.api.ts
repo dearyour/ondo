@@ -1,13 +1,13 @@
 import axios from "axios";
 
-// const Loginurl = process.env.BACK_EC2 + "/auth/kakao/callback";
-const Loginurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/auth/kakao/callback";
-// const ProfileEditurl = process.env.BACK_EC2 + "/user/modify/";
-const ProfileEditurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/modify/";
-// const GetUserurl = process.env.BACK_EC2 + "/user/info";
-const GetUserurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/info";
-// const base = process.env.BACK_EC2;
-const base = process.env.NEXT_PUBLIC_BACK_LOCAL;
+const Loginurl = process.env.BACK_EC2 + "/auth/kakao/callback";
+// const Loginurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/auth/kakao/callback";
+const ProfileEditurl = process.env.BACK_EC2 + "/user/modify/";
+// const ProfileEditurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/modify/";
+const GetUserurl = process.env.BACK_EC2 + "/user/info";
+// const GetUserurl = process.env.NEXT_PUBLIC_BACK_LOCAL + "/user/info";
+const base = process.env.BACK_EC2;
+// const base = process.env.NEXT_PUBLIC_BACK_LOCAL;
 
 export const test = process.env.KAKAO_LOGIN;
 //response_type=code&client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}'
@@ -56,7 +56,7 @@ export const GetUserState = (token: string | null) => {
     headers: { Authorization: "Bearer " + token },
   })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res.data;
     })
     .catch((err) => {
@@ -71,11 +71,11 @@ export const getUserObjapi = (username: any, token: string | null) => {
     headers: { Authorization: "Bearer " + token },
   })
     .then((result) => {
-      console.log(result.data);
+      // console.log(result.data);
       return result.data;
     })
     .catch((err) => {
-      console.log("#############" + username);
+      // console.log("#############" + username);
       return err;
     });
 };

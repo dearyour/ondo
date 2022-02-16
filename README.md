@@ -1,5 +1,5 @@
 # Ondo
-![ondo-001](/uploads/438dad964d0467e6b13fc5f12bbee75c/ondo-001.png)
+![ondologo](/uploads/5273796d36da88e978f9b05cfce57710/ondologo.png)
 # dev
 
 ## commit messages
@@ -18,7 +18,7 @@ The type is contained within the title and can be one of these types:
 
 ## Preview.
 
-![img](frontOndo/test-ondo/public/images/ondo.png)
+![img](frontOndo/test-ondo/public/images/textLogo.png)
 
 Ondo(오늘의 도전)
 

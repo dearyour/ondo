@@ -20,35 +20,29 @@ const SearchPage = () => {
     if (keyword) {
       const token = localStorage.getItem('Token');
       console.log(keyword)
-      const url = process.env.NEXT_PUBLIC_BACK_LOCAL + '/search/' + keyword
+      const url = process.env.BACK_EC2 + '/search/' + keyword
       axios({
         method: 'get',
         url: url,
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
+          console.log(res.data)
           setData(res.data)
-          console.log(data)
         })
     }
   }, [keyword]), [keyword])
 
 
-  const temptemp = { image: 'https://picsum.photos/1000', id: 1, nickname: 'asd' }
-  const temp2 = { image: 'https://picsum.photos/1200', id: 2, nickname: 'asdf' }
-  const temp = {
-    challenge: [temptemp, temptemp, temp2, temptemp, temptemp, temptemp, temp2],
-    feed: [temptemp, temptemp, temptemp, temptemp, temptemp],
-    user: [temptemp, temptemp, temptemp, temptemp, temptemp, temp2],
-  }
-
   return (
     <AppLayout>
-      <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={data.challenges}></SearchResultChallenge>
-      <DivideLine />
-      <SearchResultFeed title='Feed' keyword={String(keyword)} results={data.feeds}></SearchResultFeed>
-      <DivideLine />
-      <SearchResultUser title='User' keyword={String(keyword)} results={data.users}></SearchResultUser>
+      <Wrap>
+        <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={data.challenges}></SearchResultChallenge>
+        <DivideLine />
+        <SearchResultFeed title='Feed' keyword={String(keyword)} results={data.feeds}></SearchResultFeed>
+        <DivideLine />
+        <SearchResultUser title='User' keyword={String(keyword)} results={data.users}></SearchResultUser>
+      </Wrap>
     </AppLayout>
   )
 };
@@ -56,6 +50,13 @@ const SearchPage = () => {
 const DivideLine = styled.hr`
   margin-top: 10px;
   margin-bottom: 10px;
+`
+
+const Wrap = styled.div`
+  margin-top:20px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 export default SearchPage;

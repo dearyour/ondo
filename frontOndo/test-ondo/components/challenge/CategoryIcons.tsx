@@ -33,10 +33,10 @@ const CategoryIcons = (props: any) => {
   // }
 
   return (
-    <Row style={{ marginTop: '100px' }}>
+    <Row style={{ marginTop: '100px', marginBottom: '-20px' }}>
       {
         categoryIcons.map((v, i) => (
-          <ColCenter xs={3} md={3} key={i}>
+          <ColCenter xs={6} md={3} key={i}>
             <Space direction="vertical">
               <CategoryIcon src={v} width={50} height={50} id={categoryLabels[i]} onClick={() => props.changeCategory(categoryLabels[i])}></CategoryIcon>
               <LabelCenter htmlFor={categoryLabels[i]}>{categoryLabels[i]}</LabelCenter>
@@ -44,53 +44,6 @@ const CategoryIcons = (props: any) => {
           </ColCenter>
         ))
       }
-      {/* <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space>
-      </ColCenter>
-      <ColCenter xs={3} md={3}>
-        <Space direction="vertical">
-          <Image src={pikachu} name='dd' width={50} height={50}></Image>
-          <label htmlFor="dd">피카츄</label>
-        </Space> 
-      </ColCenter> */}
     </Row>
   )
 }

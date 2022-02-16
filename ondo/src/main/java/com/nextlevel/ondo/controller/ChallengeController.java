@@ -27,7 +27,7 @@ import java.util.List;
 //        카테고리별 도전리스트	/challenge/{category}
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/challenge")
+@RequestMapping("/api/challenge")
 public class ChallengeController {
     private final ChallengeService challengeService;
     private final S3Uploader s3Uploader;

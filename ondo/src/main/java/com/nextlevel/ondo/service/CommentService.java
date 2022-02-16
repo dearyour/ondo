@@ -12,7 +12,9 @@ import com.nextlevel.ondo.repository.FeedRepository;
 import com.nextlevel.ondo.util.KakaoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +35,11 @@ public class CommentService {
         Feed feed = feedRepository.findByFeedId(createCommentDto.getFeedId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 피드가 없습니다. id=" + createCommentDto.getFeedId()));
         Comment comment = createCommentDto.toEntity(user, feed);
-        return commentRepository.save(comment);
+        LocalDate now = LocalDate.now();
+        System.out.println("현재 시각 : " + now);
+        commentRepository.save(comment);
+        System.out.println("저장후 Service createComment : " + comment.getCreatedDate());
+        return comment;
     }
 
     public Comment modifyComment(ModifyCommentDto modifyCommentDto, String token) {
@@ -48,6 +54,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    @Transactional
     public Long deleteComment(Long commentId, String token) {
         String accessToken = token.split(" ")[1];
         User user = kakaoUtil.getUserByEmail(accessToken);
