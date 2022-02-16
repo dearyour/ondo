@@ -4,19 +4,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Space } from 'antd';
 import SadDogye from 'public/images/dogye/sad.png';
+import Head from 'next/head';
 
 const NotFound = () : JSX.Element => {
   return (
-     <NotFoundDiv>
-       <Space direction='horizontal'>
+    <>
+      <Head><title>온도 :: 페이지를 찾을 수 없습니다.</title></Head>
+      <NotFoundDiv>
+        <Space direction='horizontal'>
           <Image src={SadDogye} width={500} height={500}></Image>
           <SpeechBubble>
             <h1>이런...</h1>
             <h2>해당 페이지를 찾을 수 없어요.</h2>
             <p><Link href="/"><a>홈페이지</a></Link>로 돌아가기</p>
           </SpeechBubble>
-       </Space>
-     </NotFoundDiv>
+        </Space>
+      </NotFoundDiv>
+    </>
   );
 }
 
