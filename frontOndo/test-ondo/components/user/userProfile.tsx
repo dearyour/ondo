@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Modal, Button, Col, Row, Alert, Progress } from "antd";
+import { Modal, Button, Col, Row, Alert, Progress, Divider, Skeleton, Drawer, List, Avatar } from "antd";
 import Image from "next/image";
 import styled from "styled-components";
 import temp_profile from "public/images/temp_profile.jpg";
@@ -8,7 +8,7 @@ import FollowUser from "./followUser";
 import Router, { useRouter } from "next/router";
 import useUser from "store/hooks/userHooks";
 import axios from "axios";
-import InfiniteScroll from 'react-infinite-scroll-component';
+import Link from "next/link";
 
 const UserProfile = ({ data }: any) => {
   const router = useRouter();
@@ -20,18 +20,45 @@ const UserProfile = ({ data }: any) => {
   const [ondo, setOndo] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [followdata, setFollowData] = useState([]);
+  const [followcount, setFollowCount] = useState({ follow: 3, following: 3 });
+  const [followingdata, setFollowingData] = useState([]);
 
   useEffect(() => {
+    setfollowModalVisible(false);
     setUser(data.user);
     setOndo(1);
+    console.log(data)
     if (data) {
       setFollowed(data.followflag)
+      setFollowData(data.followerUserDtos)
+      setFollowingData(data.followingUserDtos)
       setTimeout(() => {
         setOndo(data.user.ondo)
 
       }, 1000);
     }
   }, [data]);
+
+  const loadMoreDataFollow = () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    setFollowCount((prev) => ({ follow: prev.follow + 3, following: prev.following }))
+    setLoading(false)
+
+  };
+
+  const loadMoreDataFollowing = () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    setFollowCount((prev) => ({ follow: prev.follow, following: prev.following + 3 }))
+    setLoading(false)
+
+  };
+
   const showFollowModal = () => {
     setfollowModalVisible(true);
   };
@@ -112,7 +139,7 @@ const UserProfile = ({ data }: any) => {
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
         <ProfileRight span={4} md={4} offset={1}>
-          <Nick>{user ? user.username : null}</Nick>
+          {user ? <Nick><Style className={users.chooseStyle}>{users.chooseStyle}</Style> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
               Router.push("/user/profileEdit");
@@ -157,19 +184,16 @@ const UserProfile = ({ data }: any) => {
               팔로우
             </FollowBtn> : <FollowBtn className="" onClick={UnFollow}>언팔로우</FollowBtn>}
         </Col>
-        <FModal
+        <Drawer
           visible={followModalVisible}
-          onOk={handleOkFollow}
-          centered={true}
-          onCancel={handleCancelFollow}
-          cancelButtonProps={{ style: { display: "none" } }}
-          okButtonProps={{ style: { display: "none" } }}
+          headerStyle={{ textAlign: 'center' }}
+          title="Follow"
+          onClose={handleCancelFollow}
         >
-          {data && data.followerUserDtos.length >= 1 ? (
-            data.followerUserDtos.map((user: any) => {
-              let key = 9;
+          {/* {data && data.followerUserDtos.length >= 1 ? (
+            data.followerUserDtos.map((user: any, idx: any) => {
               return (
-                <FModalDiv key={key++}>
+                <FModalDiv key={idx}>
                   <FollowUser off1={setfollowModalVisible} off2={setfollowingModalVisible} user={user}></FollowUser>
                   <hr />
                 </FModalDiv>
@@ -177,22 +201,32 @@ const UserProfile = ({ data }: any) => {
             })
           ) : (
             <div>팔로우 중인 유저가 없습니다.</div>
-          )}
-        </FModal>
-        <FModal
+          )} */}
+          <List
+            itemLayout="horizontal"
+            dataSource={data.followerUserDtos}
+            renderItem={(item: any) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.image} />}
+                  title={<Link href={'/user/' + item.username}><a>{item.username}</a></Link>}
+                />
+              </List.Item>
+
+            )}
+          />
+        </Drawer>
+        <Drawer
           visible={followingModalVisible}
-          onOk={handleOkfollowing}
-          centered={true}
-          onCancel={handleCancelFollowing}
-          cancelButtonProps={{ style: { display: "none" } }}
-          okButtonProps={{ style: { display: "none" } }}
+          title="Following"
+          onClose={handleCancelFollowing}
+          headerStyle={{ textAlign: 'center' }}
         >
-          {data &&
+          {/* {data &&
             data.followingUserDtos.length >= 1 ? (
-            data.followingUserDtos.map((user: any) => {
-              let key = 9;
+            data.followingUserDtos.map((user: any, idx: any) => {
               return (
-                <FModalDiv key={key++}>
+                <FModalDiv key={idx}>
                   <FollowUser user={user} off1={setfollowModalVisible} off2={setfollowingModalVisible}></FollowUser>
                   <hr />
                 </FModalDiv>
@@ -200,12 +234,29 @@ const UserProfile = ({ data }: any) => {
             })
           ) : (
             <div>팔로잉 중인 유저가 없습니다.</div>
-          )}
-        </FModal>
+          )} */}
+          <List
+            itemLayout="horizontal"
+            dataSource={data.followingUserDtos}
+            renderItem={(item: any) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.image} />}
+                  title={<Link href={'/user/' + item.username}><a>{item.username}</a></Link>}
+                />
+              </List.Item>
+            )}
+          />
+        </Drawer>
       </ProfileWrap>
     </Wrap>
   );
 };
+
+const Style = styled.div`
+  font-size: 1rem;
+
+`
 
 const OndoProgress = styled(Progress)`
   transition: all 2.0s ease-in-out;
@@ -268,6 +319,9 @@ const ProfileWrap = styled(Row)`
 
 const FModal = styled(Modal)`
   border-radius: 10px;
+  /* overflow-y: scroll;
+  max-height: 500px; */
+  /* height: 20%; */
 `;
 
 const ProfileCol = styled(Col)`
@@ -280,10 +334,11 @@ const ProfileImg = styled.img`
   width: 100%;
   border: 1px solid pink;
 `;
-const FModalDiv = styled.div``;
+const FModalDiv = styled.div`
+`;
 const ProfileRight = styled(Col)``;
 const Profileedit = styled.div`
-  margin-top: 120px;
+  margin-top: 150px;
   white-space: nowrap;
   cursor: pointer;
 `;

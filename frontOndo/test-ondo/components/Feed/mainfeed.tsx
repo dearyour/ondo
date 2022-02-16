@@ -25,6 +25,7 @@ function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user.users);
+  const chooseStyle = useSelector((state: RootState) => state.user.users.chooseStyle);
   const image = useSelector((state: RootState) => state.user.users.image);
   const feedstate = useSelector((state: RootState) => state.feed.items);
   const { comments } = useSelector((state: RootState) => state.comment);
@@ -115,6 +116,7 @@ function Mainfeed() {
   useEffect(() => {
     const token = localStorage.getItem("Token");
     __GetFeedState(token);
+    // console.log(feedstate)
   }, []);
 
   useEffect(() => {
@@ -243,9 +245,8 @@ function Mainfeed() {
                 ></div>
               )}
               {/* <div className="profile-image"></div> */}
-              <div className="nickname txt-bold">
-                {nickname && user.nickname}
-              </div>
+
+              {nickname ? <div className="nickname txt-bold"><Style className={chooseStyle}>{chooseStyle}</Style> {user.nickname}</div> : null}
             </div>
             <div className="my-friends">
               <div
@@ -274,6 +275,10 @@ function Mainfeed() {
   );
 }
 export default Mainfeed;
+
+const Style = styled.div`
+  font-size: 12px;
+`
 //유저 이미지 불러오기 ##########
 // const __getUserProfileImage = useCallback(() => {
 //   if (user) {

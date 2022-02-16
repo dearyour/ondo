@@ -203,7 +203,7 @@ const Feed = (props: any) => {
               Router.push(`/user/${props.dto.user.username}`);
             }}
           >
-            {props.dto.user.username}
+            <Style className={props.dto.user.chooseStyle}>{props.dto.user.chooseStyle}</Style>{props.dto.user.username}
           </div>
           <div className="timestamp">
             온도 : {props.dto.user.ondo}
@@ -274,6 +274,10 @@ const Feed = (props: any) => {
 
 export default Feed;
 
+const Style = styled.span`
+  /* font-size: 1rem; */
+  margin-right: 10px;
+`
 // const [
 //   {
 //     feed: {

@@ -246,6 +246,10 @@ const Login = () => {
         {" "}
         올바른 URL을 다시 입력해 주세요
       </LoginLabel>
+      <div>
+        <div className="태양">닉네임</div>
+        <div><span className="태양" style={{ marginRight: '10px' }}>태양</span>닉네임</div>
+      </div>
       <LoginDiv>
         <LoginLabel htmlFor="user-id">이메일</LoginLabel>
         <LoginInput name="user-id" required />

@@ -190,7 +190,7 @@ const FeedForModal = (props: nowProps) => {
                 {data && <FeedUser>
                   <Profile src={data.user.image}></Profile>
                   <span>
-                    <Username>{data.user.username}</Username>
+                    <Username><Style className={data.user.chooseStyle}>{data.user.chooseStyle}</Style>{data.user.username}</Username>
                     <CreatedDate>{date}</CreatedDate>
                   </span>
                 </FeedUser>}
@@ -257,6 +257,10 @@ const FeedForModal = (props: nowProps) => {
     </animated.div>
   )
 }
+
+const Style = styled.span`
+  margin-right: 10px;
+`
 
 const CommentInput = styled.input`
   outline: none;

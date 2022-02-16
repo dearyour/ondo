@@ -67,6 +67,10 @@ a {
 /* 칭호부분 */
 .자 {
  /* color:aqua; */
+ padding: 2px;
+ border: 1px solid rgb(216, 123, 139);
+ background-color: #f1cdcd;
+ color:rgb(230, 109, 109);
 }
 
 .헬스왕 {

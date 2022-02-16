@@ -104,7 +104,7 @@ public class FeedService {
         List<User> ulist = userRepository.findTop5ByOrderByOndoDesc();
         List<RankUserDto> rankUserDtos = new ArrayList<>();
         for (User u : ulist) {
-            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage(), u.getOndo()));
+            rankUserDtos.add(new RankUserDto(u.getUsername(), u.getImage(), u.getOndo(), u.getChooseStyle()));
         }
 
         MainFeedDto mainFeedDto = new MainFeedDto(detailFeedDtos, rankUserDtos);
