@@ -4,7 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 function Rankfeed(props: any) {
-  console.log(props)
+  // console.log(props)
   return (
     <ul className="friend-list-wrapper">
       {props.num}위 　[ {props.dto.ondo} ˚C ]
@@ -22,7 +22,7 @@ function Rankfeed(props: any) {
             {" "}
           </div>
         )}
-        <div className="nickname txt-bold"><div><Style className={props.dto.chooseStyle}>{props.dto.chooseStyle}</Style></div>{props.dto.username}</div>
+        <div className="nickname txt-bold">{props.dto.chooseStyle ? <div><Style className={props.dto.chooseStyle}>{props.dto.chooseStyle}</Style></div> : null}{props.dto.username}</div>
       </li>
     </ul>
   );

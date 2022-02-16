@@ -27,16 +27,22 @@ import { useRouter } from "next/router";
 function* getKakaoKey() {
   interface tokentype extends AxiosResponse {
     token: string;
+    newUser: boolean;
   }
   try {
     const code = new URL(window.location.href).searchParams.get("code");
     const response: tokentype = yield call(KakaoLogin, code);
-    console.log(response);
-    console.log(code);
+    // console.log(response);
+    // console.log(code);
     yield put(userActions.getKakaoKeySuccess(response.token));
-    Router.push("/feedMain");
+    if (response.newUser) {
+      Router.push("/user/profileEdit")
+    } else {
+      Router.push("/feedMain");
+    }
   } catch (err) {
     yield put(userActions.getKakaoKeyError(err));
+    Router.push("/")
     // Router.push("/");
   }
 }
