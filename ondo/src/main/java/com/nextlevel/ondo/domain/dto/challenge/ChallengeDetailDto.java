@@ -20,5 +20,6 @@ public class ChallengeDetailDto {
     private Challenge challenge;
     private List<Feed> feeds; // 해당 챌린지 관련 피드 리스트
     private String username;
+    private String image;
 
 }
