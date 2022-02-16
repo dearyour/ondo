@@ -132,19 +132,19 @@ const UserProfile = ({ data }: any) => {
       {/* {alert ?
         <FollowAlert message="정상적으로 처리되었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
         : null} */}
-        {
-          alert && !isFollowed && <FollowAlert message="팔로우하였습니다." type="info" closable afterClose={handleClose}></FollowAlert>
-        }
+      {
+        alert && !isFollowed && <FollowAlert message="팔로우하였습니다." type="info" closable afterClose={handleClose}></FollowAlert>
+      }
 
-        {
-          alert && isFollowed && <FollowAlert message="언팔로우하었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
-        }
+      {
+        alert && isFollowed && <FollowAlert message="언팔로우하었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
+      }
       <ProfileWrap justify="space-around">
         <ProfileCol md={7}>
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
         <ProfileRight md={7}>
-          {user ? <Nick><div><Style className={users.chooseStyle}>{users.chooseStyle}</Style></div> {user.username}</Nick> : null}
+          {user ? <Nick><div><Style className={user.chooseStyle}>{user.chooseStyle}</Style></div> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
               Router.push("/user/profileEdit");

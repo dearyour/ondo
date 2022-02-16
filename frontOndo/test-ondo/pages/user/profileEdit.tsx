@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect, ReactNode } from "react";
+import React, { useState, useCallback, useRef, useEffect, ReactNode, useLayoutEffect } from "react";
 import NowTitleBar from "components/NowTitleBar";
 import AppLayout from "components/layout/AppLayout";
 import styled from "styled-components";
@@ -50,9 +50,13 @@ const Edit = () => {
     onChangeNick(e.target.value);
   }, []);
 
+
+
   const StyleChallenge = (e: any) => {
     setStyle(e);
   }
+  // useLayoutEffect
+
 
   useEffect(() => {
     const token = localStorage.getItem('Token');
