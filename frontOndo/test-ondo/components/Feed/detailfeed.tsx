@@ -94,10 +94,12 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${
+      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+    }:${makeTwoDigits(minutes)},  ${
+      date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-      }`;
+    }`;
   };
 
   // const __deleteComment = useCallback(
@@ -184,32 +186,35 @@ function Detailfeed() {
     }
   }, []);
   // 댓글 작성
+
   const __uploadComment = useCallback(
     (e) => {
       e.preventDefault();
-      if (detailData) {
-        const data = {
-          feedId: detailData.feed.feedId,
-          content: comment,
-        };
-        const token = localStorage.getItem("Token");
-        axios({
-          method: "POST",
-          url: process.env.BACK_EC2 + "/comment/write",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          data: data,
-        })
-          .then((res) => {
-            // console.log(res);
-            commentRef.current.value = "";
-            setComment("");
-            __loadComments();
+      if (comment.length > 0 && comment.trim()) {
+        if (detailData) {
+          const data = {
+            feedId: detailData.feed.feedId,
+            content: comment,
+          };
+          const token = localStorage.getItem("Token");
+          axios({
+            method: "POST",
+            url: process.env.BACK_EC2 + "/comment/write",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+            data: data,
           })
-          .catch((err) => {
-            // console.log(err);
-          });
+            .then((res) => {
+              // console.log(res);
+              commentRef.current.value = "";
+              setComment("");
+              __loadComments();
+            })
+            .catch((err) => {
+              // console.log(err);
+            });
+        }
       }
     },
     [detailData, comment, commentRef, __loadComments]
@@ -270,7 +275,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => { };
+    return () => {};
   }, [__loadComments]);
   // console.log(detailData.tags.map((it: any) => it) + "###");
   // console.log(detailData.tags[0].name + "###");
@@ -315,10 +320,16 @@ function Detailfeed() {
                     {makeFeedTime()}
                   </div>
                   {loginUserName === feedUserName ? (
-                    <Popconfirm placement="bottomRight" title='이 피드를 삭제하시겠습니까?' onConfirm={__deleteFeed} okText='네' cancelText='아니요'>
-                    <div className="reply-btn">
-                      <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
-                    </div>
+                    <Popconfirm
+                      placement="bottomRight"
+                      title="이 피드를 삭제하시겠습니까?"
+                      onConfirm={__deleteFeed}
+                      okText="네"
+                      cancelText="아니요"
+                    >
+                      <div className="reply-btn">
+                        <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
+                      </div>
                     </Popconfirm>
                   ) : (
                     ""
@@ -327,7 +338,11 @@ function Detailfeed() {
               </div>
               <div className="body-tag">
                 {detailData.tags.map((item: any, idx: number) => {
-                  return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
+                  return (
+                    <div className="body-tag" key={idx}>
+                      [# {item.name} ]　
+                    </div>
+                  );
                   // <Tags item={item.name}></Tags>;
                 })}
               </div>
@@ -340,8 +355,8 @@ function Detailfeed() {
                         // detailData.likeflag === false &&
                         likeState === "ok"
                           ? // || detailData.likeflag === false
-                          // && likelist === "ok"
-                          "/assets/feed/pngwing.com2.png"
+                            // && likelist === "ok"
+                            "/assets/feed/pngwing.com2.png"
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"
