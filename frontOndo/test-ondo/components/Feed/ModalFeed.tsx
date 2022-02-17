@@ -5,6 +5,7 @@ import axios from "axios";
 import Modal from "antd/lib/modal/Modal";
 import Router, { useRouter } from 'next/router';
 import useUser from 'store/hooks/userHooks';
+import { Popconfirm } from "antd";
 
 interface nowProps {
   show: number, // 상위에서 state로 show, control 설정. show에 feedId 넣어서 내려준다
@@ -202,7 +203,15 @@ const FeedForModal = (props: nowProps) => {
                     <CommentImg src="/assets/feed/pngwing.com5.png"></CommentImg>
                     <span> {data && data.comments ? data.comments.length : 0}</span>
                   </CommentCount>
-                  {data && users.username === data.user.username ? <DeleteImg src="/assets/feed/pngwing.com6.png" onClick={deleteFeed} /> : null}
+                  <Popconfirm
+                    placement="bottomRight"
+                    title="이 피드를 삭제하시겠습니까?"
+                    onConfirm={deleteFeed}
+                    okText="네"
+                    cancelText="아니요"
+                  >
+                    {data && users.username === data.user.username ? <DeleteImg src="/assets/feed/pngwing.com6.png" /> : null}
+                  </Popconfirm>
                 </ImgWrap>
                 <CommentLine></CommentLine>
                 <CommentWrap>
