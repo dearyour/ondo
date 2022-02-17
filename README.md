@@ -1,20 +1,7 @@
 # Ondo
 ![ondologo](/uploads/5273796d36da88e978f9b05cfce57710/ondologo.png)
-# dev
 
-## commit messages
-
-### Convention
-
-The type is contained within the title and can be one of these types:
-
-- **feat:** A new feature
-- **fix:** A bug fix
-- **docs:** Changes to documentation
-- **style:** Formatting, missing semi colons, etc; no code change
-- **refactor:** Refactoring production code
-- **test:** Adding tests, refactoring test; no production code change
-- **chore:** Updating build tasks, package manager configs, etc; no production code change
+http://i6a601.p.ssafy.io/
 
 ## Preview.
 
@@ -28,7 +15,7 @@ Ondo(오늘의 도전)
 - [ERD](https://www.erdcloud.com/d/uNBM3PjzYqBmSymfP)<br>
 - [프로토타입](https://www.figma.com/file/GDZM9AklPZrsCaC1AeHYxH/Ondo?node-id=0%3A1)<br>
 - [API](https://www.notion.so/API-1ca45d1fdc95415aac1050bf3f63cb96)
-- [patch notes](https://lab.ssafy.com/s06-webmobile2-sub2/S06P12A601/-/wikis/Patch-Notes)
+- [Patch Notes](https://lab.ssafy.com/s06-webmobile2-sub2/S06P12A601/-/wikis/Patch-Notes)
 
 ## 카테고리
 
