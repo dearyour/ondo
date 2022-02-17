@@ -138,9 +138,9 @@ $yong-blue: #5085e8;
             .like {
               margin-right: 16px;
               position: relative;
-              // &:active {
-              //   animation: box-ani 0.1s linear forwards; /* 애니메이션 적용 */
-              // }
+              &:active {
+                animation: box-ani 0.05s linear forwards; /* 애니메이션 적용 */
+              }
               cursor: pointer;
               .move {
                 width: 30px;
@@ -267,6 +267,6 @@ $yong-blue: #5085e8;
     transform: translate(0, 0);
   }
   to {
-    transform: translate(10px, 10px);
+    transform: translate(5px, 5px);
   }
 }
