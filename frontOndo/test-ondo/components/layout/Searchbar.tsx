@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { SearchOutlined, CloseOutlined } from '@ant-design/icons';
-import useInput from 'store/hooks/useInput';
-import axios from 'axios';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import useUser from 'store/hooks/userHooks';
 
 const SearchContainer = styled.div`
@@ -73,13 +71,13 @@ const IconButton = styled.button`
 `;
 
 function Searchbar(): JSX.Element {
-    const router = useRouter();
     const { isLoading, loadingStart, loadingEnd } = useUser();
     const [keyword, setKeyword] = useState('');
     const [isActive, setIsActive] = useState(false);
     const keywordChange: React.ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value)
     }
+
     useEffect(() => {
         if (keyword) {
             setIsActive(true)
@@ -88,13 +86,8 @@ function Searchbar(): JSX.Element {
         }
     }, [keyword])
 
-    const toggleSearch = () => {
-        setIsActive(!isActive);
-    }
-    const url = process.env.BACK_EC2 + '/search/'
     const Search = () => {
         Router.push('/search/' + keyword)
-
     }
 
     return (
