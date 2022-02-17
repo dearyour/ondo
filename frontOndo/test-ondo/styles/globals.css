@@ -186,12 +186,13 @@ a {
   initial-value: 0deg;
 }
 
-.unlike {
-  animation: fadeOut 0.5s;
+.unlikeanimated {
+  animation: fadeOut 0.3s;
   opacity: 0;
+  visibility: none;
 }
-.like{
-  animation: fadein 0.5s;
+.likeanimated{
+  animation: fadein 1.5s;
 }
 @keyframes fadein{
   from {

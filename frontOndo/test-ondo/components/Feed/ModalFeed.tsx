@@ -208,7 +208,7 @@ const FeedForModal = (props: nowProps) => {
                       : "/assets/feed/pngwing.com.png"} onClick={DoLike}>
                     </LikeImg> */}
                     <LikeImg src="/assets/feed/white.png"></LikeImg>
-                    <LikeBaseImg className={likeState.like ? "like" : 'unlike'} onClick={DoLike} src="/assets/feed/pngwing.com2.png"></LikeBaseImg>
+                    <LikeBaseImg className={likeState.like ? "likeanimated" : 'unlikeanimated'} onClick={DoLike} src="/assets/feed/pngwing.com2.png"></LikeBaseImg>
                     <LikeBase src="/assets/feed/pngwing.com.png" onClick={DoLike}></LikeBase>
 
                     <span> {data ? likeState.count : 0}</span>

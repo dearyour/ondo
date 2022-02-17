@@ -137,10 +137,15 @@ $yong-blue: #5085e8;
             }
             .like {
               margin-right: 16px;
-              &:active {
-                animation: box-ani 0.1s linear forwards; /* 애니메이션 적용 */
-              }
+              position: relative;
+              // &:active {
+              //   animation: box-ani 0.1s linear forwards; /* 애니메이션 적용 */
+              // }
               cursor: pointer;
+              .move {
+                width: 30px;
+                position: absolute;
+              }
             }
           }
         }

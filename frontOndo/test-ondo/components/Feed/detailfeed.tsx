@@ -94,12 +94,10 @@ function Detailfeed() {
     // console.log(hour + "hour");
     // console.log(minutes);
 
-    return ` ${hour > 12 ? "오후" : "오전"} ${
-      hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
-    }:${makeTwoDigits(minutes)},  ${
-      date === 0 ? "오늘" : date === 1 ? "어제" : ``
+    return ` ${hour > 12 ? "오후" : "오전"} ${hour > 12 ? makeTwoDigits(hour - 12) : makeTwoDigits(hour)
+      }:${makeTwoDigits(minutes)},  ${date === 0 ? "오늘" : date === 1 ? "어제" : ``
       // `${date} 일전`
-    }`;
+      }`;
   };
 
   // const __deleteComment = useCallback(
@@ -275,7 +273,7 @@ function Detailfeed() {
 
   useEffect(() => {
     __loadComments();
-    return () => {};
+    return () => { };
   }, [__loadComments]);
   // console.log(detailData.tags.map((it: any) => it) + "###");
   // console.log(detailData.tags[0].name + "###");
@@ -346,7 +344,7 @@ function Detailfeed() {
                         Router.push("/search/" + item.name);
                       }}
                     >
-                      [# {item.name} ]　
+                      [# {item.name} ]
                     </div>
                   );
                   // <Tags item={item.name}></Tags>;
@@ -357,16 +355,15 @@ function Detailfeed() {
                 <div className="like" onClick={__updateLike}>
                   <div className="asset">
                     <img
-                      src={
-                        // detailData.likeflag === false &&
-                        likeState === "ok"
-                          ? // || detailData.likeflag === false
-                            // && likelist === "ok"
-                            "/assets/feed/pngwing.com2.png"
-                          : "/assets/feed/pngwing.com.png"
-                      }
+                      className={likeState === 'ok' ? "move likeanimated" : "move unlikeanimated"}
+                      src=
+                      // detailData.likeflag === false &&
+                      // || detailData.likeflag === false
+                      // && likelist === "ok"
+                      "/assets/feed/pngwing.com2.png"
                       alt="좋아요"
                     />
+                    <img src="/assets/feed/pngwing.com.png"></img>
                   </div>
                   <div className="title txt-bold">
                     {/* {layout.likelist}　 */}

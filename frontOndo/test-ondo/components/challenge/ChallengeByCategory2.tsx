@@ -142,12 +142,18 @@ const Card = styled.div`
   border-radius: 0.2rem;
   min-width: 28rem;
   display: flex;
+  /* position: relative; */
 
   @media screen and (min-width: 600px) {
     flex-direction: column;
     text-align: center;
     min-width: 14rem;
   }
+`
+
+const CardFooter = styled.div`
+  height: 20%;
+  width: 100%;
 `
 
 const CardImg = styled.img`
