@@ -10,14 +10,17 @@ export default function Reply(props: any) {
   const loginUserName = useSelector(
     (state: RootState) => state.user.users.username
   );
-  console.log(loginUserName);
+  const feedUserName = useSelector(
+    (state: RootState) => state.layout.detailData.user.username
+  );
+  // console.log(loginUserName);
   const commentId = useSelector((state: RootState) => state.layout.targetId);
   const [temp, setTemp] = useState(commentId);
   const feedssId = useSelector(
     (state: RootState) => state.layout.detailData.feed.feedId
   );
-  console.log(props.reply.comment.commentId + "$$$$$$$$$$$$");
-  console.log(commentId);
+  // console.log(props.reply.comment.commentId + "$$$$$$$$$$$$");
+  // console.log(commentId);
   const [commentData, setCommentData] = useState([]);
   const dispatch = useDispatch();
   const oneDay = 1000 * 60 * 60 * 24;
@@ -104,12 +107,12 @@ export default function Reply(props: any) {
           },
         })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             props.method(); // 로드 comment 다시 부른다
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },
@@ -132,7 +135,14 @@ export default function Reply(props: any) {
           )}
           <div className="feed-desc">
             {/* <div className="nickname">{props.item.username}</div> */}
-            <div className="nickname">{props.reply.username}</div>
+            <div
+              className="nickname"
+              onClick={() => {
+                Router.push(`/user/${props.reply.username}`);
+              }}
+            >
+              {props.reply.username}
+            </div>
             <div className="timestamp">
               {getStartDate(props.reply.comment.createdDate)}{" "}
               {makeFeedTime(props.reply.comment.createdDate)}
@@ -150,7 +160,8 @@ export default function Reply(props: any) {
             </div>
             <div className="title txt-bold"></div>
           </div>
-          {loginUserName === props.reply.username ? (
+          {loginUserName === feedUserName ||
+          loginUserName === props.reply.username ? (
             <div className="reply-btn" onClick={__deleteComment}>
               삭제
             </div>

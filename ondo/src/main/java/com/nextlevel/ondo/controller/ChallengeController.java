@@ -69,4 +69,9 @@ public class ChallengeController {
     public ResponseEntity<List<Challenge>> getChallengeByCategory(@PathVariable("category") Category category) {
         return new ResponseEntity<List<Challenge>>(challengeService.getChallengeByCategory(category), HttpStatus.OK);
     }
+
+    @GetMapping("/canparticipate") // 참여 가능한 도전 리스트
+    public ResponseEntity<List<Challenge>> canparticipate(@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<List<Challenge>>(challengeService.canparticipate(), HttpStatus.OK);
+    }
 }

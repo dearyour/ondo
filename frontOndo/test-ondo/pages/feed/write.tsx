@@ -272,7 +272,7 @@ const Write_feed = () => {
   `
 
   return (
-    <AppLayout>
+    <AppLayout title="도전 인증 피드 작성하기 | 온도">
       <Write>
         {loading && <Loading size="large" tip={<div>로딩 중...</div>}></Loading>}
         {/* <Writetitle>피드 작성하기</Writetitle> */}

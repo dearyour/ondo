@@ -131,8 +131,13 @@ $yong-blue: #5085e8;
               display: flex;
               align-items: center;
               margin-top: 7px;
-              color: blueviolet;
-              cursor: pointer;
+              .body-tags {
+                color: blueviolet;
+                cursor: pointer;
+                &:hover {
+                  color: #709edb;
+                }
+              }
             }
           }
           .bottom {
@@ -158,6 +163,9 @@ $yong-blue: #5085e8;
             }
             .like {
               margin-right: 24px;
+              &:active {
+                animation: box-ani 0.1s linear forwards; /* 애니메이션 적용 */
+              }
             }
           }
         }
@@ -231,5 +239,13 @@ $yong-blue: #5085e8;
         }
       }
     }
+  }
+}
+@keyframes box-ani {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(10px, 10px);
   }
 }

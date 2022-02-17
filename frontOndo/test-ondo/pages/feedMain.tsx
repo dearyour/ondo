@@ -39,7 +39,7 @@ const Home: NextPage = () => {
   //   const likelistRef = __getLikeList();
   // }, [__getLikeList]);
   return (
-    <AppLayout title="index page">
+    <AppLayout title="메인 | 온도">
       <Mainfeed />
       {isDetailOpen && <Detailfeed />}
       <ScrollToTop />

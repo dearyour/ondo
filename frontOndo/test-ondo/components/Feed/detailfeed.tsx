@@ -142,13 +142,13 @@ function Detailfeed() {
           },
         })
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             dispatch(feedAction.getFeed());
             __closeDetail();
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },
@@ -340,7 +340,7 @@ function Detailfeed() {
                 {detailData.tags.map((item: any, idx: number) => {
                   return (
                     <div
-                      className="body-tag"
+                      className="body-tags"
                       key={idx}
                       onClick={() => {
                         Router.push("/search/" + item.name);
@@ -354,7 +354,7 @@ function Detailfeed() {
               </div>
               <div className="body">{detailData.feed.content}</div>
               <div className="bottom">
-                <div className="like">
+                <div className="like" onClick={__updateLike}>
                   <div className="asset">
                     <img
                       src={
@@ -366,7 +366,6 @@ function Detailfeed() {
                           : "/assets/feed/pngwing.com.png"
                       }
                       alt="좋아요"
-                      onClick={__updateLike}
                     />
                   </div>
                   <div className="title txt-bold">

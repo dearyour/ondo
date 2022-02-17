@@ -33,9 +33,9 @@ const ChallengeByCategory2 = (props: any) => {
         <Card key={i}>
           <CardImg src={challenges[i].image} />
           <CardBody>
-            <h2>{challenges[i].title}</h2>
+            <h3>{challenges[i].title}</h3>
             <p>{getDuration(challenges[i].sdate)} | {challenges[i].category}</p>
-            <h3>현재 {challenges[i].challengeParticipate.length} 명 참여 중</h3>
+            <h4>현재 {challenges[i].challengeParticipate.length} 명 참여 중</h4>
             <button onClick={() => { Router.push(`/challenge/${challenges[i].challengeId}`) }}>자세히 보기</button>
           </CardBody>
         </Card>
@@ -165,7 +165,7 @@ const CardBody = styled.div`
   margin: 1rem;
   flex-grow: 1;
 
-  h2 {
+  h3 {
     line-height: 1.4rem;
     margin-bottom: 0.5rem;
   }
@@ -175,8 +175,8 @@ const CardBody = styled.div`
     line-height: 1.2rem;
   }
 
-  h3 {
-    font-size: 1.4rem;
+  h4 {
+    font-size: 1.2rem;
     margin-top: 0.6rem;
   }
 

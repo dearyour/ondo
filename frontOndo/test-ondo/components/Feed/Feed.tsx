@@ -242,7 +242,7 @@ const Feed = (props: any) => {
           {props.dto.tags.map((item: any, idx: number) => {
             return (
               <div
-                className="body-tag"
+                className="body-tags"
                 key={idx}
                 onClick={() => {
                   Router.push("/search/" + item.name);
