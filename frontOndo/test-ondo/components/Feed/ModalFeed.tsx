@@ -77,7 +77,7 @@ const FeedForModal = (props: nowProps) => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           setData(res.data)
           setLikeState({ like: !res.data.likeflag, count: res.data.feed.feedlike.length })
           setDate(getStartDate(res.data.feed.createdDate) + makeFeedTime((res.data.feed.createdDate)))

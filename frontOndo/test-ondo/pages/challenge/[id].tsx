@@ -41,7 +41,7 @@ const ReadChallenge = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           setAmIParticipant(res.data.amIParticipate)
           setChallenge(res.data.challenge)
           setFeeds(res.data.feeds)
@@ -54,7 +54,7 @@ const ReadChallenge = () => {
           setLoading(false)
           const now = new Date()
           setRstarted(Number(res.data.challenge.sdate) <= Number(now.getFullYear().toString() + ("00" + (now.getMonth() + 1).toString()).slice(-2) + now.getDate().toString()))
-          console.log(res.data);
+          // console.log(res.data);
 
         })
         .catch((err) => {

@@ -67,7 +67,7 @@ const Edit = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         // setImage(res.data.image)
         // onChangeNick(res.data.username)
         setChooseStyle(res.data.stylesList)
@@ -119,7 +119,7 @@ const Edit = () => {
     if (e.file.status === 'done') {
       getBase64(e.file.originFileObj, (imageUrl: any) => {
         setOriginalImage(imageUrl)
-        console.log(originalImg)
+        // console.log(originalImg)
         setLoading(false)
         return;
       },

@@ -22,7 +22,7 @@ const SearchPage = () => {
     // Router.reload()
     if (keyword) {
       const token = localStorage.getItem('Token');
-      console.log(keyword)
+      // console.log(keyword)
       const url = process.env.BACK_EC2 + '/search/' + keyword
       axios({
         method: 'get',
@@ -30,7 +30,7 @@ const SearchPage = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
           setData(res.data)
           setLayoutTitle(keyword + ' : 온도 통합검색')
         })

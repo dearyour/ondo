@@ -80,7 +80,7 @@ const Challenge = () => {
     loadingStart();
     if (selectedCategory === '전체') {
       setCatChallenges(allChallenges);
-      console.log(allChallenges[0]);
+      // console.log(allChallenges[0]);
 
       return;
     }
@@ -91,15 +91,15 @@ const Challenge = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log('categorizing 성공');
-        console.log(res.data[0]);
+        // console.log('categorizing 성공');
+        // console.log(res.data[0]);
 
         setCatChallenges(res.data);
         loadingEnd();
       })
       .catch((err) => {
         loadingEnd();
-        console.log(selectedCategory);
+        // console.log(selectedCategory);
         console.log(err);
       })
   }

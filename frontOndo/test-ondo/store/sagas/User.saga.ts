@@ -93,13 +93,13 @@ function* getUserObjState(username: any) {
   try {
     const token = localStorage.getItem("Token");
     if (token) {
-      console.log("객체유저통신전");
+      // console.log("객체유저통신전");
       const userObjdata: AxiosResponse = yield call(
         getUserObjapi,
         username,
         token
       );
-      console.log("객체유저통신후");
+      // console.log("객체유저통신후");
       // console.log(userObjdata);
       yield put(userActions.setUserObj(userObjdata));
     }

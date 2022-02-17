@@ -76,7 +76,7 @@ const Write_feed = () => {
       url: process.env.BACK_EC2 + "/feed/create",
       headers: { Authorization: "Bearer " + token },
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data) {
         setChallenges(res.data);
       } else {
@@ -93,7 +93,7 @@ const Write_feed = () => {
   const onChangeImage: React.ChangeEventHandler<HTMLInputElement> = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log(e.target);
+    // console.log(e.target);
   };
   const onChangeContent: React.ChangeEventHandler<HTMLTextAreaElement> = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -117,7 +117,7 @@ const Write_feed = () => {
     // }
     setTagErr('')
     if (!challenge) {
-      console.log(challenge);
+      // console.log(challenge);
       setChallengeErr("도전을 선택해주세요.");
       i++;
     } else {
@@ -167,7 +167,7 @@ const Write_feed = () => {
         challengeId: challenge,
         content: content,
       };
-      console.log(data);
+      // console.log(data);
       const formdata = new FormData();
       formdata.append("file", file);
       formdata.append(
@@ -184,7 +184,7 @@ const Write_feed = () => {
         },
         data: formdata,
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         Router.push("/feedMain");
       });
     }
@@ -237,7 +237,7 @@ const Write_feed = () => {
       /* 태그를 클릭 이벤트 관련 로직 */
       $HashWrapInner.addEventListener("click", () => {
         $HashWrapOuter?.removeChild($HashWrapInner);
-        console.log($HashWrapInner.innerHTML);
+        // console.log($HashWrapInner.innerHTML);
         setHashArr(hashArr.filter((hashtag) => hashtag));
       });
 

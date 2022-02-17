@@ -45,7 +45,7 @@ const Userfeed = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setdata(res.data)
         router.push('/user/' + username);
       })
