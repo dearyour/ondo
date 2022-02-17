@@ -15,12 +15,12 @@ function Rankfeed(props: any) {
         }}
       >
         {props.dto.image && (
-          <div
+          <Profile
             className="profile-image"
             style={{ backgroundImage: `url(${props.dto.image})` }}
           >
             {" "}
-          </div>
+          </Profile>
         )}
         <div className="nickname txt-bold">
           {props.dto.chooseStyle ? (
@@ -38,6 +38,10 @@ function Rankfeed(props: any) {
 }
 
 export default Rankfeed;
+
+const Profile = styled.div`
+  margin-bottom: 2px;
+`
 
 const Style = styled.span`
   font-size: 10px;

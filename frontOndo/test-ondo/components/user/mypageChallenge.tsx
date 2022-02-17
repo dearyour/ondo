@@ -8,9 +8,9 @@ const Challengebox = ({ challenge }: any) => {
   const [showTitle, setShowTitle] = useState<boolean>(false);
 
   const mouseOver = () => {
-    setTimeout(() => {
-      setShowTitle(true)
-    }, 200)
+
+    setShowTitle(true)
+
   }
 
   const mouseOut = () => {
@@ -20,7 +20,7 @@ const Challengebox = ({ challenge }: any) => {
   return (
     <Title span={24} sm={12} md={8} lg={6}>
       <Content src={challenge.image} onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={() => { Router.push('/challenge/' + challenge.challengeId) }}></Content>
-      {showTitle ? <ChallengeTitle>{challenge.title}</ChallengeTitle> : null}
+      {showTitle ? <ChallengeTitle >{challenge.title}</ChallengeTitle> : null}
     </Title>
 
   )
@@ -29,6 +29,7 @@ const Challengebox = ({ challenge }: any) => {
 const Title = styled(Col)`
   padding: 10px;
   position: relative;
+
 
 `
 
@@ -48,7 +49,10 @@ const ChallengeTitle = styled.div`
   align-items: center;
   justify-content: center;
   padding: 10px;
-  left:0;
+  /* padding-right: 0; */
+  margin-left: auto;
+  margin-right: auto;
+  left:20px;
   top:0;
   pointer-events: none;
   width: 80%;

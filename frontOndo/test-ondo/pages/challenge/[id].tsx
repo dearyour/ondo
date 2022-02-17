@@ -86,7 +86,7 @@ const ReadChallenge = () => {
   }
   // alert 관련
   const AlertClose = useCallback(() => {
-    setTimeout(() => { setAlert(false) }, 3000);
+    setTimeout(() => { setAlert(false) }, 8000);
   }, [])
   const handleClose = () => {
     setAlert(false)
