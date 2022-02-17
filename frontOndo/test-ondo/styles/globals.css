@@ -185,3 +185,31 @@ a {
   inherits: false;
   initial-value: 0deg;
 }
+
+.unlikeanimated {
+  /* animation: fadeOut 0.3s; */
+  transition: opacity 1.5s ease;
+  opacity: 0;
+}
+
+.likeanimated{
+  transition: opacity 1.5s ease;
+  /* animation: fadein 1.5s; */
+  opacity: 1;
+}
+/* @keyframes fadein{
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+} */
+/* @keyframes fadeOut {
+from {
+  opacity: 1;
+}
+to {
+  opacity: 0;
+  } */
+/* } */

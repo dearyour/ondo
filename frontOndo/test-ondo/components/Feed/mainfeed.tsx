@@ -20,16 +20,38 @@ import Rankfeed from "components/Feed/rankfeed";
 import happy from "public/images/dogye/happy.png";
 import styled from "styled-components";
 import { UpCircleOutlined } from "@ant-design/icons";
+import useUser from "store/hooks/userHooks";
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 
 function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
   const user = useSelector((state: RootState) => state.user);
   const { ondo } = useSelector((state: RootState) => state.user.users);
-  const chooseStyle = useSelector((state: RootState) => state.user.users.chooseStyle);
+  const chooseStyle = useSelector(
+    (state: RootState) => state.user.users.chooseStyle
+  );
   const image = useSelector((state: RootState) => state.user.users.image);
   const feedstate = useSelector((state: RootState) => state.feed.items);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
+  const { isLoading, loadingStart, loadingEnd } = useUser();
+
+  //인피니티 스크롤
+  const [loading, setLoading] = useState<boolean>(false);
+  const [nowFeedsnum, setNowFeedsNum] = useState(5);
+  const loadmoredata = () => {
+    if (loading) { return }
+    setLoading(true)
+    setTimeout(() => {
+      setNowFeedsNum(nowFeedsnum + 5)
+
+    }, 1000)
+    setLoading(false)
+  }
+
+
+
   const dispatch = useDispatch();
   const [feeds, setFeeds] = useState([]); //프롭으로내려주자
   const [rankers, setRankers] = useState([]); //프롭으로내려주자
@@ -39,10 +61,10 @@ function Mainfeed() {
   // });
 
   ////////////////////////
-  useEffect(() => {
-    // dispatch(userActions.getUser());
-    // dispatch(feedAction.getFeed());
-  }, []);
+  // useEffect(() => {
+  // dispatch(userActions.getUser());
+  // dispatch(feedAction.getFeed());
+  // }, []);
   const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
@@ -60,10 +82,12 @@ function Mainfeed() {
   };
 
   useEffect(() => {
+    loadingStart();
     const token = localStorage.getItem("Token");
     __GetUserState(token);
     // console.log(userstate.Object.email);
     // dispatch(userActions.setnickname(userstate));
+    loadingEnd();
   }, []);
   //////////////////////////////////////////
 
@@ -114,12 +138,17 @@ function Mainfeed() {
     [feeds]
   );
   useEffect(() => {
+    loadingStart();
     const token = localStorage.getItem("Token");
     __GetFeedState(token);
+
     // console.log(feedstate)
+    loadingEnd();
   }, []);
 
+
   useEffect(() => {
+    loadingStart()
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
     //댓글개수 실시간카운트 하려면 호출 상태를 디펜던시에 넣는게 아니라
@@ -128,6 +157,7 @@ function Mainfeed() {
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
+    loadingEnd()
   }, []);
 
   // const __openFeedDetail = useCallback(() => {
@@ -163,7 +193,7 @@ function Mainfeed() {
       top: 120px;
       left: 19%;
     }
-  `
+  `;
 
   // const GoTopBtn = styled.div`
   //   position: fixed;
@@ -172,9 +202,11 @@ function Mainfeed() {
   //   font-size: 2.5rem;
   //   cursor: pointer;
   // `;
+
   return (
     <div>
       <div className="mainfeed">
+
         <div className="wrapper">
           <div className="feed-list">
             <Dogye>
@@ -199,7 +231,7 @@ function Mainfeed() {
                   disabled
                   // ref={contextRef}
                   type="text"
-                  placeholder=" 오늘의 도전 인증하기"
+                  placeholder="     오늘의 도전 인증하기"
                 // onChange={(e) => setContext(e.target.value)}
                 />
               </div>
@@ -215,20 +247,44 @@ function Mainfeed() {
               </div>
             </form>
             {/* <Feed /> */}
-            {feedstate &&
-              feedstate.map((item: any, idx: number) => {
-                // console.log(feeds);
+            {feedstate ? <InfiniteScroll
+              dataLength={feedstate.slice(0, nowFeedsnum).length} //This is important field to render the next data
+              next={loadmoredata}
+              hasMore={nowFeedsnum < feedstate.length}
+              loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+              endMessage={
+                <p style={{ textAlign: 'center' }}>
+                  <b>마지막입니다</b>
+                </p>
+              }
+            // below props only if you need pull down functionality
+            // pullDownToRefresh
+            // pullDownToRefreshThreshold={50}
+            // pullDownToRefreshContent={
+            //   <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+            // }
+            // releaseToRefreshContent={
+            //   <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+            // }
+            >
 
-                return (
-                  <Feed
-                    key={idx}
-                    dto={item}
-                    nickname={nickname}
-                    image={image}
-                  // comments={comments}
-                  />
-                );
-              })}
+              {feedstate &&
+                feedstate.slice(0, nowFeedsnum).map((item: any, idx: number) => {
+                  // console.log(feeds);
+                  // console.log(feedstate.length)
+                  // console.log(nowFeedsnum)
+
+                  return (
+                    <Feed
+                      key={idx}
+                      dto={item}
+                      nickname={nickname}
+                      image={image}
+                    // comments={comments}
+                    />
+                  );
+                })}
+            </InfiniteScroll> : null}
           </div>
 
           <div className="friend-list">
@@ -246,7 +302,14 @@ function Mainfeed() {
               )}
               {/* <div className="profile-image"></div> */}
 
-              {nickname ? <div className="nickname txt-bold"><div><Style className={chooseStyle}>{chooseStyle}</Style></div> {user.nickname}</div> : null}
+              {nickname ? (
+                <div className="nickname txt-bold">
+                  <div>
+                    <Style className={chooseStyle}>{chooseStyle}</Style>
+                  </div>{" "}
+                  {user.nickname}
+                </div>
+              ) : null}
             </div>
             <div className="my-friends">
               <div
@@ -278,7 +341,7 @@ export default Mainfeed;
 
 const Style = styled.span`
   font-size: 12px;
-`
+`;
 //유저 이미지 불러오기 ##########
 // const __getUserProfileImage = useCallback(() => {
 //   if (user) {

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import styles from 'css/index.module.css'
 import useUser from 'store/hooks/userHooks';
-import { Modal, Button, Col, Row, Divider, Spin } from 'antd';
+import { Modal, Button, Col, Row, Divider, Spin, Alert } from 'antd';
 import AppLayout from 'components/layout/AppLayout';
 import ChallengeOwner from 'components/challenge/ChallengeOwner';
 import Image from 'next/image';
@@ -29,6 +29,7 @@ const ReadChallenge = () => {
   const [ownerName, setOwnerName] = useState<string>();
   const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
   const [ownerStyle, setOwnerStyle] = useState();
+  const [alert, setAlert] = useState<boolean>(false);
 
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const ReadChallenge = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           setAmIParticipant(res.data.amIParticipate)
           setChallenge(res.data.challenge)
           setFeeds(res.data.feeds)
@@ -53,11 +54,12 @@ const ReadChallenge = () => {
           setLoading(false)
           const now = new Date()
           setRstarted(Number(res.data.challenge.sdate) <= Number(now.getFullYear().toString() + ("00" + (now.getMonth() + 1).toString()).slice(-2) + now.getDate().toString()))
-          console.log(res.data);
+          // console.log(res.data);
 
         })
         .catch((err) => {
           console.log('상세보기 실패');
+          Router.push('/404')
 
         })
     }
@@ -76,10 +78,26 @@ const ReadChallenge = () => {
     })
       .then((res) => {
         // console.log(res)
-        alert('참여합니다.')
+        // alert('참여합니다.')
+        setAlert(true);
+        AlertClose();
         location.reload();
       })
   }
+  // alert 관련
+  const AlertClose = useCallback(() => {
+    setTimeout(() => { setAlert(false) }, 8000);
+  }, [])
+  const handleClose = () => {
+    setAlert(false)
+  }
+  const ParticipateAlert = styled(Alert)`
+  position: absolute;
+  left: 40%;
+  /* right: auto; */
+  top: 80px;
+  z-index: 2;
+`
 
   const getDuration = (startDate: string) => {
 
@@ -129,6 +147,7 @@ const ReadChallenge = () => {
 
   return (
     <AppLayout title={layoutTitle}>
+      {alert && <ParticipateAlert message="참여하였습니다" type="info" closable afterClose={handleClose}></ParticipateAlert>}
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
       <Row style={{ marginTop: 20, fontFamily: 'sans-serif' }}>
         <Col xs={0} md={4} />

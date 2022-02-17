@@ -140,13 +140,13 @@ function Detailfeed() {
           },
         })
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             dispatch(feedAction.getFeed());
             __closeDetail();
             // dispatch(layoutAction.updateDetailData(commentData));
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     },
@@ -184,32 +184,35 @@ function Detailfeed() {
     }
   }, []);
   // 댓글 작성
+
   const __uploadComment = useCallback(
     (e) => {
       e.preventDefault();
-      if (detailData) {
-        const data = {
-          feedId: detailData.feed.feedId,
-          content: comment,
-        };
-        const token = localStorage.getItem("Token");
-        axios({
-          method: "POST",
-          url: process.env.BACK_EC2 + "/comment/write",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          data: data,
-        })
-          .then((res) => {
-            // console.log(res);
-            commentRef.current.value = "";
-            setComment("");
-            __loadComments();
+      if (comment.length > 0 && comment.trim()) {
+        if (detailData) {
+          const data = {
+            feedId: detailData.feed.feedId,
+            content: comment,
+          };
+          const token = localStorage.getItem("Token");
+          axios({
+            method: "POST",
+            url: process.env.BACK_EC2 + "/comment/write",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+            data: data,
           })
-          .catch((err) => {
-            // console.log(err);
-          });
+            .then((res) => {
+              // console.log(res);
+              commentRef.current.value = "";
+              setComment("");
+              __loadComments();
+            })
+            .catch((err) => {
+              // console.log(err);
+            });
+        }
       }
     },
     [detailData, comment, commentRef, __loadComments]
@@ -315,10 +318,16 @@ function Detailfeed() {
                     {makeFeedTime()}
                   </div>
                   {loginUserName === feedUserName ? (
-                    <Popconfirm placement="bottomRight" title='이 피드를 삭제하시겠습니까?' onConfirm={__deleteFeed} okText='네' cancelText='아니요'>
-                    <div className="reply-btn">
-                      <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
-                    </div>
+                    <Popconfirm
+                      placement="bottomRight"
+                      title="이 피드를 삭제하시겠습니까?"
+                      onConfirm={__deleteFeed}
+                      okText="네"
+                      cancelText="아니요"
+                    >
+                      <div className="reply-btn">
+                        <img src="/assets/feed/pngwing.com9.png" alt="삭제" />
+                      </div>
                     </Popconfirm>
                   ) : (
                     ""
@@ -327,26 +336,34 @@ function Detailfeed() {
               </div>
               <div className="body-tag">
                 {detailData.tags.map((item: any, idx: number) => {
-                  return <div className="body-tag" key={idx}>[# {item.name} ]　</div>;
+                  return (
+                    <div
+                      className="body-tags"
+                      key={idx}
+                      onClick={() => {
+                        Router.push("/search/" + item.name);
+                      }}
+                    >
+                      [# {item.name} ]
+                    </div>
+                  );
                   // <Tags item={item.name}></Tags>;
                 })}
               </div>
               <div className="body">{detailData.feed.content}</div>
               <div className="bottom">
-                <div className="like">
+                <div className="like" onClick={__updateLike}>
                   <div className="asset">
                     <img
-                      src={
-                        // detailData.likeflag === false &&
-                        likeState === "ok"
-                          ? // || detailData.likeflag === false
-                          // && likelist === "ok"
-                          "/assets/feed/pngwing.com2.png"
-                          : "/assets/feed/pngwing.com.png"
-                      }
+                      className={likeState === 'ok' ? "move likeanimated" : "move unlikeanimated"}
+                      src=
+                      // detailData.likeflag === false &&
+                      // || detailData.likeflag === false
+                      // && likelist === "ok"
+                      "/assets/feed/pngwing.com2.png"
                       alt="좋아요"
-                      onClick={__updateLike}
                     />
+                    <img src="/assets/feed/pngwing.com.png"></img>
                   </div>
                   <div className="title txt-bold">
                     {/* {layout.likelist}　 */}

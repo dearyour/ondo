@@ -37,19 +37,19 @@ function HotChallenge(props: any): JSX.Element {
     const result = [];
     for (let i = 0; i < Math.min(10, hotChallenges.length); i++) {
       result.push(
-        <CardWrapper onClick={() => { Router.push(`/challenge/${hotChallenges[i].challengeId}`) }}>
+        <CardWrapper key={i} onClick={() => { Router.push(`/challenge/${hotChallenges[i].challengeId}`) }}>
           <Card>
             <CardImage>
               <ChallengeImage src={hotChallenges[i].image} />
             </CardImage>
             <Details>
-              <h2>
+              <h3>
                 {hotChallenges[i].title}
                 <SubTitle>
-                  {getDuration(hotChallenges[i].sdate)} <br/>
+                  {getDuration(hotChallenges[i].sdate)} <br />
                   현재 {hotChallenges[i].challengeParticipate.length} 명 참여 중
-                </SubTitle>               
-              </h2>
+                </SubTitle>
+              </h3>
             </Details>
           </Card>
         </CardWrapper>
@@ -177,7 +177,7 @@ const Card = styled.div`
   }
 
   &:hover div:nth-child(2) {
-    bottom: 0;
+    bottom: -5px;
   }
 `
 
@@ -193,7 +193,7 @@ const Details = styled.div`
   -webkit-transition: .6s;
   transition: .6s;
 
-  h2 {
+  h3 {
     margin: 30px 0;
     padding: 0;
     text-align: center;

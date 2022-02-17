@@ -4,22 +4,37 @@ import UserProfile from 'components/user/userProfile';
 import styled from 'styled-components';
 import Challengebox from 'components/user/mypageChallenge';
 import Feedbox from 'components/user/mypageFeed';
-import { Tabs, Row, Progress } from 'antd';
-import { useRouter } from 'next/router'
+import { Tabs, Row } from 'antd';
+import Router, { useRouter } from 'next/router'
 import axios from 'axios';
-import { UpCircleOutlined } from '@ant-design/icons';
 import FeedForModal from 'components/Feed/ModalFeed';
 import ScrollToTop from 'components/ScrollToTop';
+import useUser from 'store/hooks/userHooks';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const { TabPane } = Tabs;
 
 const Userfeed = () => {
 
-
+  const { isLoading, loadingStart, loadingEnd } = useUser();
   const router = useRouter()
   const { username } = router.query
   const [data, setdata] = useState<any>('');
   const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
+  const layoutTitle = username + ' 님의 페이지 | 온도'
+
+  //인피니티 스크롤
+  const [loading, setLoading] = useState<boolean>(false);
+  const [nowFeedsnum, setNowFeedsNum] = useState(5);
+  const loadmoredata = () => {
+    if (loading) { return }
+    setLoading(true)
+    setTimeout(() => {
+      setNowFeedsNum(nowFeedsnum + 5)
+
+    }, 1000)
+    setLoading(false)
+  }
 
   useEffect(() => {
     if (!username) { return }
@@ -30,51 +45,29 @@ const Userfeed = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setdata(res.data)
         router.push('/user/' + username);
       })
+      .catch((err) => {
+        Router.push('/404')
+      })
+    loadingEnd()
   }, [username])
-  const people = {
-    image: 'https://picsum.photos/2500',
-    nickname: 'asdasd',
-  }
-  const Challenge = {
-    image: 'https://picsum.photos/2500',
-  }
-  const Feed = {
-    image: 'https://picsum.photos/2500',
-  }
-  const nowUser = {
-    username: 'asd',
-    image: '',
-    ondo: 22,
-    challenges: [Challenge, Challenge],
-    endChallenges: [Challenge, Challenge, Challenge, Challenge],
-    myChallenges: [Challenge, Challenge, Challenge],
-    feeds: [Feed, Feed, Feed, Feed, Feed],
-    follow: [people, people, people, people,],
-    following: [],
-  }
-  if (username) {
-    nowUser.username = String(username)
 
-  }
+
+
   return (
-    <AppLayout title='마이페이지 | 온도'>
+    <AppLayout title={layoutTitle}>
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
-      {/* <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
-        <UpCircleOutlined />
-      </GoTopBtn> */}
       <UserProfile data={data}></UserProfile>
-      {/* <FeedModal setShowModal={setShowModal} showModal={showModal}></FeedModal> */}
       <DivdeLine />
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
         <MyTab tab="Feed" key="1">
           <ImageRow>
-            {data && data.myFeed.length >= 1 ? data.myFeed.map((feed: any) => {
+            {data && data.myFeed.length >= 1 ? data.myFeed.map((feed: any, idx: any) => {
               return (
-                <Feedbox show={showModal} control={setShowModal} feed={feed} key={nowUser.ondo++} onClick={() => { setShowModal(feed.feedId) }}></Feedbox>
+                <Feedbox show={showModal} control={setShowModal} feed={feed} key={idx} onClick={() => { setShowModal(feed.feedId) }}></Feedbox>
               )
             }) : <Nothing>작성한 피드가 없습니다.</Nothing>}
           </ImageRow>
@@ -82,26 +75,26 @@ const Userfeed = () => {
         <MyTab tab="도전" key="2">
           <ChallengeDiv>도전 중</ChallengeDiv>
           <ImageRow>
-            {data && data.runChallenge.length >= 1 ? data.runChallenge.map((challenge: any) => {
+            {data && data.runChallenge.length >= 1 ? data.runChallenge.map((challenge: any, idx: any) => {
               return (
-                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+                <Challengebox challenge={challenge} key={idx}></Challengebox>
               )
             }) : <Nothing>진행 중인 도전이 없습니다.</Nothing>}
           </ImageRow>
           <ChallengeDiv>도전 완료</ChallengeDiv>
           <ImageRow>
-            {data && data.compeleteChallenge.length >= 1 ? data.compeleteChallenge.map((challenge: any) => {
+            {data && data.compeleteChallenge.length >= 1 ? data.compeleteChallenge.map((challenge: any, idx: any) => {
               return (
-                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+                <Challengebox challenge={challenge} key={idx}></Challengebox>
               )
             }) : <Nothing>완료한 도전이 없습니다.</Nothing>}
           </ImageRow>
 
           <ChallengeDiv>내가 만든 도전</ChallengeDiv>
           <ImageRow>
-            {data && data.makedChallenge.length >= 1 ? data.makedChallenge.map((challenge: any) => {
+            {data && data.makedChallenge.length >= 1 ? data.makedChallenge.map((challenge: any, idx: any) => {
               return (
-                <Challengebox challenge={challenge} key={nowUser.ondo++}></Challengebox>
+                <Challengebox challenge={challenge} key={idx}></Challengebox>
               )
             }) : <Nothing>개설한 도전이 없습니다.</Nothing>}
           </ImageRow>

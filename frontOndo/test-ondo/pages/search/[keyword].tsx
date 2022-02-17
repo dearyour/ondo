@@ -7,11 +7,14 @@ import SearchResultChallenge from 'components/search/resultChallenge';
 import SearchResultUser from 'components/search/resultUser';
 import SearchResultFeed from 'components/search/resultFeed';
 import styled from 'styled-components';
+import useUser from 'store/hooks/userHooks';
 
 
 
 const SearchPage = () => {
   const [data, setData] = useState({ challenges: [], feeds: [], users: [], });
+  const { isLoading, loadingStart, loadingEnd } = useUser();
+  const [layoutTitle, setLayoutTitle] = useState('');
 
   const router = useRouter()
   const { keyword } = router.query
@@ -19,7 +22,7 @@ const SearchPage = () => {
     // Router.reload()
     if (keyword) {
       const token = localStorage.getItem('Token');
-      console.log(keyword)
+      // console.log(keyword)
       const url = process.env.BACK_EC2 + '/search/' + keyword
       axios({
         method: 'get',
@@ -27,15 +30,17 @@ const SearchPage = () => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res.data)
+          // console.log(res.data)
           setData(res.data)
+          setLayoutTitle(keyword + ' : 온도 통합검색')
         })
     }
+    loadingEnd()
   }, [keyword]), [keyword])
 
 
   return (
-    <AppLayout>
+    <AppLayout title={layoutTitle}>
       <Wrap>
         <SearchResultChallenge title='Challenge' keyword={String(keyword)} results={data.challenges}></SearchResultChallenge>
         <DivideLine />

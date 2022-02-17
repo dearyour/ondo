@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space, Spin } from "antd";
 import AppLayout from "../../components/layout/AppLayout";
 import styles from "css/index.module.css";
 import { Select } from "antd";
@@ -30,7 +30,7 @@ function beforeUpload(file: any) {
   if (!isJpgOrPng) {
     message.error("You can only upload JPG/PNG file!");
   }
-  const isLt10M = file.size / 1024 / 1024 < 10;
+  const isLt10M = true;
   if (!isLt10M) {
     message.error("Image must smaller than 10MB!");
   }
@@ -76,7 +76,7 @@ const Write_feed = () => {
       url: process.env.BACK_EC2 + "/feed/create",
       headers: { Authorization: "Bearer " + token },
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data) {
         setChallenges(res.data);
       } else {
@@ -93,7 +93,7 @@ const Write_feed = () => {
   const onChangeImage: React.ChangeEventHandler<HTMLInputElement> = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log(e.target);
+    // console.log(e.target);
   };
   const onChangeContent: React.ChangeEventHandler<HTMLTextAreaElement> = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -117,7 +117,7 @@ const Write_feed = () => {
     // }
     setTagErr('')
     if (!challenge) {
-      console.log(challenge);
+      // console.log(challenge);
       setChallengeErr("도전을 선택해주세요.");
       i++;
     } else {
@@ -141,6 +141,7 @@ const Write_feed = () => {
   };
 
   const handleChange = (info: any) => {
+    setLoading(true)
     setImageErr("");
     // setFile(info.file)
     if (info.file.status === "uploading") {
@@ -158,6 +159,7 @@ const Write_feed = () => {
 
   // 피드 작성 axios
   const WriteRequest = () => {
+    setLoading(true);
     if (CheckBeforeCreate()) {
       const data = {
         // image: new FormData(),
@@ -165,7 +167,7 @@ const Write_feed = () => {
         challengeId: challenge,
         content: content,
       };
-      console.log(data);
+      // console.log(data);
       const formdata = new FormData();
       formdata.append("file", file);
       formdata.append(
@@ -182,10 +184,11 @@ const Write_feed = () => {
         },
         data: formdata,
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         Router.push("/feedMain");
       });
     }
+    setLoading(false)
   };
 
   const UpBtn = styled(Button)`
@@ -234,7 +237,7 @@ const Write_feed = () => {
       /* 태그를 클릭 이벤트 관련 로직 */
       $HashWrapInner.addEventListener("click", () => {
         $HashWrapOuter?.removeChild($HashWrapInner);
-        console.log($HashWrapInner.innerHTML);
+        // console.log($HashWrapInner.innerHTML);
         setHashArr(hashArr.filter((hashtag) => hashtag));
       });
 
@@ -261,11 +264,19 @@ const Write_feed = () => {
     }
   };
 
+  const Loading = styled(Spin)`
+    position: absolute;
+    top:45%;
+    left: 45%;
+    z-index: 10;
+  `
+
   return (
-    <AppLayout>
+    <AppLayout title="도전 인증 피드 작성하기 | 온도">
       <Write>
+        {loading && <Loading size="large" tip={<div>로딩 중...</div>}></Loading>}
         {/* <Writetitle>피드 작성하기</Writetitle> */}
-        <Space direction='horizontal' style={{justifyContent: 'center'}}>
+        <Space direction='horizontal' style={{ justifyContent: 'center' }}>
           <Image src={FightingDogye} width={100} height={100} />
           <SpeechBubble>피드로 인증해주세요!</SpeechBubble>
         </Space>

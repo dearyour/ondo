@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const { Option } = Select;
 
 function onSearch(val: any) {
-  console.log('search:', val);
+  // console.log('search:', val);
 }
 
 function CategorySelector(props: any): JSX.Element {

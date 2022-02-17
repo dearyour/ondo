@@ -1,11 +1,7 @@
-import { Col, Row } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Imgbox from './resultCarouselImg';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Router from 'next/router';
-import Link from 'next/link';
 import ImgboxChallenge from 'components/search/resultCarouselImgChallenge';
 
 
@@ -14,19 +10,6 @@ interface SearchResults {
   keyword?: string,
   results: Array<Object>,
 }
-
-const Wrap = styled.div`
-  
-`
-const Title = styled.h1`
-  /* color: #edbaba; */
-`
-const Nothing = styled.div`
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  padding-left: 5rem;
-`
-
 
 const SearchResultChallenge = ({ title = '', keyword, results }: SearchResults) => {
   let i = 121211
@@ -56,10 +39,8 @@ const SearchResultChallenge = ({ title = '', keyword, results }: SearchResults) 
           }
         }}
         navigation
-        // pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}>
         <Swrapper className='swiper-wrapper'>
-
           {results.length >= 1 ? results.map((content: any) => {
             content = {
               ...content,
@@ -70,13 +51,22 @@ const SearchResultChallenge = ({ title = '', keyword, results }: SearchResults) 
             )
           }) : <Nothing>검색 결과가 없습니다</Nothing>}
         </Swrapper>
-
-
       </Swiper>
     </Wrap>
   )
 };
 
+const Wrap = styled.div`
+  
+`
+const Title = styled.h1`
+  /* color: #edbaba; */
+`
+const Nothing = styled.div`
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-left: 5rem;
+`
 
 const Swrapper = styled.div`
 

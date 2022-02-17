@@ -17,7 +17,7 @@ function* getFeedSaga() {
     const token = localStorage.getItem("Token");
     // call은 미들웨어에게 함수와 인자들을 실행하라는 명령
     const comments: AxiosResponse = yield call(GetFeedState, token);
-    console.log(comments);
+    // console.log(comments);
     // put은 dispatch 를 뜻한다.
     yield put(feedAction.getFeedSuccess(comments));
   } catch (err) {

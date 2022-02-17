@@ -11,7 +11,7 @@ export const GetFeedState = (token: string | null) => {
     headers: { Authorization: "Bearer " + token },
   })
     .then((comments) => {
-      console.log(comments.data.detailFeedDtos);
+      // console.log(comments.data.detailFeedDtos);
       return comments.data.detailFeedDtos.reverse();
     })
     .catch((err) => {

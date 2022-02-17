@@ -105,7 +105,13 @@ $yong-blue: #5085e8;
             display: flex;
             align-items: center;
             margin-top: 7px;
-            color: blueviolet;
+            .body-tags {
+              color: blueviolet;
+              cursor: pointer;
+              &:hover {
+                color: #709edb;
+              }
+            }
           }
 
           .bottom {
@@ -131,7 +137,15 @@ $yong-blue: #5085e8;
             }
             .like {
               margin-right: 16px;
+              position: relative;
+              &:active {
+                animation: box-ani 0.05s linear forwards; /* 애니메이션 적용 */
+              }
               cursor: pointer;
+              .move {
+                width: 30px;
+                position: absolute;
+              }
             }
           }
         }
@@ -165,6 +179,7 @@ $yong-blue: #5085e8;
                   .nickname {
                     font-size: 12px;
                     color: $yong-gray200;
+                    cursor: pointer;
                   }
                   .timestamp {
                     font-size: 10px;
@@ -245,5 +260,13 @@ $yong-blue: #5085e8;
         }
       }
     }
+  }
+}
+@keyframes box-ani {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(5px, 5px);
   }
 }

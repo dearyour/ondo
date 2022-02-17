@@ -1,16 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { useSpring, animated } from 'react-spring';
-import { Divider, Row, Col } from 'antd';
 import styled from "styled-components";
 import { useSpring, animated } from 'react-spring';
-import { CloseOutlined, FireOutlined, FireTwoTone, CommentOutlined } from '@ant-design/icons';
 import axios from "axios";
-import { stringify } from "querystring";
 import Modal from "antd/lib/modal/Modal";
-import { Controller } from "react-spring";
-import produce from 'immer';
 import Router, { useRouter } from 'next/router';
 import useUser from 'store/hooks/userHooks';
+import { Popconfirm } from "antd";
 
 interface nowProps {
   show: number, // 상위에서 state로 show, control 설정. show에 feedId 넣어서 내려준다
@@ -63,7 +58,6 @@ const FeedForModal = (props: nowProps) => {
       }`;
   }; // 날짜 표현
 
-  // const likeState: boolean = false;
   // 애니메이션
   const animation = useSpring({
     config: {
@@ -83,7 +77,7 @@ const FeedForModal = (props: nowProps) => {
         headers: { Authorization: "Bearer " + token },
       })
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           setData(res.data)
           setLikeState({ like: !res.data.likeflag, count: res.data.feed.feedlike.length })
           setDate(getStartDate(res.data.feed.createdDate) + makeFeedTime((res.data.feed.createdDate)))
@@ -97,7 +91,6 @@ const FeedForModal = (props: nowProps) => {
     axios({
       method: "get",
       url: process.env.BACK_EC2 + "/feed/like/" + props.show,
-      // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -107,8 +100,6 @@ const FeedForModal = (props: nowProps) => {
         } else {
           setLikeState({ like: true, count: likeState.count + 1 })
         }
-        // setFlag(!flag);
-        // setData(res.data)
       })
   }
 
@@ -132,7 +123,6 @@ const FeedForModal = (props: nowProps) => {
           CommentRef.current.value = '';
           setComment('');
           setFlag(!flag);
-          // loadComment();
         })
     }
   }
@@ -172,7 +162,6 @@ const FeedForModal = (props: nowProps) => {
 
   return (
     <animated.div style={animation}>
-
       <WrapDiv>
         <FeedModal
           width={'70%'}
@@ -204,16 +193,25 @@ const FeedForModal = (props: nowProps) => {
                 <Content>{data && data.feed.content}</Content>
                 <ImgWrap>
                   <Like>
-                    <LikeImg src={likeState.like ? "/assets/feed/pngwing.com2.png"
-                      : "/assets/feed/pngwing.com.png"} onClick={DoLike}>
-                    </LikeImg>
+                    <LikeImg src="/assets/feed/white.png"></LikeImg>
+                    <LikeBaseImg className={likeState.like ? "likeanimated" : 'unlikeanimated'} onClick={DoLike} src="/assets/feed/pngwing.com2.png"></LikeBaseImg>
+                    <LikeBase src="/assets/feed/pngwing.com.png" onClick={DoLike}></LikeBase>
+
                     <span> {data ? likeState.count : 0}</span>
                   </Like>
                   <CommentCount>
                     <CommentImg src="/assets/feed/pngwing.com5.png"></CommentImg>
                     <span> {data && data.comments ? data.comments.length : 0}</span>
                   </CommentCount>
-                  {data && users.username === data.user.username ? <DeleteImg src="/assets/feed/pngwing.com6.png" onClick={deleteFeed} /> : null}
+                  <Popconfirm
+                    placement="bottomRight"
+                    title="이 피드를 삭제하시겠습니까?"
+                    onConfirm={deleteFeed}
+                    okText="네"
+                    cancelText="아니요"
+                  >
+                    {data && users.username === data.user.username ? <DeleteImg src="/assets/feed/pngwing.com6.png" /> : null}
+                  </Popconfirm>
                 </ImgWrap>
                 <CommentLine></CommentLine>
                 <CommentWrap>
@@ -311,11 +309,31 @@ const CommentLine = styled.hr`
 const Like = styled.div`
   padding: 2px;
   margin-right: 5px;
+  position: relative;
 `
 
 const LikeImg = styled.img`
+  /* visibility: hidden; */
   width: 1.5rem;
   cursor: pointer;
+`
+
+const LikeBase = styled.img`
+  width:1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+`
+const LikeBaseImg = styled.img`
+  transition: all 1s ease-out;
+  height: 1.5rem;
+  width:1.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0; */
+  
 `
 
 const CommentCount = styled.div`

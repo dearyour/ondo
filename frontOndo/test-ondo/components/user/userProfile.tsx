@@ -1,10 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Modal, Button, Col, Row, Alert, Progress, Divider, Skeleton, Drawer, List, Avatar } from "antd";
-import Image from "next/image";
+import React, { useCallback, useEffect, useState } from "react";
+import { Modal, Button, Col, Row, Alert, Progress, Drawer, List, Avatar } from "antd";
 import styled from "styled-components";
-import temp_profile from "public/images/temp_profile.jpg";
 import { UserOutlined } from "@ant-design/icons";
-import FollowUser from "./followUser";
 import Router, { useRouter } from "next/router";
 import useUser from "store/hooks/userHooks";
 import axios from "axios";
@@ -18,10 +15,7 @@ const UserProfile = ({ data }: any) => {
   const [alert, setAlert] = useState<boolean>(false);
   const [isFollowed, setFollowed] = useState<boolean>(true);
   const [ondo, setOndo] = useState<number>(1);
-  const [loading, setLoading] = useState(false);
-  const [followdata, setFollowData] = useState([]);
-  const [followcount, setFollowCount] = useState({ follow: 3, following: 3 });
-  const [followingdata, setFollowingData] = useState([]);
+  const { isLoading, loadingStart, loadingEnd } = useUser();
 
   useEffect(() => {
     setfollowModalVisible(false);
@@ -30,8 +24,7 @@ const UserProfile = ({ data }: any) => {
     console.log(data)
     if (data) {
       setFollowed(data.followflag)
-      setFollowData(data.followerUserDtos)
-      setFollowingData(data.followingUserDtos)
+
       setTimeout(() => {
         setOndo(data.user.ondo)
 
@@ -39,32 +32,9 @@ const UserProfile = ({ data }: any) => {
     }
   }, [data]);
 
-  const loadMoreDataFollow = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    setFollowCount((prev) => ({ follow: prev.follow + 3, following: prev.following }))
-    setLoading(false)
-
-  };
-
-  const loadMoreDataFollowing = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    setFollowCount((prev) => ({ follow: prev.follow, following: prev.following + 3 }))
-    setLoading(false)
-
-  };
-
+  // 팔로우 Drawer관련
   const showFollowModal = () => {
     setfollowModalVisible(true);
-  };
-
-  const handleOkFollow = () => {
-    setfollowModalVisible(false);
   };
 
   const handleCancelFollow = () => {
@@ -75,10 +45,6 @@ const UserProfile = ({ data }: any) => {
 
   const showfollowingModal = () => {
     setfollowingModalVisible(true);
-  };
-
-  const handleOkfollowing = () => {
-    setfollowingModalVisible(false);
   };
 
   const handleCancelFollowing = () => {
@@ -124,31 +90,58 @@ const UserProfile = ({ data }: any) => {
         AlertClose();
       })
   }
-  // const __doFollow = useCallback(() => {}, [nickname, param]);
+
   const handleClose = () => {
     setAlert(false)
   }
+  // 데이터 없을 때. 추가하면 속도가 좀 느려짐
+  const Nodata = () => {
+    return (
+      <NodataDiv>
+        <DogyeImg src="/images/dogye/sad.png"></DogyeImg>
+        <DogyeContent>진행중인 도전이 없어요...</DogyeContent>
+      </NodataDiv>
+    )
+  }
+
+  const DogyeImg = styled.img`
+    width: 20%;
+  `
+  const DogyeContent = styled.span`
+    text-align: center;
+  `
+
+  const NodataDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
   return (
     <Wrap>
-      {alert ?
-        <FollowAlert message="정상적으로 처리되었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
-        : null}
+      {
+        alert && !isFollowed && <FollowAlert message="팔로우하였습니다." type="info" closable afterClose={handleClose}></FollowAlert>
+      }
 
-      <ProfileWrap>
-        <ProfileCol span={14} md={8}>
+      {
+        alert && isFollowed && <FollowAlert message="언팔로우하었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
+      }
+      <ProfileWrap justify="space-around">
+        <ProfileCol md={8}>
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
-        <ProfileRight span={4} md={4} offset={1}>
+        <ProfileRight md={7}>
           {user ? <Nick><div><Style className={user.chooseStyle}>{user.chooseStyle}</Style></div> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
+              loadingStart();
               Router.push("/user/profileEdit");
             }}
           >
             {data.modifyflag ? <ProfileEdit><UserOutlined />개인정보 수정</ProfileEdit> : null}
           </Profileedit>
         </ProfileRight>
-        <Col span={4} md={8} offset={1}>
+        <Col md={8}>
           <UserStates>온도   {user ? <span>   {user.ondo}</span> : null}°C  {user ? <OndoProgress
             strokeColor={{
               '0%': '#058cec',
@@ -190,18 +183,6 @@ const UserProfile = ({ data }: any) => {
           title="Follow"
           onClose={handleCancelFollow}
         >
-          {/* {data && data.followerUserDtos.length >= 1 ? (
-            data.followerUserDtos.map((user: any, idx: any) => {
-              return (
-                <FModalDiv key={idx}>
-                  <FollowUser off1={setfollowModalVisible} off2={setfollowingModalVisible} user={user}></FollowUser>
-                  <hr />
-                </FModalDiv>
-              );
-            })
-          ) : (
-            <div>팔로우 중인 유저가 없습니다.</div>
-          )} */}
           <List
             itemLayout="horizontal"
             dataSource={data.followerUserDtos}
@@ -222,19 +203,6 @@ const UserProfile = ({ data }: any) => {
           onClose={handleCancelFollowing}
           headerStyle={{ textAlign: 'center' }}
         >
-          {/* {data &&
-            data.followingUserDtos.length >= 1 ? (
-            data.followingUserDtos.map((user: any, idx: any) => {
-              return (
-                <FModalDiv key={idx}>
-                  <FollowUser user={user} off1={setfollowModalVisible} off2={setfollowingModalVisible}></FollowUser>
-                  <hr />
-                </FModalDiv>
-              );
-            })
-          ) : (
-            <div>팔로잉 중인 유저가 없습니다.</div>
-          )} */}
           <List
             itemLayout="horizontal"
             dataSource={data.followingUserDtos}
@@ -313,7 +281,7 @@ const ProfileWrap = styled(Row)`
   margin-right: auto;
   /* background-color: #f7eeef; */
   border: 1px solid pink;
-  background-color: #fcf6f7;
+  /* background-color: #fcf6f7; */
   border-radius: 10px;
   padding-top: 20px;
   padding-bottom: 20px;

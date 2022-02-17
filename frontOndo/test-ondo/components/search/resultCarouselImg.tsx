@@ -1,15 +1,10 @@
 import React from 'react';
-import Image from 'next/image';
-import temp_profile from 'public/images/temp_profile.jpg'
-import { Modal, Button, Col, Row } from 'antd';
 import styled from 'styled-components';
-import Router from 'next/router';
 
 
 const Imgbox = ({ obj, show, control }: any) => {
   return (
     <Title className='swiper-slide'>
-      {/* <Content src={obj.image}></Content> */}
       <Content src={obj.image} onClick={() => { if (control) { control(obj.feedId) } }}></Content>
     </Title>
 
@@ -34,6 +29,5 @@ const Content = styled.img`
   cursor: pointer;
   border-radius:5px;
 `
-
 
 export default Imgbox;

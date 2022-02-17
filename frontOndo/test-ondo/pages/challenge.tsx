@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row, Carousel, Space, BackTop } from "antd";
+import { Col, Row, Carousel, Space, BackTop, Spin } from "antd";
 import { BiArrowFromBottom } from 'react-icons/bi';
 import styled from "styled-components";
 import HotChallenge from "components/challenge/HotChallenge";
@@ -14,6 +14,7 @@ import { userActions } from "store/slice/user";
 import { challengeAction } from "store/slice/challenge";
 import ScrollToTop from "components/ScrollToTop";
 import Head from "next/head";
+import useUser from "store/hooks/userHooks";
 
 
 const Challenge = () => {
@@ -21,6 +22,7 @@ const Challenge = () => {
   const [catChallenges, setCatChallenges] = useState([]);
   const [allChallenges, setAllChallenges] = useState([]);
   const [category, setCategory] = useState('전체');
+  const { isLoading, loadingStart, loadingEnd } = useUser();
   const dispatch = useDispatch();
 
   // const __GetUserState = (token: string | null) => {
@@ -53,7 +55,7 @@ const Challenge = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log('axios get challenge 성공');
+        // console.log('axios get challenge 성공');
 
         // console.log(res.data);
 
@@ -67,15 +69,18 @@ const Challenge = () => {
   }, []);
 
   useEffect(() => {
+    loadingStart();
     const token = localStorage.getItem("Token");
     // __GetUserState(token);
     __GetChallengeState(token);
+    loadingEnd()
   }, []);
 
   const renderCatChallenges = (selectedCategory: string) => {
+    loadingStart();
     if (selectedCategory === '전체') {
       setCatChallenges(allChallenges);
-      console.log(allChallenges[0]);
+      // console.log(allChallenges[0]);
 
       return;
     }
@@ -86,13 +91,15 @@ const Challenge = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
-        console.log('categorizing 성공');
-        console.log(res.data[0]);
+        // console.log('categorizing 성공');
+        // console.log(res.data[0]);
 
         setCatChallenges(res.data);
+        loadingEnd();
       })
       .catch((err) => {
-        console.log(selectedCategory);
+        loadingEnd();
+        // console.log(selectedCategory);
         console.log(err);
       })
   }

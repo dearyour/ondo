@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Button, Form, Input, Space, Row, Col } from 'antd';
 import Image from 'next/image';
@@ -28,7 +28,9 @@ const WriteChallenge = () => {
   const [contentErr, setContentErr] = useState<string>();
   const [categoryErr, setCategoryErr] = useState<string>();
 
-
+  useEffect(() => {
+    setImage(null);
+  }, [])
   const CheckBeforeCreate = () => {
     let i = 0
     if (!file) {
@@ -49,7 +51,7 @@ const WriteChallenge = () => {
       setDateErr('')
     }
     if (!title) {
-      setTitleErr("도전을 선택해주세요.")
+      setTitleErr("제목을 입력해주세요.")
       i++
     } else {
       setTitleErr('')
@@ -118,7 +120,7 @@ const WriteChallenge = () => {
   }
 
   return (
-    <AppLayout title='도전 생성 | 온도'>
+    <AppLayout title='도전 개설하기 | 온도'>
       {originalImg ? <CropImg></CropImg> : null}
       <Row>
         <Col xs={0} md={6}></Col>

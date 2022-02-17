@@ -7,7 +7,7 @@ import Head from "next/head";
 import HappyDogye from 'public/images/dogye/happy.png'
 import Link from "next/link";
 
-const ChallengeByCategory2 = (props : any) => {
+const ChallengeByCategory2 = (props: any) => {
   const challenges = [...props.categorized];
 
   const getDuration = (startDate: string) => {
@@ -28,14 +28,14 @@ const ChallengeByCategory2 = (props : any) => {
   const renderCategorizedChallenges = () => {
     const result = [];
 
-    for(let i = 0; i < challenges.length; i++) {
+    for (let i = 0; i < challenges.length; i++) {
       result.push(
-        <Card>
+        <Card key={i}>
           <CardImg src={challenges[i].image} />
           <CardBody>
-            <h2>{challenges[i].title}</h2>
+            <h3>{challenges[i].title}</h3>
             <p>{getDuration(challenges[i].sdate)} | {challenges[i].category}</p>
-            <h3>현재 {challenges[i].challengeParticipate.length} 명 참여 중</h3>
+            <h4>현재 {challenges[i].challengeParticipate.length} 명 참여 중</h4>
             <button onClick={() => { Router.push(`/challenge/${challenges[i].challengeId}`) }}>자세히 보기</button>
           </CardBody>
         </Card>
@@ -47,22 +47,22 @@ const ChallengeByCategory2 = (props : any) => {
 
   return (
     <>
-    <Head><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"></link></Head>
-    <Row>
-      <Col span={24}>
-        {/* <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper> */}
-        <Space direction='horizontal' style={{display: 'flex', justifyContent: 'right', marginBottom: '-2rem'}}>
-          <SpeechBubble>
-            원하는 도전이 없나요? <br />
-            그렇다면 <Link href='/challenge/write'><a>직접 개설</a></Link>해 보세요!
-          </SpeechBubble>
-          <Image src={HappyDogye} width={100} height={100} />
-        </Space>
-        <Wrapper>
-          {renderCategorizedChallenges()}
-        </Wrapper>
-      </Col>
-    </Row>
+      <Head><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"></link></Head>
+      <Row>
+        <Col span={24}>
+          {/* <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper> */}
+          <Space direction='horizontal' style={{ display: 'flex', justifyContent: 'right', marginBottom: '-2rem' }}>
+            <SpeechBubble>
+              원하는 도전이 없나요? <br />
+              그렇다면 <Link href='/challenge/write'><a>직접 개설</a></Link>해 보세요!
+            </SpeechBubble>
+            <Image src={HappyDogye} width={100} height={100} />
+          </Space>
+          <Wrapper>
+            {renderCategorizedChallenges()}
+          </Wrapper>
+        </Col>
+      </Row>
     </>
   )
 }
@@ -142,12 +142,18 @@ const Card = styled.div`
   border-radius: 0.2rem;
   min-width: 28rem;
   display: flex;
+  /* position: relative; */
 
   @media screen and (min-width: 600px) {
     flex-direction: column;
     text-align: center;
     min-width: 14rem;
   }
+`
+
+const CardFooter = styled.div`
+  height: 20%;
+  width: 100%;
 `
 
 const CardImg = styled.img`
@@ -165,7 +171,7 @@ const CardBody = styled.div`
   margin: 1rem;
   flex-grow: 1;
 
-  h2 {
+  h3 {
     line-height: 1.4rem;
     margin-bottom: 0.5rem;
   }
@@ -175,8 +181,8 @@ const CardBody = styled.div`
     line-height: 1.2rem;
   }
 
-  h3 {
-    font-size: 1.4rem;
+  h4 {
+    font-size: 1.2rem;
     margin-top: 0.6rem;
   }
 

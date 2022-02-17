@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useRef, useEffect, ReactNode } from "react";
+import React, { useState, useCallback, useRef, useEffect, ReactNode, useLayoutEffect } from "react";
 import NowTitleBar from "components/NowTitleBar";
 import AppLayout from "components/layout/AppLayout";
 import styled from "styled-components";
 import styles from "css/index.module.css";
-import { Modal, Button, Col, Row, Input, Upload, message, Select } from "antd";
+import { Modal, Button, Col, Row, Input, Upload, message, Select, Spin } from "antd";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import temp_profile from "public/images/temp_profile.jpg";
@@ -36,6 +36,7 @@ function getBase64(img: Blob, callback: any) {
 }
 
 const Edit = () => {
+  const { isLoading, loadingStart, loadingEnd } = useUser();
   const { GetUser, profile, nickname, users } = useUser();
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,9 +51,13 @@ const Edit = () => {
     onChangeNick(e.target.value);
   }, []);
 
+
+
   const StyleChallenge = (e: any) => {
     setStyle(e);
   }
+  // useLayoutEffect
+
 
   useEffect(() => {
     const token = localStorage.getItem('Token');
@@ -62,7 +67,7 @@ const Edit = () => {
       headers: { Authorization: "Bearer " + token },
     })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         // setImage(res.data.image)
         // onChangeNick(res.data.username)
         setChooseStyle(res.data.stylesList)
@@ -71,11 +76,13 @@ const Edit = () => {
     setImage(users.image);
     onChangeNick(users.username);
     setStyle(users.chooseStyle)
+    loadingEnd()
     // console.log(users)
 
   }, [])
   // 개인정보 수정
   const onEditNickname = () => {
+    loadingStart()
     const token = localStorage.getItem('Token');
     const formdata = new FormData();
     // console.log(file);
@@ -91,30 +98,34 @@ const Edit = () => {
       data: formdata,
     })
       .then((res) => {
-        console.log(res)
+        setLoading(false)
+
         Router.push('/feedMain');
         // setImage(null)
       })
       .catch((err) => {
+        setLoading(false)
+        loadingEnd()
         setUsernameErr("중복된 닉네임입니다.")
       })
   }
 
   const ImgUpload = (e: any) => {
+    setLoading(true);
     if (e.file.status === 'uploading') {
-      setLoading(true);
+      setLoading(false)
       return;
     }
     if (e.file.status === 'done') {
-      // Get this url from response in real world.
       getBase64(e.file.originFileObj, (imageUrl: any) => {
         setOriginalImage(imageUrl)
-        console.log(originalImg)
+        // console.log(originalImg)
         setLoading(false)
         return;
       },
       );
     }
+    setLoading(false)
   };
   const UpBtn = styled(Button)`
     border: 0px;
@@ -154,9 +165,16 @@ const Edit = () => {
 
     /* align-items: center; */
   `
+  const Loading = styled(Spin)`
+    position: absolute;
+    top:45%;
+    left: 45%;
+    z-index: 10;
+  `
 
   return (
     <AppLayout title="내 정보 수정하기 | 온도">
+      {loading && <Loading size="large" tip={<div>로딩 중...</div>}></Loading>}
       {originalImg ? <CropImg></CropImg> : null}
 
       <NowTitleBar title="개인정보 수정"></NowTitleBar>

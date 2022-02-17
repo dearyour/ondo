@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
-import temp_profile from 'public/images/temp_profile.jpg'
-import { Modal, Button, Col, Row } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router';
 
@@ -18,7 +15,6 @@ const ImgboxChallenge = ({ obj }: any) => {
   }
   return (
     <Title className='swiper-slide'>
-      {/* <Content src={obj.image}></Content> */}
       <Content src={obj.image} onMouseOver={mouseOver} onMouseOut={mouseOut} onClick={() => { Router.push(obj.url) }}></Content>
       {showTitle ? <ChallengeTitle>{obj.title}</ChallengeTitle> : null}
     </Title>
@@ -51,11 +47,11 @@ const ChallengeTitle = styled.div`
   justify-content: center;
   left:0;
   top:0;
+  padding:10px;
   pointer-events: none;
-  width: 100%;
+  width: 80%;
   height: 100%;
   font-size: 2rem;
-  /* transition: all 0.3s ease-in-out; */
   position: absolute;
 `
 
