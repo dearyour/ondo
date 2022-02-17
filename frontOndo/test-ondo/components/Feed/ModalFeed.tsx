@@ -1,14 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { useSpring, animated } from 'react-spring';
-import { Divider, Row, Col } from 'antd';
 import styled from "styled-components";
 import { useSpring, animated } from 'react-spring';
-import { CloseOutlined, FireOutlined, FireTwoTone, CommentOutlined } from '@ant-design/icons';
 import axios from "axios";
-import { stringify } from "querystring";
 import Modal from "antd/lib/modal/Modal";
-import { Controller } from "react-spring";
-import produce from 'immer';
 import Router, { useRouter } from 'next/router';
 import useUser from 'store/hooks/userHooks';
 
@@ -63,7 +57,6 @@ const FeedForModal = (props: nowProps) => {
       }`;
   }; // 날짜 표현
 
-  // const likeState: boolean = false;
   // 애니메이션
   const animation = useSpring({
     config: {
@@ -97,7 +90,6 @@ const FeedForModal = (props: nowProps) => {
     axios({
       method: "get",
       url: process.env.BACK_EC2 + "/feed/like/" + props.show,
-      // url: GetFeedurl,
       headers: { Authorization: "Bearer " + token },
     })
       .then((res) => {
@@ -107,8 +99,6 @@ const FeedForModal = (props: nowProps) => {
         } else {
           setLikeState({ like: true, count: likeState.count + 1 })
         }
-        // setFlag(!flag);
-        // setData(res.data)
       })
   }
 
@@ -132,7 +122,6 @@ const FeedForModal = (props: nowProps) => {
           CommentRef.current.value = '';
           setComment('');
           setFlag(!flag);
-          // loadComment();
         })
     }
   }
@@ -172,7 +161,6 @@ const FeedForModal = (props: nowProps) => {
 
   return (
     <animated.div style={animation}>
-
       <WrapDiv>
         <FeedModal
           width={'70%'}
@@ -204,9 +192,6 @@ const FeedForModal = (props: nowProps) => {
                 <Content>{data && data.feed.content}</Content>
                 <ImgWrap>
                   <Like>
-                    {/* <LikeImg src={likeState.like ? "/assets/feed/pngwing.com2.png"
-                      : "/assets/feed/pngwing.com.png"} onClick={DoLike}>
-                    </LikeImg> */}
                     <LikeImg src="/assets/feed/white.png"></LikeImg>
                     <LikeBaseImg className={likeState.like ? "likeanimated" : 'unlikeanimated'} onClick={DoLike} src="/assets/feed/pngwing.com2.png"></LikeBaseImg>
                     <LikeBase src="/assets/feed/pngwing.com.png" onClick={DoLike}></LikeBase>

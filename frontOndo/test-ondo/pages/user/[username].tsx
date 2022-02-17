@@ -4,10 +4,9 @@ import UserProfile from 'components/user/userProfile';
 import styled from 'styled-components';
 import Challengebox from 'components/user/mypageChallenge';
 import Feedbox from 'components/user/mypageFeed';
-import { Tabs, Row, Progress } from 'antd';
-import { useRouter } from 'next/router'
+import { Tabs, Row } from 'antd';
+import Router, { useRouter } from 'next/router'
 import axios from 'axios';
-import { UpCircleOutlined } from '@ant-design/icons';
 import FeedForModal from 'components/Feed/ModalFeed';
 import ScrollToTop from 'components/ScrollToTop';
 import useUser from 'store/hooks/userHooks';
@@ -36,6 +35,9 @@ const Userfeed = () => {
         setdata(res.data)
         router.push('/user/' + username);
       })
+      .catch((err) => {
+        Router.push('/404')
+      })
     loadingEnd()
   }, [username])
 
@@ -44,11 +46,7 @@ const Userfeed = () => {
   return (
     <AppLayout title={layoutTitle}>
       <FeedForModal show={showModal} control={setShowModal}></FeedForModal>
-      {/* <GoTopBtn onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: "smooth" }) }}>
-        <UpCircleOutlined />
-      </GoTopBtn> */}
       <UserProfile data={data}></UserProfile>
-      {/* <FeedModal setShowModal={setShowModal} showModal={showModal}></FeedModal> */}
       <DivdeLine />
       <Tabs defaultActiveKey="1" centered={true} tabBarGutter={40}>
         <MyTab tab="Feed" key="1">

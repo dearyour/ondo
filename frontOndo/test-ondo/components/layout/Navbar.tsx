@@ -1,32 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import OndoLogo from "/public/images/textLogo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Input, Row, Col, Menu, Dropdown, Spin } from "antd";
+import { Row, Col, Menu, Dropdown, Spin } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Searchbar from "./Searchbar";
 import Router from "next/router";
 import LoggedInForm from "./LoggedInForm";
-import styles from "css/index.module.css";
 import useUser from "store/hooks/userHooks";
 
-// const { Search } = Input;
-// const onSearch = (value:any) => console.log(value);
-
-// const StyledContent = styled(Search)`
-//   font-size: 50px
-// `;
 
 function Navbar(): JSX.Element {
   const { isLoading, loadingStart, loadingEnd } = useUser();
-  const [isOpen, setIsOpen] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { nickname, GetUser } = useUser();
   useEffect(() => {
     GetUser();
     // loadingStart();
   }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      loadingEnd();
+    }
+      , 3000)
+  }, [isLoading])
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -69,7 +67,6 @@ function Navbar(): JSX.Element {
 `
   return (
     <NavWrapper>
-      {/* <img src={OndoLogo} alt='OndoLogo'/> */}
       {isLoading && <LoadingWrap><Loading size="large" tip={<div>로딩 중...</div>}></Loading></LoadingWrap>}
       <Nav>
         <XsLogo xs={24} lg={4} xl={6}>
@@ -78,7 +75,6 @@ function Navbar(): JSX.Element {
               <Image src={OndoLogo} width={150} height={50} />
             </a>
           </Link>
-          {/* <StyledContent placeholder="input search text" onSearch={onSearch} enterButton /> */}
           <Hamburger
             overlayStyle={{ width: "50%" }}
             overlay={menu}
@@ -92,17 +88,6 @@ function Navbar(): JSX.Element {
         </Col>
         <Col md={24} lg={12}>
           <Menuitem>
-            {/* <MenuLink style={{ color: "red", fontWeight: "bold" }}>
-              <Link href="/challenge">Challenge🔥</Link>
-            </MenuLink>
-            <Link href={"/user/" + nickname}>
-              <a>
-                <MenuLink>
-                  <LoggedInForm />
-                </MenuLink>
-              </a>
-            </Link>
-            <MenuLink onClick={Logout}>로그아웃</MenuLink> */}
             <MenuLink onClick={() => { loadingStart(); Router.push('/challenge'); }}>오늘의 도전🔥</MenuLink>|
             <MenuLink onClick={() => { loadingStart(); Router.push(`/user/${nickname}`); }}><LoggedInForm /></MenuLink>|
             <MenuLink onClick={Logout}>로그아웃</MenuLink>
@@ -127,9 +112,6 @@ const XsLogo = styled(Col)`
 
 const NavWrapper = styled.div`
   padding: 1rem 10rem 1rem 10rem;
-  /* padding:10px; */
-  /* background-color: black; */
-  
   @media (max-width: 768px) {
     padding: 1rem;
   }
@@ -137,10 +119,7 @@ const NavWrapper = styled.div`
 
 const Nav = styled(Row)`
   padding: 10px;
-  /* display: flex;
-    justify-content: space-between; */
   align-items: center;
-  /* flex-wrap: wrap; */
   background: white;
   border-bottom: 2px solid #edbaba;
 `;
