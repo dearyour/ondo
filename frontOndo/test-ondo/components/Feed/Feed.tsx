@@ -269,7 +269,7 @@ const Feed = (props: any) => {
             {/* <img src="/assets/feed/like-dac.svg" alt="좋아요" /> */}
             <img
 
-              className={props.dto.likeflag === false ? "move likeanimated" : "move unlikeanimated"}
+              className={props.dto.likeflag === false ? "move likeanimated unlikeanimated" : "move unlikeanimated"}
               src=
               //  && likelist === "ok"
               "/assets/feed/pngwing.com2.png"></img>
