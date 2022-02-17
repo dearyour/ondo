@@ -1,5 +1,7 @@
 # Ondo
 ![ondologo](/uploads/5273796d36da88e978f9b05cfce57710/ondologo.png)
+Palette
+![로고_팔레트](/uploads/e17615a74896c27bab6807866c21e889/로고_팔레트.jpg)
 
 http://i6a601.p.ssafy.io/
 
