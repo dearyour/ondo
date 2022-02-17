@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import OndoLogo from "/public/images/textLogo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Input, Row, Col, Menu, Dropdown } from "antd";
+import { Input, Row, Col, Menu, Dropdown, Spin } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Searchbar from "./Searchbar";
@@ -19,12 +19,13 @@ import useUser from "store/hooks/userHooks";
 // `;
 
 function Navbar(): JSX.Element {
-
-  const [isOpen, setIsOpen] = useState(false);
+  const { isLoading, loadingStart, loadingEnd } = useUser();
+  const [isOpen, setIsOpen] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { nickname, GetUser } = useUser();
   useEffect(() => {
     GetUser();
+    // loadingStart();
   }, [])
   const menu = (
     <Menu>
@@ -46,13 +47,34 @@ function Navbar(): JSX.Element {
     </Menu>
   );
 
+  const LoadingWrap = styled.div`
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 12;
+    background-color: #f8f1f1;
+    opacity: 50%;
+    text-align: center;
+    top:0;
+    left:0;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  `
+  const Loading = styled(Spin)`
+    opacity: 1 !important;
+    z-index: 13;
+`
   return (
     <NavWrapper>
       {/* <img src={OndoLogo} alt='OndoLogo'/> */}
+      {isLoading && <LoadingWrap><Loading size="large" tip={<div>로딩 중...</div>}></Loading></LoadingWrap>}
       <Nav>
         <XsLogo xs={24} lg={4} xl={6}>
           <Link href="/feedMain">
-            <a>
+            <a onClick={loadingStart}>
               <Image src={OndoLogo} width={150} height={50} />
             </a>
           </Link>
@@ -81,8 +103,8 @@ function Navbar(): JSX.Element {
               </a>
             </Link>
             <MenuLink onClick={Logout}>로그아웃</MenuLink> */}
-            <MenuLink onClick={() => { Router.push('/challenge') }}>오늘의 도전🔥</MenuLink>|
-            <MenuLink onClick={() => { Router.push(`/user/${nickname}`) }}><LoggedInForm /></MenuLink>|
+            <MenuLink onClick={() => { loadingStart(); Router.push('/challenge'); }}>오늘의 도전🔥</MenuLink>|
+            <MenuLink onClick={() => { loadingStart(); Router.push(`/user/${nickname}`); }}><LoggedInForm /></MenuLink>|
             <MenuLink onClick={Logout}>로그아웃</MenuLink>
           </Menuitem>
         </Col>

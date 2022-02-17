@@ -37,7 +37,7 @@ function HotChallenge(props: any): JSX.Element {
     const result = [];
     for (let i = 0; i < Math.min(10, hotChallenges.length); i++) {
       result.push(
-        <CardWrapper onClick={() => { Router.push(`/challenge/${hotChallenges[i].challengeId}`) }}>
+        <CardWrapper key={i} onClick={() => { Router.push(`/challenge/${hotChallenges[i].challengeId}`) }}>
           <Card>
             <CardImage>
               <ChallengeImage src={hotChallenges[i].image} />
@@ -46,9 +46,9 @@ function HotChallenge(props: any): JSX.Element {
               <h2>
                 {hotChallenges[i].title}
                 <SubTitle>
-                  {getDuration(hotChallenges[i].sdate)} <br/>
+                  {getDuration(hotChallenges[i].sdate)} <br />
                   현재 {hotChallenges[i].challengeParticipate.length} 명 참여 중
-                </SubTitle>               
+                </SubTitle>
               </h2>
             </Details>
           </Card>

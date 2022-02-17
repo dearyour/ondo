@@ -7,11 +7,13 @@ import SearchResultChallenge from 'components/search/resultChallenge';
 import SearchResultUser from 'components/search/resultUser';
 import SearchResultFeed from 'components/search/resultFeed';
 import styled from 'styled-components';
+import useUser from 'store/hooks/userHooks';
 
 
 
 const SearchPage = () => {
   const [data, setData] = useState({ challenges: [], feeds: [], users: [], });
+  const { isLoading, loadingStart, loadingEnd } = useUser();
 
   const router = useRouter()
   const { keyword } = router.query
@@ -31,6 +33,7 @@ const SearchPage = () => {
           setData(res.data)
         })
     }
+    loadingEnd()
   }, [keyword]), [keyword])
 
 

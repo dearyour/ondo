@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space, Spin } from "antd";
 import AppLayout from "../../components/layout/AppLayout";
 import styles from "css/index.module.css";
 import { Select } from "antd";
@@ -141,6 +141,7 @@ const Write_feed = () => {
   };
 
   const handleChange = (info: any) => {
+    setLoading(true)
     setImageErr("");
     // setFile(info.file)
     if (info.file.status === "uploading") {
@@ -158,6 +159,7 @@ const Write_feed = () => {
 
   // 피드 작성 axios
   const WriteRequest = () => {
+    setLoading(true);
     if (CheckBeforeCreate()) {
       const data = {
         // image: new FormData(),
@@ -186,6 +188,7 @@ const Write_feed = () => {
         Router.push("/feedMain");
       });
     }
+    setLoading(false)
   };
 
   const UpBtn = styled(Button)`
@@ -261,9 +264,17 @@ const Write_feed = () => {
     }
   };
 
+  const Loading = styled(Spin)`
+    position: absolute;
+    top:45%;
+    left: 45%;
+    z-index: 10;
+  `
+
   return (
     <AppLayout>
       <Write>
+        {loading && <Loading size="large" tip={<div>로딩 중...</div>}></Loading>}
         {/* <Writetitle>피드 작성하기</Writetitle> */}
         <Space direction='horizontal' style={{ justifyContent: 'center' }}>
           <Image src={FightingDogye} width={100} height={100} />

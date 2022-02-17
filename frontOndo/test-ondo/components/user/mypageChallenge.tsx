@@ -52,10 +52,12 @@ opacity: 50%; */
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
+  /* margin-left:5px; */
   left:0;
   top:0;
   pointer-events: none;
-  width: 100%;
+  width: 80%;
   height: 100%;
   font-size: 2rem;
   transition: all 1.3s ease-in-out;

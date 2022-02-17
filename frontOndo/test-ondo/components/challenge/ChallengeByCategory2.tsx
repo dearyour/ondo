@@ -7,7 +7,7 @@ import Head from "next/head";
 import HappyDogye from 'public/images/dogye/happy.png'
 import Link from "next/link";
 
-const ChallengeByCategory2 = (props : any) => {
+const ChallengeByCategory2 = (props: any) => {
   const challenges = [...props.categorized];
 
   const getDuration = (startDate: string) => {
@@ -28,9 +28,9 @@ const ChallengeByCategory2 = (props : any) => {
   const renderCategorizedChallenges = () => {
     const result = [];
 
-    for(let i = 0; i < challenges.length; i++) {
+    for (let i = 0; i < challenges.length; i++) {
       result.push(
-        <Card>
+        <Card key={i}>
           <CardImg src={challenges[i].image} />
           <CardBody>
             <h2>{challenges[i].title}</h2>
@@ -47,22 +47,22 @@ const ChallengeByCategory2 = (props : any) => {
 
   return (
     <>
-    <Head><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"></link></Head>
-    <Row>
-      <Col span={24}>
-        {/* <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper> */}
-        <Space direction='horizontal' style={{display: 'flex', justifyContent: 'right', marginBottom: '-2rem'}}>
-          <SpeechBubble>
-            원하는 도전이 없나요? <br />
-            그렇다면 <Link href='/challenge/write'><a>직접 개설</a></Link>해 보세요!
-          </SpeechBubble>
-          <Image src={HappyDogye} width={100} height={100} />
-        </Space>
-        <Wrapper>
-          {renderCategorizedChallenges()}
-        </Wrapper>
-      </Col>
-    </Row>
+      <Head><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap"></link></Head>
+      <Row>
+        <Col span={24}>
+          {/* <WriteBtnWrapper><WriteBtn onClick={() => { Router.push('/challenge/write') }}>도전 개설하기</WriteBtn></WriteBtnWrapper> */}
+          <Space direction='horizontal' style={{ display: 'flex', justifyContent: 'right', marginBottom: '-2rem' }}>
+            <SpeechBubble>
+              원하는 도전이 없나요? <br />
+              그렇다면 <Link href='/challenge/write'><a>직접 개설</a></Link>해 보세요!
+            </SpeechBubble>
+            <Image src={HappyDogye} width={100} height={100} />
+          </Space>
+          <Wrapper>
+            {renderCategorizedChallenges()}
+          </Wrapper>
+        </Col>
+      </Row>
     </>
   )
 }

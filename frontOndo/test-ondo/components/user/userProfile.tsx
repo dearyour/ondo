@@ -18,6 +18,7 @@ const UserProfile = ({ data }: any) => {
   const [alert, setAlert] = useState<boolean>(false);
   const [isFollowed, setFollowed] = useState<boolean>(true);
   const [ondo, setOndo] = useState<number>(1);
+  const { isLoading, loadingStart, loadingEnd } = useUser();
 
 
   useEffect(() => {
@@ -140,13 +141,14 @@ const UserProfile = ({ data }: any) => {
         alert && isFollowed && <FollowAlert message="언팔로우하었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
       }
       <ProfileWrap justify="space-around">
-        <ProfileCol md={7}>
+        <ProfileCol md={8}>
           <ProfileImg src={user && user.image}></ProfileImg>
         </ProfileCol>
         <ProfileRight md={7}>
           {user ? <Nick><div><Style className={user.chooseStyle}>{user.chooseStyle}</Style></div> {user.username}</Nick> : null}
           <Profileedit
             onClick={() => {
+              loadingStart();
               Router.push("/user/profileEdit");
             }}
           >
@@ -318,7 +320,7 @@ const ProfileWrap = styled(Row)`
   margin-right: auto;
   /* background-color: #f7eeef; */
   border: 1px solid pink;
-  background-color: #fcf6f7;
+  /* background-color: #fcf6f7; */
   border-radius: 10px;
   padding-top: 20px;
   padding-bottom: 20px;

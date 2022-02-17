@@ -10,12 +10,13 @@ import axios from 'axios';
 import { UpCircleOutlined } from '@ant-design/icons';
 import FeedForModal from 'components/Feed/ModalFeed';
 import ScrollToTop from 'components/ScrollToTop';
+import useUser from 'store/hooks/userHooks';
 
 const { TabPane } = Tabs;
 
 const Userfeed = () => {
 
-
+  const { isLoading, loadingStart, loadingEnd } = useUser();
   const router = useRouter()
   const { username } = router.query
   const [data, setdata] = useState<any>('');
@@ -35,6 +36,7 @@ const Userfeed = () => {
         setdata(res.data)
         router.push('/user/' + username);
       })
+    loadingEnd()
   }, [username])
 
 

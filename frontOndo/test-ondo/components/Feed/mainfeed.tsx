@@ -20,6 +20,8 @@ import Rankfeed from "components/Feed/rankfeed";
 import happy from "public/images/dogye/happy.png";
 import styled from "styled-components";
 import { UpCircleOutlined } from "@ant-design/icons";
+import useUser from "store/hooks/userHooks";
+
 
 function Mainfeed() {
   const { nickname } = useSelector((state: RootState) => state.user);
@@ -30,6 +32,7 @@ function Mainfeed() {
   const feedstate = useSelector((state: RootState) => state.feed.items);
   const { comments } = useSelector((state: RootState) => state.comment);
   const [userProfileImage, setUserProfileImage] = useState(undefined);
+  const { isLoading, loadingStart, loadingEnd } = useUser();
   const dispatch = useDispatch();
   const [feeds, setFeeds] = useState([]); //프롭으로내려주자
   const [rankers, setRankers] = useState([]); //프롭으로내려주자
@@ -39,10 +42,10 @@ function Mainfeed() {
   // });
 
   ////////////////////////
-  useEffect(() => {
-    // dispatch(userActions.getUser());
-    // dispatch(feedAction.getFeed());
-  }, []);
+  // useEffect(() => {
+  // dispatch(userActions.getUser());
+  // dispatch(feedAction.getFeed());
+  // }, []);
   const __GetUserState = (token: string | null) => {
     return axios({
       method: "GET",
@@ -60,10 +63,12 @@ function Mainfeed() {
   };
 
   useEffect(() => {
+    loadingStart();
     const token = localStorage.getItem("Token");
     __GetUserState(token);
     // console.log(userstate.Object.email);
     // dispatch(userActions.setnickname(userstate));
+    loadingEnd();
   }, []);
   //////////////////////////////////////////
 
@@ -114,12 +119,15 @@ function Mainfeed() {
     [feeds]
   );
   useEffect(() => {
+    loadingStart();
     const token = localStorage.getItem("Token");
     __GetFeedState(token);
     // console.log(feedstate)
+    loadingEnd();
   }, []);
 
   useEffect(() => {
+    loadingStart()
     const token = localStorage.getItem("Token");
     // console.log(feeds); useState는 이렇게하면 초기값나오는듯, set된값은 아래 tsx에서 확인하자
     //댓글개수 실시간카운트 하려면 호출 상태를 디펜던시에 넣는게 아니라
@@ -128,6 +136,7 @@ function Mainfeed() {
     dispatch(userActions.getUser());
     dispatch(feedAction.getFeed());
     setUserProfileImage(image);
+    loadingEnd()
   }, []);
 
   // const __openFeedDetail = useCallback(() => {
@@ -172,9 +181,11 @@ function Mainfeed() {
   //   font-size: 2.5rem;
   //   cursor: pointer;
   // `;
+
   return (
     <div>
       <div className="mainfeed">
+
         <div className="wrapper">
           <div className="feed-list">
             <Dogye>

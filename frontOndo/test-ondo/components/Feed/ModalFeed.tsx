@@ -204,9 +204,13 @@ const FeedForModal = (props: nowProps) => {
                 <Content>{data && data.feed.content}</Content>
                 <ImgWrap>
                   <Like>
-                    <LikeImg src={likeState.like ? "/assets/feed/pngwing.com2.png"
+                    {/* <LikeImg src={likeState.like ? "/assets/feed/pngwing.com2.png"
                       : "/assets/feed/pngwing.com.png"} onClick={DoLike}>
-                    </LikeImg>
+                    </LikeImg> */}
+                    <LikeImg src="/assets/feed/white.png"></LikeImg>
+                    <LikeBaseImg className={likeState.like ? "like" : 'unlike'} onClick={DoLike} src="/assets/feed/pngwing.com2.png"></LikeBaseImg>
+                    <LikeBase src="/assets/feed/pngwing.com.png" onClick={DoLike}></LikeBase>
+
                     <span> {data ? likeState.count : 0}</span>
                   </Like>
                   <CommentCount>
@@ -311,11 +315,31 @@ const CommentLine = styled.hr`
 const Like = styled.div`
   padding: 2px;
   margin-right: 5px;
+  position: relative;
 `
 
 const LikeImg = styled.img`
+  /* visibility: hidden; */
   width: 1.5rem;
   cursor: pointer;
+`
+
+const LikeBase = styled.img`
+  width:1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+`
+const LikeBaseImg = styled.img`
+  transition: all 1s ease-out;
+  height: 1.5rem;
+  width:1.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* opacity: 0; */
+  
 `
 
 const CommentCount = styled.div`
