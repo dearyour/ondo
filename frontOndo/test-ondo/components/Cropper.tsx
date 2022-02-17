@@ -1,17 +1,14 @@
-import React, { useRef, useState } from "react";
-import { Button, Col, Row, Modal } from 'antd';
+import React, { useRef } from "react";
+import { Button, Modal } from 'antd';
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import styled from "styled-components";
 import useImg from "store/hooks/imgHooks";
 
 
-
 const CropImg: React.FC = () => {
   const { file, image, originalImg, setFile, setImage, setOriginalImage } = useImg();
   const cropperRef = useRef<HTMLImageElement | null>(null);
-  // const [image, setImage] = useState<string>();
-  // const [file, setFile] = useState<File>();
   const onCrop = () => {
     const imageElement: any = cropperRef?.current;
     const cropper: any = imageElement?.cropper;
@@ -36,10 +33,6 @@ const CropImg: React.FC = () => {
         guides={true}
         ref={cropperRef}
       />
-      {/* <div>
-        <CropImage src={image} alt="" />
-      </div> */}
-      {/* <Button onClick={onCrop}>미리보기</Button> */}
       <BtnDiv>
         <CropBtn onClick={onCrop}>적용</CropBtn>
         <CropBtn onClick={() => { setOriginalImage(null) }}>종료</CropBtn>

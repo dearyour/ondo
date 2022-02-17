@@ -1,10 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Modal, Button, Col, Row, Alert, Progress, Divider, Skeleton, Drawer, List, Avatar } from "antd";
-import Image from "next/image";
+import React, { useCallback, useEffect, useState } from "react";
+import { Modal, Button, Col, Row, Alert, Progress, Drawer, List, Avatar } from "antd";
 import styled from "styled-components";
-import temp_profile from "public/images/temp_profile.jpg";
 import { UserOutlined } from "@ant-design/icons";
-import FollowUser from "./followUser";
 import Router, { useRouter } from "next/router";
 import useUser from "store/hooks/userHooks";
 import axios from "axios";
@@ -19,7 +16,6 @@ const UserProfile = ({ data }: any) => {
   const [isFollowed, setFollowed] = useState<boolean>(true);
   const [ondo, setOndo] = useState<number>(1);
   const { isLoading, loadingStart, loadingEnd } = useUser();
-
 
   useEffect(() => {
     setfollowModalVisible(false);
@@ -36,13 +32,9 @@ const UserProfile = ({ data }: any) => {
     }
   }, [data]);
 
-
+  // 팔로우 Drawer관련
   const showFollowModal = () => {
     setfollowModalVisible(true);
-  };
-
-  const handleOkFollow = () => {
-    setfollowModalVisible(false);
   };
 
   const handleCancelFollow = () => {
@@ -53,10 +45,6 @@ const UserProfile = ({ data }: any) => {
 
   const showfollowingModal = () => {
     setfollowingModalVisible(true);
-  };
-
-  const handleOkfollowing = () => {
-    setfollowingModalVisible(false);
   };
 
   const handleCancelFollowing = () => {
@@ -102,10 +90,11 @@ const UserProfile = ({ data }: any) => {
         AlertClose();
       })
   }
-  // const __doFollow = useCallback(() => {}, [nickname, param]);
+
   const handleClose = () => {
     setAlert(false)
   }
+  // 데이터 없을 때. 추가하면 속도가 좀 느려짐
   const Nodata = () => {
     return (
       <NodataDiv>
@@ -130,9 +119,6 @@ const UserProfile = ({ data }: any) => {
 
   return (
     <Wrap>
-      {/* {alert ?
-        <FollowAlert message="정상적으로 처리되었습니다." type="info" closable afterClose={handleClose}></FollowAlert>
-        : null} */}
       {
         alert && !isFollowed && <FollowAlert message="팔로우하였습니다." type="info" closable afterClose={handleClose}></FollowAlert>
       }
@@ -197,18 +183,6 @@ const UserProfile = ({ data }: any) => {
           title="Follow"
           onClose={handleCancelFollow}
         >
-          {/* {data && data.followerUserDtos.length >= 1 ? (
-            data.followerUserDtos.map((user: any, idx: any) => {
-              return (
-                <FModalDiv key={idx}>
-                  <FollowUser off1={setfollowModalVisible} off2={setfollowingModalVisible} user={user}></FollowUser>
-                  <hr />
-                </FModalDiv>
-              );
-            })
-          ) : (
-            <div>팔로우 중인 유저가 없습니다.</div>
-          )} */}
           <List
             itemLayout="horizontal"
             dataSource={data.followerUserDtos}
@@ -229,19 +203,6 @@ const UserProfile = ({ data }: any) => {
           onClose={handleCancelFollowing}
           headerStyle={{ textAlign: 'center' }}
         >
-          {/* {data &&
-            data.followingUserDtos.length >= 1 ? (
-            data.followingUserDtos.map((user: any, idx: any) => {
-              return (
-                <FModalDiv key={idx}>
-                  <FollowUser user={user} off1={setfollowModalVisible} off2={setfollowingModalVisible}></FollowUser>
-                  <hr />
-                </FModalDiv>
-              );
-            })
-          ) : (
-            <div>팔로잉 중인 유저가 없습니다.</div>
-          )} */}
           <List
             itemLayout="horizontal"
             dataSource={data.followingUserDtos}

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
-import temp_profile from 'public/images/temp_profile.jpg'
-import { Modal, Button, Col, Row } from 'antd';
+import { Col } from 'antd';
 import styled from 'styled-components';
 import Router from 'next/router'
 
@@ -44,16 +42,12 @@ const Content = styled.img`
   cursor: pointer;
   border-radius:5px;
   border: 1px solid pink;
-  /* box-shadow: 0 1px 1px 0; */
 `
 const ChallengeTitle = styled.div`
-/* background-color: gray;
-opacity: 50%; */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px;
-  /* margin-left:5px; */
   left:0;
   top:0;
   pointer-events: none;

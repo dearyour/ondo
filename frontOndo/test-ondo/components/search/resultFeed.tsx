@@ -1,11 +1,8 @@
-import { Col, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Imgbox from './resultCarouselImg';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Router from 'next/router';
-import Link from 'next/link';
 import FeedForModal from 'components/Feed/ModalFeed';
 
 
@@ -26,7 +23,6 @@ const Nothing = styled.div`
   margin-bottom: 3rem;
   padding-left: 5rem;
 `
-
 
 const SearchResultFeed: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
   const [showModal, setShowModal] = useState<number>(0);
@@ -60,7 +56,6 @@ const SearchResultFeed: React.FC<SearchResults> = ({ title = '', keyword, result
         // pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}>
         <div className='swiper-wrapper'>
-
           {results.length >= 1 ? results.map((content: any, idx: any) => {
             content = {
               ...content,
@@ -77,7 +72,6 @@ const SearchResultFeed: React.FC<SearchResults> = ({ title = '', keyword, result
         {results.length >= 5 ?
           <div className="swiper-button-next-feed"></div> : null
         }
-
       </Swiper>
     </Wrap>
   )

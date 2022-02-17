@@ -11,6 +11,8 @@ interface Props {
   setShowModal: Function;
 }
 
+// 현재 사용 안하는 페이지
+
 // dummy data
 const challengeTitle = '한강에서 1만보 걷기';
 const feedContent = '힘들었지만 성공!! 내일도 화이팅 #한강 #걷기 #산책';
@@ -25,17 +27,17 @@ const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
       duration: 250
     },
     opacity: showModal ? 1 : 0,
-    transform: showModal ? `translateY(0%)` : `translateY(-100%)` 
+    transform: showModal ? `translateY(0%)` : `translateY(-100%)`
   })
 
-  const closeModal: React.MouseEventHandler<HTMLDivElement>  = (e: React.MouseEvent<HTMLElement>) => {
-    if(modalRef.current === e.target) {
+  const closeModal: React.MouseEventHandler<HTMLDivElement> = (e: React.MouseEvent<HTMLElement>) => {
+    if (modalRef.current === e.target) {
       setShowModal(false);
     }
   }
 
   const keyPress = useCallback(e => {
-    if(e.key === 'Escape' && showModal) {
+    if (e.key === 'Escape' && showModal) {
       setShowModal(false)
     }
   }, [setShowModal, showModal])
@@ -66,18 +68,18 @@ const FeedModal: FC<Props> = ({ showModal, setShowModal }) => {
                 <Divider orientation="right">
                   {liked
                     ? <FireTwoTone twoToneColor='red' onClick={onToggleLike} />
-                    : <FireOutlined style={{color: '#edbaba'}} onClick={onToggleLike} />
+                    : <FireOutlined style={{ color: '#edbaba' }} onClick={onToggleLike} />
                   }  {likes} &nbsp;
                   <CommentOutlined /> {comments.length}
                 </Divider>
                 {/* <button>Join</button> */}
                 <div>댓글 부분</div>
               </ModalContent>
-              <CloseModalButton aria-label="Close modal" onClick={() => setShowModal((prev:Boolean) => !prev)} />
+              <CloseModalButton aria-label="Close modal" onClick={() => setShowModal((prev: Boolean) => !prev)} />
             </ModalWrapper>
           </animated.div>
         </Background>
-      ) : null} 
+      ) : null}
     </>
   )
 }

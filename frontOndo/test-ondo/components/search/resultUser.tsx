@@ -1,12 +1,8 @@
-import { Col, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Imgbox from './resultCarouselImg';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import Router from 'next/router';
-import Link from 'next/link';
-
 
 
 interface SearchResults {
@@ -27,9 +23,7 @@ const Nothing = styled.div`
   padding-left: 5rem;
 `
 
-
 const SearchResultUser: React.FC<SearchResults> = ({ title = '', keyword, results }: SearchResults) => {
-
   let i = 1212111
   return (
     <Wrap>
@@ -60,7 +54,6 @@ const SearchResultUser: React.FC<SearchResults> = ({ title = '', keyword, result
         // pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}>
         <div className='swiper-wrapper'>
-
           {results.length >= 1 ? results.map((content: any) => {
             content = {
               ...content,
@@ -77,7 +70,6 @@ const SearchResultUser: React.FC<SearchResults> = ({ title = '', keyword, result
         {results.length >= 5 ?
           <div className="swiper-button-next-user"></div> : null
         }
-
       </Swiper>
     </Wrap>
   )

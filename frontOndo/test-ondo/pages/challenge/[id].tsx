@@ -59,6 +59,7 @@ const ReadChallenge = () => {
         })
         .catch((err) => {
           console.log('상세보기 실패');
+          Router.push('/404')
 
         })
     }
