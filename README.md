@@ -43,23 +43,26 @@ Ondo(오늘의 도전)
 
 - 사용 기술과 특징
   - IDE
-    - IntelliJ - Spring boot
+    - IntelliJ(2021.3.1 community Edition) - Spring boot
       - 강력한 추천 기능
       - 다양한 리팩토링과 디버깅 기능
       - 이클립스의 Git에 비해 높은 자유도
       - Maven, Gradle과 같은 빌드 도구 지원
       - Git과 같은 버전 관리 시스템 기능 지원
-    - VSCode - React
+    - VSCode(1.64.1) - React
       - 쉽게 추가할 수 있는 Add On(Extension)
       - 협업 시 도움이 되는 직관적 UI/UX
   - Back-End
-    - **Spring boot(2.2.2.RELEASE)** - 2.0.0부터 @Nullable, @NotNull, Java 11, Junit 5 지원.
+    - **Spring boot(2.6.2)** - 2.0.0부터 @Nullable, @NotNull, Java 11, Junit 5 지원.
+    - Gradle 7.3.2
+    - Java 11.0.13
   - Front-End
-    - React(Next.js, typescript)
+    - **Next.js** 12.0.8, TypeScript 4.5.4
   - DB
     - Mysql
   - CI/CD
     - Jenkins - 프로젝트 시, 개발자들의 commit, push 내용을 지속적으로 통합하여 빌드, 테스트하며 관리.
+    - Nginx 1.18.0
 
 ---
 
