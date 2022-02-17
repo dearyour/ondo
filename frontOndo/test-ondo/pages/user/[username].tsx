@@ -10,6 +10,7 @@ import axios from 'axios';
 import FeedForModal from 'components/Feed/ModalFeed';
 import ScrollToTop from 'components/ScrollToTop';
 import useUser from 'store/hooks/userHooks';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const { TabPane } = Tabs;
 
@@ -21,6 +22,19 @@ const Userfeed = () => {
   const [data, setdata] = useState<any>('');
   const [showModal, setShowModal] = useState<number>(0); // 피드 모달용
   const layoutTitle = username + ' 님의 페이지 | 온도'
+
+  //인피니티 스크롤
+  const [loading, setLoading] = useState<boolean>(false);
+  const [nowFeedsnum, setNowFeedsNum] = useState(5);
+  const loadmoredata = () => {
+    if (loading) { return }
+    setLoading(true)
+    setTimeout(() => {
+      setNowFeedsNum(nowFeedsnum + 5)
+
+    }, 1000)
+    setLoading(false)
+  }
 
   useEffect(() => {
     if (!username) { return }

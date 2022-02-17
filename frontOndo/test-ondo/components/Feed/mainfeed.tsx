@@ -271,8 +271,8 @@ function Mainfeed() {
               {feedstate &&
                 feedstate.slice(0, nowFeedsnum).map((item: any, idx: number) => {
                   // console.log(feeds);
-                  console.log(feedstate.length)
-                  console.log(nowFeedsnum)
+                  // console.log(feedstate.length)
+                  // console.log(nowFeedsnum)
 
                   return (
                     <Feed
