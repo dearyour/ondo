@@ -80,6 +80,7 @@ Ondo(오늘의 도전)
 ## 주요 화면 소개
 -	사이트 대문 페이지 
 
+![image](https://user-images.githubusercontent.com/52556956/154600370-a2930b54-e688-40b8-8a0a-6e48b62c1d22.png)
 -	메인 페이지 
  
 -	피드 상세 모달창
