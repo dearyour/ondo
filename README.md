@@ -82,32 +82,35 @@ Ondo(오늘의 도전)
 
 ![image](https://user-images.githubusercontent.com/52556956/154600370-a2930b54-e688-40b8-8a0a-6e48b62c1d22.png)
 -	메인 페이지 
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600374-3fba4322-c843-4080-9117-c64a2d5eca40.png)
 -	피드 상세 모달창
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600412-e9d55125-ceab-4a79-83ed-0f86a16122a6.png)
 
 -	피드 작성 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600426-c4b00d51-91a7-4f1e-8a2e-e999edf7aef3.png)
 
 
 
 -	검색 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600430-594ff4ea-32de-4afc-9048-d7e26064ce05.png)
 
 -	도전 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600439-f63314e1-6d63-4f1a-9152-65156886f095.png)
 -	도전 상세 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600453-b5129440-e969-403d-a032-714dde06f19d.png)
 -	도전 생성 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600466-1b37388c-7363-466c-9159-ebecb61b31ae.png)
 -	개인 피드 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600472-386a0445-074f-48fd-94e1-184849788e54.png)
+![image](https://user-images.githubusercontent.com/52556956/154600481-b5f35126-c3e9-4b53-96ad-45b317c988f2.png)
  
  
 
 
 -	개인 정보 수정 페이지
- 
+ ![image](https://user-images.githubusercontent.com/52556956/154600488-97a8b555-d258-4e3a-9f0c-5cf5a17eb30a.png)
+![image](https://user-images.githubusercontent.com/52556956/154600551-491619bc-8fb5-4f81-b6a2-5c53cb98fe42.png)
+![image](https://user-images.githubusercontent.com/52556956/154600573-9cecdb49-460c-478a-936c-bde7c9d693b6.png)
  
 -	404 Page Not Found
  
