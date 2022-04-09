@@ -1,9 +1,3 @@
-# 프로젝트 시연 영상 
-
-https://www.youtube.com/watch?v=aSMTt3dGWOI
-
----
-
 # Ondo
 
 ![ondologo](https://user-images.githubusercontent.com/52556956/154810157-0ed49b31-1941-4128-b22e-41c1b85a9b03.png)
@@ -146,6 +140,6 @@ https://www.notion.so/ONDO-d398bc38f3fa4698b8b1d37d52b99f70
 
  ![image](https://user-images.githubusercontent.com/52556956/154600573-9cecdb49-460c-478a-936c-bde7c9d693b6.png)
 
-### 프로젝트 시연 영상 
+# 프로젝트 시연 영상 
 
 https://www.youtube.com/watch?v=aSMTt3dGWOI
