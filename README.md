@@ -32,7 +32,7 @@ https://www.notion.so/ONDO-d398bc38f3fa4698b8b1d37d52b99f70
 - [API](https://www.notion.so/API-1ca45d1fdc95415aac1050bf3f63cb96)
 - [Patch Notes](https://lab.ssafy.com/s06-webmobile2-sub2/S06P12A601/-/wikis/Patch-Notes)
 
-## 카테고리
+## 카테고리 
 
 | Application | Domain | Language | Framework |
 | ---- | ---- | ---- | ---- |
