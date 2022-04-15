@@ -140,6 +140,11 @@ https://www.notion.so/ONDO-d398bc38f3fa4698b8b1d37d52b99f70
 
  ![image](https://user-images.githubusercontent.com/52556956/154600573-9cecdb49-460c-478a-936c-bde7c9d693b6.png)
 
+# SEO(검색 엔진 최적화) 검색가능 설정 
+![image](https://user-images.githubusercontent.com/52556956/163557964-5246ebba-9b17-4a37-ae66-0a2e0626a029.png)
+
+- 현재 서버는 닫혔습니다! 
+
 # 프로젝트 시연 영상 
 
 https://www.youtube.com/watch?v=aSMTt3dGWOI
